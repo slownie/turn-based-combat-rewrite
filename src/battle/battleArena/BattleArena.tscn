@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://b4m5jes4b48u2" path="res://src/battle/battleArena/BattleArena.cs" id="1_7r31s"]
 [ext_resource type="Texture2D" uid="uid://dowj15rbomc8k" path="res://assets/images/battleBackgrounds/BlackBackground.png" id="2_kbgty"]
-[ext_resource type="PackedScene" uid="uid://ludecivyoabp" path="res://src/controllers/ActorController.tscn" id="3_ma76s"]
 
 [node name="BattleArena" type="Control" unique_id=420812231]
 layout_mode = 3
@@ -22,4 +21,4 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_kbgty")
 
-[node name="ActorController" parent="." unique_id=1861226942 instance=ExtResource("3_ma76s")]
+[node name="Node2D" type="Node2D" parent="." unique_id=1453677100]

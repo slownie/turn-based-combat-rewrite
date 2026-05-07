@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c4jt51dfiyfeo" path="res://scenes/overworld/OverworldBaseScene.tscn" id="1_gfm78"]
 [ext_resource type="PackedScene" uid="uid://dcil4qvlksm87" path="res://src/overworld/combatZone/CombatZone.tscn" id="2_7rt71"]
-[ext_resource type="Script" uid="uid://ded8acw4jwwi" path="res://src/dataClasses/enemies/EnemyEncounterResource.cs" id="3_gpfer"]
+[ext_resource type="Script" uid="uid://ded8acw4jwwi" path="res://src/dataClasses/EnemyEncounterResource.cs" id="3_gpfer"]
 [ext_resource type="PackedScene" uid="uid://4qqsxngostna" path="res://src/overworld/overworldPlayer/OverworldPlayer.tscn" id="4_mf42l"]
 
 [sub_resource type="Resource" id="Resource_jk03q"]
