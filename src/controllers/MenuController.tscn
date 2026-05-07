@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://mkr6vpx8rufy"]
+
+[ext_resource type="Script" uid="uid://d3w0pi8ul5hw3" path="res://src/controllers/MenuController.cs" id="1_hni0b"]
+
+[node name="MenuController" type="Control" unique_id=1597004745]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hni0b")

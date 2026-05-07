@@ -1,0 +1,57 @@
+using Godot;
+using System;
+
+public partial class OverworldController : Node2D
+{
+	Node2D _loadedScene;
+
+	[Signal] public delegate void SwitchToBattleEventHandler(EnemyEncounterResource enemyEncounterResource);
+
+    public override void _Ready()
+    {
+    }
+
+	public void SetActive(bool isActive)
+	{
+		if (isActive)
+		{
+			SetProcess(true);
+			SetProcessInput(true);
+			Show();
+		} else {
+			SetProcess(false);
+			SetProcessInput(false);
+			Hide();
+		}
+	}
+
+	public void LoadScene(PackedScene sceneResource)
+	{
+		_loadedScene = sceneResource.Instantiate() as Node2D;
+		AddChild(_loadedScene);
+		OnNewRoomLoaded();
+	}
+
+	private void OnNewRoomLoaded()
+	{
+		// 1. Story Progress
+
+		// 2. Combat Zones
+		Node2D combatZones = _loadedScene.GetNode<Node2D>("CombatZones");
+		foreach (CombatZone combatZone in combatZones.GetChildren())
+		{
+			// Signal Hookup, don't need to do any disconnects
+			combatZone.EncounterStart += OnEncounterStart;
+		}
+
+		// 3. Interactables
+
+		// 4. Transitions
+	}
+
+	private void OnEncounterStart(EnemyEncounterResource enemyEncounterResource)
+	{
+		EmitSignal(SignalName.SwitchToBattle, enemyEncounterResource);
+	}
+
+}

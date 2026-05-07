@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ctxu6vlmqn48"]
+
+[ext_resource type="Script" uid="uid://bbtkkbbni1dyq" path="res://src/music/MusicPlayer.cs" id="1_blapn"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer2D" unique_id=366776142]
+script = ExtResource("1_blapn")

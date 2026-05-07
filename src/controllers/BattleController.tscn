@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bsi0twnxlr4aj"]
+
+[ext_resource type="Script" uid="uid://dbjgdpfbd502m" path="res://src/controllers/BattleController.cs" id="1_sr7m1"]
+[ext_resource type="PackedScene" uid="uid://bbdjju1addtf4" path="res://src/battle/battleArena/BattleArena.tscn" id="2_iecjt"]
+
+[node name="BattleController" type="CanvasLayer" unique_id=1034776414]
+script = ExtResource("1_sr7m1")
+battleArenaScene = ExtResource("2_iecjt")

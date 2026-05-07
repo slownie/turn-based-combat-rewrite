@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d1s5s2oh2xdn3"]
+
+[ext_resource type="Script" uid="uid://xsc3nl4xwirp" path="res://src/controllers/OverworldController.cs" id="1_gimri"]
+
+[node name="OverworldController" type="Node2D" unique_id=240939576]
+script = ExtResource("1_gimri")

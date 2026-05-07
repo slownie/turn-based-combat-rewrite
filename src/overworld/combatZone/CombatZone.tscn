@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://dcil4qvlksm87"]
+
+[ext_resource type="Script" uid="uid://x85dwrnk2hno" path="res://src/overworld/combatZone/CombatZone.cs" id="1_s7g4g"]
+[ext_resource type="Texture2D" uid="uid://bfluumcgchbdu" path="res://assets/images/icon.svg" id="2_6m1df"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w3jh3"]
+size = Vector2(32, 32)
+
+[node name="CombatZone" type="Area2D" unique_id=1384814405]
+script = ExtResource("1_s7g4g")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1712181160]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("2_6m1df")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1092530716]
+shape = SubResource("RectangleShape2D_w3jh3")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]

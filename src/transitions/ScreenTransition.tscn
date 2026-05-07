@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bw0t0n3hshsrt"]
+
+[ext_resource type="Script" uid="uid://c7lili0280ujf" path="res://src/transitions/ScreenTransition.cs" id="1_0ippg"]
+
+[node name="ScreenTransition" type="CanvasLayer" unique_id=1463522174]
+script = ExtResource("1_0ippg")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1446710613]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)

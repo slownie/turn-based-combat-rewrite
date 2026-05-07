@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bfwkxok1ibrmf"]
+
+[ext_resource type="PackedScene" uid="uid://d1s5s2oh2xdn3" path="res://src/controllers/OverworldController.tscn" id="1_cv204"]
+[ext_resource type="Script" uid="uid://5qof01h63daa" path="res://src/controllers/Main.cs" id="1_gwppc"]
+
+[node name="Main" type="Node" unique_id=1991083736]
+script = ExtResource("1_gwppc")
+_overworldControllerScene = ExtResource("1_cv204")

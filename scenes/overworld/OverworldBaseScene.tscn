@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://c4jt51dfiyfeo"]
+
+[node name="OverworldBaseScene" type="Node2D" unique_id=324754686]
+
+[node name="StoryNodes" type="Node2D" parent="." unique_id=1224504187]
+
+[node name="CombatZones" type="Node2D" parent="." unique_id=1688329792]
+
+[node name="Interactables" type="Node2D" parent="." unique_id=2040921847]
