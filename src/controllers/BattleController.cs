@@ -36,5 +36,33 @@ public partial class BattleController : CanvasLayer
 
 		BattleArena newBattleArena = battleArenaScene.Instantiate() as BattleArena;
 		AddChild(newBattleArena);
+
+		newBattleArena.BattleFinished += OnBattleFinished;
+	}
+
+	private void OnBattleFinished(BattleArena.BattleOutcome outcome)
+	{
+		switch (outcome)
+		{
+			case BattleArena.BattleOutcome.Victory:
+			{
+				break;
+			}
+
+			case BattleArena.BattleOutcome.Defeat:
+			{
+				break;
+			}
+
+			case BattleArena.BattleOutcome.Escape:
+			{
+				break;
+			}
+
+			case BattleArena.BattleOutcome.Interrupt:
+			{
+				break;
+			}
+		}
 	}
 }

@@ -63,11 +63,12 @@ public partial class Main : Node
 
 	private void BattleStart(EnemyEncounterResource enemyEncounterResource)
 	{
-		GD.Print("Battle Start");
+		_screenTransition.FadeOutTransition();
 		_overworldController.SetActive(false);
 
 		_battleController.SetActive(true);
 		_battleController.SetupBattle(enemyEncounterResource);
+		_screenTransition.FadeInTransition();
 	}
 
 	private void GameInit()
