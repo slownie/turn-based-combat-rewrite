@@ -11,6 +11,7 @@ public partial class Main : Node
 	SFXPlayer _sfxPlayer;
 	ScreenTransition _screenTransition;
 
+	GameState _gameState;
 
 	public override void _Ready()
 	{
@@ -41,6 +42,7 @@ public partial class Main : Node
 
 		_battleController.SetActive(false);
 
+		// Menu Controller
 		PackedScene menuControllerScene = GD.Load<PackedScene>("res://src/controllers/MenuController.tscn");
 		_menuController = menuControllerScene.Instantiate() as MenuController;
 		AddChild(_menuController);
@@ -59,6 +61,10 @@ public partial class Main : Node
 		_screenTransition = screenTransitionScene.Instantiate() as ScreenTransition;
 		AddChild(_screenTransition);
 
+		
+
+		_gameState = new GameState();
+
 	}
 
 	private void BattleStart(EnemyEncounterResource enemyEncounterResource)
@@ -67,7 +73,7 @@ public partial class Main : Node
 		_overworldController.SetActive(false);
 
 		_battleController.SetActive(true);
-		_battleController.SetupBattle(enemyEncounterResource);
+		_battleController.SetupBattle(_gameState.GetActivePartyMembers(), enemyEncounterResource);
 	}
 
 	private void GameInit()

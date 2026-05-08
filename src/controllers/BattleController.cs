@@ -5,6 +5,15 @@ public partial class BattleController : CanvasLayer
 {
 	[Export] PackedScene battleArenaScene;
 
+
+	public enum BattleConclusion
+	{
+		Victory,
+		Defeat,
+		Escape,
+		Interrupt
+	}
+
 	EnemyEncounterResource _enemyEncounterResource;
 
 	MusicPlayer _musicPlayer;
@@ -30,11 +39,45 @@ public partial class BattleController : CanvasLayer
 		}
 	}
 
-	public void SetupBattle(EnemyEncounterResource enemyEncounterResource)
+	public void SetupBattle(Godot.Collections.Array<ActivePartyMember> partyMembers, EnemyEncounterResource enemyEncounterResource)
 	{
 		_enemyEncounterResource = enemyEncounterResource;
 
 		BattleArena newBattleArena = battleArenaScene.Instantiate() as BattleArena;
 		AddChild(newBattleArena);
+
+		newBattleArena.BattleFinished += OnBattleFinished;
+
+		newBattleArena.SetActorData(partyMembers, enemyEncounterResource.GetEnemies());
+
+		if (enemyEncounterResource.GetBattleMusic() != null)
+		{
+		}
+	}
+
+	private void OnBattleFinished(BattleConclusion battleConclusion)
+	{
+		switch(battleConclusion)
+		{
+			case BattleConclusion.Victory:
+			{
+				break;
+			}
+
+			case BattleConclusion.Defeat:
+			{
+				break;
+			}
+
+			case BattleConclusion.Escape:
+			{
+				break;
+			}
+
+			case BattleConclusion.Interrupt:
+			{
+				break;
+			}
+		}
 	}
 }

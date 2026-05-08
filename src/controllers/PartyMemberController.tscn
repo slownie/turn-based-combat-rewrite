@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://djgpru3l68bxi"]
+
+[sub_resource type="CSharpScript" id="CSharpScript_yx572"]
+script/source = "using Godot;
+using System;
+
+/*
+	Though it is the API in which PartyMembers are accessed and modified, it DOES NOT store partyMember
+	data
+*/
+public partial class PartyMemberController : Node2D
+{
+	GameState _gameState;
+
+	public void BindServices(GameState gameState)
+	{
+		_gameState = gameState;
+	}
+
+	public ActivePartyMember CreatePartyMember(PartyMemberDataResource partyMemberDataResource)
+	{
+		ActivePartyMember newPartyMember = new ActivePartyMember(partyMemberDataResource);
+		return newPartyMember;
+	}
+}
+"
+
+[node name="PartyMemberController" type="Node2D" unique_id=667371097]
+script = SubResource("CSharpScript_yx572")
