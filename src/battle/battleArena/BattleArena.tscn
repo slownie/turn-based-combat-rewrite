@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bbdjju1addtf4"]
 
 [ext_resource type="Script" uid="uid://b4m5jes4b48u2" path="res://src/battle/battleArena/BattleArena.cs" id="1_7r31s"]
+[ext_resource type="PackedScene" uid="uid://dd5i0y578f2c3" path="res://src/battle/battleActor/BattleActor.tscn" id="2_2kbwh"]
 [ext_resource type="Texture2D" uid="uid://dowj15rbomc8k" path="res://assets/images/battleBackgrounds/BlackBackground.png" id="2_kbgty"]
 [ext_resource type="Script" uid="uid://jpm4necbdqwp" path="res://src/battle/actorController/ActorController.cs" id="3_ma76s"]
 
@@ -12,6 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7r31s")
+battleActorScene = ExtResource("2_2kbwh")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1520520660]
 layout_mode = 1

@@ -1,12 +1,6 @@
 [gd_scene format=3 uid="uid://bfwkxok1ibrmf"]
 
 [ext_resource type="Script" uid="uid://5qof01h63daa" path="res://src/controllers/Main.cs" id="1_gwppc"]
-[ext_resource type="Script" uid="uid://dkifupotxxy4t" path="res://src/dataClasses/partyMembers/ActivePartyMember.cs" id="2_cv204"]
-
-[sub_resource type="Resource" id="Resource_cv204"]
-script = ExtResource("2_cv204")
-metadata/_custom_type_script = "uid://dkifupotxxy4t"
 
 [node name="Main" type="Node" unique_id=1991083736]
 script = ExtResource("1_gwppc")
-activePartyMembers = Array[ExtResource("2_cv204")]([SubResource("Resource_cv204")])

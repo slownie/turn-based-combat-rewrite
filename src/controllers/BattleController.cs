@@ -48,7 +48,7 @@ public partial class BattleController : CanvasLayer
 
 		newBattleArena.BattleFinished += OnBattleFinished;
 
-		newBattleArena.SetActorData(partyMembers, enemyEncounterResource.GetEnemies());
+		newBattleArena.SetupActors(partyMembers, enemyEncounterResource.GetEnemies());
 
 		if (enemyEncounterResource.GetBattleMusic() != null)
 		{

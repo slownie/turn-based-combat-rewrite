@@ -4,4 +4,5 @@
 
 [resource]
 script = ExtResource("1_0mqtt")
+partyMemberName = "Terra"
 metadata/_custom_type_script = "uid://cfoqdpdkdpur5"

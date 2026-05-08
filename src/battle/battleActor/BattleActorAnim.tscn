@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://6ev7juafx3ux"]
+
+[ext_resource type="SpriteFrames" uid="uid://ch7v1bthauhml" path="res://data/enemies/TestEnemySpriteFrames.tres" id="1_c2dpg"]
+
+[node name="BattleActorAnim" type="Node2D" unique_id=1358611207]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=2068988893]
+sprite_frames = ExtResource("1_c2dpg")
+autoplay = "default"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=341338015]

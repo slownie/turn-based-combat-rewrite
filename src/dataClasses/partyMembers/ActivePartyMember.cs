@@ -1,6 +1,10 @@
 using Godot;
 using System;
 
+/*
+    This class is primarily used in the Overworld as Battles create their own actors which use
+    different variables of ActivePartyMember. 
+*/
 public partial class ActivePartyMember : GodotObject
 {
     // UI
@@ -19,7 +23,17 @@ public partial class ActivePartyMember : GodotObject
     public ActivePartyMember() : this(null) {}
     public ActivePartyMember(PartyMemberDataResource partyMemberDataResource)
     {
-        GD.Print(partyMemberDataResource);
+        /* 
+            Necessary since Godot seems to run empty constructors before the game loads
+            Good to have a safety check anyway.  
+        */
+        if (partyMemberDataResource != null)
+        {
+            _name = partyMemberDataResource.GetPartyMemberName();
+            GD.Print(_name);
+        } else {
+            GD.Print("ActivePartyMember - partyMemberDataResource not found, disregard if this is at the start of the program");
+        }
     }
 
 

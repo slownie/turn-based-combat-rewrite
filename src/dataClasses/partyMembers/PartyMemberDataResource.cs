@@ -5,10 +5,10 @@ using System;
 public partial class PartyMemberDataResource : Resource
 {
     [Export] string partyMemberName = "";
-    [Export] BaseStats baseStats;
+    [Export] CharacterStats characterStats;
 
     [Export] int startingLevel = 1;
 
     public string GetPartyMemberName() { return partyMemberName; }
-    public BaseStats GetBaseStats() { return baseStats; }
+    public CharacterStats GetCharacterStats() { return characterStats; }
 }

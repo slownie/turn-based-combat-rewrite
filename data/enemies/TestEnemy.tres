@@ -1,14 +1,8 @@
-[gd_resource type="Resource" script_class="EnemyResource" format=3 uid="uid://cujvq2eugmg5x"]
+[gd_resource type="Resource" format=3 uid="uid://cujvq2eugmg5x"]
 
-[ext_resource type="Script" uid="uid://bbw1wa366hyuo" path="res://src/dataClasses/EnemyResource.cs" id="1_nhxye"]
-[ext_resource type="Script" uid="uid://b8nmpa76b5asm" path="res://src/components/BaseStats.cs" id="1_vdmrk"]
-
-[sub_resource type="Resource" id="Resource_vuhg2"]
-script = ExtResource("1_vdmrk")
-metadata/_custom_type_script = "uid://b8nmpa76b5asm"
+[ext_resource type="Script" uid="uid://bbw1wa366hyuo" path="res://src/dataClasses/enemies/EnemyResource.cs" id="1_nhxye"]
 
 [resource]
 script = ExtResource("1_nhxye")
-name = "Test Enemy"
-baseStats = SubResource("Resource_vuhg2")
+enemyName = "Test Enemy"
 metadata/_custom_type_script = "uid://bbw1wa366hyuo"

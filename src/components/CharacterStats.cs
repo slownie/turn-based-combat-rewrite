@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class BaseStats : Resource
+public partial class CharacterStats : Resource
 {
 	[Export] int _maxHP = 0;
 	[Export] int _maxMP = 0;
@@ -13,12 +13,19 @@ public partial class BaseStats : Resource
 	[Export] int _defense = 0;
     [Export] int _resistance = 0;
 
-	public BaseStats() {}
+	int _curHP = 0;
+	int _curMP = 0;
+
+	public CharacterStats() {}
 
 	public int GetMaxHP() { return _maxHP; }
 	public int GetMaxMP() { return _maxMP; }
+	public int GetCurHP() { return _curHP; }
+	public int GetCurMP() { return _curMP; }
+
 	public int GetStrength() { return _strength; }
 	public int GetElemental() { return _elemental; }
+	public int GetAgility() { return _agility; }
 	public int GetLuck() { return _luck; }
 	public int GetDefense() { return _defense; }
 	public int GetResistance() { return _resistance; }
