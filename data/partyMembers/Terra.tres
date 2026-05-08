@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PartyMemberDataResource" format=3 uid="uid://1b7i8tunlfiy"]
+
+[ext_resource type="Script" uid="uid://cfoqdpdkdpur5" path="res://src/dataClasses/partyMembers/PartyMemberDataResource.cs" id="1_0mqtt"]
+
+[resource]
+script = ExtResource("1_0mqtt")
+metadata/_custom_type_script = "uid://cfoqdpdkdpur5"

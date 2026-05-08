@@ -19,12 +19,7 @@ public partial class ActivePartyMember : GodotObject
     public ActivePartyMember() : this(null) {}
     public ActivePartyMember(PartyMemberDataResource partyMemberDataResource)
     {
-        if (partyMemberDataResource != null)
-        {
-            _name = partyMemberDataResource.GetPartyMemberName();
-        } else {
-            GD.Print("ActivePartyMember - partyMemberDataResource is null");
-        }
+        GD.Print(partyMemberDataResource);
     }
 
 

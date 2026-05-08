@@ -65,6 +65,8 @@ public partial class Main : Node
 
 		_gameState = new GameState();
 
+		// TODO: REMOVE WHEN YOU ACTUALLY GET A WORKING MENU
+
 	}
 
 	private void BattleStart(EnemyEncounterResource enemyEncounterResource)

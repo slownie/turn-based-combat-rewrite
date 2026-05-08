@@ -4,7 +4,7 @@ using System;
 [GlobalClass]
 public partial class PartyMemberDataResource : Resource
 {
-    [Export] string partyMemberName;
+    [Export] string partyMemberName = "";
     [Export] BaseStats baseStats;
 
     [Export] int startingLevel = 1;
