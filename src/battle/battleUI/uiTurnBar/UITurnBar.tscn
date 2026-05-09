@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://cseqwi6oq3fss"]
+
+[ext_resource type="Script" uid="uid://dyar5rhni6gyq" path="res://src/battle/battleUI/uiTurnBar/UITurnBar.cs" id="1_8bm7t"]
+[ext_resource type="Texture2D" uid="uid://cfk44ega4ds8" path="res://assets/images/ui/TurnBar.png" id="1_hh4m5"]
+[ext_resource type="PackedScene" uid="uid://cv4k0oc6ofj5h" path="res://src/battle/battleUI/uiTurnIcon/UITurnIcon.tscn" id="2_ot0t5"]
+
+[node name="UITurnBar" type="Control" unique_id=350606653]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8bm7t")
+_uiTurnIconScene = ExtResource("2_ot0t5")
+
+[node name="Background" type="TextureRect" parent="." unique_id=697899245]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -156.0
+offset_top = 20.0
+offset_right = -28.0
+offset_bottom = 28.0
+grow_horizontal = 2
+texture = ExtResource("1_hh4m5")
+
+[node name="Icons" type="Control" parent="Background" unique_id=761958048]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

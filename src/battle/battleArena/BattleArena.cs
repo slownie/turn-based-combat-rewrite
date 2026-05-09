@@ -7,8 +7,58 @@ public partial class BattleArena : Control
 
 	[Signal] public delegate void BattleFinishedEventHandler(BattleController.BattleConclusion battleConclusion);
 
-	ActorController _actorController;
 	Godot.Collections.Array<BattleActor> _actors = [];
+
+	ActorController _actorController;
+	UITurnBar _turnBar;
+	
+
+	// UI Objects
+
+	/*
+		Allows for pausing the Active Time Battler during combat intro, a cutscene, or combat end
+	*/
+	bool isActive = false;
+	public bool IsActive
+	{
+		get { return isActive; }
+		set
+		{
+			if (value != isActive)
+			{
+				isActive = value;
+				foreach (BattleActor actor in _actors)
+				{
+					actor.IsActive = isActive;
+				}
+			}
+		}
+	}
+
+	/*
+		Multiplier for the global pace of battle.
+		Stops when a battler is selecting/executing an action.
+	*/
+	double timeScale = 1.0;
+	public double TimeScale
+	{
+		get { return timeScale; }
+		set
+		{
+			timeScale = value;
+			foreach(BattleActor actor in _actors)
+			{
+				actor.TimeScale = timeScale;
+			}
+		}
+	}
+
+	public override void _Ready()
+	{
+		_actorController = GetNode<ActorController>("ActorController");
+
+		_turnBar = GetNode<UITurnBar>("UI/UITurnBar");
+	}
 
 	public void SetupActors(Godot.Collections.Array<ActivePartyMember> partyMembers, Godot.Collections.Array<EnemyResource> enemies)
 	{
@@ -21,12 +71,15 @@ public partial class BattleArena : Control
 			
 			newActor.Setup(
 				250+(i % 3*10)+(i / 3*25),
-				68+(i % 3*20),
+				68+(i % 5*30),
 				activePartyMember.GetPartyMemberName(), 
 				activePartyMember.GetCharacterStats(),
 				activePartyMember.GetSpriteFrames(),
+				activePartyMember.GetBattleIcon(),
 				true
 			);
+
+			newActor.ReadyToAct += OnPartyMemberActorReady;
 
 			_actors.Add(newActor);
 		}
@@ -44,20 +97,39 @@ public partial class BattleArena : Control
 				enemy.GetEnemyName(), 
 				enemy.GetCharacterStats(),
 				enemy.GetSpriteFrames(),
+				enemy.GetBattleIcon(),
 				false
 			);
 
+			newActor.ReadyToAct += OnEnemyActorReady;
+
 			_actors.Add(newActor);
-		}	
+		}
+
+		_turnBar.Setup(_actors);	
+		IsActive = true;
 	}
 
-
-	public override void _Ready()
-	{
-		_actorController = GetNode<ActorController>("ActorController");
-	}
 
 	public void StartBattle()
 	{
 	}
+
+	#region Signal Functions
+	private void OnPartyMemberActorReady(BattleActor actor)
+	{
+		TimeScale = 0.0;
+		
+	}
+
+	private void OnEnemyActorReady(BattleActor actor)
+	{
+		TimeScale = 0.0;
+	}
+
+	private void OnActionSelected()
+	{
+		
+	}
+	#endregion
 }

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blqxh3ggq58xc"
-path="res://.godot/imported/sFaustIdle_strip4.png-c54fbabcc23fc260d02327bc6652a7a5.ctex"
+uid="uid://cfk44ega4ds8"
+path="res://.godot/imported/TurnBar.png-9e1a25c9c152832d2abba7570bec78ba.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/battleActors/Faust/sFaustIdle_strip4.png"
-dest_files=["res://.godot/imported/sFaustIdle_strip4.png-c54fbabcc23fc260d02327bc6652a7a5.ctex"]
+source_file="res://assets/images/ui/TurnBar.png"
+dest_files=["res://.godot/imported/TurnBar.png-9e1a25c9c152832d2abba7570bec78ba.ctex"]
 
 [params]
 

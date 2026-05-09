@@ -2,16 +2,55 @@
 
 [ext_resource type="Script" uid="uid://crf2oythoqbrs" path="res://src/components/CharacterStats.cs" id="1_0jh7a"]
 [ext_resource type="Script" uid="uid://cfoqdpdkdpur5" path="res://src/dataClasses/partyMembers/PartyMemberDataResource.cs" id="1_0mqtt"]
-[ext_resource type="SpriteFrames" uid="uid://uaaru411whb6" path="res://data/partyMembers/TerraSpriteFrames.tres" id="2_b23jy"]
+[ext_resource type="Texture2D" uid="uid://dehtghxnp1n3b" path="res://assets/images/battleActors/Jam/JamBattleIcon.png" id="1_m5hiy"]
+[ext_resource type="Texture2D" uid="uid://d10ckyduld8r0" path="res://assets/images/battleActors/Jam/sJamIdle_strip4.png" id="3_0jh7a"]
 
 [sub_resource type="Resource" id="Resource_m5hiy"]
 script = ExtResource("1_0jh7a")
 _maxHP = 40
+_agility = 3
 metadata/_custom_type_script = "uid://crf2oythoqbrs"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m5hiy"]
+atlas = ExtResource("3_0jh7a")
+region = Rect2(0, 0, 34, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ushfx"]
+atlas = ExtResource("3_0jh7a")
+region = Rect2(34, 0, 34, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2gw5i"]
+atlas = ExtResource("3_0jh7a")
+region = Rect2(68, 0, 34, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_41mu6"]
+atlas = ExtResource("3_0jh7a")
+region = Rect2(102, 0, 34, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bqktf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m5hiy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ushfx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2gw5i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_41mu6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [resource]
 script = ExtResource("1_0mqtt")
 partyMemberName = "Terra"
 characterStats = SubResource("Resource_m5hiy")
-spriteFrames = ExtResource("2_b23jy")
+spriteFrames = SubResource("SpriteFrames_bqktf")
+battleIcon = ExtResource("1_m5hiy")
 metadata/_custom_type_script = "uid://cfoqdpdkdpur5"

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blqxh3ggq58xc"
-path="res://.godot/imported/sFaustIdle_strip4.png-c54fbabcc23fc260d02327bc6652a7a5.ctex"
+uid="uid://bm1puenshcxdv"
+path="res://.godot/imported/SolBadguyBattleIcon.png-d449dc03eca21491bd6776caa0f65299.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/battleActors/Faust/sFaustIdle_strip4.png"
-dest_files=["res://.godot/imported/sFaustIdle_strip4.png-c54fbabcc23fc260d02327bc6652a7a5.ctex"]
+source_file="res://assets/images/battleActors/SolBadguy/SolBadguyBattleIcon.png"
+dest_files=["res://.godot/imported/SolBadguyBattleIcon.png-d449dc03eca21491bd6776caa0f65299.ctex"]
 
 [params]
 

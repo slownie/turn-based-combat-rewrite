@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blqxh3ggq58xc"
-path="res://.godot/imported/sFaustIdle_strip4.png-c54fbabcc23fc260d02327bc6652a7a5.ctex"
+uid="uid://bb8ugtsnath64"
+path="res://.godot/imported/KyBattleIcon.png-0f1801c1cfc3b5fcf79e5a0a9adb24a6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/battleActors/Faust/sFaustIdle_strip4.png"
-dest_files=["res://.godot/imported/sFaustIdle_strip4.png-c54fbabcc23fc260d02327bc6652a7a5.ctex"]
+source_file="res://assets/images/battleActors/KyKiske/KyBattleIcon.png"
+dest_files=["res://.godot/imported/KyBattleIcon.png-0f1801c1cfc3b5fcf79e5a0a9adb24a6.ctex"]
 
 [params]
 

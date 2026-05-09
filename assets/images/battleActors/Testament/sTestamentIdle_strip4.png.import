@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://blqxh3ggq58xc"
-path="res://.godot/imported/sFaustIdle_strip4.png-c54fbabcc23fc260d02327bc6652a7a5.ctex"
+uid="uid://cor5p3nuroajs"
+path="res://.godot/imported/sTestamentIdle_strip4.png-9ebc0769a5295ca427b1f5d4443961a2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/battleActors/Faust/sFaustIdle_strip4.png"
-dest_files=["res://.godot/imported/sFaustIdle_strip4.png-c54fbabcc23fc260d02327bc6652a7a5.ctex"]
+source_file="res://assets/images/battleActors/Testament/sTestamentIdle_strip4.png"
+dest_files=["res://.godot/imported/sTestamentIdle_strip4.png-9ebc0769a5295ca427b1f5d4443961a2.ctex"]
 
 [params]
 

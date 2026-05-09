@@ -23,6 +23,7 @@ public partial class ActivePartyMember : GodotObject
 
     // Battle Animation
     SpriteFrames _spriteFrames;
+    Texture2D _battleIcon;
 
     public ActivePartyMember() : this(null) {}
     public ActivePartyMember(PartyMemberDataResource partyMemberDataResource)
@@ -39,6 +40,7 @@ public partial class ActivePartyMember : GodotObject
             _characterStats = partyMemberDataResource.GetCharacterStats();
 
             _spriteFrames = partyMemberDataResource.GetSpriteFrames();
+            _battleIcon = partyMemberDataResource.GetBattleIcon();
         } else {
             GD.Print("ActivePartyMember - partyMemberDataResource not found, disregard if this is at the start of the program");
         }
@@ -47,6 +49,7 @@ public partial class ActivePartyMember : GodotObject
     public string GetPartyMemberName() { return _name; }
     public CharacterStats GetCharacterStats() { return _characterStats; }
     public SpriteFrames GetSpriteFrames() { return _spriteFrames; }
+    public Texture2D GetBattleIcon() { return _battleIcon; }
 
     /*
         Add will add the specified amount to HP/MP

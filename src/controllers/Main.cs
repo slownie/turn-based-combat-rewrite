@@ -13,6 +13,9 @@ public partial class Main : Node
 
 	GameState _gameState;
 
+	// FOR TESTING PURPOSES ONLY
+	[Export] Godot.Collections.Array<PartyMemberDataResource> startingPartyMembers = [];
+
 	public override void _Ready()
 	{
 		BuildServices();
@@ -67,7 +70,7 @@ public partial class Main : Node
 		
 
 		// TODO: REMOVE WHEN YOU ACTUALLY GET A WORKING MENU
-		_gameState.NewGame();
+		_gameState.NewGame(startingPartyMembers);
 	}
 
 	private void BattleStart(EnemyEncounterResource enemyEncounterResource)

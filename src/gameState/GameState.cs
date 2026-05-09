@@ -10,11 +10,14 @@ public partial class GameState : GodotObject
         
     }
 
-    public void NewGame()
+    public void NewGame(Godot.Collections.Array<PartyMemberDataResource> partyMembers)
     {
-        PartyMemberDataResource firstPartyMemberData = GD.Load<PartyMemberDataResource>("res://data/partyMembers/Terra.tres");
-        ActivePartyMember activePartyMember = new ActivePartyMember(firstPartyMemberData);
-        _activePartyMembers.Add(activePartyMember);
+        foreach (PartyMemberDataResource partyMemberData in partyMembers)
+        {
+            ActivePartyMember activePartyMember = new ActivePartyMember(partyMemberData);
+            _activePartyMembers.Add(activePartyMember);
+        }
+        
     }
 
     public void SaveGameData()

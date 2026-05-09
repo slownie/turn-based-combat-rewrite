@@ -7,7 +7,7 @@ public partial class BattleActor : Node2D
 
 
 	[Signal] public delegate void ReadinessChangedEventHandler(double readiness);
-	[Signal] public delegate void ReadyToActEventHandler();
+	[Signal] public delegate void ReadyToActEventHandler(BattleActor battleActor);
 
 	string _name = "Placeholder";
 	CharacterStats _characterStats;
@@ -15,6 +15,7 @@ public partial class BattleActor : Node2D
 	bool _isPlayer = true;
 
 	AnimatedSprite2D _sprite;
+	Texture2D _battleIcon;
 
 	#region Properties
 	bool isActive = true;
@@ -43,17 +44,17 @@ public partial class BattleActor : Node2D
 			if (readiness >= 100.0)
 			{
 				readiness = 100.0;
-				EmitSignal(SignalName.ReadyToAct);
+				EmitSignal(SignalName.ReadyToAct, this);
 				SetProcess(false);
 			}
 		}
 	}
-	#endregion
 
 	// If 'false' this actor cannot be targeted by any action
 	public bool IsTargetable {get; set;} = true;
 
-
+	#endregion
+	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -66,7 +67,15 @@ public partial class BattleActor : Node2D
 		Readiness += 10 * _characterStats.GetAgility() * TimeScale * delta;
 	}
 
-	public void Setup(int x, int y, string actorName, CharacterStats characterStats, SpriteFrames spriteFrames, bool isPlayer)
+	public void Setup(
+		int x, 
+		int y, 
+		string actorName, 
+		CharacterStats characterStats, 
+		SpriteFrames spriteFrames, 
+		Texture2D battleIcon,
+		bool isPlayer
+	)
 	{
 		Vector2 newPosition = new Vector2(x, y);
 		Position = newPosition;
@@ -79,10 +88,20 @@ public partial class BattleActor : Node2D
 		_sprite.SpriteFrames = spriteFrames;
 		_sprite.Play("default");
 
+		_battleIcon = battleIcon;
+
 		_isPlayer = isPlayer;
 		if (_isPlayer) _sprite.FlipH = true;
 	}
 
+	#region Getters
+
+	public bool GetIsPlayer() { return _isPlayer; }
+	public Texture2D GetBattleIcon() { return _battleIcon; }
+
+	#endregion
+
+	#region Signals
 	private void OnStatsHPDepleted()
 	{
 		Readiness = 0.0;
@@ -90,4 +109,5 @@ public partial class BattleActor : Node2D
 		IsTargetable = false;
 		EmitSignal(SignalName.HPDepleted);
 	}
+	#endregion
 }

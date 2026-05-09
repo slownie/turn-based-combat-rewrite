@@ -1,6 +1,10 @@
 [gd_scene format=3 uid="uid://bfwkxok1ibrmf"]
 
 [ext_resource type="Script" uid="uid://5qof01h63daa" path="res://src/controllers/Main.cs" id="1_gwppc"]
+[ext_resource type="Script" uid="uid://cfoqdpdkdpur5" path="res://src/dataClasses/partyMembers/PartyMemberDataResource.cs" id="2_k30t1"]
+[ext_resource type="Resource" uid="uid://1b7i8tunlfiy" path="res://data/partyMembers/Terra.tres" id="3_ktfyv"]
+[ext_resource type="Resource" uid="uid://djmfuvimqa11c" path="res://data/partyMembers/Alpheus.tres" id="4_dlaq4"]
 
 [node name="Main" type="Node" unique_id=1991083736]
 script = ExtResource("1_gwppc")
+startingPartyMembers = Array[ExtResource("2_k30t1")]([ExtResource("3_ktfyv"), ExtResource("4_dlaq4")])

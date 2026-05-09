@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://clagd2omj8203"
-path="res://.godot/imported/sFaustRun_strip3.png-06a85c3cb146cc024caec254176285f7.ctex"
+path="res://.godot/imported/sFaustRun_strip3.png-46db22f709b9f975771bbb412faf0395.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/battleActors/sFaustRun_strip3.png"
-dest_files=["res://.godot/imported/sFaustRun_strip3.png-06a85c3cb146cc024caec254176285f7.ctex"]
+source_file="res://assets/images/battleActors/Faust/sFaustRun_strip3.png"
+dest_files=["res://.godot/imported/sFaustRun_strip3.png-46db22f709b9f975771bbb412faf0395.ctex"]
 
 [params]
 

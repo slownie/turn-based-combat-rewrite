@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cfyv67l08hkx8"
-path="res://.godot/imported/sSolBadguyIdle_strip4.png-3ccb24bf41bd95e2514ca377f246b0fc.ctex"
+path="res://.godot/imported/sSolBadguyIdle_strip4.png-0f77f1e2c733f6795af927e06b28698b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/images/battleActors/sSolBadguyIdle_strip4.png"
-dest_files=["res://.godot/imported/sSolBadguyIdle_strip4.png-3ccb24bf41bd95e2514ca377f246b0fc.ctex"]
+source_file="res://assets/images/battleActors/SolBadguy/sSolBadguyIdle_strip4.png"
+dest_files=["res://.godot/imported/sSolBadguyIdle_strip4.png-0f77f1e2c733f6795af927e06b28698b.ctex"]
 
 [params]
 

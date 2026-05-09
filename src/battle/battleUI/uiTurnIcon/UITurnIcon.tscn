@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://cv4k0oc6ofj5h"]
+
+[ext_resource type="Script" uid="uid://ei4tqe08qdtd" path="res://src/battle/battleUI/uiTurnIcon/UITurnIcon.cs" id="1_hjohf"]
+[ext_resource type="Texture2D" uid="uid://mlyjobvs0y8m" path="res://assets/images/ui/TurnIconParty.png" id="2_tw6vs"]
+[ext_resource type="Texture2D" uid="uid://c4no1b3o5ejfb" path="res://assets/images/ui/TurnIconEnemy.png" id="3_i6iso"]
+[ext_resource type="Texture2D" uid="uid://djd4a0j14s8ec" path="res://assets/images/ui/TurnIconPlaceholder.png" id="4_tw6vs"]
+
+[node name="UITurnIcon" type="TextureRect" unique_id=1165364982]
+texture = ExtResource("2_tw6vs")
+script = ExtResource("1_hjohf")
+partyMemberBorder = ExtResource("2_tw6vs")
+enemyBorder = ExtResource("3_i6iso")
+
+[node name="ActorIcon" type="TextureRect" parent="." unique_id=15574904]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -7.0
+offset_top = -7.0
+offset_right = 7.0
+offset_bottom = 7.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_tw6vs")
