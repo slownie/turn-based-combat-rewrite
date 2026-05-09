@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://bnfsqmxhg6f6q"]
+
+[ext_resource type="Texture2D" uid="uid://ce2d83yk304qf" path="res://assets/images/ui/BarBackground.png" id="1_kj25t"]
+[ext_resource type="Texture2D" uid="uid://cont8xpx1kw0o" path="res://assets/images/ui/LifeBarFill.png" id="2_j7sql"]
+[ext_resource type="Script" uid="uid://bq3ito7nr0j4j" path="res://src/ui/uiBar/UIBar.cs" id="3_kwxnt"]
+
+[node name="UIBar" type="TextureProgressBar" unique_id=1658496861]
+step = 0.01
+texture_under = ExtResource("1_kj25t")
+texture_progress = ExtResource("2_j7sql")
+script = ExtResource("3_kwxnt")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=823600108]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1717515788]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+alignment = 2
+
+[node name="Value" type="Label" parent="MarginContainer/HBoxContainer" unique_id=133560819]
+layout_mode = 2
+theme_override_constants/outline_size = 4
+text = "9999"
+
+[node name="Divider" type="Label" parent="MarginContainer/HBoxContainer" unique_id=103236203]
+layout_mode = 2
+theme_override_constants/outline_size = 4
+text = "/"
+
+[node name="Max" type="Label" parent="MarginContainer/HBoxContainer" unique_id=1916462736]
+layout_mode = 2
+theme_override_constants/outline_size = 4
+text = "9999"

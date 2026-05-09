@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://d1murxmqrorcc"]
+
+[ext_resource type="Script" uid="uid://77qjdcayb1ov" path="res://src/ui/uiListMenu/UIListMenu.cs" id="1_2dj3v"]
+
+[node name="UIListMenu" type="VBoxContainer" unique_id=688591181]
+script = ExtResource("1_2dj3v")

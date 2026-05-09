@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bf2l733misg3e"]
+
+[ext_resource type="Script" uid="uid://dy6gfn6w80m" path="res://src/battle/battleUI/uiPartyEntry/UIPartyEntry.cs" id="1_378q8"]
+
+[node name="UIPartyEntry" type="TextureRect" unique_id=1503550835]
+script = ExtResource("1_378q8")
