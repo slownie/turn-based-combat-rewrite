@@ -1,8 +1,17 @@
 [gd_resource type="Resource" script_class="PartyMemberDataResource" format=3 uid="uid://1b7i8tunlfiy"]
 
+[ext_resource type="Script" uid="uid://crf2oythoqbrs" path="res://src/components/CharacterStats.cs" id="1_0jh7a"]
 [ext_resource type="Script" uid="uid://cfoqdpdkdpur5" path="res://src/dataClasses/partyMembers/PartyMemberDataResource.cs" id="1_0mqtt"]
+[ext_resource type="SpriteFrames" uid="uid://uaaru411whb6" path="res://data/partyMembers/TerraSpriteFrames.tres" id="2_b23jy"]
+
+[sub_resource type="Resource" id="Resource_m5hiy"]
+script = ExtResource("1_0jh7a")
+_maxHP = 40
+metadata/_custom_type_script = "uid://crf2oythoqbrs"
 
 [resource]
 script = ExtResource("1_0mqtt")
 partyMemberName = "Terra"
+characterStats = SubResource("Resource_m5hiy")
+spriteFrames = ExtResource("2_b23jy")
 metadata/_custom_type_script = "uid://cfoqdpdkdpur5"

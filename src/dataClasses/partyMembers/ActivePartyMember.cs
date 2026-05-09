@@ -11,6 +11,7 @@ public partial class ActivePartyMember : GodotObject
     string _name = "PartyMember - Name Placeholder";
 
     // Stats
+    CharacterStats _characterStats;
     int currentLevel = 1;
     int currentEXP = 0;
 
@@ -19,6 +20,9 @@ public partial class ActivePartyMember : GodotObject
     // Skills
     Godot.Collections.Array _learnedSkills = [];
     Godot.Collections.Array<int> _equippedSkills = []; 
+
+    // Battle Animation
+    SpriteFrames _spriteFrames;
 
     public ActivePartyMember() : this(null) {}
     public ActivePartyMember(PartyMemberDataResource partyMemberDataResource)
@@ -31,11 +35,18 @@ public partial class ActivePartyMember : GodotObject
         {
             _name = partyMemberDataResource.GetPartyMemberName();
             GD.Print(_name);
+
+            _characterStats = partyMemberDataResource.GetCharacterStats();
+
+            _spriteFrames = partyMemberDataResource.GetSpriteFrames();
         } else {
             GD.Print("ActivePartyMember - partyMemberDataResource not found, disregard if this is at the start of the program");
         }
     }
 
+    public string GetPartyMemberName() { return _name; }
+    public CharacterStats GetCharacterStats() { return _characterStats; }
+    public SpriteFrames GetSpriteFrames() { return _spriteFrames; }
 
     /*
         Add will add the specified amount to HP/MP

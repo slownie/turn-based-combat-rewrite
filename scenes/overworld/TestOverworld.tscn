@@ -2,12 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://c4jt51dfiyfeo" path="res://scenes/overworld/OverworldBaseScene.tscn" id="1_gfm78"]
 [ext_resource type="PackedScene" uid="uid://dcil4qvlksm87" path="res://src/overworld/combatZone/CombatZone.tscn" id="2_7rt71"]
-[ext_resource type="Script" uid="uid://ded8acw4jwwi" path="res://src/dataClasses/EnemyEncounterResource.cs" id="3_gpfer"]
+[ext_resource type="Resource" uid="uid://cmkh3d8eu1xdu" path="res://data/enemyEncounters/TestEncounter.tres" id="3_66xq4"]
+[ext_resource type="Script" uid="uid://ded8acw4jwwi" path="res://src/dataClasses/enemies/EnemyEncounterResource.cs" id="3_gpfer"]
+[ext_resource type="Script" uid="uid://bbw1wa366hyuo" path="res://src/dataClasses/enemies/EnemyResource.cs" id="4_8q0j0"]
 [ext_resource type="PackedScene" uid="uid://4qqsxngostna" path="res://src/overworld/overworldPlayer/OverworldPlayer.tscn" id="4_mf42l"]
-
-[sub_resource type="Resource" id="Resource_jk03q"]
-script = ExtResource("3_gpfer")
-metadata/_custom_type_script = "uid://ded8acw4jwwi"
 
 [sub_resource type="Resource" id="Resource_66xq4"]
 script = ExtResource("3_gpfer")
@@ -17,7 +15,7 @@ metadata/_custom_type_script = "uid://ded8acw4jwwi"
 
 [node name="CombatZone" parent="CombatZones" parent_id_path=PackedInt32Array(1688329792) index="0" unique_id=1384814405 instance=ExtResource("2_7rt71")]
 position = Vector2(135, 131)
-_enemyEncounterResource = SubResource("Resource_jk03q")
+_enemyEncounterResource = ExtResource("3_66xq4")
 
 [node name="CombatZone2" parent="CombatZones" parent_id_path=PackedInt32Array(1688329792) index="1" unique_id=446547944 instance=ExtResource("2_7rt71")]
 position = Vector2(237, 63)

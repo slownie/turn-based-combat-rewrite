@@ -14,6 +14,7 @@ public partial class BattleActor : Node2D
 
 	bool _isPlayer = true;
 
+	AnimatedSprite2D _sprite;
 
 	#region Properties
 	bool isActive = true;
@@ -56,6 +57,7 @@ public partial class BattleActor : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		_sprite = GetNode<AnimatedSprite2D>("Sprite");
 		IsActive = false;
 	}
 
@@ -64,10 +66,21 @@ public partial class BattleActor : Node2D
 		Readiness += 10 * _characterStats.GetAgility() * TimeScale * delta;
 	}
 
-	public void Setup(string actorName, CharacterStats characterStats)
+	public void Setup(int x, int y, string actorName, CharacterStats characterStats, SpriteFrames spriteFrames, bool isPlayer)
 	{
+		Vector2 newPosition = new Vector2(x, y);
+		Position = newPosition;
+
 		_name = actorName;
 		_characterStats = characterStats;
+
+		GD.Print(_characterStats.GetMaxHP());
+
+		_sprite.SpriteFrames = spriteFrames;
+		_sprite.Play("default");
+
+		_isPlayer = isPlayer;
+		if (_isPlayer) _sprite.FlipH = true;
 	}
 
 	private void OnStatsHPDepleted()
