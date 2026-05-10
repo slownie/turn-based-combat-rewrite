@@ -10,6 +10,7 @@ public partial class BattleArena : Control
 	Godot.Collections.Array<BattleActor> _actors = [];
 
 	ActorController _actorController;
+	UIMenuController _menuController;
 	UITurnBar _turnBar;
 	
 
@@ -57,6 +58,8 @@ public partial class BattleArena : Control
 	{
 		_actorController = GetNode<ActorController>("ActorController");
 
+		// UI
+		_menuController = GetNode<UIMenuController>("UI/UIMenuController");
 		_turnBar = GetNode<UITurnBar>("UI/UITurnBar");
 	}
 
@@ -119,6 +122,7 @@ public partial class BattleArena : Control
 	private void OnPartyMemberActorReady(BattleActor actor)
 	{
 		TimeScale = 0.0;
+		_menuController.PartyTurnStart(actor);
 		
 	}
 

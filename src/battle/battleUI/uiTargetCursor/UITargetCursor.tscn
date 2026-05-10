@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://kqvmptdjgic6"]
+
+[ext_resource type="Script" uid="uid://dfen71f7tih1w" path="res://src/battle/battleUI/uiTargetCursor/UITargetCursor.cs" id="1_hwq63"]
+[ext_resource type="Texture2D" uid="uid://ct8qnrmbb73ou" path="res://assets/images/ui/Pointer.png" id="2_j2eiu"]
+
+[node name="UITargetCursor" type="Marker2D" unique_id=701034384]
+script = ExtResource("1_hwq63")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=167469551]
+texture = ExtResource("2_j2eiu")

@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://bydk2ilq2jwy2"]
 
 [ext_resource type="Script" uid="uid://b5c6re2xliapi" path="res://src/battle/battleUI/uiBattleMainMenu/UIBattleMainMenu.cs" id="1_gp4c5"]
+[ext_resource type="Resource" uid="uid://c5fdarb44i3v0" path="res://data/skills/Attack.tres" id="2_e3kr8"]
+[ext_resource type="Resource" uid="uid://dqtftmh6xbku5" path="res://data/skills/Pass.tres" id="3_7gv0k"]
 
 [node name="UIBattleMainMenu" type="Control" unique_id=533249634]
 layout_mode = 3
@@ -10,89 +12,66 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_gp4c5")
+attackAction = ExtResource("2_e3kr8")
+passAction = ExtResource("3_7gv0k")
 
-[node name="Skills" type="Control" parent="." unique_id=191580761]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="ButtonContainer" type="HBoxContainer" parent="." unique_id=1781435491]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -70.0
+offset_right = 212.0
+grow_vertical = 0
 
-[node name="SkillsButton" type="Label" parent="Skills" unique_id=2037560101]
-layout_mode = 0
-offset_right = 10.0
-offset_bottom = 23.0
-theme_override_colors/font_color = Color(0.02745098, 0.28627452, 0.7058824, 1)
-text = "X"
+[node name="ItemsContainer" type="HBoxContainer" parent="ButtonContainer" unique_id=841200860]
+layout_mode = 2
 
-[node name="SkillsLabel" type="Label" parent="Skills" unique_id=1879889951]
-layout_mode = 0
-offset_left = 14.0
-offset_right = 63.0
-offset_bottom = 23.0
-text = "- Skills"
-
-[node name="Items" type="Control" parent="." unique_id=1437523929]
-anchors_preset = 0
-offset_left = 224.0
-offset_top = 95.0
-offset_right = 264.0
-offset_bottom = 135.0
-
-[node name="ItemsButton" type="Label" parent="Items" unique_id=442884791]
-layout_mode = 0
-offset_top = 4.0
-offset_right = 10.0
-offset_bottom = 27.0
+[node name="ItemsButton" type="Label" parent="ButtonContainer/ItemsContainer" unique_id=442884791]
+layout_mode = 2
 theme_override_colors/font_color = Color(0, 0.5529412, 0.27058825, 1)
 text = "Y"
 
-[node name="ItemsLabel" type="Label" parent="Items" unique_id=1086118575]
-layout_mode = 0
-offset_left = 14.0
-offset_top = 4.0
-offset_right = 67.0
-offset_bottom = 27.0
+[node name="ItemsLabel" type="Label" parent="ButtonContainer/ItemsContainer" unique_id=1086118575]
+layout_mode = 2
 text = "- Items"
 
-[node name="Attack" type="Control" parent="." unique_id=2137079984]
-anchors_preset = 0
-offset_left = 60.0
-offset_top = 53.0
-offset_right = 100.0
-offset_bottom = 93.0
+[node name="Skills&PassContainer" type="VBoxContainer" parent="ButtonContainer" unique_id=1141809597]
+layout_mode = 2
+theme_override_constants/separation = 24
 
-[node name="AttackButton" type="Label" parent="Attack" unique_id=2018730843]
-layout_mode = 0
-offset_left = 71.0
-offset_top = 4.0
-offset_right = 82.0
-offset_bottom = 27.0
-theme_override_colors/font_color = Color(0.92156863, 0.101960786, 0.11372549, 1)
-text = "A"
+[node name="SkillsContainer" type="HBoxContainer" parent="ButtonContainer/Skills&PassContainer" unique_id=1538903849]
+layout_mode = 2
 
-[node name="AttackLabel" type="Label" parent="Attack" unique_id=1059959765]
-layout_mode = 0
-offset_left = 86.0
-offset_top = 4.0
-offset_right = 145.0
-offset_bottom = 27.0
-text = "- Attack"
+[node name="SkillsButton" type="Label" parent="ButtonContainer/Skills&PassContainer/SkillsContainer" unique_id=2037560101]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.02745098, 0.28627452, 0.7058824, 1)
+text = "X"
 
-[node name="Pass" type="Control" parent="." unique_id=178467040]
-anchors_preset = 0
-offset_left = 219.0
-offset_top = 148.0
-offset_right = 259.0
-offset_bottom = 188.0
+[node name="SkillsLabel" type="Label" parent="ButtonContainer/Skills&PassContainer/SkillsContainer" unique_id=1879889951]
+layout_mode = 2
+text = "- Skills"
 
-[node name="PassButton" type="Label" parent="Pass" unique_id=252891575]
-layout_mode = 0
-offset_right = 11.0
-offset_bottom = 23.0
+[node name="PassContainer" type="HBoxContainer" parent="ButtonContainer/Skills&PassContainer" unique_id=113316539]
+layout_mode = 2
+
+[node name="PassButton" type="Label" parent="ButtonContainer/Skills&PassContainer/PassContainer" unique_id=252891575]
+layout_mode = 2
 theme_override_colors/font_color = Color(0.99607843, 0.80784315, 0.08235294, 1)
 text = "B"
 
-[node name="PassLabel" type="Label" parent="Pass" unique_id=1735266299]
-layout_mode = 0
-offset_right = 45.0
-offset_bottom = 23.0
+[node name="PassLabel" type="Label" parent="ButtonContainer/Skills&PassContainer/PassContainer" unique_id=1735266299]
+layout_mode = 2
 text = "- Pass"
+
+[node name="AttackContainer" type="HBoxContainer" parent="ButtonContainer" unique_id=504688468]
+layout_mode = 2
+
+[node name="AttackButton" type="Label" parent="ButtonContainer/AttackContainer" unique_id=2018730843]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92156863, 0.101960786, 0.11372549, 1)
+text = "A"
+
+[node name="AttackLabel" type="Label" parent="ButtonContainer/AttackContainer" unique_id=1059959765]
+layout_mode = 2
+text = "- Attack"

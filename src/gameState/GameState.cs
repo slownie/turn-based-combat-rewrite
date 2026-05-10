@@ -4,6 +4,7 @@ using System;
 public partial class GameState : GodotObject
 {
     Godot.Collections.Array<ActivePartyMember> _activePartyMembers = [];
+    Godot.Collections.Array<InventoryItem> _consumableItems = [];
 
     public GameState()
     {

@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://dd5i0y578f2c3" path="res://src/battle/battleActor/BattleActor.tscn" id="2_2kbwh"]
 [ext_resource type="Script" uid="uid://jpm4necbdqwp" path="res://src/battle/actorController/ActorController.cs" id="3_ma76s"]
 [ext_resource type="PackedScene" uid="uid://cseqwi6oq3fss" path="res://src/battle/battleUI/uiTurnBar/UITurnBar.tscn" id="4_2kbwh"]
+[ext_resource type="Script" uid="uid://bghwbpceoptk8" path="res://src/battle/battleArena/UIMenuController.cs" id="5_fk1sc"]
+[ext_resource type="PackedScene" uid="uid://bydk2ilq2jwy2" path="res://src/battle/battleUI/uiBattleMainMenu/UIBattleMainMenu.tscn" id="6_ysmad"]
 
 [node name="BattleArena" type="Control" unique_id=420812231]
 layout_mode = 3
@@ -30,14 +32,12 @@ script = ExtResource("3_ma76s")
 
 [node name="UITurnBar" parent="UI" unique_id=350606653 instance=ExtResource("4_2kbwh")]
 
-[node name="PlayerMenus" type="Control" parent="UI" unique_id=2065690736]
+[node name="UIMenuController" type="Control" parent="UI" unique_id=1846249460]
 layout_mode = 3
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -105.0
-offset_top = -86.0
-grow_horizontal = 0
-grow_vertical = 0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_fk1sc")
+mainMenuScene = ExtResource("6_ysmad")
