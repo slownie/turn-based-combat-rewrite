@@ -96,6 +96,10 @@ public partial class BattleActor : Node2D
 
 	#region Getters
 
+
+	// Stats
+	public int GetCurHP() { return _characterStats.GetCurHP(); }
+
 	public bool GetIsPlayer() { return _isPlayer; }
 	public Texture2D GetBattleIcon() { return _battleIcon; }
 

@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://c6p5glakoq6l3"]
 
 [ext_resource type="Script" uid="uid://dtwgoum6n7w07" path="res://src/battle/battleUI/uiTargetCursorController/UITargetCursorController.cs" id="1_lkrn4"]
+[ext_resource type="PackedScene" uid="uid://kqvmptdjgic6" path="res://src/battle/battleUI/uiTargetCursor/UITargetCursor.tscn" id="2_56o0y"]
 
 [node name="UITargetCursorController" type="Node2D" unique_id=122574662]
 script = ExtResource("1_lkrn4")
+cursorScene = ExtResource("2_56o0y")

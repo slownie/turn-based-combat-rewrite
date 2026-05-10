@@ -13,7 +13,7 @@ public partial class UITargetCursorController : Node2D
 	[Signal] public delegate void TargetsSelectedEventHandler(Godot.Collections.Array<BattleActor> selectedTargets);
     [Signal] public delegate void TargetsCancelledEventHandler();
 
-	bool _targetsAll = false;
+	Godot.Collections.Array<BattleActor> _availableTargets = [];
 
 	int _targetIndex = 0;
 
@@ -27,9 +27,9 @@ public partial class UITargetCursorController : Node2D
     }
 
 
-	public void Setup(bool targetsAll)
+	public void Setup(Godot.Collections.Array<BattleActor> availableTargets)
 	{
-		_targetsAll = targetsAll;
+		_availableTargets = availableTargets;
 	}
 
 }

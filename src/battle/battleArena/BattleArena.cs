@@ -60,7 +60,11 @@ public partial class BattleArena : Control
 
 		// UI
 		_menuController = GetNode<UIMenuController>("UI/UIMenuController");
+		_menuController.BindServices(_actorController);
+
 		_turnBar = GetNode<UITurnBar>("UI/UITurnBar");
+
+		
 	}
 
 	public void SetupActors(Godot.Collections.Array<ActivePartyMember> partyMembers, Godot.Collections.Array<EnemyResource> enemies)

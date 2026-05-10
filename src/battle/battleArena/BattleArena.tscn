@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cseqwi6oq3fss" path="res://src/battle/battleUI/uiTurnBar/UITurnBar.tscn" id="4_2kbwh"]
 [ext_resource type="Script" uid="uid://bghwbpceoptk8" path="res://src/battle/battleArena/UIMenuController.cs" id="5_fk1sc"]
 [ext_resource type="PackedScene" uid="uid://bydk2ilq2jwy2" path="res://src/battle/battleUI/uiBattleMainMenu/UIBattleMainMenu.tscn" id="6_ysmad"]
+[ext_resource type="PackedScene" uid="uid://c6p5glakoq6l3" path="res://src/battle/battleUI/uiTargetCursorController/UITargetCursorController.tscn" id="7_1m5vt"]
 
 [node name="BattleArena" type="Control" unique_id=420812231]
 layout_mode = 3
@@ -41,3 +42,5 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_fk1sc")
 mainMenuScene = ExtResource("6_ysmad")
+
+[node name="UITargetCursorController" parent="UI/UIMenuController" unique_id=122574662 instance=ExtResource("7_1m5vt")]

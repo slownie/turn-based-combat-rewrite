@@ -5,16 +5,25 @@ public partial class UIMenuController : Control
 {
 	[Export] PackedScene mainMenuScene;
 	[Export] PackedScene actionSelectionMenuScene;
-	[Export] PackedScene targetingCursorScene;
 
 	[Signal] public delegate void TargetSelectedEventHandler();
 
+	UITargetCursorController _uiTargetCursorController;
+
+	ActorController _actorController;
+	Godot.Collections.Array<BattleActor> _battleActors = [];
+
 	BattleActor _currentPartyActor;
-	Control _loadedMenu;
 
     public override void _Ready()
-    {
-    }
+	{
+		_uiTargetCursorController = GetNode<UITargetCursorController>("UITargetCursorController");
+	}
+
+	public void BindServices(ActorController actorController)
+	{
+		_actorController = actorController;
+	}
 
 	public void PartyTurnStart(BattleActor currentPartyActor)
 	{
@@ -24,7 +33,8 @@ public partial class UIMenuController : Control
 
 	private void CreateTargetCursor(UseableSkillResource selectedAction)
 	{
-		GD.Print("Target Cursor Created");
+		Godot.Collections.Array<BattleActor> availableTargets = [];
+		//availableTargets = _actorController.GetLiveActors();
 	}
 
 	private void CreateMainMenu()
