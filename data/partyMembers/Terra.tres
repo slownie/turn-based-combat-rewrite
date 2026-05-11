@@ -8,6 +8,7 @@
 [sub_resource type="Resource" id="Resource_2gw5i"]
 script = ExtResource("1_ushfx")
 _maxHP = 40
+_maxMP = 15
 _agility = 3
 metadata/_custom_type_script = "uid://elamptvvyimh"
 

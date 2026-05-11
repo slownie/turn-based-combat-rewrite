@@ -13,11 +13,11 @@ public partial class UITargetCursorController : Node2D
 	[Signal] public delegate void TargetsSelectedEventHandler(Godot.Collections.Array<BattleActor> selectedTargets);
     [Signal] public delegate void TargetsCancelledEventHandler();
 
+	// Targeting Parameters
 	Godot.Collections.Array<BattleActor> _availableTargets = [];
 
 	int _targetIndex = 0;
 
-	bool _targetsAll = false;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -27,7 +27,7 @@ public partial class UITargetCursorController : Node2D
     public override void _Input(InputEvent @event)
 	{
 		// Movement
-        if (@event is InputEventKey && !_targetsAll)
+        if (@event is InputEventKey)
         {
             // Dumb but 
             int desiredDown = @event.IsActionReleased("MoveDown") ? 1 : 0;

@@ -17,6 +17,12 @@ public partial class BattleActor : Node2D
 	AnimatedSprite2D _sprite;
 	Texture2D _battleIcon;
 
+	Label _curHPLabel;
+	Label _maxHPLabel;
+
+	Label _curMPLabel;
+	Label _maxMPLabel;
+
 	#region Properties
 	bool isActive = true;
 	public bool IsActive
@@ -59,6 +65,12 @@ public partial class BattleActor : Node2D
 	public override void _Ready()
 	{
 		_sprite = GetNode<AnimatedSprite2D>("Sprite");
+
+		_curHPLabel = GetNode<Label>("TestUI/HPContainer/CurHP");
+		_maxHPLabel = GetNode<Label>("TestUI/HPContainer/MaxHP");
+		_curMPLabel = GetNode<Label>("TestUI/MPContainer/CurMP");
+		_maxMPLabel = GetNode<Label>("TestUI/MPContainer/MaxMP");
+
 		IsActive = false;
 	}
 
@@ -83,7 +95,10 @@ public partial class BattleActor : Node2D
 		_name = actorName;
 		_characterStats = characterStats;
 
-		GD.Print(_characterStats.GetMaxHP());
+		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
+		_maxHPLabel.Text = _characterStats.GetMaxHP().ToString();
+		_curMPLabel.Text = _characterStats.GetCurMP().ToString();
+		_maxMPLabel.Text = _characterStats.GetMaxMP().ToString();
 
 		_sprite.SpriteFrames = spriteFrames;
 		_sprite.Play("default");
@@ -102,10 +117,25 @@ public partial class BattleActor : Node2D
 
 	public int GetMaxHP() { return _characterStats.GetMaxHP(); }
 
-	public void AddCurHP(int amount) { _characterStats.AddCurHP(amount); }
-	public void SetCurHP(int amount) { _characterStats.SetCurHP(amount); }
-	public void AddCurMP(int amount) { _characterStats.AddCurMP(amount); }
-	public void SetCurMP(int amount) { _characterStats.SetCurMP(amount); }
+	public void AddCurHP(int amount) { 
+		_characterStats.AddCurHP(amount); 
+		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
+	}
+	
+	public void SetCurHP(int amount) { 
+		_characterStats.SetCurHP(amount); 
+		_curHPLabel.Text = _characterStats.GetCurHP().ToString();	
+	}
+	
+	public void AddCurMP(int amount) { 
+		_characterStats.AddCurMP(amount); 
+		_curMPLabel.Text = _characterStats.GetCurMP().ToString();
+	}
+	
+	public void SetCurMP(int amount) { 
+		_characterStats.SetCurMP(amount); 
+		_curMPLabel.Text = _characterStats.GetCurMP().ToString();
+	}
 
 
 	public bool GetIsPlayer() { return _isPlayer; }

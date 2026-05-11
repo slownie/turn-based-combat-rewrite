@@ -4,6 +4,8 @@ using System;
 [GlobalClass]
 public partial class CharacterStats : GodotObject
 {
+	[Signal] public delegate void HPChangedEventHandler();
+
 	int _maxHP = 0;
 	int _maxMP = 0;
 	int _curHP = 0;

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dd5i0y578f2c3"]
 
 [ext_resource type="Script" uid="uid://cc4rk2p8p6ivm" path="res://src/battle/battleActor/BattleActor.cs" id="1_r8nm7"]
-[ext_resource type="Texture2D" uid="uid://cfyv67l08hkx8" path="res://assets/images/battleActors/sSolBadguyIdle_strip4.png" id="2_86ltd"]
+[ext_resource type="Texture2D" uid="uid://cfyv67l08hkx8" path="res://assets/images/battleActors/SolBadguy/sSolBadguyIdle_strip4.png" id="2_86ltd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nsqsq"]
 atlas = ExtResource("2_86ltd")
@@ -45,3 +45,61 @@ script = ExtResource("1_r8nm7")
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=872489255]
 sprite_frames = SubResource("SpriteFrames_xp4os")
 autoplay = "default"
+
+[node name="MPLabel" type="Label" parent="." unique_id=801517325]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="TestUI" type="VBoxContainer" parent="." unique_id=1721447135]
+offset_left = -22.0
+offset_top = 1.0
+offset_right = 27.0
+offset_bottom = 29.0
+
+[node name="HPContainer" type="HBoxContainer" parent="TestUI" unique_id=868554181]
+layout_mode = 2
+
+[node name="HP" type="Label" parent="TestUI/HPContainer" unique_id=1530749783]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 8
+text = "HP"
+
+[node name="CurHP" type="Label" parent="TestUI/HPContainer" unique_id=206089142]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "20"
+
+[node name="Divider" type="Label" parent="TestUI/HPContainer" unique_id=1581164648]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "/"
+
+[node name="MaxHP" type="Label" parent="TestUI/HPContainer" unique_id=1942268177]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "20"
+
+[node name="MPContainer" type="HBoxContainer" parent="TestUI" unique_id=1263176805]
+layout_mode = 2
+
+[node name="MP" type="Label" parent="TestUI/MPContainer" unique_id=1829891011]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 1, 1, 1)
+theme_override_font_sizes/font_size = 8
+text = "MP"
+
+[node name="CurMP" type="Label" parent="TestUI/MPContainer" unique_id=1598199000]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "20"
+
+[node name="Divider" type="Label" parent="TestUI/MPContainer" unique_id=388210811]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "/"
+
+[node name="MaxMP" type="Label" parent="TestUI/MPContainer" unique_id=92019575]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "20"

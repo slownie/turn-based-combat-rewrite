@@ -88,7 +88,7 @@ public partial class BattleArena : Control
 			
 			newActor.Setup(
 				250+(i % 3*10)+(i / 3*25),
-				68+(i % 5*30),
+				68+(i % 5*55),
 				activePartyMember.GetPartyMemberName(), 
 				activePartyMember.GetCharacterStats(),
 				activePartyMember.GetSpriteFrames(),
