@@ -1,16 +1,15 @@
 [gd_resource type="Resource" script_class="PartyMemberDataResource" format=3 uid="uid://djmfuvimqa11c"]
 
+[ext_resource type="Script" uid="uid://elamptvvyimh" path="res://src/components/BaseStats.cs" id="1_4uqfo"]
 [ext_resource type="Texture2D" uid="uid://cb5uc65k5bepg" path="res://assets/images/battleActors/Testament/TestamentBattleIcon.png" id="1_es0o6"]
-[ext_resource type="Script" uid="uid://crf2oythoqbrs" path="res://src/components/CharacterStats.cs" id="1_gnjv5"]
 [ext_resource type="Script" uid="uid://cfoqdpdkdpur5" path="res://src/dataClasses/partyMembers/PartyMemberDataResource.cs" id="1_iccj4"]
 [ext_resource type="Texture2D" uid="uid://cor5p3nuroajs" path="res://assets/images/battleActors/Testament/sTestamentIdle_strip4.png" id="3_es0o6"]
 
-[sub_resource type="Resource" id="Resource_4uqfo"]
-script = ExtResource("1_gnjv5")
-_maxHP = 1
-_maxMP = 1
+[sub_resource type="Resource" id="Resource_aq5s4"]
+script = ExtResource("1_4uqfo")
+_maxHP = 25
 _agility = 5
-metadata/_custom_type_script = "uid://crf2oythoqbrs"
+metadata/_custom_type_script = "uid://elamptvvyimh"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aq5s4"]
 atlas = ExtResource("3_es0o6")
@@ -51,7 +50,7 @@ animations = [{
 [resource]
 script = ExtResource("1_iccj4")
 partyMemberName = "Alpheus"
-characterStats = SubResource("Resource_4uqfo")
+baseStats = SubResource("Resource_aq5s4")
 spriteFrames = SubResource("SpriteFrames_r0vku")
 battleIcon = ExtResource("1_es0o6")
 metadata/_custom_type_script = "uid://cfoqdpdkdpur5"

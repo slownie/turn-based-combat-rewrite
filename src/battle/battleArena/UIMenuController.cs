@@ -20,9 +20,22 @@ public partial class UIMenuController : Control
 		_uiTargetCursorController = GetNode<UITargetCursorController>("UITargetCursorController");
 	}
 
-	public void BindServices(ActorController actorController)
+    public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+		{
+			if (keyEvent.Keycode == Key.R)
+			{
+				GD.Print(_battleActors[2].GetCurHP());
+			}
+		}
+	}
+
+
+	public void BindServices(ActorController actorController, Godot.Collections.Array<BattleActor> battleActors)
 	{
 		_actorController = actorController;
+		_battleActors = battleActors;
 	}
 
 	public void PartyTurnStart(BattleActor currentPartyActor)
@@ -34,7 +47,9 @@ public partial class UIMenuController : Control
 	private void CreateTargetCursor(UseableSkillResource selectedAction)
 	{
 		Godot.Collections.Array<BattleActor> availableTargets = [];
-		//availableTargets = _actorController.GetLiveActors();
+		availableTargets = _actorController.GetLiveActors(_battleActors);
+
+		
 	}
 
 	private void CreateMainMenu()

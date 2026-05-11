@@ -5,7 +5,7 @@ using System;
 public partial class PartyMemberDataResource : Resource
 {
     [Export] string partyMemberName = "";
-    [Export] CharacterStats characterStats;
+    [Export] BaseStats baseStats;
 
 
     [Export] int startingLevel = 1;
@@ -14,7 +14,7 @@ public partial class PartyMemberDataResource : Resource
     [Export] Texture2D battleIcon;
 
     public string GetPartyMemberName() { return partyMemberName; }
-    public CharacterStats GetCharacterStats() { return characterStats; }
+    public BaseStats GetBaseStats() { return baseStats; }
 
     public SpriteFrames GetSpriteFrames() { return spriteFrames; }
     public Texture2D GetBattleIcon() { return battleIcon; }

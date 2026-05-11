@@ -100,6 +100,14 @@ public partial class BattleActor : Node2D
 	// Stats
 	public int GetCurHP() { return _characterStats.GetCurHP(); }
 
+	public int GetMaxHP() { return _characterStats.GetMaxHP(); }
+
+	public void AddCurHP(int amount) { _characterStats.AddCurHP(amount); }
+	public void SetCurHP(int amount) { _characterStats.SetCurHP(amount); }
+	public void AddCurMP(int amount) { _characterStats.AddCurMP(amount); }
+	public void SetCurMP(int amount) { _characterStats.SetCurMP(amount); }
+
+
 	public bool GetIsPlayer() { return _isPlayer; }
 	public Texture2D GetBattleIcon() { return _battleIcon; }
 

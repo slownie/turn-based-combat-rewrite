@@ -60,11 +60,21 @@ public partial class BattleArena : Control
 
 		// UI
 		_menuController = GetNode<UIMenuController>("UI/UIMenuController");
-		_menuController.BindServices(_actorController);
+		_menuController.BindServices(_actorController, _actors);
 
 		_turnBar = GetNode<UITurnBar>("UI/UITurnBar");
+	}
 
-		
+    public override void _Input(InputEvent @event)
+	{
+		if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+		{
+			if (keyEvent.Keycode == Key.E)
+			{
+				_actorController.AddActorCurHP(_actors[2], -5);
+				GD.Print(_actors[2].GetCurHP());
+			}
+		}
 	}
 
 	public void SetupActors(Godot.Collections.Array<ActivePartyMember> partyMembers, Godot.Collections.Array<EnemyResource> enemies)
@@ -98,11 +108,13 @@ public partial class BattleArena : Control
 			BattleActor newActor = battleActorScene.Instantiate() as BattleActor;
 			_actorController.AddChild(newActor);
 			
+			CharacterStats enemyStats = new CharacterStats(enemy.GetBaseStats());
+
 			newActor.Setup(
 				70+(i % 2*35)+(i / 3*40),
 				58+(i % 3*30),
 				enemy.GetEnemyName(), 
-				enemy.GetCharacterStats(),
+				enemyStats,
 				enemy.GetSpriteFrames(),
 				enemy.GetBattleIcon(),
 				false

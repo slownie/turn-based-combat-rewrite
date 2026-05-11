@@ -37,7 +37,7 @@ public partial class ActivePartyMember : GodotObject
             _name = partyMemberDataResource.GetPartyMemberName();
             GD.Print(_name);
 
-            _characterStats = partyMemberDataResource.GetCharacterStats();
+            _characterStats = new CharacterStats(partyMemberDataResource.GetBaseStats());
 
             _spriteFrames = partyMemberDataResource.GetSpriteFrames();
             _battleIcon = partyMemberDataResource.GetBattleIcon();

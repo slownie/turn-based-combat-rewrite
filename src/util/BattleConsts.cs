@@ -35,7 +35,8 @@ public static partial class BattleConsts
 	{
 		Single,
 		All,
-		Random
+		Random,
+		Self
 	}
 
 	/*
@@ -46,6 +47,5 @@ public static partial class BattleConsts
 		Single,
 		Side,
 		All,
-		Self
 	}
 }

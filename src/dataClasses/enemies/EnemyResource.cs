@@ -5,13 +5,13 @@ using System;
 public partial class EnemyResource : Resource
 {
     [Export] string enemyName = "";
-    [Export] CharacterStats characterStats;
+    [Export] BaseStats baseStats;
 
     [Export] SpriteFrames spriteFrames;
     [Export] Texture2D battleIcon;
 
     public string GetEnemyName() { return enemyName; }
-    public CharacterStats GetCharacterStats() { return characterStats; }
+    public BaseStats GetBaseStats() { return baseStats; }
 
     public SpriteFrames GetSpriteFrames() { return spriteFrames; }
 
