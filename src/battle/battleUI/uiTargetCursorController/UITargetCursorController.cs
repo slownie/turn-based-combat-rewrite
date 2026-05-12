@@ -21,7 +21,10 @@ public partial class UITargetCursorController : Node2D
 	// Targeting parameters
 	BattleConsts.CursorMode _cursorMode = BattleConsts.CursorMode.Single;
 	int _targetSide = 0; // 0 -> Enemy, 1 -> Party
+
+	bool _canMoveTarget = true;
 	bool _canMoveSide = false;
+
 	Godot.Collections.Array<UITargetCursor> _partyCursors = [];
 	Godot.Collections.Array<UITargetCursor> _enemyCursors = [];
 
@@ -30,7 +33,6 @@ public partial class UITargetCursorController : Node2D
 	Godot.Collections.Array<UITargetCursor> _currentCursors = [];
 	
 	// Used only for single target
-	BattleActor _currentTarget;
 	int _currentIndex = 0;
 
 	// Called when the node enters the scene tree for the first time.
@@ -42,49 +44,43 @@ public partial class UITargetCursorController : Node2D
     public override void _Input(InputEvent @event)
 	{
 		// Movement
-        if (@event is InputEventKey)
+        if (@event.IsActionPressed("YButton"))
         {
-			if (_cursorMode == BattleConsts.CursorMode.Single)
-			{
-				// Dumb but 
-				int desiredDown = @event.IsActionReleased("MoveDown") ? 1 : 0;
-				int desiredUp = @event.IsActionReleased("MoveUp") ? 1 : 0;
-
-
-
-				
-				// Hide the current cursor
-				_currentCursors[_currentIndex].SetIsVisible(false);
-
-				_currentIndex += desiredDown - desiredUp;
-				if (_currentIndex > _currentTargets.Count - 1) _currentIndex = 0;
-				if (_currentIndex < 0) _currentIndex = _currentTargets.Count - 1;
-
-				_currentTarget = _currentTargets[_currentIndex];
-				_currentCursors[_currentIndex].SetIsVisible(true);
-			}
-
 			if (_canMoveSide)
 			{
-				float desiredInput = Input.GetAxis("MoveLeft", "MoveRight");
-				if (desiredInput != 0.0) {
-					if (_targetSide == 0)
-					{
-						// Swap to party side
-						_targetSide = 1;
-						_currentTargets = _partyTargets;
-					} else {
-						// Swap to enemy side
-						_targetSide = 0;
-						_currentTargets = _enemyTargets;
-					}
+				if (_targetSide == 0)
+				{
+					// Switch to player side
+					_targetSide = 1;	
+
+					_currentTargets = _partyTargets;
 					
-					if (_currentIndex > _currentTargets.Count - 1) _currentIndex = 0;
-					if (_currentIndex < 0) _currentIndex = _currentTargets.Count - 1;
+					foreach(UITargetCursor cursor in _currentCursors)
+					{
+						cursor.SetIsVisible(false);
+					}
+					_currentCursors = _partyCursors;
+					foreach(UITargetCursor cursor in _currentCursors)
+					{
+						cursor.SetIsVisible(true);
+					}
+
+
+				} else {
+					// Switch to enemy side
+					_targetSide = 0;
+					_currentTargets = _enemyTargets;
+					foreach(UITargetCursor cursor in _currentCursors)
+					{
+						cursor.SetIsVisible(false);
+					}
+
+					_currentCursors = _enemyCursors;
+					foreach(UITargetCursor cursor in _currentCursors)
+					{
+						cursor.SetIsVisible(true);
+					}
 				}
-
-				_currentCursors[_currentIndex].SetIsVisible(false);
-
 			}
         }
 	}
@@ -101,46 +97,132 @@ public partial class UITargetCursorController : Node2D
 
 		_cursorMode = cursorMode;
 
-		_canMoveSide = _partyTargets.Count !=0 && _enemyTargets.Count !=0 ? true : false;
-
-		if (_cursorMode == BattleConsts.CursorMode.Single)
+		// Setup & create based on cursor mode & targets
+		switch (_cursorMode)
 		{
-			if (partyTargets.Count != 0 && enemyTargets.Count == 0)
+			case BattleConsts.CursorMode.Single:
 			{
-				_currentTargets = partyTargets;
-				_currentTarget = _currentTargets[0];
-			} else {
-				// Default to enemy
-				_currentTargets = enemyTargets;
-				_currentTarget = _currentTargets[0];
+				// Move between targets, only allow side movement if targets exist in both
+				_canMoveTarget = true;
+				_canMoveSide = _partyTargets.Count != 0 && _enemyTargets.Count != 0 ? true : false;
+				break;
+			}
+
+			case BattleConsts.CursorMode.Side:
+			{
+				// No target movement, only allow side movement if targets exist in both
+				_canMoveTarget = false;
+				_canMoveSide = _partyTargets.Count != 0 && _enemyTargets.Count != 0 ? true : false;
+
+				// Default side
+				if (_partyTargets.Count != 0 && _enemyTargets.Count == 0)
+				{
+					// Go to party
+					_currentTargets = _partyTargets;
+				} else {
+					// Default to enemy
+					_currentTargets = _enemyTargets;
+				}
+
+				// Create Cursors
+				foreach(BattleActor enemyActor in enemyTargets)
+				{
+					UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
+					AddChild(targetCursor);
+
+					_enemyCursors.Add(targetCursor);
+
+					targetCursor.SetIsVisible(_currentTargets.Contains(enemyActor));
+					targetCursor.Position = enemyActor.Position;
+				}
+
+				foreach(BattleActor partyActor in partyTargets)
+				{
+					UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
+					AddChild(targetCursor);
+
+					_partyCursors.Add(targetCursor);
+
+					targetCursor.SetIsVisible(_currentTargets.Contains(partyActor));
+					targetCursor.Position = partyActor.Position;
+				}
+
+				// Targeting party only
+				if (_partyCursors.Count != 0 && _enemyCursors.Count == 0)
+				{
+					_targetSide = 1;
+					_currentCursors = _partyCursors;
+				} else {
+					_currentCursors = _enemyCursors;
+				}
+
+				break;
+			}
+
+			case BattleConsts.CursorMode.All:
+			{
+				// No movement
+				_canMoveTarget = false;
+				_canMoveSide = false;
+
+				// Target all actors
+				_currentTargets.AddRange(_partyTargets);
+				_currentTargets.AddRange(_enemyTargets);
+
+				// Create Cursors
+				foreach (BattleActor actor in _currentTargets)
+				{
+					UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
+					AddChild(targetCursor);
+
+					_currentCursors.Add(targetCursor);
+
+					targetCursor.Position = actor.Position;
+				}
+				break;
 			}
 		}
 
-		// Create Cursors
-		foreach(BattleActor enemyActor in enemyTargets)
-		{
-			UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
-			AddChild(targetCursor);
+		// _canMoveSide = _partyTargets.Count !=0 && _enemyTargets.Count !=0 ? true : false;
 
-			_enemyCursors.Add(targetCursor);
+		// if (_cursorMode == BattleConsts.CursorMode.Single)
+		// {
+		// 	if (partyTargets.Count != 0 && enemyTargets.Count == 0)
+		// 	{
+		// 		_currentTargets = partyTargets;
+		// 		_currentTarget = _currentTargets[0];
+		// 	} else {
+		// 		// Default to enemy
+		// 		_currentTargets = enemyTargets;
+		// 		_currentTarget = _currentTargets[0];
+		// 	}
+		// }
 
-			targetCursor.SetIsVisible(_currentTarget == enemyActor);
-			targetCursor.Position = enemyActor.Position;
-		}
+		// // Create Cursors
+		// foreach(BattleActor enemyActor in enemyTargets)
+		// {
+		// 	UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
+		// 	AddChild(targetCursor);
+
+		// 	_enemyCursors.Add(targetCursor);
+
+		// 	targetCursor.SetIsVisible(_currentTarget == enemyActor);
+		// 	targetCursor.Position = enemyActor.Position;
+		// }
 
 
-		foreach(BattleActor partyActor in partyTargets)
-		{
-			UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
-			AddChild(targetCursor);
+		// foreach(BattleActor partyActor in partyTargets)
+		// {
+		// 	UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
+		// 	AddChild(targetCursor);
 
-			_partyCursors.Add(targetCursor);
+		// 	_partyCursors.Add(targetCursor);
 
-			targetCursor.SetIsVisible(_currentTarget == partyActor);
-			targetCursor.Position = partyActor.Position;
-		}
+		// 	targetCursor.SetIsVisible(_currentTarget == partyActor);
+		// 	targetCursor.Position = partyActor.Position;
+		// }
 
-		_currentCursors = _currentTargets == _partyTargets ? _partyCursors : _enemyCursors;
+		// _currentCursors = _currentTargets == _partyTargets ? _partyCursors : _enemyCursors;
 
 		SetProcessInput(true);
 		
