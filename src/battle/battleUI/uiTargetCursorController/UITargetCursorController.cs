@@ -14,14 +14,13 @@ public partial class UITargetCursorController : Node2D
     [Signal] public delegate void TargetsCancelledEventHandler();
 
 	// Targeting Parameters
-	Godot.Collections.Array<BattleActor> _partyTargets = [];
-	Godot.Collections.Array<BattleActor> _enemyTargets = [];
+	Godot.Collections.Array<BattleActor> _availableTargets = [];
 	BattleActor _currentTarget;
 
-	int _targetSide = 0; // 0 -> Enemy, 1 -> Party
 	BattleConsts.CursorMode _cursorMode = BattleConsts.CursorMode.Single;
-
 	int _targetIndex = 0;
+
+	Godot.Collections.Array<UITargetCursor> _cursors = [];
 
 
 	// Called when the node enters the scene tree for the first time.
@@ -39,23 +38,24 @@ public partial class UITargetCursorController : Node2D
             int desiredUp = @event.IsActionReleased("MoveUp") ? 1 : 0;
             
             _targetIndex += desiredDown - desiredUp;
-            // if (_targetIndex > _availableTargets.Count - 1) _targetIndex = 0;
-            // if (_targetIndex < 0) _targetIndex = _availableTargets.Count - 1;
-            
+            if (_targetIndex > _availableTargets.Count - 1) _targetIndex = 0;
+            if (_targetIndex < 0) _targetIndex = _availableTargets.Count - 1;
+			_currentTarget = _availableTargets[_targetIndex];
         }
 	}
 
 
 	public void Setup(
-		Godot.Collections.Array<BattleActor> partyTargets,
-		Godot.Collections.Array<BattleActor> enemyTargets,
-		BattleConsts.CursorMode cursorMode
+		Godot.Collections.Array<BattleActor> availableTargets,
+		BattleConsts.CursorMode cursorMode,
+		bool enableMovement=false
 	)
 	{
-		_partyTargets = partyTargets;
-		_enemyTargets = enemyTargets;
-
+		GD.Print("==Cursor Controller Setup==");
 		_cursorMode = cursorMode;
+		_currentTarget = availableTargets[0];
+
+		/*
 		if (partyTargets.Count != 0 && enemyTargets.Count == 0)
 		{
 			_currentTarget = partyTargets[0];
@@ -82,6 +82,9 @@ public partial class UITargetCursorController : Node2D
 			targetCursor.SetIsVisible(_currentTarget == enemyActor);
 			targetCursor.Position = enemyActor.Position;
 		}
+		*/
+
+		_availableTargets = availableTargets;
 
 		// Specify number of cursors to create
 		switch(_cursorMode)
@@ -89,7 +92,14 @@ public partial class UITargetCursorController : Node2D
 			// Only create the one cursor, default to the first actor in the array
 			case BattleConsts.CursorMode.Single:
 			{
+				GD.Print("Cursor Mode - Single");
+				UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
+				AddChild(targetCursor);
 
+				_cursors.Add(targetCursor);
+
+				
+				targetCursor.CurrentTarget = _currentTarget;
 
 				break;
 			}

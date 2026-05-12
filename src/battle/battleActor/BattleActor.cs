@@ -9,7 +9,7 @@ public partial class BattleActor : Node2D
 	[Signal] public delegate void ReadinessChangedEventHandler(double readiness);
 	[Signal] public delegate void ReadyToActEventHandler(BattleActor battleActor);
 
-	string _name = "Placeholder";
+	string _actorName = "Placeholder";
 	CharacterStats _characterStats;
 
 	bool _isPlayer = true;
@@ -92,7 +92,7 @@ public partial class BattleActor : Node2D
 		Vector2 newPosition = new Vector2(x, y);
 		Position = newPosition;
 
-		_name = actorName;
+		_actorName = actorName;
 		_characterStats = characterStats;
 
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
@@ -111,6 +111,7 @@ public partial class BattleActor : Node2D
 
 	#region Getters
 
+	public string GetActorName() { return _actorName; }
 
 	// Stats
 	public int GetCurHP() { return _characterStats.GetCurHP(); }

@@ -58,9 +58,8 @@ public partial class UIMenuController : Control
 
 	private void CreateTargetCursor(UseableSkillResource selectedAction)
 	{
-		GD.Print("Create Target Cursor");
-		Godot.Collections.Array<BattleActor> _partyTargets = [];
-		Godot.Collections.Array<BattleActor> _enemyTargets = [];
+		GD.Print("==Create Target Cursor==");
+		Godot.Collections.Array<BattleActor> availableTargets = [];
 
 		// Provide targeting parameters to TargetCursorController
 		TargetingSettings targetingSettings = selectedAction.GetTargetingSettings();
@@ -68,31 +67,30 @@ public partial class UIMenuController : Control
 		// 1. Are we targeting the party, enemies, both, or the self?
 		if (targetingSettings.GetTargetOppositeSide())
 		{
-			_enemyTargets = _actorController.GetEnemies(_battleActors);
+			availableTargets.AddRange(_actorController.GetEnemies(_battleActors));
 		}
 
 		if (targetingSettings.GetTargetSameSide())
 		{
-			_partyTargets = _actorController.GetPartyMembers(_battleActors);
+			availableTargets.AddRange(_actorController.GetPartyMembers(_battleActors));
 		}
 
 		if (targetingSettings.GetTargetSelfOnly())
 		{
-			_partyTargets.Add(_currentPartyActor);
+			availableTargets.Add(_currentPartyActor);
 		}
 
 		// 2. Are we targeting dead or alive actors?
 		if (targetingSettings.GetTargetDeadOnly())
 		{
 			// We are only targeting dead party members
-			_partyTargets = _actorController.GetDeadActors(_partyTargets);
+			availableTargets = _actorController.GetDeadActors(availableTargets);
 		} else {
-			if (_enemyTargets.Count != 0) _enemyTargets = _actorController.GetLiveActors(_enemyTargets);
-			if (_partyTargets.Count != 0) _partyTargets = _actorController.GetLiveActors(_partyTargets);
+			availableTargets = _actorController.GetLiveActors(availableTargets);
 		}
 
 		// 3. Pass data to controller
-		_uiTargetCursorController.Setup(_partyTargets, _enemyTargets, targetingSettings.GetCursorMode());
+		_uiTargetCursorController.Setup(availableTargets, targetingSettings.GetCursorMode());
 	}
 
 	private void CreateSkillMenu()
