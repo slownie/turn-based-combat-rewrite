@@ -15,4 +15,6 @@ public partial class UseableSkillResource : BaseSkillResource
 	[Export] Godot.Collections.Array<ActionEffectResource> actions = [];
 
 	[Export] TargetingSettings targetingSettings;
+
+	public TargetingSettings GetTargetingSettings() { return targetingSettings; }
 }

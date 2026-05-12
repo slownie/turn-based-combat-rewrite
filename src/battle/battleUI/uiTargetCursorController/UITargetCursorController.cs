@@ -14,7 +14,12 @@ public partial class UITargetCursorController : Node2D
     [Signal] public delegate void TargetsCancelledEventHandler();
 
 	// Targeting Parameters
-	Godot.Collections.Array<BattleActor> _availableTargets = [];
+	Godot.Collections.Array<BattleActor> _partyTargets = [];
+	Godot.Collections.Array<BattleActor> _enemyTargets = [];
+	BattleActor _currentTarget;
+
+	int _targetSide = 0; // 0 -> Enemy, 1 -> Party
+	BattleConsts.CursorMode _cursorMode = BattleConsts.CursorMode.Single;
 
 	int _targetIndex = 0;
 
@@ -34,16 +39,74 @@ public partial class UITargetCursorController : Node2D
             int desiredUp = @event.IsActionReleased("MoveUp") ? 1 : 0;
             
             _targetIndex += desiredDown - desiredUp;
-            if (_targetIndex > _availableTargets.Count - 1) _targetIndex = 0;
-            if (_targetIndex < 0) _targetIndex = _availableTargets.Count - 1;
+            // if (_targetIndex > _availableTargets.Count - 1) _targetIndex = 0;
+            // if (_targetIndex < 0) _targetIndex = _availableTargets.Count - 1;
             
         }
 	}
 
 
-	public void Setup(Godot.Collections.Array<BattleActor> availableTargets)
+	public void Setup(
+		Godot.Collections.Array<BattleActor> partyTargets,
+		Godot.Collections.Array<BattleActor> enemyTargets,
+		BattleConsts.CursorMode cursorMode
+	)
 	{
-		_availableTargets = availableTargets;
+		_partyTargets = partyTargets;
+		_enemyTargets = enemyTargets;
+
+		_cursorMode = cursorMode;
+		if (partyTargets.Count != 0 && enemyTargets.Count == 0)
+		{
+			_currentTarget = partyTargets[0];
+		} else {
+			// Default to enemy
+			_currentTarget = enemyTargets[0];
+		}
+
+		// Create Cursors
+		foreach(BattleActor partyActor in partyTargets)
+		{
+			UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
+			AddChild(targetCursor);
+
+			targetCursor.SetIsVisible(_currentTarget == partyActor);
+			targetCursor.Position = partyActor.Position;
+		}
+
+		foreach(BattleActor enemyActor in enemyTargets)
+		{
+			UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
+			AddChild(targetCursor);
+
+			targetCursor.SetIsVisible(_currentTarget == enemyActor);
+			targetCursor.Position = enemyActor.Position;
+		}
+
+		// Specify number of cursors to create
+		switch(_cursorMode)
+		{
+			// Only create the one cursor, default to the first actor in the array
+			case BattleConsts.CursorMode.Single:
+			{
+
+
+				break;
+			}
+		}
+
+		
+
+	}
+
+	public void Cleanup()
+	{
+		// Reset variables and destroy all cursors
+
+		foreach (UITargetCursor cursor in GetChildren())
+		{
+			cursor.QueueFree();
+		}
 	}
 
 }

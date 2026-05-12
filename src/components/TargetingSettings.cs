@@ -8,17 +8,34 @@ public partial class TargetingSettings : Resource
 
     [Export] BattleConsts.TargetType targetType = BattleConsts.TargetType.Single;
 	[Export] BattleConsts.CursorMode cursorMode = BattleConsts.CursorMode.Single;
-	[Export] bool targetSameSide = false;
-	[Export] bool targetOppositeSide = true;
 
-	// These could probably one variable but maybe there will be a case where we want both
-	[Export] bool targetAlive = true;
-	[Export] bool targetDead = false;
+	[Export] bool targetOppsiteSide = true;
+	[Export] bool targetSameSide = false; 
+	[Export] bool targetSelfOnly = false;
+
+	// Skill/Stat/Condition related parameters
+	[Export] bool targetHurtOnly = false;
+	[Export] bool targetDepletedOnly = false;
+	[Export] bool targetDeadOnly = false; 
+
+	[Export] bool targetHasBuffOnly = false;
+	[Export] bool targetHasDebuffOnly = false;
+	[Export] bool targetHasStatusOnly = false;
+
+	// Todo, specify enable conditions in UseableSkill/UseableItem
+	
 
 	public BattleConsts.TargetType GetTargetType() { return targetType; }
 	public BattleConsts.CursorMode GetCursorMode() { return cursorMode; }
+	
+	/*
+		Note that this is RELATIVE to the user.
+			- In the UIMenuController, SameSide=Party, OppositeSide=Enemies
+			- In EnemyAI, SameSide=Enemies, OppositeSide=Party
+	*/
+	public bool GetTargetOppositeSide() { return targetOppsiteSide; }
 	public bool GetTargetSameSide() { return targetSameSide; }
-	public bool GetTargetOppositeSide() { return targetOppositeSide; }
-	public bool GetTargetAlive() { return targetAlive; }
-	public bool GetTargetDead() { return targetDead; }
+	public bool GetTargetSelfOnly() { return targetSelfOnly; }
+	public bool GetTargetDeadOnly() { return targetDeadOnly; }
+	
 }

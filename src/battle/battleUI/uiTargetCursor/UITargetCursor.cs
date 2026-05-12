@@ -17,4 +17,14 @@ public partial class UITargetCursor : Marker2D
 		slideTween = CreateTween().SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Cubic);
 		slideTween.TweenProperty(this, "position", target, SlideTime);
 	}
+
+	public void SetIsVisible(bool isVisible)
+	{
+		if (isVisible)
+		{
+			Show();
+		} else {
+			Hide();
+		}
+	}
 }

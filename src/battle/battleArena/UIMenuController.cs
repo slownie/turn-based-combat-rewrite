@@ -44,14 +44,6 @@ public partial class UIMenuController : Control
 		CreateMainMenu();
 	}
 
-	private void CreateTargetCursor(UseableSkillResource selectedAction)
-	{
-		Godot.Collections.Array<BattleActor> availableTargets = [];
-		availableTargets = _actorController.GetLiveActors(_battleActors);
-
-		
-	}
-
 	private void CreateMainMenu()
 	{
 		UIBattleMainMenu mainMenu = mainMenuScene.Instantiate() as UIBattleMainMenu;
@@ -62,6 +54,45 @@ public partial class UIMenuController : Control
 		mainMenu.ItemMenuRequested += CreateItemMenu;
 
 		mainMenu.Setup(true, true);
+	}
+
+	private void CreateTargetCursor(UseableSkillResource selectedAction)
+	{
+		GD.Print("Create Target Cursor");
+		Godot.Collections.Array<BattleActor> _partyTargets = [];
+		Godot.Collections.Array<BattleActor> _enemyTargets = [];
+
+		// Provide targeting parameters to TargetCursorController
+		TargetingSettings targetingSettings = selectedAction.GetTargetingSettings();
+
+		// 1. Are we targeting the party, enemies, both, or the self?
+		if (targetingSettings.GetTargetOppositeSide())
+		{
+			_enemyTargets = _actorController.GetEnemies(_battleActors);
+		}
+
+		if (targetingSettings.GetTargetSameSide())
+		{
+			_partyTargets = _actorController.GetPartyMembers(_battleActors);
+		}
+
+		if (targetingSettings.GetTargetSelfOnly())
+		{
+			_partyTargets.Add(_currentPartyActor);
+		}
+
+		// 2. Are we targeting dead or alive actors?
+		if (targetingSettings.GetTargetDeadOnly())
+		{
+			// We are only targeting dead party members
+			_partyTargets = _actorController.GetDeadActors(_partyTargets);
+		} else {
+			if (_enemyTargets.Count != 0) _enemyTargets = _actorController.GetLiveActors(_enemyTargets);
+			if (_partyTargets.Count != 0) _partyTargets = _actorController.GetLiveActors(_partyTargets);
+		}
+
+		// 3. Pass data to controller
+		_uiTargetCursorController.Setup(_partyTargets, _enemyTargets, targetingSettings.GetCursorMode());
 	}
 
 	private void CreateSkillMenu()
