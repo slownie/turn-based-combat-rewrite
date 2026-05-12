@@ -49,6 +49,9 @@ public partial class UITargetCursorController : Node2D
 				// Dumb but 
 				int desiredDown = @event.IsActionReleased("MoveDown") ? 1 : 0;
 				int desiredUp = @event.IsActionReleased("MoveUp") ? 1 : 0;
+
+
+
 				
 				// Hide the current cursor
 				_currentCursors[_currentIndex].SetIsVisible(false);
@@ -59,6 +62,29 @@ public partial class UITargetCursorController : Node2D
 
 				_currentTarget = _currentTargets[_currentIndex];
 				_currentCursors[_currentIndex].SetIsVisible(true);
+			}
+
+			if (_canMoveSide)
+			{
+				float desiredInput = Input.GetAxis("MoveLeft", "MoveRight");
+				if (desiredInput != 0.0) {
+					if (_targetSide == 0)
+					{
+						// Swap to party side
+						_targetSide = 1;
+						_currentTargets = _partyTargets;
+					} else {
+						// Swap to enemy side
+						_targetSide = 0;
+						_currentTargets = _enemyTargets;
+					}
+					
+					if (_currentIndex > _currentTargets.Count - 1) _currentIndex = 0;
+					if (_currentIndex < 0) _currentIndex = _currentTargets.Count - 1;
+				}
+
+				_currentCursors[_currentIndex].SetIsVisible(false);
+
 			}
         }
 	}
@@ -74,6 +100,8 @@ public partial class UITargetCursorController : Node2D
 		_enemyTargets = enemyTargets;
 
 		_cursorMode = cursorMode;
+
+		_canMoveSide = _partyTargets.Count !=0 && _enemyTargets.Count !=0 ? true : false;
 
 		if (_cursorMode == BattleConsts.CursorMode.Single)
 		{
