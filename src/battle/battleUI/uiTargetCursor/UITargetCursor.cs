@@ -7,17 +7,6 @@ public partial class UITargetCursor : Marker2D
 
 	Tween slideTween = null;
 
-	BattleActor currentTarget = null;
-	public BattleActor CurrentTarget
-	{
-		get { return currentTarget; }
-		set
-		{
-			currentTarget = value;
-			Position = currentTarget.Position;
-		}
-	}
-
 	/*
 		Smootly move the cursor to the specified position.
 		Called by the menu to move the cursor from entry to entry.
@@ -29,7 +18,6 @@ public partial class UITargetCursor : Marker2D
 		slideTween.TweenProperty(this, "position", target, SlideTime);
 	}
 
-	/*
 	public void SetIsVisible(bool isVisible)
 	{
 		if (isVisible)
@@ -39,5 +27,4 @@ public partial class UITargetCursor : Marker2D
 			Hide();
 		}
 	}
-	*/
 }

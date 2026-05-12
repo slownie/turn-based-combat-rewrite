@@ -14,18 +14,29 @@ public partial class UITargetCursorController : Node2D
     [Signal] public delegate void TargetsCancelledEventHandler();
 
 	// Targeting Parameters
-	Godot.Collections.Array<BattleActor> _availableTargets = [];
-	BattleActor _currentTarget;
+	Godot.Collections.Array<BattleActor> _partyTargets = [];
+	Godot.Collections.Array<BattleActor> _enemyTargets = [];
+	
 
+	// Targeting parameters
 	BattleConsts.CursorMode _cursorMode = BattleConsts.CursorMode.Single;
-	int _targetIndex = 0;
+	int _targetSide = 0; // 0 -> Enemy, 1 -> Party
+	bool _canMoveSide = false;
+	Godot.Collections.Array<UITargetCursor> _partyCursors = [];
+	Godot.Collections.Array<UITargetCursor> _enemyCursors = [];
 
-	Godot.Collections.Array<UITargetCursor> _cursors = [];
-
+	// Easier reading/composition
+	Godot.Collections.Array<BattleActor> _currentTargets = []; 
+	Godot.Collections.Array<UITargetCursor> _currentCursors = [];
+	
+	// Used only for single target
+	BattleActor _currentTarget;
+	int _currentIndex = 0;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
+		SetProcessInput(false);
 	}
 
     public override void _Input(InputEvent @event)
@@ -33,78 +44,77 @@ public partial class UITargetCursorController : Node2D
 		// Movement
         if (@event is InputEventKey)
         {
-            // Dumb but 
-            int desiredDown = @event.IsActionReleased("MoveDown") ? 1 : 0;
-            int desiredUp = @event.IsActionReleased("MoveUp") ? 1 : 0;
-            
-            _targetIndex += desiredDown - desiredUp;
-            if (_targetIndex > _availableTargets.Count - 1) _targetIndex = 0;
-            if (_targetIndex < 0) _targetIndex = _availableTargets.Count - 1;
-			_currentTarget = _availableTargets[_targetIndex];
+			if (_cursorMode == BattleConsts.CursorMode.Single)
+			{
+				// Dumb but 
+				int desiredDown = @event.IsActionReleased("MoveDown") ? 1 : 0;
+				int desiredUp = @event.IsActionReleased("MoveUp") ? 1 : 0;
+				
+				// Hide the current cursor
+				_currentCursors[_currentIndex].SetIsVisible(false);
+
+				_currentIndex += desiredDown - desiredUp;
+				if (_currentIndex > _currentTargets.Count - 1) _currentIndex = 0;
+				if (_currentIndex < 0) _currentIndex = _currentTargets.Count - 1;
+
+				_currentTarget = _currentTargets[_currentIndex];
+				_currentCursors[_currentIndex].SetIsVisible(true);
+			}
         }
 	}
 
 
 	public void Setup(
-		Godot.Collections.Array<BattleActor> availableTargets,
-		BattleConsts.CursorMode cursorMode,
-		bool enableMovement=false
+		Godot.Collections.Array<BattleActor> partyTargets,
+		Godot.Collections.Array<BattleActor> enemyTargets,
+		BattleConsts.CursorMode cursorMode
 	)
 	{
-		GD.Print("==Cursor Controller Setup==");
-		_cursorMode = cursorMode;
-		_currentTarget = availableTargets[0];
+		_partyTargets = partyTargets;
+		_enemyTargets = enemyTargets;
 
-		/*
-		if (partyTargets.Count != 0 && enemyTargets.Count == 0)
+		_cursorMode = cursorMode;
+
+		if (_cursorMode == BattleConsts.CursorMode.Single)
 		{
-			_currentTarget = partyTargets[0];
-		} else {
-			// Default to enemy
-			_currentTarget = enemyTargets[0];
+			if (partyTargets.Count != 0 && enemyTargets.Count == 0)
+			{
+				_currentTargets = partyTargets;
+				_currentTarget = _currentTargets[0];
+			} else {
+				// Default to enemy
+				_currentTargets = enemyTargets;
+				_currentTarget = _currentTargets[0];
+			}
 		}
 
 		// Create Cursors
-		foreach(BattleActor partyActor in partyTargets)
-		{
-			UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
-			AddChild(targetCursor);
-
-			targetCursor.SetIsVisible(_currentTarget == partyActor);
-			targetCursor.Position = partyActor.Position;
-		}
-
 		foreach(BattleActor enemyActor in enemyTargets)
 		{
 			UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
 			AddChild(targetCursor);
 
+			_enemyCursors.Add(targetCursor);
+
 			targetCursor.SetIsVisible(_currentTarget == enemyActor);
 			targetCursor.Position = enemyActor.Position;
 		}
-		*/
 
-		_availableTargets = availableTargets;
 
-		// Specify number of cursors to create
-		switch(_cursorMode)
+		foreach(BattleActor partyActor in partyTargets)
 		{
-			// Only create the one cursor, default to the first actor in the array
-			case BattleConsts.CursorMode.Single:
-			{
-				GD.Print("Cursor Mode - Single");
-				UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
-				AddChild(targetCursor);
+			UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
+			AddChild(targetCursor);
 
-				_cursors.Add(targetCursor);
+			_partyCursors.Add(targetCursor);
 
-				
-				targetCursor.CurrentTarget = _currentTarget;
-
-				break;
-			}
+			targetCursor.SetIsVisible(_currentTarget == partyActor);
+			targetCursor.Position = partyActor.Position;
 		}
 
+		_currentCursors = _currentTargets == _partyTargets ? _partyCursors : _enemyCursors;
+
+		SetProcessInput(true);
 		
 
 	}
@@ -117,6 +127,8 @@ public partial class UITargetCursorController : Node2D
 		{
 			cursor.QueueFree();
 		}
+
+		SetProcessInput(false);
 	}
 
 }
