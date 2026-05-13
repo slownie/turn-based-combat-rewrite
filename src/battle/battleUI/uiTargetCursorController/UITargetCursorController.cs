@@ -33,7 +33,7 @@ public partial class UITargetCursorController : Node2D
 	Godot.Collections.Array<UITargetCursor> _currentCursors = [];
 	
 	// Used only for single target
-	int _currentIndex = 0;
+	int _currentIndex = -1;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -43,46 +43,79 @@ public partial class UITargetCursorController : Node2D
 
     public override void _Input(InputEvent @event)
 	{
-		// Movement
-        if (@event.IsActionPressed("YButton"))
-        {
-			if (_canMoveSide)
+		// Single target only code
+		if (_canMoveTarget)
+		{
+			float desiredVertical = Input.GetAxis("MoveUp", "MoveDown");
+			if (desiredVertical != 0)
 			{
+				_currentCursors[_currentIndex].SetIsVisible(false);
+
+				_currentIndex += (int)desiredVertical;
+				if (_currentIndex < 0) _currentIndex = _currentCursors.Count - 1;
+				if (_currentCursors.Count - 1 < _currentIndex) _currentIndex = 0;
+				_currentCursors[_currentIndex].SetIsVisible(true);
+			}
+			
+		}
+
+		if (_canMoveSide)
+		{
+			bool moveRequested = (@event.IsActionReleased("MoveLeft") || @event.IsActionReleased("MoveRight"));
+			if (moveRequested)
+			{
+				// Swap to player side
 				if (_targetSide == 0)
 				{
+					_currentTargets = _partyTargets;
+					_currentCursors[_currentIndex].SetIsVisible(false);
+
+					_currentCursors = _partyCursors;
+					if (_cursorMode == BattleConsts.CursorMode.Single)
+					{
+
+						if (_currentTargets.Count - 1 < _currentIndex) _currentIndex = _currentTargets.Count - 1;
+						_currentCursors[_currentIndex].SetIsVisible(true);
+					} else {
+						foreach(UITargetCursor cursor in _currentCursors)
+						{
+							cursor.SetIsVisible(false);
+						}
+						_currentCursors = _partyCursors;
+						foreach(UITargetCursor cursor in _currentCursors)
+						{
+							cursor.SetIsVisible(true);
+						}
+					}
+
 					// Switch to player side
 					_targetSide = 1;	
-
-					_currentTargets = _partyTargets;
-					
-					foreach(UITargetCursor cursor in _currentCursors)
-					{
-						cursor.SetIsVisible(false);
-					}
-					_currentCursors = _partyCursors;
-					foreach(UITargetCursor cursor in _currentCursors)
-					{
-						cursor.SetIsVisible(true);
-					}
-
-
 				} else {
 					// Switch to enemy side
-					_targetSide = 0;
 					_currentTargets = _enemyTargets;
-					foreach(UITargetCursor cursor in _currentCursors)
-					{
-						cursor.SetIsVisible(false);
-					}
+					_currentCursors[_currentIndex].SetIsVisible(false);
 
 					_currentCursors = _enemyCursors;
-					foreach(UITargetCursor cursor in _currentCursors)
+					if (_cursorMode == BattleConsts.CursorMode.Single)
 					{
-						cursor.SetIsVisible(true);
+						if (_currentTargets.Count - 1 < _currentIndex) _currentIndex = _currentTargets.Count - 1;
+						_currentCursors[_currentIndex].SetIsVisible(true);
+					} else {
+						foreach(UITargetCursor cursor in _currentCursors)
+						{
+							cursor.SetIsVisible(false);
+						}
+						_currentCursors = _enemyCursors;
+						foreach(UITargetCursor cursor in _currentCursors)
+						{
+							cursor.SetIsVisible(true);
+						}
 					}
+
+					_targetSide = 0;
 				}
 			}
-        }
+		}
 	}
 
 
@@ -105,6 +138,50 @@ public partial class UITargetCursorController : Node2D
 				// Move between targets, only allow side movement if targets exist in both
 				_canMoveTarget = true;
 				_canMoveSide = _partyTargets.Count != 0 && _enemyTargets.Count != 0 ? true : false;
+				_currentIndex = 0;
+
+				// Default side
+				if (_partyTargets.Count != 0 && _enemyTargets.Count == 0)
+				{
+					// Go to party
+					_currentTargets = _partyTargets;
+				} else {
+					// Default to enemy
+					_currentTargets = _enemyTargets;
+				}
+
+				// Create Cursors
+				foreach(BattleActor enemyActor in enemyTargets)
+				{
+					UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
+					AddChild(targetCursor);
+
+					_enemyCursors.Add(targetCursor);
+
+					targetCursor.SetIsVisible(enemyActor == _currentTargets[_currentIndex]);
+					targetCursor.Position = enemyActor.Position;
+				}
+
+				foreach(BattleActor partyActor in partyTargets)
+				{
+					UITargetCursor targetCursor = cursorScene.Instantiate() as UITargetCursor;
+					AddChild(targetCursor);
+
+					_partyCursors.Add(targetCursor);
+
+					targetCursor.SetIsVisible(partyActor == _currentTargets[_currentIndex]);
+					targetCursor.Position = partyActor.Position;
+				}
+
+				// Targeting party only
+				if (_partyCursors.Count != 0 && _enemyCursors.Count == 0)
+				{
+					_targetSide = 1;
+					_currentCursors = _partyCursors;
+				} else {
+					_currentCursors = _enemyCursors;
+				}
+
 				break;
 			}
 
