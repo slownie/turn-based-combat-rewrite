@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class UIBattleMainMenu : Control
+public partial class UIBattleMainMenu : UIBattleMenuBase
 {
     [Export] UseableSkillResource attackAction;
     [Export] UseableSkillResource passAction;

@@ -42,5 +42,4 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("5_fk1sc")
 mainMenuScene = ExtResource("6_ysmad")
-
-[node name="UITargetCursorController" parent="UI/UIMenuController" unique_id=122574662 instance=ExtResource("7_1m5vt")]
+targetMenuScene = ExtResource("7_1m5vt")

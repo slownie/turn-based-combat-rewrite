@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class UITargetCursorController : Node2D
+public partial class UITargetCursorController : UIBattleMenuBase
 {
 	[Export] PackedScene cursorScene;
 

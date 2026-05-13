@@ -5,21 +5,21 @@ public partial class UIMenuController : Control
 {
 	[Export] PackedScene mainMenuScene;
 	[Export] PackedScene actionSelectionMenuScene;
+	[Export] PackedScene targetMenuScene;
 
 	[Signal] public delegate void TargetSelectedEventHandler();
-
-	UITargetCursorController _uiTargetCursorController;
 
 	ActorController _actorController;
 	Godot.Collections.Array<BattleActor> _battleActors = [];
 
 	BattleActor _currentPartyActor;
 
+	Godot.Collections.Array<UIBattleMenuBase> _menuStack = [];
+	UIBattleMenuBase _currentMenu;
+
     public override void _Ready()
 	{
-		_uiTargetCursorController = GetNode<UITargetCursorController>("UITargetCursorController");
-		_uiTargetCursorController.TargetsSelected += OnTargetsSelected;
-		_uiTargetCursorController.TargetsCancelled += OnTargetSelectionCancelled;
+		
 	}
 
 	public void BindServices(ActorController actorController, Godot.Collections.Array<BattleActor> battleActors)
@@ -44,10 +44,16 @@ public partial class UIMenuController : Control
 		mainMenu.ItemMenuRequested += CreateItemMenu;
 
 		mainMenu.Setup(true, true);
+		LoadMenu(mainMenu);
 	}
 
 	private void CreateTargetCursor(UseableSkillResource selectedAction)
 	{
+		UITargetCursorController targetMenu = targetMenuScene.Instantiate() as UITargetCursorController;
+		AddChild(targetMenu);
+
+		targetMenu.TargetsSelected += OnTargetsSelected;
+
 		Godot.Collections.Array<BattleActor> _partyTargets = [];
 		Godot.Collections.Array<BattleActor> _enemyTargets = [];
 
@@ -81,7 +87,8 @@ public partial class UIMenuController : Control
 		}
 
 		// 3. Pass data to controller
-		_uiTargetCursorController.Setup(_partyTargets, _enemyTargets, targetingSettings.GetCursorMode());
+		targetMenu.Setup(_partyTargets, _enemyTargets, targetingSettings.GetCursorMode());
+		LoadMenu(targetMenu);
 	}
 
 	private void CreateSkillMenu()
@@ -99,9 +106,26 @@ public partial class UIMenuController : Control
 		Cleanup();
 	}
 
-	private void OnTargetSelectionCancelled()
+	private void LoadMenu(UIBattleMenuBase battleMenu)
 	{
-		_uiTargetCursorController.Cleanup();
+		if (_currentMenu != null) _currentMenu.Disable();
+		_menuStack.Insert(0, battleMenu);
+		
+		_currentMenu = _menuStack[0];
+		_currentMenu.Enable();
+	}
+
+	private void UnloadMenu()
+	{
+		// Only unload the menu if we are not on the main menu
+		if (1 < _menuStack.Count)
+		{
+			_currentMenu.QueueFree();
+			_menuStack.RemoveAt(0);
+
+			_currentMenu = _menuStack[0];
+			_currentMenu.Enable();
+		}
 	}
 
 	private void Cleanup()

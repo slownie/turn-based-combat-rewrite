@@ -4,6 +4,7 @@ using System;
 public partial class OverworldController : Node2D
 {
 	Node2D _loadedScene;
+	OverworldPlayer _overworldPlayer;
 
 	[Signal] public delegate void SwitchToBattleEventHandler(EnemyEncounterResource enemyEncounterResource);
 
@@ -17,10 +18,13 @@ public partial class OverworldController : Node2D
 		{
 			SetProcess(true);
 			SetProcessInput(true);
+			SetPhysicsProcess(true);
 			Show();
+
 		} else {
 			SetProcess(false);
 			SetProcessInput(false);
+			SetPhysicsProcess(false);
 			Hide();
 		}
 	}
@@ -34,6 +38,8 @@ public partial class OverworldController : Node2D
 
 	private void OnNewRoomLoaded()
 	{
+		_overworldPlayer = _loadedScene.GetNode<OverworldPlayer>("OverworldPlayer");
+
 		// 1. Story Progress
 
 		// 2. Combat Zones
@@ -51,6 +57,7 @@ public partial class OverworldController : Node2D
 
 	private void OnEncounterStart(EnemyEncounterResource enemyEncounterResource)
 	{
+		_overworldPlayer.SetPhysicsProcess(false);
 		EmitSignal(SignalName.SwitchToBattle, enemyEncounterResource);
 	}
 
