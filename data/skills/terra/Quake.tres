@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UseableSkillResource" format=3 uid="uid://ddvtnoof5n8ch"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_oibb1"]
+[ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="2_7dids"]
+
+[resource]
+script = ExtResource("2_7dids")
+skillCostAmount = 4
+skillName = "Quake"
+desc = "Deal earth damage to one enemy."
+metadata/_custom_type_script = "uid://dicj1dhgyboo"

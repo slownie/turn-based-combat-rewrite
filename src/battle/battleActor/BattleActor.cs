@@ -5,12 +5,12 @@ public partial class BattleActor : Node2D
 {
 	[Signal] public delegate void HPDepletedEventHandler();
 
-
 	[Signal] public delegate void ReadinessChangedEventHandler(double readiness);
 	[Signal] public delegate void ReadyToActEventHandler(BattleActor battleActor);
 
 	string _actorName = "Placeholder";
 	CharacterStats _characterStats;
+	Godot.Collections.Array<BaseSkillResource> _skills = [];
 
 	bool _isPlayer = true;
 
@@ -84,6 +84,7 @@ public partial class BattleActor : Node2D
 		int y, 
 		string actorName, 
 		CharacterStats characterStats, 
+		Godot.Collections.Array<BaseSkillResource> skills,
 		SpriteFrames spriteFrames, 
 		Texture2D battleIcon,
 		bool isPlayer
@@ -94,6 +95,7 @@ public partial class BattleActor : Node2D
 
 		_actorName = actorName;
 		_characterStats = characterStats;
+		_skills = skills;
 
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
 		_maxHPLabel.Text = _characterStats.GetMaxHP().ToString();
@@ -138,6 +140,7 @@ public partial class BattleActor : Node2D
 		_curMPLabel.Text = _characterStats.GetCurMP().ToString();
 	}
 
+	public Godot.Collections.Array<BaseSkillResource> GetSkills() { return _skills; }
 
 	public bool GetIsPlayer() { return _isPlayer; }
 	public Texture2D GetBattleIcon() { return _battleIcon; }

@@ -4,7 +4,7 @@ using System;
 public partial class UIMenuController : Control
 {
 	[Export] PackedScene mainMenuScene;
-	[Export] PackedScene actionSelectionMenuScene;
+	[Export] PackedScene skillMenuScene;
 	[Export] PackedScene targetMenuScene;
 
 	[Signal] public delegate void TargetSelectedEventHandler();
@@ -13,6 +13,7 @@ public partial class UIMenuController : Control
 	Godot.Collections.Array<BattleActor> _battleActors = [];
 
 	BattleActor _currentPartyActor;
+	Godot.Collections.Array<UseableSkillResource> _useableSkills = [];
 
 	Godot.Collections.Array<UIBattleMenuBase> _menuStack = [];
 	UIBattleMenuBase _currentMenu;
@@ -31,6 +32,12 @@ public partial class UIMenuController : Control
 	public void PartyTurnStart(BattleActor currentPartyActor)
 	{
 		_currentPartyActor = currentPartyActor;
+		foreach (BaseSkillResource skill in _currentPartyActor.GetSkills())
+		{
+			if (skill is UseableSkillResource) _useableSkills.Add(skill as UseableSkillResource);
+		}
+		GD.Print(_useableSkills);
+
 		CreateMainMenu();
 	}
 
@@ -43,7 +50,9 @@ public partial class UIMenuController : Control
 		mainMenu.SkillMenuRequested += CreateSkillMenu;
 		mainMenu.ItemMenuRequested += CreateItemMenu;
 
-		mainMenu.Setup(true, true);
+		bool skillMenuEnabled = 0 < _useableSkills.Count; 
+
+		mainMenu.Setup(skillMenuEnabled, true);
 		LoadMenu(mainMenu);
 	}
 
@@ -53,6 +62,7 @@ public partial class UIMenuController : Control
 		AddChild(targetMenu);
 
 		targetMenu.TargetsSelected += OnTargetsSelected;
+		targetMenu.TargetsCancelled += UnloadMenu;
 
 		Godot.Collections.Array<BattleActor> _partyTargets = [];
 		Godot.Collections.Array<BattleActor> _enemyTargets = [];
@@ -93,7 +103,17 @@ public partial class UIMenuController : Control
 
 	private void CreateSkillMenu()
 	{
-		GD.Print("Skill Menu Created");
+		UISkillMenu skillMenu = skillMenuScene.Instantiate() as UISkillMenu;
+		AddChild(skillMenu);
+
+		skillMenu.SkillSelectionCancelled += UnloadMenu;
+
+		// If the player reaches this menu, then there are useable skills
+		// Even if _useableSkills is empty, skillMenu.Setup will execute without errors
+		skillMenu.Setup(_useableSkills);
+		LoadMenu(skillMenu);
+
+		skillMenu.Position = new Vector2(64, 32);
 	}
 
 	private void CreateItemMenu()
@@ -103,6 +123,7 @@ public partial class UIMenuController : Control
 
 	private void OnTargetsSelected(Godot.Collections.Array<BattleActor> selectedActors)
 	{
+		EmitSignal(SignalName.TargetSelected);
 		Cleanup();
 	}
 
@@ -137,5 +158,6 @@ public partial class UIMenuController : Control
 		}
 
 		_currentPartyActor = null; 
+		_useableSkills = [];
 	}
 }

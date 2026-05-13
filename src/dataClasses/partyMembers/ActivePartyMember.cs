@@ -18,8 +18,8 @@ public partial class ActivePartyMember : GodotObject
     // Equipment
 
     // Skills
-    Godot.Collections.Array _learnedSkills = [];
-    Godot.Collections.Array<int> _equippedSkills = []; 
+    Godot.Collections.Array<BaseSkillResource> _learnedSkills = [];
+    Godot.Collections.Array<BaseSkillResource> _equippedSkills = []; 
 
     // Battle Animation
     SpriteFrames _spriteFrames;
@@ -35,9 +35,11 @@ public partial class ActivePartyMember : GodotObject
         if (partyMemberDataResource != null)
         {
             _name = partyMemberDataResource.GetPartyMemberName();
-            GD.Print(_name);
-
             _characterStats = new CharacterStats(partyMemberDataResource.GetBaseStats());
+
+            // Skill Setup
+            _learnedSkills = partyMemberDataResource.GetStartingSkills();
+            _equippedSkills = _learnedSkills;
 
             _spriteFrames = partyMemberDataResource.GetSpriteFrames();
             _battleIcon = partyMemberDataResource.GetBattleIcon();
@@ -48,6 +50,8 @@ public partial class ActivePartyMember : GodotObject
 
     public string GetPartyMemberName() { return _name; }
     public CharacterStats GetCharacterStats() { return _characterStats; }
+    public Godot.Collections.Array<BaseSkillResource> GetEquippedSkills() { return _equippedSkills; }
+
     public SpriteFrames GetSpriteFrames() { return _spriteFrames; }
     public Texture2D GetBattleIcon() { return _battleIcon; }
 

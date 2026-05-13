@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UseableSkillResource" format=3 uid="uid://clnbm17ilhsj"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_l740a"]
+[ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="2_de5tt"]
+
+[resource]
+script = ExtResource("2_de5tt")
+skillCostAmount = 8
+skillName = "Wave"
+desc = "Deal water damage to all enemies."
+metadata/_custom_type_script = "uid://dicj1dhgyboo"

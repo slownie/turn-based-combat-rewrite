@@ -91,6 +91,7 @@ public partial class BattleArena : Control
 				68+(i % 5*55),
 				activePartyMember.GetPartyMemberName(), 
 				activePartyMember.GetCharacterStats(),
+				activePartyMember.GetEquippedSkills(),
 				activePartyMember.GetSpriteFrames(),
 				activePartyMember.GetBattleIcon(),
 				true
@@ -115,6 +116,7 @@ public partial class BattleArena : Control
 				58+(i % 3*30),
 				enemy.GetEnemyName(), 
 				enemyStats,
+				enemy.GetSkills(),
 				enemy.GetSpriteFrames(),
 				enemy.GetBattleIcon(),
 				false

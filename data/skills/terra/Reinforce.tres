@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="UseableSkillResource" format=3 uid="uid://bb7n7ijhidmuh"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_naqk7"]
+[ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="2_axanv"]
+
+[resource]
+script = ExtResource("2_axanv")
+skillCostAmount = 12
+skillName = "Reinforce"
+desc = "Raise defense of one ally."
+metadata/_custom_type_script = "uid://dicj1dhgyboo"

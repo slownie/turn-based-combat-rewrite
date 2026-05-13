@@ -17,4 +17,7 @@ public partial class UseableSkillResource : BaseSkillResource
 	[Export] TargetingSettings targetingSettings;
 
 	public TargetingSettings GetTargetingSettings() { return targetingSettings; }
+
+	public SkillCostType GetSkillCostType() { return skillCostType; }
+	public int GetSkillCostAmount() { return skillCostAmount; }
 }
