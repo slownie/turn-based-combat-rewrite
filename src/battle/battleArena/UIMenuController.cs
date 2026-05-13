@@ -18,19 +18,9 @@ public partial class UIMenuController : Control
     public override void _Ready()
 	{
 		_uiTargetCursorController = GetNode<UITargetCursorController>("UITargetCursorController");
+		_uiTargetCursorController.TargetsSelected += OnTargetsSelected;
+		_uiTargetCursorController.TargetsCancelled += OnTargetSelectionCancelled;
 	}
-
-    public override void _Input(InputEvent @event)
-	{
-		if (@event is InputEventKey keyEvent && keyEvent.Pressed)
-		{
-			if (keyEvent.Keycode == Key.R)
-			{
-				GD.Print(_battleActors[2].GetCurHP());
-			}
-		}
-	}
-
 
 	public void BindServices(ActorController actorController, Godot.Collections.Array<BattleActor> battleActors)
 	{
@@ -58,7 +48,6 @@ public partial class UIMenuController : Control
 
 	private void CreateTargetCursor(UseableSkillResource selectedAction)
 	{
-		GD.Print("==Create Target Cursor==");
 		Godot.Collections.Array<BattleActor> _partyTargets = [];
 		Godot.Collections.Array<BattleActor> _enemyTargets = [];
 
@@ -103,6 +92,16 @@ public partial class UIMenuController : Control
 	private void CreateItemMenu()
 	{
 		GD.Print("Item Menu Created");		
+	}
+
+	private void OnTargetsSelected(Godot.Collections.Array<BattleActor> selectedActors)
+	{
+		Cleanup();
+	}
+
+	private void OnTargetSelectionCancelled()
+	{
+		_uiTargetCursorController.Cleanup();
 	}
 
 	private void Cleanup()

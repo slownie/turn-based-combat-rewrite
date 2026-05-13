@@ -2,9 +2,17 @@
 
 [ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_ge622"]
 [ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="2_jontx"]
+[ext_resource type="Script" uid="uid://bp6l7owmnyh6d" path="res://src/components/TargetingSettings.cs" id="3_jontx"]
+
+[sub_resource type="Resource" id="Resource_322vq"]
+script = ExtResource("3_jontx")
+targetOppsiteSide = false
+targetSelfOnly = true
+metadata/_custom_type_script = "uid://bp6l7owmnyh6d"
 
 [resource]
 script = ExtResource("2_jontx")
+targetingSettings = SubResource("Resource_322vq")
 skillName = "Pass"
 desc = "Skip your turn."
 metadata/_custom_type_script = "uid://dicj1dhgyboo"

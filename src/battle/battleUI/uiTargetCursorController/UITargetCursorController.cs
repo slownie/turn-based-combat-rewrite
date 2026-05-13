@@ -61,7 +61,7 @@ public partial class UITargetCursorController : Node2D
 
 		if (_canMoveSide)
 		{
-			bool moveRequested = (@event.IsActionReleased("MoveLeft") || @event.IsActionReleased("MoveRight"));
+			bool moveRequested = @event.IsActionReleased("MoveLeft") || @event.IsActionReleased("MoveRight");
 			if (moveRequested)
 			{
 				// Swap to player side
@@ -116,14 +116,21 @@ public partial class UITargetCursorController : Node2D
 				}
 			}
 		}
+	
+		// Select Targets
+		if (@event.IsActionPressed("AButton"))
+		{
+			EmitSignal(SignalName.TargetsSelected, _currentTargets);
+		}
+
+		// Quit Selection
+		if (@event.IsActionPressed("BButton"))
+		{
+			EmitSignal(SignalName.TargetsCancelled);
+		}
 	}
 
-
-	public void Setup(
-		Godot.Collections.Array<BattleActor> partyTargets,
-		Godot.Collections.Array<BattleActor> enemyTargets,
-		BattleConsts.CursorMode cursorMode
-	)
+	public void Setup(Godot.Collections.Array<BattleActor> partyTargets, Godot.Collections.Array<BattleActor> enemyTargets, BattleConsts.CursorMode cursorMode)
 	{
 		_partyTargets = partyTargets;
 		_enemyTargets = enemyTargets;
@@ -317,5 +324,4 @@ public partial class UITargetCursorController : Node2D
 
 		SetProcessInput(false);
 	}
-
 }
