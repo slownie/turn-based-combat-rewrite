@@ -154,8 +154,7 @@ public partial class BattleArena : Control
 	private void OnPartyMemberActorReady(BattleActor actor)
 	{
 		TimeScale = 0.0;
-		_menuController.PartyTurnStart(actor);
-		
+		_menuController.PartyTurnStart(actor, _battleInventory);
 	}
 
 	private void OnEnemyActorReady(BattleActor actor)

@@ -6,7 +6,7 @@ public partial class UISkillMenu : UIBattleMenuBase
     [Export] PackedScene skillMenuEntry;
     [Export] PackedScene targetCursorScene;
 
-    [Signal] public delegate void SkillSelectedEventHandler(UseableSkillResource selectedSkill);
+    [Signal] public delegate void SkillSelectedEventHandler(UseableActionResource selectedSkill);
     [Signal] public delegate void SkillSelectionCancelledEventHandler();
 
     Godot.Collections.Array<UseableSkillResource> _skillList = [];

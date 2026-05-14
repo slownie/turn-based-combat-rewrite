@@ -40,10 +40,14 @@ public partial class UIMenuController : Control
 		{
 			if (skill is UseableSkillResource) _useableSkills.Add(skill as UseableSkillResource);
 		}
-		CreateMainMenu();
+
+		bool skillMenuEnabled = 0 < _useableSkills.Count; 
+		bool itemMenuEnabled = 0 < battleInventory.Count;
+
+		CreateMainMenu(skillMenuEnabled, itemMenuEnabled);
 	}
 
-	private void CreateMainMenu()
+	private void CreateMainMenu(bool skillMenuEnabled, bool itemMenuEnabled)
 	{
 		UIBattleMainMenu mainMenu = mainMenuScene.Instantiate() as UIBattleMainMenu;
 		AddChild(mainMenu);
@@ -52,9 +56,7 @@ public partial class UIMenuController : Control
 		mainMenu.SkillMenuRequested += CreateSkillMenu;
 		mainMenu.ItemMenuRequested += CreateItemMenu;
 
-		bool skillMenuEnabled = 0 < _useableSkills.Count; 
-
-		mainMenu.Setup(skillMenuEnabled, true);
+		mainMenu.Setup(skillMenuEnabled, itemMenuEnabled);
 		LoadMenu(mainMenu);
 	}
 
@@ -79,7 +81,7 @@ public partial class UIMenuController : Control
 		GD.Print("Item Menu Created");		
 	}
 
-	private void CreateTargetCursor(UseableSkillResource selectedAction)
+	private void CreateTargetCursor(UseableActionResource useableActionResource)
 	{
 		UITargetCursorController targetMenu = targetMenuScene.Instantiate() as UITargetCursorController;
 		AddChild(targetMenu);
@@ -91,7 +93,7 @@ public partial class UIMenuController : Control
 		Godot.Collections.Array<BattleActor> _enemyTargets = [];
 
 		// Provide targeting parameters to TargetCursorController
-		TargetingSettings targetingSettings = selectedAction.GetTargetingSettings();
+		TargetingSettings targetingSettings = useableActionResource.GetTargetingSettings();
 
 		// 1. Are we targeting the party, enemies, both, or the self?
 		if (targetingSettings.GetTargetOppositeSide())
@@ -120,7 +122,7 @@ public partial class UIMenuController : Control
 		}
 
 		// 3. Pass data to controller
-		targetMenu.Setup(_partyTargets, _enemyTargets, targetingSettings.GetCursorMode());
+		targetMenu.Setup(_partyTargets, _enemyTargets, targetingSettings.GetCursorMode(), 0);
 		LoadMenu(targetMenu);
 	}
 

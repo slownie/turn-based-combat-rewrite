@@ -4,5 +4,7 @@ using System;
 [GlobalClass]
 public partial class UseableItemResource : BaseItemResource
 {
-	[Export] Godot.Collections.Array<ActionEffectResource> actions = [];
+	[Export] UseableActionResource useableActionResource;
+
+	public UseableActionResource GetUseableActionResource() { return useableActionResource; }
 }

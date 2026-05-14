@@ -16,7 +16,6 @@ public partial class UITargetCursorController : UIBattleMenuBase
 	// Targeting Parameters
 	Godot.Collections.Array<BattleActor> _partyTargets = [];
 	Godot.Collections.Array<BattleActor> _enemyTargets = [];
-	
 
 	// Targeting parameters
 	BattleConsts.CursorMode _cursorMode = BattleConsts.CursorMode.Single;
@@ -34,6 +33,8 @@ public partial class UITargetCursorController : UIBattleMenuBase
 	
 	// Used only for single target
 	int _currentIndex = -1;
+
+	BattleConsts.ActionMenuType _actionMenuType;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -130,12 +131,18 @@ public partial class UITargetCursorController : UIBattleMenuBase
 		}
 	}
 
-	public void Setup(Godot.Collections.Array<BattleActor> partyTargets, Godot.Collections.Array<BattleActor> enemyTargets, BattleConsts.CursorMode cursorMode)
+	public void Setup(
+		Godot.Collections.Array<BattleActor> partyTargets, 
+		Godot.Collections.Array<BattleActor> enemyTargets, 
+		BattleConsts.CursorMode cursorMode,
+		BattleConsts.ActionMenuType actionMenuType
+	)
 	{
 		_partyTargets = partyTargets;
 		_enemyTargets = enemyTargets;
 
 		_cursorMode = cursorMode;
+		_actionMenuType = actionMenuType;
 
 		// Setup & create based on cursor mode & targets
 		switch (_cursorMode)

@@ -47,4 +47,17 @@ public static partial class BattleConsts
 		Side,
 		All,
 	}
+
+	/*
+		Used to as a middleware between target selection and action execution.
+		Could probably be coded to look for children nodes but I think this works better.
+	*/
+	public enum ActionMenuType
+	{
+		Attack,
+		Skill,
+		Item,
+		Pass,
+		Other
+	}
 }

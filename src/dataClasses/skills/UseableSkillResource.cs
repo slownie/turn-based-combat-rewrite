@@ -12,12 +12,9 @@ public partial class UseableSkillResource : BaseSkillResource
 
 	[Export] SkillCostType skillCostType = SkillCostType.MP;
 	[Export] int skillCostAmount = 0;
-	[Export] Godot.Collections.Array<ActionEffectResource> actions = [];
+	[Export] UseableActionResource useableActionResource;
 
-	[Export] TargetingSettings targetingSettings;
-
-	public TargetingSettings GetTargetingSettings() { return targetingSettings; }
-
+	public UseableActionResource GetUseableActionResource() { return useableActionResource; }
 	public SkillCostType GetSkillCostType() { return skillCostType; }
 	public int GetSkillCostAmount() { return skillCostAmount; }
 }
