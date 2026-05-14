@@ -56,6 +56,28 @@ public partial class UIMenuController : Control
 		LoadMenu(mainMenu);
 	}
 
+	private void CreateSkillMenu()
+	{
+		UISkillMenu skillMenu = skillMenuScene.Instantiate() as UISkillMenu;
+		AddChild(skillMenu);
+
+		skillMenu.SkillSelected += CreateTargetCursor;
+		skillMenu.SkillSelectionCancelled += UnloadMenu;
+
+		// If the player reaches this menu, then there are useable skills
+		// Even if _useableSkills is empty, skillMenu.Setup will execute without errors
+		skillMenu.Setup(_useableSkills);
+		LoadMenu(skillMenu);
+
+		skillMenu.Position = new Vector2(64, 32);
+
+	}
+
+	private void CreateItemMenu()
+	{
+		GD.Print("Item Menu Created");		
+	}
+
 	private void CreateTargetCursor(UseableSkillResource selectedAction)
 	{
 		UITargetCursorController targetMenu = targetMenuScene.Instantiate() as UITargetCursorController;
@@ -99,26 +121,6 @@ public partial class UIMenuController : Control
 		// 3. Pass data to controller
 		targetMenu.Setup(_partyTargets, _enemyTargets, targetingSettings.GetCursorMode());
 		LoadMenu(targetMenu);
-	}
-
-	private void CreateSkillMenu()
-	{
-		UISkillMenu skillMenu = skillMenuScene.Instantiate() as UISkillMenu;
-		AddChild(skillMenu);
-
-		skillMenu.SkillSelectionCancelled += UnloadMenu;
-
-		// If the player reaches this menu, then there are useable skills
-		// Even if _useableSkills is empty, skillMenu.Setup will execute without errors
-		skillMenu.Setup(_useableSkills);
-		LoadMenu(skillMenu);
-
-		skillMenu.Position = new Vector2(64, 32);
-	}
-
-	private void CreateItemMenu()
-	{
-		GD.Print("Item Menu Created");		
 	}
 
 	private void OnTargetsSelected(Godot.Collections.Array<BattleActor> selectedActors)
