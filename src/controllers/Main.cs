@@ -7,6 +7,7 @@ public partial class Main : Node
 	BattleController _battleController;
 	MenuController _menuController;
 
+	InventoryController _inventoryController;
 	MusicPlayer _musicPlayer;
 	SFXPlayer _sfxPlayer;
 	ScreenTransition _screenTransition;
@@ -15,6 +16,7 @@ public partial class Main : Node
 
 	// FOR TESTING PURPOSES ONLY
 	[Export] Godot.Collections.Array<PartyMemberDataResource> startingPartyMembers = [];
+	[Export] Godot.Collections.Array<UseableItemResource> inventoryItems = [];
 
 	public override void _Ready()
 	{
@@ -25,33 +27,6 @@ public partial class Main : Node
 
 	private void BuildServices()
 	{
-		// Overworld Controller
-		PackedScene overworldControllerScene = GD.Load<PackedScene>("res://src/controllers/OverworldController.tscn");
-		_overworldController = overworldControllerScene.Instantiate() as OverworldController;
-		AddChild(_overworldController);
-
-		PackedScene initialOverworldScene = GD.Load<PackedScene>("res://scenes/overworld/TestOverworld.tscn");
-		_overworldController.LoadScene(initialOverworldScene);
-
-		_overworldController.SwitchToBattle += BattleStart;
-
-		
-
-
-		// Battle Controller
-		PackedScene battleControllerScene = GD.Load<PackedScene>("res://src/controllers/BattleController.tscn");
-		_battleController = battleControllerScene.Instantiate() as BattleController;
-		AddChild(_battleController);
-
-		_battleController.SetActive(false);
-
-		// Menu Controller
-		PackedScene menuControllerScene = GD.Load<PackedScene>("res://src/controllers/MenuController.tscn");
-		_menuController = menuControllerScene.Instantiate() as MenuController;
-		AddChild(_menuController);
-
-		_menuController.SetActive(false);
-
 		PackedScene musicPlayerScene = GD.Load<PackedScene>("res://src/music/MusicPlayer.tscn");
 		_musicPlayer = musicPlayerScene.Instantiate() as MusicPlayer;
 		AddChild(_musicPlayer);
@@ -64,13 +39,48 @@ public partial class Main : Node
 		_screenTransition = screenTransitionScene.Instantiate() as ScreenTransition;
 		AddChild(_screenTransition);
 
-		
+		// Inventory Controller
+		PackedScene inventoryControllerScene = GD.Load<PackedScene>("res://src/controllers/InventoryController.tscn");
+		_inventoryController = inventoryControllerScene.Instantiate() as InventoryController;
+		AddChild(_inventoryController);
+
+
+		// Overworld Controller
+		PackedScene overworldControllerScene = GD.Load<PackedScene>("res://src/controllers/OverworldController.tscn");
+		_overworldController = overworldControllerScene.Instantiate() as OverworldController;
+		AddChild(_overworldController);
+
+		PackedScene initialOverworldScene = GD.Load<PackedScene>("res://scenes/overworld/TestOverworld.tscn");
+		_overworldController.LoadScene(initialOverworldScene);
+
+		_overworldController.SwitchToBattle += BattleStart;
+
+		// Battle Controller
+		PackedScene battleControllerScene = GD.Load<PackedScene>("res://src/controllers/BattleController.tscn");
+		_battleController = battleControllerScene.Instantiate() as BattleController;
+		AddChild(_battleController);
+
+		_battleController.BindServices(
+			_inventoryController,
+			_musicPlayer,
+			_sfxPlayer
+		);
+
+		_battleController.SetActive(false);
+
+		// Menu Controller
+		PackedScene menuControllerScene = GD.Load<PackedScene>("res://src/controllers/MenuController.tscn");
+		_menuController = menuControllerScene.Instantiate() as MenuController;
+		AddChild(_menuController);
+
+		_menuController.SetActive(false);
+
 
 		_gameState = new GameState();
 		
 
 		// TODO: REMOVE WHEN YOU ACTUALLY GET A WORKING MENU
-		_gameState.NewGame(startingPartyMembers);
+		_gameState.NewGame(startingPartyMembers, inventoryItems);
 	}
 
 	private void BattleStart(EnemyEncounterResource enemyEncounterResource)

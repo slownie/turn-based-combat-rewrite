@@ -1,6 +1,7 @@
 using Godot;
 using System;
 
+[GlobalClass]
 public partial class InventoryItem : GodotObject
 {
 	BaseItemResource _itemResource;
@@ -14,5 +15,8 @@ public partial class InventoryItem : GodotObject
 	}
 
 	public BaseItemResource GetItemResource() { return _itemResource; }
+
+	public Texture2D GetIcon() { return _itemResource.GetIcon(); }
+	public string GetItemName() { return _itemResource.GetItemName(); }
 	public int GetItemQuantity() { return _quantity; }
 }

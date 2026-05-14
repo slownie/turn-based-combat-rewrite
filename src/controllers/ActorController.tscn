@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://ludecivyoabp"]
-
-[ext_resource type="Script" uid="uid://47eqbwxbc3pj" path="res://src/controllers/ActorController.cs" id="1_uh8ax"]
-
-[node name="ActorController" type="Node2D" unique_id=1861226942]
-script = ExtResource("1_uh8ax")

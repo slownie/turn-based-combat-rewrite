@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PassiveSkillResource" format=3 uid="uid://dx56xapu1gg37"]
+
+[ext_resource type="Script" uid="uid://c2rs1ebt6mlmh" path="res://src/dataClasses/skills/PassiveSkillResource.cs" id="1_rmfn2"]
+
+[resource]
+script = ExtResource("1_rmfn2")
+skillName = "Critical Eye"
+metadata/_custom_type_script = "uid://c2rs1ebt6mlmh"

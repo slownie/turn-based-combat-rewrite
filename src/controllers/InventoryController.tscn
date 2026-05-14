@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bqo2htn45my6p"]
+
+[ext_resource type="Script" uid="uid://wp5cwi2rxnhs" path="res://src/controllers/InventoryController.cs" id="1_nqmga"]
+
+[node name="InventoryController" type="Node2D" unique_id=1809421345]
+script = ExtResource("1_nqmga")

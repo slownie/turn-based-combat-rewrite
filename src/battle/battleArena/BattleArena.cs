@@ -12,6 +12,10 @@ public partial class BattleArena : Control
 	ActorController _actorController;
 	UIMenuController _menuController;
 	UITurnBar _turnBar;
+
+	InventoryController _inventoryController;
+	MusicPlayer _musicPlayer;
+	SFXPlayer _sfxPlayer;
 	
 
 	// UI Objects
@@ -75,6 +79,11 @@ public partial class BattleArena : Control
 				GD.Print(_actors[2].GetCurHP());
 			}
 		}
+	}
+
+	public void BindServices()
+	{
+		
 	}
 
 	public void SetupActors(Godot.Collections.Array<ActivePartyMember> partyMembers, Godot.Collections.Array<EnemyResource> enemies)

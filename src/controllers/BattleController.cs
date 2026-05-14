@@ -16,11 +16,13 @@ public partial class BattleController : CanvasLayer
 
 	EnemyEncounterResource _enemyEncounterResource;
 
+	InventoryController _inventoryController;
 	MusicPlayer _musicPlayer;
 	SFXPlayer _sfxPlayer;
 
-	public void BindServices(MusicPlayer musicPlayer, SFXPlayer sfxPlayer)
+	public void BindServices(InventoryController inventoryController, MusicPlayer musicPlayer, SFXPlayer sfxPlayer)
 	{
+		_inventoryController = inventoryController;
 		_musicPlayer = musicPlayer;
 		_sfxPlayer = sfxPlayer;
 	}
@@ -47,7 +49,7 @@ public partial class BattleController : CanvasLayer
 		AddChild(newBattleArena);
 
 		newBattleArena.BattleFinished += OnBattleFinished;
-
+		
 		newBattleArena.SetupActors(partyMembers, enemyEncounterResource.GetEnemies());
 
 		if (enemyEncounterResource.GetBattleMusic() != null)

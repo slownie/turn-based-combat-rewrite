@@ -11,12 +11,18 @@ public partial class GameState : GodotObject
         
     }
 
-    public void NewGame(Godot.Collections.Array<PartyMemberDataResource> partyMembers)
+    public void NewGame(Godot.Collections.Array<PartyMemberDataResource> partyMembers, Godot.Collections.Array<UseableItemResource> startingInventory)
     {
         foreach (PartyMemberDataResource partyMemberData in partyMembers)
         {
             ActivePartyMember activePartyMember = new ActivePartyMember(partyMemberData);
             _activePartyMembers.Add(activePartyMember);
+        }
+
+        foreach (UseableItemResource itemResource in startingInventory)
+        {
+            InventoryItem inventoryItem = new InventoryItem(itemResource, 3);
+            _consumableItems.Add(inventoryItem);
         }
         
     }
@@ -32,4 +38,5 @@ public partial class GameState : GodotObject
     }
 
     public Godot.Collections.Array<ActivePartyMember> GetActivePartyMembers() { return _activePartyMembers; }
+    public Godot.Collections.Array<InventoryItem> GetInventoryItems() { return _consumableItems; }
 }
