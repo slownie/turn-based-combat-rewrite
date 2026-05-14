@@ -9,11 +9,15 @@ public partial class UIMenuController : Control
 
 	[Signal] public delegate void TargetSelectedEventHandler();
 
+	[Signal] public delegate void SkillUsedEventHandler(BattleActor actor, UseableSkillResource.SkillCostType skillCostType, int amount);
+	[Signal] public delegate void ItemUsedEventHandler(int itemIndex, int quantity);
+
 	ActorController _actorController;
 	Godot.Collections.Array<BattleActor> _battleActors = [];
 
 	BattleActor _currentPartyActor;
 	Godot.Collections.Array<UseableSkillResource> _useableSkills = [];
+
 
 	Godot.Collections.Array<UIBattleMenuBase> _menuStack = [];
 	UIBattleMenuBase _currentMenu;
@@ -29,15 +33,13 @@ public partial class UIMenuController : Control
 		_battleActors = battleActors;
 	}
 
-	public void PartyTurnStart(BattleActor currentPartyActor)
+	public void PartyTurnStart(BattleActor currentPartyActor, Godot.Collections.Array<InventoryItem> battleInventory)
 	{
 		_currentPartyActor = currentPartyActor;
 		foreach (BaseSkillResource skill in _currentPartyActor.GetSkills())
 		{
 			if (skill is UseableSkillResource) _useableSkills.Add(skill as UseableSkillResource);
 		}
-		GD.Print(_useableSkills);
-
 		CreateMainMenu();
 	}
 
@@ -70,7 +72,6 @@ public partial class UIMenuController : Control
 		LoadMenu(skillMenu);
 
 		skillMenu.Position = new Vector2(64, 32);
-
 	}
 
 	private void CreateItemMenu()

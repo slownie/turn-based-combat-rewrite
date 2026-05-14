@@ -8,6 +8,7 @@ public partial class BattleArena : Control
 	[Signal] public delegate void BattleFinishedEventHandler(BattleController.BattleConclusion battleConclusion);
 
 	Godot.Collections.Array<BattleActor> _actors = [];
+	Godot.Collections.Array<InventoryItem> _battleInventory = [];
 
 	ActorController _actorController;
 	UIMenuController _menuController;
@@ -65,6 +66,9 @@ public partial class BattleArena : Control
 		// UI
 		_menuController = GetNode<UIMenuController>("UI/UIMenuController");
 		_menuController.BindServices(_actorController, _actors);
+		
+		_menuController.SkillUsed += OnSkillUsed;
+		_menuController.ItemUsed += OnItemUsed;
 
 		_turnBar = GetNode<UITurnBar>("UI/UITurnBar");
 	}
@@ -73,17 +77,14 @@ public partial class BattleArena : Control
 	{
 		if (@event is InputEventKey keyEvent && keyEvent.Pressed)
 		{
-			if (keyEvent.Keycode == Key.E)
-			{
-				_actorController.AddActorCurHP(_actors[2], -5);
-				GD.Print(_actors[2].GetCurHP());
-			}
 		}
 	}
 
-	public void BindServices()
+	public void BindServices(InventoryController inventoryController, MusicPlayer musicPlayer, SFXPlayer sfxPlayer)
 	{
-		
+		_inventoryController = inventoryController;
+		_musicPlayer = musicPlayer;
+		_sfxPlayer = sfxPlayer;
 	}
 
 	public void SetupActors(Godot.Collections.Array<ActivePartyMember> partyMembers, Godot.Collections.Array<EnemyResource> enemies)
@@ -140,6 +141,10 @@ public partial class BattleArena : Control
 		IsActive = true;
 	}
 
+	public void SetupInventory(Godot.Collections.Array<InventoryItem> inventory)
+	{
+		_battleInventory = inventory;
+	}
 
 	public void StartBattle()
 	{
@@ -161,6 +166,21 @@ public partial class BattleArena : Control
 	private void OnActionSelected()
 	{
 		
+	}
+
+	private void OnSkillUsed(BattleActor actor, UseableSkillResource.SkillCostType skillCostType, int amount)
+	{
+		if (skillCostType == UseableSkillResource.SkillCostType.HP)
+		{
+			_actorController.AddActorCurHP(actor, -amount);
+		} else {
+			_actorController.AddActorCurMP(actor, -amount);
+		}
+		
+	}
+
+	private void OnItemUsed(int itemIndex, int quantity)
+	{
 	}
 	#endregion
 }
