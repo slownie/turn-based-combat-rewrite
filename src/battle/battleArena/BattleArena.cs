@@ -181,6 +181,7 @@ public partial class BattleArena : Control
 
 	private void OnItemUsed(int itemIndex, int quantity)
 	{
+		_inventoryController.AddItemQuantity(_battleInventory, itemIndex, -quantity);
 	}
 	#endregion
 }

@@ -6,7 +6,7 @@ public partial class UIItemMenu : UIBattleMenuBase
     [Export] PackedScene itemMenuEntry;
     [Export] PackedScene targetCursorScene;
 
-    [Signal] public delegate void ItemSelectedEventHandler(UseableItemResource selectedItem);
+    [Signal] public delegate void ItemSelectedEventHandler(int selectedItemIndex);
     [Signal] public delegate void ItemSelectionCancelledEventHandler();
 
     Godot.Collections.Array<InventoryItem> _itemList = [];
@@ -41,8 +41,7 @@ public partial class UIItemMenu : UIBattleMenuBase
     {
         if (@event.IsActionPressed("AButton"))
         {
-            UseableItemResource selectedItem = _itemList[index].GetItemResource() as UseableItemResource;
-            EmitSignal(SignalName.ItemSelected, selectedItem);
+            EmitSignal(SignalName.ItemSelected, index);
         }
 
 		// Quit Selection

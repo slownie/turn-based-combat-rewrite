@@ -56,6 +56,7 @@ public partial class BattleController : CanvasLayer
 		
 		newBattleArena.SetupActors(partyMembers, enemyEncounterResource.GetEnemies());
 		newBattleArena.SetupInventory(inventoryItems);
+		newBattleArena.BindServices(_inventoryController, _musicPlayer, _sfxPlayer);
 
 		if (enemyEncounterResource.GetBattleMusic() != null)
 		{

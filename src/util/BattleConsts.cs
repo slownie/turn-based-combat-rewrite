@@ -60,4 +60,5 @@ public static partial class BattleConsts
 		Pass,
 		Other
 	}
+
 }

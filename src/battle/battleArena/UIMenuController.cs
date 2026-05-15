@@ -20,7 +20,7 @@ public partial class UIMenuController : Control
 	Godot.Collections.Array<UseableSkillResource> _useableSkills = [];
 	Godot.Collections.Array<InventoryItem> _battleInventory = [];
 	UseableSkillResource _selectedSkill;
-	UseableItemResource _selectedItem;
+	int _selectedItemIndex = -1;
 
 	Godot.Collections.Array<UIBattleMenuBase> _menuStack = [];
 	UIBattleMenuBase _currentMenu;
@@ -101,10 +101,11 @@ public partial class UIMenuController : Control
 		CreateTargetCursor(_selectedSkill.GetUseableActionResource());
 	}
 
-	private void OnItemSelected(UseableItemResource useableItemResource)
+	private void OnItemSelected(int selectedItemIndex)
 	{
-		_selectedItem = useableItemResource;
-		CreateTargetCursor(_selectedItem.GetUseableActionResource());
+		_selectedItemIndex = selectedItemIndex;
+		UseableItemResource useableItemResource = _battleInventory[_selectedItemIndex].GetItemResource() as UseableItemResource;
+		CreateTargetCursor(useableItemResource.GetUseableActionResource());
 	}
 
 	private void CreateTargetCursor(UseableActionResource useableActionResource)
@@ -160,8 +161,10 @@ public partial class UIMenuController : Control
 			EmitSignal(SignalName.SkillUsed, _currentPartyActor, (int)_selectedSkill.GetSkillCostType(), _selectedSkill.GetSkillCostAmount());
 		}
 
-		if (_selectedItem != null)
+		if (_selectedItemIndex != -1)
 		{
+			// You could include the item quantity here but I can't think of a situation where you would want that
+			EmitSignal(SignalName.ItemUsed, _selectedItemIndex, 1);
 		}
 
 		Cleanup();
@@ -200,6 +203,6 @@ public partial class UIMenuController : Control
 		_currentPartyActor = null; 
 		_useableSkills = [];
 		_selectedSkill = null;
-		_selectedItem = null;
+		_selectedItemIndex = -1;
 	}
 }
