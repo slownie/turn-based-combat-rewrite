@@ -12,5 +12,5 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lslav")
-skillMenuEntry = ExtResource("2_six10")
+itemMenuEntry = ExtResource("2_six10")
 targetCursorScene = ExtResource("3_3q7nt")

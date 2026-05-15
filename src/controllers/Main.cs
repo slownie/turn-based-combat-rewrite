@@ -89,7 +89,7 @@ public partial class Main : Node
 		_overworldController.SetActive(false);
 
 		_battleController.SetActive(true);
-		_battleController.SetupBattle(_gameState.GetActivePartyMembers(), enemyEncounterResource);
+		_battleController.SetupBattle(_gameState.GetActivePartyMembers(), enemyEncounterResource, _gameState.GetInventoryItems());
 	}
 
 	private void GameInit()

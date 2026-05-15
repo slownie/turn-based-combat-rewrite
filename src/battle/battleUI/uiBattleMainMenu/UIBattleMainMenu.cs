@@ -6,7 +6,7 @@ public partial class UIBattleMainMenu : UIBattleMenuBase
     [Export] UseableSkillResource attackAction;
     [Export] UseableSkillResource passAction;
 
-    [Signal] public delegate void ActionSelectedEventHandler(UseableActionResource selectedAction);
+    [Signal] public delegate void ActionSelectedEventHandler(UseableSkillResource selectedAction);
     [Signal] public delegate void SkillMenuRequestedEventHandler();
     [Signal] public delegate void ItemMenuRequestedEventHandler();
 

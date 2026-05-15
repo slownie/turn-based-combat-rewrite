@@ -5,6 +5,7 @@ public partial class UIMenuController : Control
 {
 	[Export] PackedScene mainMenuScene;
 	[Export] PackedScene skillMenuScene;
+	[Export] PackedScene itemMenuScene;
 	[Export] PackedScene targetMenuScene;
 
 	[Signal] public delegate void TargetSelectedEventHandler();
@@ -17,7 +18,9 @@ public partial class UIMenuController : Control
 
 	BattleActor _currentPartyActor;
 	Godot.Collections.Array<UseableSkillResource> _useableSkills = [];
-
+	Godot.Collections.Array<InventoryItem> _battleInventory = [];
+	UseableSkillResource _selectedSkill;
+	UseableItemResource _selectedItem;
 
 	Godot.Collections.Array<UIBattleMenuBase> _menuStack = [];
 	UIBattleMenuBase _currentMenu;
@@ -41,8 +44,10 @@ public partial class UIMenuController : Control
 			if (skill is UseableSkillResource) _useableSkills.Add(skill as UseableSkillResource);
 		}
 
+		_battleInventory = battleInventory;
+
 		bool skillMenuEnabled = 0 < _useableSkills.Count; 
-		bool itemMenuEnabled = 0 < battleInventory.Count;
+		bool itemMenuEnabled = 0 < _battleInventory.Count;
 
 		CreateMainMenu(skillMenuEnabled, itemMenuEnabled);
 	}
@@ -52,7 +57,7 @@ public partial class UIMenuController : Control
 		UIBattleMainMenu mainMenu = mainMenuScene.Instantiate() as UIBattleMainMenu;
 		AddChild(mainMenu);
 
-		mainMenu.ActionSelected += CreateTargetCursor;
+		mainMenu.ActionSelected += OnSkillSelected;
 		mainMenu.SkillMenuRequested += CreateSkillMenu;
 		mainMenu.ItemMenuRequested += CreateItemMenu;
 
@@ -65,7 +70,7 @@ public partial class UIMenuController : Control
 		UISkillMenu skillMenu = skillMenuScene.Instantiate() as UISkillMenu;
 		AddChild(skillMenu);
 
-		skillMenu.SkillSelected += CreateTargetCursor;
+		skillMenu.SkillSelected += OnSkillSelected;
 		skillMenu.SkillSelectionCancelled += UnloadMenu;
 
 		// If the player reaches this menu, then there are useable skills
@@ -78,7 +83,28 @@ public partial class UIMenuController : Control
 
 	private void CreateItemMenu()
 	{
-		GD.Print("Item Menu Created");		
+		UIItemMenu itemMenu = itemMenuScene.Instantiate() as UIItemMenu;
+		AddChild(itemMenu);
+
+		itemMenu.ItemSelected += OnItemSelected;
+		itemMenu.ItemSelectionCancelled += UnloadMenu;
+
+		itemMenu.Setup(_battleInventory);
+		LoadMenu(itemMenu);
+
+		itemMenu.Position = new Vector2(64, 32);
+	}
+
+	private void OnSkillSelected(UseableSkillResource useableSkillResource)
+	{
+		_selectedSkill = useableSkillResource;
+		CreateTargetCursor(_selectedSkill.GetUseableActionResource());
+	}
+
+	private void OnItemSelected(UseableItemResource useableItemResource)
+	{
+		_selectedItem = useableItemResource;
+		CreateTargetCursor(_selectedItem.GetUseableActionResource());
 	}
 
 	private void CreateTargetCursor(UseableActionResource useableActionResource)
@@ -93,26 +119,25 @@ public partial class UIMenuController : Control
 		Godot.Collections.Array<BattleActor> _enemyTargets = [];
 
 		// Provide targeting parameters to TargetCursorController
-		TargetingSettings targetingSettings = useableActionResource.GetTargetingSettings();
 
 		// 1. Are we targeting the party, enemies, both, or the self?
-		if (targetingSettings.GetTargetOppositeSide())
+		if (useableActionResource.GetTargetOppositeSide())
 		{
 			_enemyTargets = _actorController.GetEnemies(_battleActors);
 		}
 
-		if (targetingSettings.GetTargetSameSide())
+		if (useableActionResource.GetTargetSameSide())
 		{
 			_partyTargets = _actorController.GetPartyMembers(_battleActors);
 		}
 
-		if (targetingSettings.GetTargetSelfOnly())
+		if (useableActionResource.GetTargetSelfOnly())
 		{
 			_partyTargets.Add(_currentPartyActor);
 		}
 
 		// 2. Are we targeting dead or alive actors?
-		if (targetingSettings.GetTargetDeadOnly())
+		if (useableActionResource.GetTargetDeadOnly())
 		{
 			// We are only targeting dead party members
 			_partyTargets = _actorController.GetDeadActors(_partyTargets);
@@ -122,13 +147,23 @@ public partial class UIMenuController : Control
 		}
 
 		// 3. Pass data to controller
-		targetMenu.Setup(_partyTargets, _enemyTargets, targetingSettings.GetCursorMode(), 0);
+		targetMenu.Setup(_partyTargets, _enemyTargets, useableActionResource.GetCursorMode());
 		LoadMenu(targetMenu);
 	}
 
 	private void OnTargetsSelected(Godot.Collections.Array<BattleActor> selectedActors)
 	{
 		EmitSignal(SignalName.TargetSelected);
+
+		if (_selectedSkill != null)
+		{
+			EmitSignal(SignalName.SkillUsed, _currentPartyActor, (int)_selectedSkill.GetSkillCostType(), _selectedSkill.GetSkillCostAmount());
+		}
+
+		if (_selectedItem != null)
+		{
+		}
+
 		Cleanup();
 	}
 
@@ -164,5 +199,7 @@ public partial class UIMenuController : Control
 
 		_currentPartyActor = null; 
 		_useableSkills = [];
+		_selectedSkill = null;
+		_selectedItem = null;
 	}
 }

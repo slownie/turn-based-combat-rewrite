@@ -120,6 +120,9 @@ public partial class BattleActor : Node2D
 
 	public int GetMaxHP() { return _characterStats.GetMaxHP(); }
 
+	public int GetCurMP() { return _characterStats.GetCurMP(); }
+	public int GetMaxMP() { return _characterStats.GetMaxMP(); }
+
 	public void AddCurHP(int amount) { 
 		_characterStats.AddCurHP(amount); 
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();

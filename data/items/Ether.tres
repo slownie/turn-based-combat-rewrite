@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="UseableItemResource" format=3 uid="uid://d02umgi418wh7"]
+
+[ext_resource type="Script" uid="uid://df1x4c3otk6bt" path="res://src/dataClasses/items/UseableItemResource.cs" id="1_uj8d4"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_78jdd"]
+[ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="3_7xos5"]
+
+[sub_resource type="Resource" id="Resource_1rfrc"]
+script = ExtResource("3_7xos5")
+targetOppsiteSide = false
+targetSameSide = true
+metadata/_custom_type_script = "uid://f4ubms2rgfo3"
+
+[resource]
+script = ExtResource("1_uj8d4")
+useableActionResource = SubResource("Resource_1rfrc")
+itemName = "Ether"
+metadata/_custom_type_script = "uid://df1x4c3otk6bt"

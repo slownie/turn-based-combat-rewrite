@@ -41,7 +41,11 @@ public partial class BattleController : CanvasLayer
 		}
 	}
 
-	public void SetupBattle(Godot.Collections.Array<ActivePartyMember> partyMembers, EnemyEncounterResource enemyEncounterResource)
+	public void SetupBattle(
+		Godot.Collections.Array<ActivePartyMember> partyMembers, 
+		EnemyEncounterResource enemyEncounterResource,
+		Godot.Collections.Array<InventoryItem> inventoryItems
+	)
 	{
 		_enemyEncounterResource = enemyEncounterResource;
 
@@ -51,6 +55,7 @@ public partial class BattleController : CanvasLayer
 		newBattleArena.BattleFinished += OnBattleFinished;
 		
 		newBattleArena.SetupActors(partyMembers, enemyEncounterResource.GetEnemies());
+		newBattleArena.SetupInventory(inventoryItems);
 
 		if (enemyEncounterResource.GetBattleMusic() != null)
 		{

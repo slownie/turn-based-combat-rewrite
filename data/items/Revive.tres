@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="UseableItemResource" format=3 uid="uid://cheo5dmxxd60d"]
+
+[ext_resource type="Script" uid="uid://df1x4c3otk6bt" path="res://src/dataClasses/items/UseableItemResource.cs" id="1_tdo2w"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_w5yyu"]
+[ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="3_ynhvq"]
+
+[sub_resource type="Resource" id="Resource_6o8qj"]
+script = ExtResource("3_ynhvq")
+targetOppsiteSide = false
+targetSameSide = true
+targetDeadOnly = true
+metadata/_custom_type_script = "uid://f4ubms2rgfo3"
+
+[resource]
+script = ExtResource("1_tdo2w")
+useableActionResource = SubResource("Resource_6o8qj")
+itemName = "Revive"
+metadata/_custom_type_script = "uid://df1x4c3otk6bt"

@@ -6,7 +6,7 @@ public partial class UISkillMenu : UIBattleMenuBase
     [Export] PackedScene skillMenuEntry;
     [Export] PackedScene targetCursorScene;
 
-    [Signal] public delegate void SkillSelectedEventHandler(UseableActionResource selectedSkill);
+    [Signal] public delegate void SkillSelectedEventHandler(UseableSkillResource selectedSkill);
     [Signal] public delegate void SkillSelectionCancelledEventHandler();
 
     Godot.Collections.Array<UseableSkillResource> _skillList = [];
@@ -41,11 +41,7 @@ public partial class UISkillMenu : UIBattleMenuBase
     {
         if (@event.IsActionPressed("AButton"))
         {
-            // Check should not be required but good to have anyway
-            if (0 < _entries.Count && 0 < _skillList.Count)
-            {
-                EmitSignal(SignalName.SkillSelected, _skillList[index]);
-            }
+            EmitSignal(SignalName.SkillSelected, _skillList[index]);
         }
 
 		// Quit Selection

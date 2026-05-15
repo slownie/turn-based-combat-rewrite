@@ -2,18 +2,18 @@
 
 [ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_l740a"]
 [ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="2_de5tt"]
-[ext_resource type="Script" uid="uid://bp6l7owmnyh6d" path="res://src/components/TargetingSettings.cs" id="3_de5tt"]
+[ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="3_de5tt"]
 
 [sub_resource type="Resource" id="Resource_453fm"]
 script = ExtResource("3_de5tt")
 targetType = 1
 cursorMode = 1
-metadata/_custom_type_script = "uid://bp6l7owmnyh6d"
+metadata/_custom_type_script = "uid://f4ubms2rgfo3"
 
 [resource]
 script = ExtResource("2_de5tt")
 skillCostAmount = 8
-targetingSettings = SubResource("Resource_453fm")
+useableActionResource = SubResource("Resource_453fm")
 skillName = "Wave"
 desc = "Deal water damage to all enemies."
 metadata/_custom_type_script = "uid://dicj1dhgyboo"

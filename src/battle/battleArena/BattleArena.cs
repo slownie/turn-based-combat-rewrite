@@ -174,6 +174,7 @@ public partial class BattleArena : Control
 			_actorController.AddActorCurHP(actor, -amount);
 		} else {
 			_actorController.AddActorCurMP(actor, -amount);
+			GD.Print(actor.GetCurMP());
 		}
 		
 	}

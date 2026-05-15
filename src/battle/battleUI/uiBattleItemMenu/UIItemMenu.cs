@@ -3,14 +3,14 @@ using System;
 
 public partial class UIItemMenu : UIBattleMenuBase
 {
-    [Export] PackedScene skillMenuEntry;
+    [Export] PackedScene itemMenuEntry;
     [Export] PackedScene targetCursorScene;
 
-    [Signal] public delegate void SkillSelectedEventHandler(UseableSkillResource selectedSkill);
-    [Signal] public delegate void SkillSelectionCancelledEventHandler();
+    [Signal] public delegate void ItemSelectedEventHandler(UseableItemResource selectedItem);
+    [Signal] public delegate void ItemSelectionCancelledEventHandler();
 
-    Godot.Collections.Array<UseableSkillResource> _skillList = [];
-    Godot.Collections.Array<UISkillMenuEntry> _entries = [];
+    Godot.Collections.Array<InventoryItem> _itemList = [];
+    Godot.Collections.Array<UIItemMenuEntry> _entries = [];
     int _index = 0;
     int index
     {
@@ -18,9 +18,9 @@ public partial class UIItemMenu : UIBattleMenuBase
         set
         {
             _index = value;
-		
-			// Clamp
-			if (_entries.Count <= _index) _index = 0;
+
+            // Clamp
+            if (_entries.Count <= _index) _index = 0;
 			if (_index < 0) _index = _entries.Count - 1;
 
             if (_targetCursor != null)
@@ -41,17 +41,14 @@ public partial class UIItemMenu : UIBattleMenuBase
     {
         if (@event.IsActionPressed("AButton"))
         {
-            // Check should not be required but good to have anyway
-            if (0 < _entries.Count && 0 < _skillList.Count)
-            {
-                EmitSignal(SignalName.SkillSelected, _skillList[index]);
-            }
+            UseableItemResource selectedItem = _itemList[index].GetItemResource() as UseableItemResource;
+            EmitSignal(SignalName.ItemSelected, selectedItem);
         }
 
 		// Quit Selection
 		if (@event.IsActionPressed("BButton"))
 		{
-			EmitSignal(SignalName.SkillSelectionCancelled);
+			EmitSignal(SignalName.ItemSelectionCancelled);
 		}
 
         if (@event.IsActionPressed("MoveDown"))
@@ -65,19 +62,19 @@ public partial class UIItemMenu : UIBattleMenuBase
 		}
     }
 
-    public void Setup(Godot.Collections.Array<UseableSkillResource> skillList)
+    public void Setup(Godot.Collections.Array<InventoryItem> itemList)
     {
-        _skillList = skillList;
+        _itemList = itemList;
 
-        for (int i=0; i < _skillList.Count; i++)
+        for (int i=0; i < _itemList.Count; i++)
         {
-            UseableSkillResource useableSkill = _skillList[i];
-            UISkillMenuEntry skillEntry = skillMenuEntry.Instantiate() as UISkillMenuEntry;
-            AddChild(skillEntry);
-            skillEntry.Position = new Vector2(skillEntry.Position.X, skillEntry.Position.Y + (32 * i));
+            UseableItemResource useableItem = _itemList[i].GetItemResource() as UseableItemResource;
+            UIItemMenuEntry itemEntry = itemMenuEntry.Instantiate() as UIItemMenuEntry;
+            AddChild(itemEntry);
 
-            skillEntry.Setup(useableSkill);
-            _entries.Add(skillEntry);
+            itemEntry.Position = new Vector2(itemEntry.Position.X, itemEntry.Position.Y + (32 * i));
+            itemEntry.Setup(_itemList[i]);
+            _entries.Add(itemEntry);
         }
 
         _targetCursor = targetCursorScene.Instantiate() as UITargetCursor;
