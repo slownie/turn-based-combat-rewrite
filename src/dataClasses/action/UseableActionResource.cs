@@ -22,9 +22,11 @@ public partial class UseableActionResource : Resource
 	[Export] bool targetHasDebuffOnly = false;
 	[Export] bool targetHasStatusOnly = false;
 
+
+
 	// Todo, specify enable conditions in UseableSkill/UseableItem
 	
-
+	public Godot.Collections.Array<ActionEffectResource> GetActions() { return actions; }
 	public BattleConsts.TargetType GetTargetType() { return targetType; }
 	public BattleConsts.CursorMode GetCursorMode() { return cursorMode; }
 	

@@ -18,6 +18,7 @@ public partial class BattleArena : Control
 	MusicPlayer _musicPlayer;
 	SFXPlayer _sfxPlayer;
 	
+	RandomNumberGenerator _rng = new RandomNumberGenerator();
 
 	// UI Objects
 
@@ -167,6 +168,23 @@ public partial class BattleArena : Control
 	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
 	{
 		TimeScale = 1.0;
+
+		foreach(ActionEffectResource actionEffect in selectedAction.GetActions())
+		{
+			// 1. Does the effect occur on its own?
+			if (actionEffect.GetSuccessChance() > GD.Randi() % 99)
+			{
+				// 2. Who are the targets for this effect?
+				switch (selectedAction.GetTargetType())
+				{
+					case BattleConsts.TargetType.Single:
+					{
+						
+						break;
+					}
+				}
+			}	
+		}
 	}
 
 	private void OnSkillUsed(BattleActor actor, UseableSkillResource.SkillCostType skillCostType, int amount)

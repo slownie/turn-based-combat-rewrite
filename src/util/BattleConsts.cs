@@ -3,10 +3,11 @@ using System;
 
 public static partial class BattleConsts
 {
-	public enum DamageType
+	public enum DamageCalculation
 	{
-		Physical,
-		Elemental
+		Strength,
+		Elemental,
+		True
 	}
 
 	public enum ElementType
@@ -28,13 +29,11 @@ public static partial class BattleConsts
 		When the targets array is passed into the skill's function, the target type will
 		determine which target the effect is applied to.
 			- Single: Only one target, the targets array will already only have the one target in it.
-			- All: Applies to all targets in the targets array.
 			- Random: Randomly selects a target from the targets array.
 	*/
 	public enum TargetType
 	{
 		Single,
-		All,
 		Random,
 	}
 
