@@ -17,11 +17,13 @@ public partial class AttackEffect : ActionEffectResource
         {
             case BattleConsts.DamageCalculation.Strength:
             {
+                calculatedDamage = baseDamage + user.GetStrength();
                 break;
             }
 
             case BattleConsts.DamageCalculation.Elemental:
             {
+                calculatedDamage = baseDamage + user.GetElemental();
                 break;
             }
 
@@ -32,7 +34,7 @@ public partial class AttackEffect : ActionEffectResource
             }
         }
 
-        
+        // Maybe make this through the ActorController?
         target.AddCurHP(-calculatedDamage);
     }
 

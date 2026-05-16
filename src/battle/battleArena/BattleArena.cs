@@ -8,6 +8,7 @@ public partial class BattleArena : Control
 	[Signal] public delegate void BattleFinishedEventHandler(BattleController.BattleConclusion battleConclusion);
 
 	Godot.Collections.Array<BattleActor> _actors = [];
+	BattleActor _currentActor;
 	Godot.Collections.Array<InventoryItem> _battleInventory = [];
 
 	ActorController _actorController;
@@ -157,22 +158,42 @@ public partial class BattleArena : Control
 	private void OnPartyMemberActorReady(BattleActor actor)
 	{
 		TimeScale = 0.0;
+		_currentActor = actor;
 		_menuController.PartyTurnStart(actor, _battleInventory);
 	}
 
 	private void OnEnemyActorReady(BattleActor actor)
 	{
 		TimeScale = 0.0;
+		_currentActor = actor;
 	}
 
 	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
 	{
-		
+		// Start the action
+		foreach(ActionEffectResource actionEffect in selectedAction.GetActions())
+		{
+			// 1. Does the effect occur?
+			if (actionEffect.GetSuccessChance() > GD.Randi() % 99)
+			{
+				// 2. Who do we target?
+				if (selectedAction.GetTargetType() == BattleConsts.TargetType.Random)
+				{
+					int targetIndex = GD.RandRange(0, selectedActors.Count - 1);
+					actionEffect.ExecuteEffect(_currentActor, selectedActors[targetIndex]);
+				} else {
+					foreach (BattleActor target in selectedActors)
+					{
+						actionEffect.ExecuteEffect(_currentActor, target);
+					}
+				}
+			}
+		}
 	}
 
 	private void OnActionFinished()
 	{
-		
+		_currentActor = null;
 	}
 
 	/*

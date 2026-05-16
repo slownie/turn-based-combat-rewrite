@@ -3,7 +3,10 @@ using System;
 
 public partial class BattleActor : Node2D
 {
+	[Signal] public delegate void HPChangedEventHandler(int newHP);
 	[Signal] public delegate void HPDepletedEventHandler();
+
+	[Signal] public delegate void MPChangedEventHandler(int newMP);
 
 	[Signal] public delegate void ReadinessChangedEventHandler(double readiness);
 	[Signal] public delegate void ReadyToActEventHandler(BattleActor battleActor);
@@ -142,6 +145,13 @@ public partial class BattleActor : Node2D
 		_characterStats.SetCurMP(amount); 
 		_curMPLabel.Text = _characterStats.GetCurMP().ToString();
 	}
+
+	public int GetStrength() { return _characterStats.GetStrength(); }
+	public int GetElemental() { return _characterStats.GetElemental(); }
+	public int GetAgility() { return _characterStats.GetAgility(); }
+	public int GetLuck() { return _characterStats.GetLuck(); }
+	public int GetDefense() { return _characterStats.GetDefense(); }
+	public int GetResistance() { return _characterStats.GetResistance(); }
 
 	public Godot.Collections.Array<BaseSkillResource> GetSkills() { return _skills; }
 
