@@ -5,14 +5,14 @@ using System.Linq;
 
 public partial class ActorController : Node2D
 {
-
-	RandomNumberGenerator _rng;
-
+	#region Stats
 	public void AddActorCurHP(BattleActor target, int amount) { target.AddCurHP(amount); }
 	public void SetActorCurHP(BattleActor target, int amount) { target.SetCurHP(amount); }
 	public void AddActorCurMP(BattleActor target, int amount) { target.AddCurMP(amount); }
 	public void SetActorCurMP(BattleActor target, int amount) { target.SetCurMP(amount); }
+	#endregion
 
+	#region Queries
 	public Godot.Collections.Array<BattleActor> GetLiveActors(Godot.Collections.Array<BattleActor> battleActors)
 	{
 		Godot.Collections.Array<BattleActor> actors = [];
@@ -66,4 +66,21 @@ public partial class ActorController : Node2D
 		} 
 		return actors;
 	}
+	#endregion
+
+	#region Sequences
+
+	/*
+		Keep in mind this moves the SPRITE'S OFFSET NOT THE POSITION OF THE ACTOR
+	*/
+	public void MoveActor(BattleActor actor, Vector2 movePosition)
+	{
+	}
+
+	public void SetActorSprite(BattleActor actor, string spriteName)
+	{
+		
+	}
+
+	#endregion
 }

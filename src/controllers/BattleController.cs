@@ -19,12 +19,19 @@ public partial class BattleController : CanvasLayer
 	InventoryController _inventoryController;
 	MusicPlayer _musicPlayer;
 	SFXPlayer _sfxPlayer;
+	GameCamera _gameCamera;
 
-	public void BindServices(InventoryController inventoryController, MusicPlayer musicPlayer, SFXPlayer sfxPlayer)
+	public void BindServices(
+		InventoryController inventoryController, 
+		MusicPlayer musicPlayer, 
+		SFXPlayer sfxPlayer,
+		GameCamera gameCamera
+	)
 	{
 		_inventoryController = inventoryController;
 		_musicPlayer = musicPlayer;
 		_sfxPlayer = sfxPlayer;
+		_gameCamera = gameCamera;
 	}
 
 	public void SetActive(bool isActive)
@@ -56,7 +63,7 @@ public partial class BattleController : CanvasLayer
 		
 		newBattleArena.SetupActors(partyMembers, enemyEncounterResource.GetEnemies());
 		newBattleArena.SetupInventory(inventoryItems);
-		newBattleArena.BindServices(_inventoryController, _musicPlayer, _sfxPlayer);
+		newBattleArena.BindServices(_inventoryController, _musicPlayer, _sfxPlayer, _gameCamera);
 
 		if (enemyEncounterResource.GetBattleMusic() != null)
 		{

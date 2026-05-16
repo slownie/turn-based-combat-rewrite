@@ -17,9 +17,8 @@ public partial class BattleArena : Control
 	InventoryController _inventoryController;
 	MusicPlayer _musicPlayer;
 	SFXPlayer _sfxPlayer;
+	GameCamera _gameCamera;
 	
-	RandomNumberGenerator _rng = new RandomNumberGenerator();
-
 	// UI Objects
 
 	/*
@@ -83,11 +82,12 @@ public partial class BattleArena : Control
 		}
 	}
 
-	public void BindServices(InventoryController inventoryController, MusicPlayer musicPlayer, SFXPlayer sfxPlayer)
+	public void BindServices(InventoryController inventoryController, MusicPlayer musicPlayer, SFXPlayer sfxPlayer, GameCamera gameCamera)
 	{
 		_inventoryController = inventoryController;
 		_musicPlayer = musicPlayer;
 		_sfxPlayer = sfxPlayer;
+		_gameCamera = gameCamera;
 	}
 
 	public void SetupActors(Godot.Collections.Array<ActivePartyMember> partyMembers, Godot.Collections.Array<EnemyResource> enemies)
@@ -167,25 +167,17 @@ public partial class BattleArena : Control
 
 	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
 	{
-		TimeScale = 1.0;
-
-		foreach(ActionEffectResource actionEffect in selectedAction.GetActions())
-		{
-			// 1. Does the effect occur on its own?
-			if (actionEffect.GetSuccessChance() > GD.Randi() % 99)
-			{
-				// 2. Who are the targets for this effect?
-				switch (selectedAction.GetTargetType())
-				{
-					case BattleConsts.TargetType.Single:
-					{
-						
-						break;
-					}
-				}
-			}	
-		}
+		
 	}
+
+	private void OnActionFinished()
+	{
+		
+	}
+
+	/*
+		Action Middleware
+	*/
 
 	private void OnSkillUsed(BattleActor actor, UseableSkillResource.SkillCostType skillCostType, int amount)
 	{
@@ -196,7 +188,6 @@ public partial class BattleArena : Control
 			_actorController.AddActorCurMP(actor, -amount);
 			GD.Print(actor.GetCurMP());
 		}
-		
 	}
 
 	private void OnItemUsed(int itemIndex, int quantity)

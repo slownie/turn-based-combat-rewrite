@@ -6,8 +6,6 @@
 
 [sub_resource type="Resource" id="Resource_453fm"]
 script = ExtResource("3_de5tt")
-targetType = 1
-cursorMode = 1
 metadata/_custom_type_script = "uid://f4ubms2rgfo3"
 
 [resource]

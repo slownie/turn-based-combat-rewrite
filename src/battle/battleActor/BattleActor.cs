@@ -148,6 +148,7 @@ public partial class BattleActor : Node2D
 	public bool GetIsPlayer() { return _isPlayer; }
 	public Texture2D GetBattleIcon() { return _battleIcon; }
 
+
 	#endregion
 
 	#region Signals

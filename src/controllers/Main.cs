@@ -8,8 +8,11 @@ public partial class Main : Node
 	MenuController _menuController;
 
 	InventoryController _inventoryController;
+
+	// Audio/Visual Controllers
 	MusicPlayer _musicPlayer;
 	SFXPlayer _sfxPlayer;
+	GameCamera _gameCamera;
 	ScreenTransition _screenTransition;
 
 	GameState _gameState;
@@ -34,6 +37,10 @@ public partial class Main : Node
 		PackedScene sfxPlayerScene = GD.Load<PackedScene>("res://src/sfx/SFXPlayer.tscn");
 		_sfxPlayer = sfxPlayerScene.Instantiate() as SFXPlayer;
 		AddChild(_sfxPlayer);
+
+		PackedScene gameCameraScene = GD.Load<PackedScene>("res://src/camera/GameCamera.tscn");
+		_gameCamera = gameCameraScene.Instantiate() as GameCamera;
+		AddChild(_gameCamera);
 
 		PackedScene screenTransitionScene = GD.Load<PackedScene>("res://src/transitions/ScreenTransition.tscn");
 		_screenTransition = screenTransitionScene.Instantiate() as ScreenTransition;
@@ -63,7 +70,8 @@ public partial class Main : Node
 		_battleController.BindServices(
 			_inventoryController,
 			_musicPlayer,
-			_sfxPlayer
+			_sfxPlayer,
+			_gameCamera
 		);
 
 		_battleController.SetActive(false);

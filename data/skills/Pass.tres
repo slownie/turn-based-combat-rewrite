@@ -6,8 +6,6 @@
 
 [sub_resource type="Resource" id="Resource_322vq"]
 script = ExtResource("3_jontx")
-targetOppsiteSide = false
-targetSelfOnly = true
 metadata/_custom_type_script = "uid://f4ubms2rgfo3"
 
 [resource]
