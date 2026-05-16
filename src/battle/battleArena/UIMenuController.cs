@@ -154,8 +154,6 @@ public partial class UIMenuController : Control
 
 	private void OnTargetsSelected(Godot.Collections.Array<BattleActor> selectedActors)
 	{
-		GD.Print(selectedActors);
-
 		if (_selectedSkill != null)
 		{
 			EmitSignal(SignalName.SkillUsed, _currentPartyActor, (int)_selectedSkill.GetSkillCostType(), _selectedSkill.GetSkillCostAmount());
@@ -166,7 +164,7 @@ public partial class UIMenuController : Control
 		{
 			// You could include the item quantity here but I can't think of a situation where you would want that
 			EmitSignal(SignalName.ItemUsed, _selectedItemIndex, 1);
-			EmitSignal(SignalName.ActionTargetConfirmed, _selectedSkill.GetUseableActionResource(), selectedActors);
+			EmitSignal(SignalName.ActionTargetConfirmed, _selectedItem.GetUseableActionResource(), selectedActors);
 		}
 
 		Cleanup();

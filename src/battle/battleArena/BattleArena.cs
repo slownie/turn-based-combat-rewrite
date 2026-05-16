@@ -166,10 +166,6 @@ public partial class BattleArena : Control
 
 	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
 	{
-		foreach(BattleActor battleActor in selectedActors)
-		{
-			GD.Print(battleActor.GetActorName());
-		}
 		TimeScale = 1.0;
 	}
 

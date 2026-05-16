@@ -125,14 +125,13 @@ public partial class UITargetCursorController : UIBattleMenuBase
 				{
 					// Stupid but this is how it works
 					Godot.Collections.Array<BattleActor> tempArray = [_currentTargets[_currentIndex]];
-					
+
 					EmitSignal(SignalName.TargetsSelected, tempArray);
 					break;
 				}
 
 				case BattleConsts.CursorMode.Side:
 				{
-					GD.Print("side");
 					if (_targetSide == 0)
 					{
 						EmitSignal(SignalName.TargetsSelected, _enemyTargets);
@@ -144,7 +143,6 @@ public partial class UITargetCursorController : UIBattleMenuBase
 
 				case BattleConsts.CursorMode.All:
 				{
-					GD.Print("all");
 					EmitSignal(SignalName.TargetsSelected, _currentTargets);
 					break;
 				}
