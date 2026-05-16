@@ -8,8 +8,7 @@ public partial class UIMenuController : Control
 	[Export] PackedScene itemMenuScene;
 	[Export] PackedScene targetMenuScene;
 
-	[Signal] public delegate void TargetSelectedEventHandler();
-
+	[Signal] public delegate void ActionTargetConfirmedEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 	[Signal] public delegate void SkillUsedEventHandler(BattleActor actor, UseableSkillResource.SkillCostType skillCostType, int amount);
 	[Signal] public delegate void ItemUsedEventHandler(int itemIndex, int quantity);
 
@@ -20,6 +19,7 @@ public partial class UIMenuController : Control
 	Godot.Collections.Array<UseableSkillResource> _useableSkills = [];
 	Godot.Collections.Array<InventoryItem> _battleInventory = [];
 	UseableSkillResource _selectedSkill;
+	UseableItemResource _selectedItem;
 	int _selectedItemIndex = -1;
 
 	Godot.Collections.Array<UIBattleMenuBase> _menuStack = [];
@@ -104,8 +104,8 @@ public partial class UIMenuController : Control
 	private void OnItemSelected(int selectedItemIndex)
 	{
 		_selectedItemIndex = selectedItemIndex;
-		UseableItemResource useableItemResource = _battleInventory[_selectedItemIndex].GetItemResource() as UseableItemResource;
-		CreateTargetCursor(useableItemResource.GetUseableActionResource());
+		_selectedItem = _battleInventory[_selectedItemIndex].GetItemResource() as UseableItemResource;
+		CreateTargetCursor(_selectedItem.GetUseableActionResource());
 	}
 
 	private void CreateTargetCursor(UseableActionResource useableActionResource)
@@ -154,17 +154,17 @@ public partial class UIMenuController : Control
 
 	private void OnTargetsSelected(Godot.Collections.Array<BattleActor> selectedActors)
 	{
-		EmitSignal(SignalName.TargetSelected);
-
 		if (_selectedSkill != null)
 		{
 			EmitSignal(SignalName.SkillUsed, _currentPartyActor, (int)_selectedSkill.GetSkillCostType(), _selectedSkill.GetSkillCostAmount());
+			EmitSignal(SignalName.ActionTargetConfirmed, _selectedSkill.GetUseableActionResource(), selectedActors);
 		}
 
 		if (_selectedItemIndex != -1)
 		{
 			// You could include the item quantity here but I can't think of a situation where you would want that
 			EmitSignal(SignalName.ItemUsed, _selectedItemIndex, 1);
+			EmitSignal(SignalName.ActionTargetConfirmed, _selectedSkill.GetUseableActionResource(), selectedActors);
 		}
 
 		Cleanup();
@@ -203,6 +203,7 @@ public partial class UIMenuController : Control
 		_currentPartyActor = null; 
 		_useableSkills = [];
 		_selectedSkill = null;
+		_selectedItem = null;
 		_selectedItemIndex = -1;
 	}
 }

@@ -70,6 +70,8 @@ public partial class BattleArena : Control
 		_menuController.SkillUsed += OnSkillUsed;
 		_menuController.ItemUsed += OnItemUsed;
 
+		_menuController.ActionTargetConfirmed += OnActionTargetConfimed;
+
 		_turnBar = GetNode<UITurnBar>("UI/UITurnBar");
 	}
 
@@ -162,9 +164,10 @@ public partial class BattleArena : Control
 		TimeScale = 0.0;
 	}
 
-	private void OnActionSelected()
+	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
 	{
-		
+		GD.Print("Action Selected");
+		TimeScale = 1.0;
 	}
 
 	private void OnSkillUsed(BattleActor actor, UseableSkillResource.SkillCostType skillCostType, int amount)

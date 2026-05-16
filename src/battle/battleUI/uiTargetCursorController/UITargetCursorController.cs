@@ -137,7 +137,6 @@ public partial class UITargetCursorController : UIBattleMenuBase
 	{
 		_partyTargets = partyTargets;
 		_enemyTargets = enemyTargets;
-
 		_cursorMode = cursorMode;
 
 		// Setup & create based on cursor mode & targets
