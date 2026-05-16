@@ -5,6 +5,9 @@ using System.Linq;
 
 public partial class ActorController : Node2D
 {
+	[Export] UseableActionResource defaultEnemyAction;
+	[Signal] public delegate void EnemySelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
+
 	#region Stats
 	public void AddActorCurHP(BattleActor target, int amount) { target.AddCurHP(amount); }
 	public void SetActorCurHP(BattleActor target, int amount) { target.SetCurHP(amount); }
@@ -65,6 +68,65 @@ public partial class ActorController : Node2D
 			if (!actor.GetIsPlayer()) actors.Add(actor);
 		} 
 		return actors;
+	}
+
+	public Godot.Collections.Array<UseableSkillResource> GetUseableSkills(BattleActor battleActor)
+	{
+		Godot.Collections.Array<UseableSkillResource> useableSkills = [];
+		foreach (BaseSkillResource baseSkill in battleActor.GetSkills())
+		{
+			if (baseSkill is UseableSkillResource) useableSkills.Add((UseableSkillResource)baseSkill);
+		}
+		return useableSkills;
+	}
+	#endregion
+
+	#region Enemy AI
+	public void EnemyAISelectAction(BattleActor enemyUser, Godot.Collections.Array<BattleActor> battleActors)
+	{
+		// Easier naming
+		UseableActionResource selectedAction;
+
+		if (GetUseableSkills(enemyUser).Count <= 0)
+		{
+			selectedAction = defaultEnemyAction;
+		} else {
+			int selectedActionIndex = (int)(GD.Randi() % GetUseableSkills(enemyUser).Count - 1);
+			selectedAction = GetUseableSkills(enemyUser)[selectedActionIndex].GetUseableActionResource();
+		}
+
+		Godot.Collections.Array<BattleActor> _partyTargets = [];
+		Godot.Collections.Array<BattleActor> _enemyTargets = [];
+
+		// Provide targeting parameters to TargetCursorController
+
+		// 1. Are we targeting the party, enemies, both, or the self?
+		if (selectedAction.GetTargetOppositeSide())
+		{
+			_enemyTargets = GetEnemies(battleActors);
+		}
+
+		if (selectedAction.GetTargetSameSide())
+		{
+			_partyTargets = GetPartyMembers(battleActors);
+		}
+
+		if (selectedAction.GetTargetSelfOnly())
+		{
+			_partyTargets.Add(enemyUser);
+		}
+
+		// 2. Are we targeting dead or alive actors?
+		if (selectedAction.GetTargetDeadOnly())
+		{
+			// We are only targeting dead party members
+			_partyTargets = GetDeadActors(_partyTargets);
+		} else {
+			if (_enemyTargets.Count != 0) _enemyTargets = GetLiveActors(_enemyTargets);
+			if (_partyTargets.Count != 0) _partyTargets = GetLiveActors(_partyTargets);
+		}
+
+		EmitSignal(SignalName.EnemySelectAction, selectedAction, battleActors);
 	}
 	#endregion
 

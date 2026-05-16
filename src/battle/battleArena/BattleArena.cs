@@ -63,6 +63,7 @@ public partial class BattleArena : Control
 	public override void _Ready()
 	{
 		_actorController = GetNode<ActorController>("ActorController");
+		_actorController.EnemySelectAction += OnActionTargetConfimed;
 
 		// UI
 		_menuController = GetNode<UIMenuController>("UI/UIMenuController");
@@ -166,10 +167,12 @@ public partial class BattleArena : Control
 	{
 		TimeScale = 0.0;
 		_currentActor = actor;
+		_actorController.EnemyAISelectAction(_currentActor, _actors);
 	}
 
 	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
 	{
+		GD.Print("==OnActionTargetConfirmed===");
 		// Start the action
 		foreach(ActionEffectResource actionEffect in selectedAction.GetActions())
 		{
@@ -189,6 +192,7 @@ public partial class BattleArena : Control
 				}
 			}
 		}
+		TimeScale = 1.0;
 	}
 
 	private void OnActionFinished()

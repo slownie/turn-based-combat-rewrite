@@ -51,7 +51,6 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="TestUI" type="VBoxContainer" parent="." unique_id=1721447135]
-visible = false
 offset_left = -22.0
 offset_top = 1.0
 offset_right = 27.0

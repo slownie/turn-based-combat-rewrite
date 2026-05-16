@@ -36,6 +36,7 @@ public partial class AttackEffect : ActionEffectResource
 
         // Maybe make this through the ActorController?
         target.AddCurHP(-calculatedDamage);
+
     }
 
 }
