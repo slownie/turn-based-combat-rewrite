@@ -119,7 +119,37 @@ public partial class UITargetCursorController : UIBattleMenuBase
 		// Select Targets
 		if (@event.IsActionPressed("AButton"))
 		{
-			EmitSignal(SignalName.TargetsSelected, _currentTargets);
+			switch (_cursorMode)
+			{
+				case BattleConsts.CursorMode.Single:
+				{
+					// Stupid but this is how it works
+					Godot.Collections.Array<BattleActor> tempArray = [_currentTargets[_currentIndex]];
+					
+					EmitSignal(SignalName.TargetsSelected, tempArray);
+					break;
+				}
+
+				case BattleConsts.CursorMode.Side:
+				{
+					GD.Print("side");
+					if (_targetSide == 0)
+					{
+						EmitSignal(SignalName.TargetsSelected, _enemyTargets);
+					} else {
+						EmitSignal(SignalName.TargetsSelected, _partyTargets);
+					}
+					break;
+				}
+
+				case BattleConsts.CursorMode.All:
+				{
+					GD.Print("all");
+					EmitSignal(SignalName.TargetsSelected, _currentTargets);
+					break;
+				}
+			}
+			
 		}
 
 		// Quit Selection

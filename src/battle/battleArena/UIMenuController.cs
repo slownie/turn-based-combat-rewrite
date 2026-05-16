@@ -154,6 +154,8 @@ public partial class UIMenuController : Control
 
 	private void OnTargetsSelected(Godot.Collections.Array<BattleActor> selectedActors)
 	{
+		GD.Print(selectedActors);
+
 		if (_selectedSkill != null)
 		{
 			EmitSignal(SignalName.SkillUsed, _currentPartyActor, (int)_selectedSkill.GetSkillCostType(), _selectedSkill.GetSkillCostAmount());
