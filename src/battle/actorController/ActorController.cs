@@ -5,7 +5,7 @@ using System.Linq;
 
 public partial class ActorController : Node2D
 {
-	[Export] UseableActionResource defaultEnemyAction;
+	[Export] UseableSkillResource defaultEnemyAction;
 	[Signal] public delegate void EnemySelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 
 	#region Stats
@@ -89,7 +89,7 @@ public partial class ActorController : Node2D
 
 		if (GetUseableSkills(enemyUser).Count <= 0)
 		{
-			selectedAction = defaultEnemyAction;
+			selectedAction = defaultEnemyAction.GetUseableActionResource();
 		} else {
 			int selectedActionIndex = (int)(GD.Randi() % GetUseableSkills(enemyUser).Count - 1);
 			selectedAction = GetUseableSkills(enemyUser)[selectedActionIndex].GetUseableActionResource();

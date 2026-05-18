@@ -5,6 +5,7 @@ using System;
 public partial class UseableActionResource : Resource
 {
 	[Export] Godot.Collections.Array<ActionEffectResource> actions = [];
+	[Export] Godot.Collections.Array<BattleSequenceEffectResource> sequences = [];
 
 	[Export] BattleConsts.TargetType targetType = BattleConsts.TargetType.Single;
 	[Export] BattleConsts.CursorMode cursorMode = BattleConsts.CursorMode.Single;

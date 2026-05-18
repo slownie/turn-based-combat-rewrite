@@ -4,39 +4,46 @@ using System;
 [GlobalClass]
 public partial class AttackEffect : ActionEffectResource
 {
+    [Signal] public delegate void AttackMissedEventHandler(BattleActor target);
+
     [Export] int baseDamage = 10;
     [Export] int baseAccuracy = 100;
     [Export] int baseCrit = 21;
     [Export] BattleConsts.DamageCalculation damageCalculation = BattleConsts.DamageCalculation.Strength;
     [Export] BattleConsts.ElementType elementType = BattleConsts.ElementType.Phys;
 
-    public override void ExecuteEffect(BattleActor user, BattleActor target)
+    public override void ExecuteEffect(BattleActor user, BattleActor target, ActorController actorController)
     {
-        int calculatedDamage = 0;
-        switch(damageCalculation)
+        if (baseAccuracy > GD.Randi() % 99)
         {
-            case BattleConsts.DamageCalculation.Strength:
+            // Hit
+            int calculatedDamage = 0;
+            switch(damageCalculation)
             {
-                calculatedDamage = baseDamage + user.GetStrength();
-                break;
+                case BattleConsts.DamageCalculation.Strength:
+                {
+                    calculatedDamage = baseDamage + user.GetStrength();
+                    break;
+                }
+
+                case BattleConsts.DamageCalculation.Elemental:
+                {
+                    calculatedDamage = baseDamage + user.GetElemental();
+                    break;
+                }
+
+                case BattleConsts.DamageCalculation.True:
+                {
+                    calculatedDamage = baseDamage;
+                    break;
+                }
             }
 
-            case BattleConsts.DamageCalculation.Elemental:
-            {
-                calculatedDamage = baseDamage + user.GetElemental();
-                break;
-            }
-
-            case BattleConsts.DamageCalculation.True:
-            {
-                calculatedDamage = baseDamage;
-                break;
-            }
+            actorController.AddActorCurHP(target, -calculatedDamage);
+        } else {
+            // Miss
+            EmitSignal(SignalName.AttackMissed, target);
         }
-
-        // Maybe make this through the ActorController?
-        target.AddCurHP(-calculatedDamage);
-
     }
 
 }

@@ -3,13 +3,9 @@ using System;
 
 public partial class SFXPlayer : AudioStreamPlayer2D
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+	public void PlaySFX(AudioStream soundEffect)
 	{
-	}
-
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
+		Stream = soundEffect;
+		Play();
 	}
 }

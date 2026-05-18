@@ -4,6 +4,7 @@ using System;
 [GlobalClass]
 public abstract partial class ActionEffectResource : Resource
 {
+
     // Determines if the action should occur, primarily used for bonus effects or variable hits
     [Export] int successChance = 100;
 
@@ -16,7 +17,7 @@ public abstract partial class ActionEffectResource : Resource
     public virtual void OverworldEffect(ActivePartyMember target) {}
 
 
-    public abstract void ExecuteEffect(BattleActor user, BattleActor target);
+    public abstract void ExecuteEffect(BattleActor user, BattleActor target, ActorController actorController);
 
 
     public int GetSuccessChance() { return successChance; }

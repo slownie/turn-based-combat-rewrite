@@ -1,6 +1,13 @@
 using Godot;
 using System;
 
-public partial class BattleSequenceEffectResource : Resource
+[GlobalClass]
+public abstract partial class BattleSequenceEffectResource : Resource
 {
+    [Signal] public delegate void EffectFinishedEventHandler();
+
+    public async virtual void ExecuteSequence()
+    {
+        
+    }
 }

@@ -173,7 +173,19 @@ public partial class BattleArena : Control
 	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
 	{
 		GD.Print("==OnActionTargetConfirmed===");
+		TimeScale = 0.0;
+
 		// Start the action
+	}
+
+	private void OnActionFinished()
+	{
+		_currentActor = null;
+		TimeScale = 1.0;
+	}
+
+	private void ExecuteActionResource(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
+	{
 		foreach(ActionEffectResource actionEffect in selectedAction.GetActions())
 		{
 			// 1. Does the effect occur?
@@ -183,21 +195,20 @@ public partial class BattleArena : Control
 				if (selectedAction.GetTargetType() == BattleConsts.TargetType.Random)
 				{
 					int targetIndex = GD.RandRange(0, selectedActors.Count - 1);
-					actionEffect.ExecuteEffect(_currentActor, selectedActors[targetIndex]);
+					actionEffect.ExecuteEffect(_currentActor, selectedActors[targetIndex], _actorController);
 				} else {
 					foreach (BattleActor target in selectedActors)
 					{
-						actionEffect.ExecuteEffect(_currentActor, target);
+						actionEffect.ExecuteEffect(_currentActor, target, _actorController);
 					}
 				}
 			}
 		}
-		TimeScale = 1.0;
 	}
 
-	private void OnActionFinished()
+	private void ExeucteAnimation()
 	{
-		_currentActor = null;
+		
 	}
 
 	/*
