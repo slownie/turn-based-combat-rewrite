@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://jpm4necbdqwp" path="res://src/battle/actorController/ActorController.cs" id="3_ma76s"]
 [ext_resource type="PackedScene" uid="uid://cseqwi6oq3fss" path="res://src/battle/battleUI/uiTurnBar/UITurnBar.tscn" id="4_2kbwh"]
 [ext_resource type="Resource" uid="uid://c5fdarb44i3v0" path="res://data/skills/Attack.tres" id="4_yc600"]
+[ext_resource type="PackedScene" uid="uid://cbpgejujefhwb" path="res://src/battle/battleSequencePlayer/BattleSequencePlayer.tscn" id="5_cjual"]
 [ext_resource type="Script" uid="uid://bghwbpceoptk8" path="res://src/battle/battleArena/UIMenuController.cs" id="5_fk1sc"]
 [ext_resource type="PackedScene" uid="uid://bydk2ilq2jwy2" path="res://src/battle/battleUI/uiBattleMainMenu/UIBattleMainMenu.tscn" id="6_ysmad"]
 [ext_resource type="PackedScene" uid="uid://c6p5glakoq6l3" path="res://src/battle/battleUI/uiTargetCursorController/UITargetCursorController.tscn" id="7_1m5vt"]
@@ -33,7 +34,7 @@ grow_vertical = 2
 script = ExtResource("3_ma76s")
 defaultEnemyAction = ExtResource("4_yc600")
 
-[node name="BattleSequenceController" type="Node2D" parent="." unique_id=2001708108]
+[node name="BattleSequencePlayer" parent="." unique_id=704811150 instance=ExtResource("5_cjual")]
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1774234567]
 

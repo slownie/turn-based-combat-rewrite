@@ -12,6 +12,8 @@ public partial class BattleArena : Control
 	Godot.Collections.Array<InventoryItem> _battleInventory = [];
 
 	ActorController _actorController;
+	BattleSequencePlayer _battleSequencePlayer;
+
 	UIMenuController _menuController;
 	UITurnBar _turnBar;
 
@@ -65,6 +67,9 @@ public partial class BattleArena : Control
 		_actorController = GetNode<ActorController>("ActorController");
 		_actorController.EnemySelectAction += OnActionTargetConfimed;
 
+		_battleSequencePlayer = GetNode<BattleSequencePlayer>("BattleSequencePlayer");
+		_battleSequencePlayer.BindServices(_gameCamera, _musicPlayer, _sfxPlayer);
+
 		// UI
 		_menuController = GetNode<UIMenuController>("UI/UIMenuController");
 		_menuController.BindServices(_actorController, _actors);
@@ -99,7 +104,7 @@ public partial class BattleArena : Control
 		{
 			ActivePartyMember activePartyMember = partyMembers[i];
 			BattleActor newActor = battleActorScene.Instantiate() as BattleActor;
-			_actorController.AddChild(newActor);
+			_battleSequencePlayer.AddChild(newActor);
 			
 			newActor.Setup(
 				250+(i % 3*10)+(i / 3*25),
@@ -122,7 +127,7 @@ public partial class BattleArena : Control
 		{
 			EnemyResource enemy = enemies[i];
 			BattleActor newActor = battleActorScene.Instantiate() as BattleActor;
-			_actorController.AddChild(newActor);
+			_battleSequencePlayer.AddChild(newActor);
 			
 			CharacterStats enemyStats = new CharacterStats(enemy.GetBaseStats());
 
@@ -204,11 +209,6 @@ public partial class BattleArena : Control
 				}
 			}
 		}
-	}
-
-	private void ExeucteAnimation()
-	{
-		
 	}
 
 	/*
