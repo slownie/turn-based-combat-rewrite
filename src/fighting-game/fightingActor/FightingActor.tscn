@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://dlhvx235nft7g"]
+
+[ext_resource type="Script" uid="uid://cvuhh0qj27x38" path="res://src/fighting-game/fightingActor/FightingActor.cs" id="1_eo4gv"]
+[ext_resource type="Texture2D" uid="uid://cfyv67l08hkx8" path="res://assets/images/battleActors/SolBadguy/sSolBadguyIdle_strip4.png" id="1_j3nyg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eo4gv"]
+atlas = ExtResource("1_j3nyg")
+region = Rect2(0, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxn4p"]
+atlas = ExtResource("1_j3nyg")
+region = Rect2(32, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kdmag"]
+atlas = ExtResource("1_j3nyg")
+region = Rect2(64, 0, 32, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61kml"]
+atlas = ExtResource("1_j3nyg")
+region = Rect2(96, 0, 32, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0okd5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eo4gv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxn4p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kdmag")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61kml")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fje7f"]
+
+[node name="FightingActor" type="CharacterBody2D" unique_id=869518547]
+script = ExtResource("1_eo4gv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=763167978]
+sprite_frames = SubResource("SpriteFrames_0okd5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1718957237]
+shape = SubResource("RectangleShape2D_fje7f")

@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://bhrp04ee75trc"]
+
+[ext_resource type="Script" uid="uid://jsg7cr665w5m" path="res://src/fighting-game/fightingArena/FightingArena.cs" id="1_vnny0"]
+
+[node name="FightingArena" type="Control" unique_id=1788720566]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vnny0")
+
+[node name="Actors" type="Node2D" parent="." unique_id=860325187]
