@@ -8,11 +8,13 @@ public partial class BattleArena : Control
 	[Signal] public delegate void BattleFinishedEventHandler(BattleController.BattleConclusion battleConclusion);
 
 	Godot.Collections.Array<BattleActor> _actors = [];
+	
 	BattleActor _currentActor;
+	BattleActor _partnerActor;
+
 	Godot.Collections.Array<InventoryItem> _battleInventory = [];
 
 	ActorController _actorController;
-	BattleSequencePlayer _battleSequencePlayer;
 
 	UIMenuController _menuController;
 	UITurnBar _turnBar;
@@ -67,9 +69,6 @@ public partial class BattleArena : Control
 		_actorController = GetNode<ActorController>("ActorController");
 		_actorController.EnemySelectAction += OnActionTargetConfimed;
 
-		_battleSequencePlayer = GetNode<BattleSequencePlayer>("BattleSequencePlayer");
-		_battleSequencePlayer.BindServices(_gameCamera, _musicPlayer, _sfxPlayer);
-
 		// UI
 		_menuController = GetNode<UIMenuController>("UI/UIMenuController");
 		_menuController.BindServices(_actorController, _actors);
@@ -104,7 +103,7 @@ public partial class BattleArena : Control
 		{
 			ActivePartyMember activePartyMember = partyMembers[i];
 			BattleActor newActor = battleActorScene.Instantiate() as BattleActor;
-			_battleSequencePlayer.AddChild(newActor);
+			_actorController.AddChild(newActor);
 			
 			newActor.Setup(
 				250+(i % 3*10)+(i / 3*25),
@@ -127,7 +126,7 @@ public partial class BattleArena : Control
 		{
 			EnemyResource enemy = enemies[i];
 			BattleActor newActor = battleActorScene.Instantiate() as BattleActor;
-			_battleSequencePlayer.AddChild(newActor);
+			_actorController.AddChild(newActor);
 			
 			CharacterStats enemyStats = new CharacterStats(enemy.GetBaseStats());
 
@@ -165,7 +164,7 @@ public partial class BattleArena : Control
 	{
 		TimeScale = 0.0;
 		_currentActor = actor;
-		_menuController.PartyTurnStart(actor, _battleInventory);
+		_menuController.PartyTurnStart(_currentActor, _battleInventory);
 	}
 
 	private void OnEnemyActorReady(BattleActor actor)
@@ -180,17 +179,6 @@ public partial class BattleArena : Control
 		GD.Print("==OnActionTargetConfirmed===");
 		TimeScale = 0.0;
 
-		// Start the action
-	}
-
-	private void OnActionFinished()
-	{
-		_currentActor = null;
-		TimeScale = 1.0;
-	}
-
-	private void ExecuteActionResource(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
-	{
 		foreach(ActionEffectResource actionEffect in selectedAction.GetActions())
 		{
 			// 1. Does the effect occur?
@@ -208,6 +196,29 @@ public partial class BattleArena : Control
 					}
 				}
 			}
+		}
+
+		OnActionFinished();
+	}
+
+	private void OnActionFinished()
+	{
+		TimeScale = 1.0;
+
+
+		Callable.From(ResetActors).CallDeferred();
+		
+	}
+
+	private void ResetActors()
+	{
+		_currentActor.ResetReadiness();
+		_currentActor = null;
+
+		if (_partnerActor != null)
+		{
+			_partnerActor.ResetReadiness();
+			_partnerActor = null;
 		}
 	}
 

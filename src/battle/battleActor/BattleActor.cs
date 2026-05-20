@@ -158,6 +158,14 @@ public partial class BattleActor : Node2D
 	public bool GetIsPlayer() { return _isPlayer; }
 	public Texture2D GetBattleIcon() { return _battleIcon; }
 
+	public void ResetReadiness() { 
+		Readiness = 0.0; 
+		if (_characterStats.GetCurHP() > 0)
+		{
+			IsActive = true;
+		}
+	}
+
 
 	#endregion
 

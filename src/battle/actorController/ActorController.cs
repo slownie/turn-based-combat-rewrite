@@ -95,38 +95,43 @@ public partial class ActorController : Node2D
 			selectedAction = GetUseableSkills(enemyUser)[selectedActionIndex].GetUseableActionResource();
 		}
 
-		Godot.Collections.Array<BattleActor> _partyTargets = [];
-		Godot.Collections.Array<BattleActor> _enemyTargets = [];
+		Godot.Collections.Array<BattleActor> _oppositeSideTargets = [];
+		Godot.Collections.Array<BattleActor> _sameSideTargets = [];
 
 		// Provide targeting parameters to TargetCursorController
 
 		// 1. Are we targeting the party, enemies, both, or the self?
 		if (selectedAction.GetTargetOppositeSide())
 		{
-			_enemyTargets = GetEnemies(battleActors);
+			_oppositeSideTargets = GetPartyMembers(battleActors);
 		}
 
 		if (selectedAction.GetTargetSameSide())
 		{
-			_partyTargets = GetPartyMembers(battleActors);
+			_sameSideTargets = GetEnemies(battleActors);
 		}
 
 		if (selectedAction.GetTargetSelfOnly())
 		{
-			_partyTargets.Add(enemyUser);
+			_sameSideTargets.Add(enemyUser);
 		}
 
 		// 2. Are we targeting dead or alive actors?
 		if (selectedAction.GetTargetDeadOnly())
 		{
 			// We are only targeting dead party members
-			_partyTargets = GetDeadActors(_partyTargets);
+			_sameSideTargets = GetDeadActors(_sameSideTargets);
 		} else {
-			if (_enemyTargets.Count != 0) _enemyTargets = GetLiveActors(_enemyTargets);
-			if (_partyTargets.Count != 0) _partyTargets = GetLiveActors(_partyTargets);
+			if (_oppositeSideTargets.Count != 0) _oppositeSideTargets = GetLiveActors(_oppositeSideTargets);
+			if (_sameSideTargets.Count != 0) _sameSideTargets = GetLiveActors(_sameSideTargets);
 		}
 
-		EmitSignal(SignalName.EnemySelectAction, selectedAction, battleActors);
+		Godot.Collections.Array<BattleActor> _selectedTargets = [];
+		_selectedTargets.AddRange(_oppositeSideTargets);
+		_selectedTargets.AddRange(_sameSideTargets);
+
+
+		EmitSignal(SignalName.EnemySelectAction, selectedAction, _selectedTargets);
 	}
 	#endregion
 

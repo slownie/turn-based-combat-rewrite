@@ -25,6 +25,8 @@ public partial class UIMenuController : Control
 	Godot.Collections.Array<UIBattleMenuBase> _menuStack = [];
 	UIBattleMenuBase _currentMenu;
 
+	Vector2 _menuPosition = new Vector2(160, 16);
+
     public override void _Ready()
 	{
 		
@@ -78,7 +80,7 @@ public partial class UIMenuController : Control
 		skillMenu.Setup(_useableSkills);
 		LoadMenu(skillMenu);
 
-		skillMenu.Position = new Vector2(64, 32);
+		skillMenu.Position = _menuPosition;
 	}
 
 	private void CreateItemMenu()
@@ -92,7 +94,7 @@ public partial class UIMenuController : Control
 		itemMenu.Setup(_battleInventory);
 		LoadMenu(itemMenu);
 
-		itemMenu.Position = new Vector2(64, 32);
+		itemMenu.Position = _menuPosition;
 	}
 
 	private void OnSkillSelected(UseableSkillResource useableSkillResource)
@@ -199,6 +201,9 @@ public partial class UIMenuController : Control
 		{
 			node.QueueFree();
 		}
+
+		_currentMenu = null;
+		_menuStack = [];
 
 		_currentPartyActor = null; 
 		_useableSkills = [];
