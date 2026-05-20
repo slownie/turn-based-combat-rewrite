@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://c6p5glakoq6l3" path="res://src/battle/battleUI/uiTargetCursorController/UITargetCursorController.tscn" id="7_1m5vt"]
 [ext_resource type="PackedScene" uid="uid://bjxtgsde45reu" path="res://src/battle/battleUI/uiBattleSkillMenu/UISkillMenu.tscn" id="7_li7l2"]
 [ext_resource type="PackedScene" uid="uid://bx7oebb2xedxr" path="res://src/battle/battleUI/uiBattleItemMenu/UIItemMenu.tscn" id="8_pu6or"]
+[ext_resource type="Script" uid="uid://comggnfxr07sj" path="res://src/battle/battleUI/UIBattleTextController/UIBattleTextController.cs" id="11_cjual"]
+[ext_resource type="PackedScene" uid="uid://8l3cnqjdjof2" path="res://src/battle/battleUI/UIBattleTextController/UIBattleText/UIBattleText.tscn" id="12_ayey8"]
 
 [node name="BattleArena" type="Control" unique_id=420812231]
 layout_mode = 3
@@ -49,3 +51,11 @@ mainMenuScene = ExtResource("6_ysmad")
 skillMenuScene = ExtResource("7_li7l2")
 itemMenuScene = ExtResource("8_pu6or")
 targetMenuScene = ExtResource("7_1m5vt")
+
+[node name="UIBattleTextController" type="Control" parent="UI" unique_id=1633982608]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("11_cjual")
+battleTextScene = ExtResource("12_ayey8")

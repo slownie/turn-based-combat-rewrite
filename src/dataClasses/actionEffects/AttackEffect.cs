@@ -4,8 +4,6 @@ using System;
 [GlobalClass]
 public partial class AttackEffect : ActionEffectResource
 {
-    [Signal] public delegate void AttackMissedEventHandler(BattleActor target);
-
     [Export] int baseDamage = 10;
     [Export] int baseAccuracy = 100;
     [Export] int baseCrit = 21;
@@ -18,6 +16,8 @@ public partial class AttackEffect : ActionEffectResource
         {
             // Hit
             int calculatedDamage = 0;
+            bool didCrit = false;
+
             switch(damageCalculation)
             {
                 case BattleConsts.DamageCalculation.Strength:
@@ -39,10 +39,10 @@ public partial class AttackEffect : ActionEffectResource
                 }
             }
 
-            actorController.AddActorCurHP(target, -calculatedDamage);
+            actorController.TakeDamage(target, -calculatedDamage, didCrit);
         } else {
             // Miss
-            EmitSignal(SignalName.AttackMissed, target);
+            actorController.ActionMissed(target);
         }
     }
 

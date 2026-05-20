@@ -18,6 +18,7 @@ public partial class BattleArena : Control
 
 	UIMenuController _menuController;
 	UITurnBar _turnBar;
+	UIBattleTextController _battleTextController;
 
 	InventoryController _inventoryController;
 	MusicPlayer _musicPlayer;
@@ -79,6 +80,8 @@ public partial class BattleArena : Control
 		_menuController.ActionTargetConfirmed += OnActionTargetConfimed;
 
 		_turnBar = GetNode<UITurnBar>("UI/UITurnBar");
+
+		_battleTextController = GetNode<UIBattleTextController>("UI/UIBattleTextController");
 	}
 
     public override void _Input(InputEvent @event)
@@ -147,6 +150,7 @@ public partial class BattleArena : Control
 		}
 
 		_turnBar.Setup(_actors);	
+		_battleTextController.Setup(_actors);
 		IsActive = true;
 	}
 
@@ -176,7 +180,6 @@ public partial class BattleArena : Control
 
 	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
 	{
-		GD.Print("==OnActionTargetConfirmed===");
 		TimeScale = 0.0;
 
 		foreach(ActionEffectResource actionEffect in selectedAction.GetActions())

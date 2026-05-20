@@ -3,11 +3,20 @@ using System;
 
 public partial class BattleActor : Node2D
 {
+	// Stat Signals
 	[Signal] public delegate void HPChangedEventHandler(int newHP);
 	[Signal] public delegate void HPDepletedEventHandler();
 
 	[Signal] public delegate void MPChangedEventHandler(int newMP);
 
+	// Skill/Action Related Signals
+	[Signal] public delegate void DamageReceivedEventHandler(BattleActor actor, int value, bool isCrit);
+	[Signal] public delegate void HealReceivedEventHandler(BattleActor actor, int value);
+	[Signal] public delegate void RejuvenateReceivedEventHandler(BattleActor actor, int value);
+
+	[Signal] public delegate void MissReceivedEventHandler(BattleActor actor);
+
+	// Readiness Signals
 	[Signal] public delegate void ReadinessChangedEventHandler(double readiness);
 	[Signal] public delegate void ReadyToActEventHandler(BattleActor battleActor);
 

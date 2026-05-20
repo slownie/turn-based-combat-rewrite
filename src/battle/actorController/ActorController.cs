@@ -9,10 +9,29 @@ public partial class ActorController : Node2D
 	[Signal] public delegate void EnemySelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 
 	#region Stats
+	/*
+		These are used for skills costs, NOT skills.
+	*/
 	public void AddActorCurHP(BattleActor target, int amount) { target.AddCurHP(amount); }
 	public void SetActorCurHP(BattleActor target, int amount) { target.SetCurHP(amount); }
 	public void AddActorCurMP(BattleActor target, int amount) { target.AddCurMP(amount); }
 	public void SetActorCurMP(BattleActor target, int amount) { target.SetCurMP(amount); }
+	#endregion
+
+	#region Actions
+	public void TakeDamage(BattleActor target, int damage, bool didCrit)
+	{
+		target.SetCurHP(-damage);
+		target.EmitSignal(BattleActor.SignalName.DamageReceived, target, damage, didCrit);
+	}
+
+	public void ActionMissed(BattleActor target)
+	{
+		target.EmitSignal(BattleActor.SignalName.MissReceived, target);
+	}
+
+
+
 	#endregion
 
 	#region Queries

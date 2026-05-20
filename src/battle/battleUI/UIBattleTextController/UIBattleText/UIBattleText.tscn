@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://8l3cnqjdjof2"]
+
+[ext_resource type="Script" uid="uid://cdmlodmaa7nhr" path="res://src/battle/battleUI/UIBattleTextController/UIBattleText/UIBattleText.cs" id="1_s0lql"]
+[ext_resource type="Theme" uid="uid://h1nt1ofh7cv8" path="res://ui/BattleUITheme.tres" id="2_mke32"]
+
+[node name="UIBattleText" type="Marker2D" unique_id=1225588942]
+script = ExtResource("1_s0lql")
+
+[node name="Label" type="Label" parent="." unique_id=1271419509]
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("2_mke32")
+text = "Battle Text"
+horizontal_alignment = 1
