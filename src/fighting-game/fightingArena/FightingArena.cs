@@ -9,14 +9,36 @@ public partial class FightingArena : Control
 
 	AnimatedSprite2D _sprite;
 	
-	public void SetActive(bool setActive)
+	Vector2 _initialPosition;
+
+	public enum States
 	{
-		_isActive = setActive;
-		SetProcessInput(_isActive);
+		Idle,
+		
 	}
+	
 
     public override void _Ready()
 	{
 		_sprite = GetNode<AnimatedSprite2D>("Sprite");
+	}
+
+	public void Setup(
+		int x,
+		int y,
+		SpriteFrames spriteFrames
+	)
+	{
+		Vector2 newPosition = new Vector2(x, y);	
+		Position = newPosition;
+		_initialPosition = Position;
+
+		_sprite.SpriteFrames = spriteFrames;
+	}
+
+	public void SetActive(bool setActive)
+	{
+		_isActive = setActive;
+		SetProcessInput(_isActive);
 	}
 }
