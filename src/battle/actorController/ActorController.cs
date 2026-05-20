@@ -21,8 +21,20 @@ public partial class ActorController : Node2D
 	#region Actions
 	public void TakeDamage(BattleActor target, int damage, bool didCrit)
 	{
-		target.SetCurHP(-damage);
+		target.AddCurHP(-damage);
 		target.EmitSignal(BattleActor.SignalName.DamageReceived, target, damage, didCrit);
+	}
+
+	public void TakeHeal(BattleActor target, int heal)
+	{
+		target.AddCurHP(heal);
+		target.EmitSignal(BattleActor.SignalName.HealReceived, target, heal);
+	}
+
+	public void TakeRejuvenate(BattleActor target, int rejuvenate)
+	{
+		target.AddCurMP(rejuvenate);
+		target.EmitSignal(BattleActor.SignalName.RejuvenateReceived, target, rejuvenate);
 	}
 
 	public void ActionMissed(BattleActor target)
