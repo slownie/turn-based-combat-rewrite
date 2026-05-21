@@ -106,7 +106,10 @@ public partial class BattleActor : Node2D
 		Position = newPosition;
 
 		_actorName = actorName;
+		
 		_characterStats = characterStats;
+		_characterStats.HPDepleted += OnStatsHPDepleted;
+
 		_skills = skills;
 
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
@@ -137,9 +140,7 @@ public partial class BattleActor : Node2D
 
 	public void AddCurHP(int amount) { 
 		_characterStats.AddCurHP(amount); 
-		GD.Print(_actorName+" - "+_characterStats.GetCurHP());
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
-		
 	}
 	
 	public void SetCurHP(int amount) { 

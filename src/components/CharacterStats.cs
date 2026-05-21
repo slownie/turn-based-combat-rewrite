@@ -6,6 +6,8 @@ public partial class CharacterStats : GodotObject
 {
 	[Signal] public delegate void HPChangedEventHandler();
 
+	[Signal] public delegate void HPDepletedEventHandler();
+
 	int _maxHP = 0;
 	int _maxMP = 0;
 	int _curHP = 0;
@@ -60,8 +62,11 @@ public partial class CharacterStats : GodotObject
 	public void AddCurHP(int amount)
 	{
 		_curHP += amount;
-		
-		if (_curHP < 0) _curHP = 0;
+
+		if (_curHP < 0) {
+			_curHP = 0;
+			EmitSignal(SignalName.HPDepleted);
+		}
 		if (_maxHP < _curHP) _curHP = _maxHP;
 	}
 
