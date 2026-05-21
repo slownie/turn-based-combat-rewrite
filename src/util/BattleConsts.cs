@@ -64,7 +64,17 @@ public static partial class BattleConsts
 	public enum TriggerType
 	{
 		OnBattleStart,
-		OnBattleEnd
+		OnBattleEnd,
+		OnTurnStart,
+		OnTurnEnd
+	}
+
+	public enum StatBuffType
+	{
+		Strength,
+		Elemental,
+		Defense,
+		Agility
 	}
 
 }

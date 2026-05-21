@@ -42,6 +42,16 @@ public partial class ActorController : Node2D
 		target.EmitSignal(BattleActor.SignalName.MissReceived, target);
 	}
 
+	public void AddBuff(BattleActor target, BaseBuff buffToApply, int turnDuration)
+	{
+		
+	}
+
+	public void RemoveBuff(BattleActor target)
+	{
+		
+	}
+
 
 
 	#endregion
