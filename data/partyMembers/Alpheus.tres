@@ -13,7 +13,12 @@
 script = ExtResource("1_4uqfo")
 _maxHP = 25
 _maxMP = 30
+_strength = 5
+_elemental = 5
 _agility = 5
+_luck = 2
+_defense = 2
+_resistance = 6
 metadata/_custom_type_script = "uid://elamptvvyimh"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aq5s4"]

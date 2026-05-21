@@ -60,6 +60,7 @@ public partial class CharacterStats : GodotObject
 	public void AddCurHP(int amount)
 	{
 		_curHP += amount;
+		
 		if (_curHP < 0) _curHP = 0;
 		if (_maxHP < _curHP) _curHP = _maxHP;
 	}

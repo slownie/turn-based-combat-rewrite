@@ -76,11 +76,13 @@ public partial class BattleController : CanvasLayer
 		{
 			case BattleConclusion.Victory:
 			{
+				GD.Print("You Win!");
 				break;
 			}
 
 			case BattleConclusion.Defeat:
 			{
+				GD.Print("You Lose!");
 				break;
 			}
 

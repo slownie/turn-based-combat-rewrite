@@ -8,6 +8,8 @@ public partial class BattleArena : Control
 	[Signal] public delegate void BattleFinishedEventHandler(BattleController.BattleConclusion battleConclusion);
 
 	Godot.Collections.Array<BattleActor> _actors = [];
+	Godot.Collections.Array<BattleActor> _partyMembers = [];
+	Godot.Collections.Array<BattleActor> _enemyMembers = [];
 	
 	BattleActor _currentActor;
 	BattleActor _partnerActor;
@@ -122,6 +124,7 @@ public partial class BattleArena : Control
 			newActor.ReadyToAct += OnPartyMemberActorReady;
 
 			_actors.Add(newActor);
+			_partyMembers.Add(newActor);
 		}
 
 		// Enemies
@@ -147,6 +150,7 @@ public partial class BattleArena : Control
 			newActor.ReadyToAct += OnEnemyActorReady;
 
 			_actors.Add(newActor);
+			_enemyMembers.Add(newActor);
 		}
 
 		_turnBar.Setup(_actors);	
@@ -180,8 +184,6 @@ public partial class BattleArena : Control
 
 	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
 	{
-		TimeScale = 0.0;
-
 		foreach(ActionEffectResource actionEffect in selectedAction.GetActions())
 		{
 			// 1. Does the effect occur?
@@ -208,9 +210,18 @@ public partial class BattleArena : Control
 	{
 		TimeScale = 1.0;
 
-
-		Callable.From(ResetActors).CallDeferred();
-		
+		// Victory Check
+		if (_actorController.GetLiveActors(_partyMembers).Count == 0)
+		{
+			IsActive = false;
+			EmitSignal(SignalName.BattleFinished, (int)BattleController.BattleConclusion.Defeat);
+		} else if (_actorController.GetLiveActors(_enemyMembers).Count == 0) {
+			IsActive = false;
+			EmitSignal(SignalName.BattleFinished, (int)BattleController.BattleConclusion.Victory);
+		} else {
+			// Required due to Godot's order of operations
+			Callable.From(ResetActors).CallDeferred();
+		}
 	}
 
 	private void ResetActors()
@@ -231,12 +242,14 @@ public partial class BattleArena : Control
 
 	private void OnSkillUsed(BattleActor actor, UseableSkillResource.SkillCostType skillCostType, int amount)
 	{
-		if (skillCostType == UseableSkillResource.SkillCostType.HP)
+		if (amount != 0)
 		{
-			_actorController.AddActorCurHP(actor, -amount);
-		} else {
-			_actorController.AddActorCurMP(actor, -amount);
-			GD.Print(actor.GetCurMP());
+			if (skillCostType == UseableSkillResource.SkillCostType.HP)
+			{
+				_actorController.AddActorCurHP(actor, -amount);
+			} else {
+				_actorController.AddActorCurMP(actor, -amount);
+			}
 		}
 	}
 

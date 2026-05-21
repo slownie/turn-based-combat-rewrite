@@ -137,7 +137,9 @@ public partial class BattleActor : Node2D
 
 	public void AddCurHP(int amount) { 
 		_characterStats.AddCurHP(amount); 
+		GD.Print(_actorName+" - "+_characterStats.GetCurHP());
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
+		
 	}
 	
 	public void SetCurHP(int amount) { 
@@ -181,6 +183,7 @@ public partial class BattleActor : Node2D
 	#region Signals
 	private void OnStatsHPDepleted()
 	{
+		GD.Print(_actorName+" - is Dead!");
 		Readiness = 0.0;
 		IsActive = false;
 		IsTargetable = false;

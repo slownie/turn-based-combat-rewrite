@@ -21,7 +21,7 @@ public partial class ActorController : Node2D
 	#region Actions
 	public void TakeDamage(BattleActor target, int damage, bool didCrit)
 	{
-		target.AddCurHP(-damage);
+		target.AddCurHP(damage);
 		target.EmitSignal(BattleActor.SignalName.DamageReceived, target, damage, didCrit);
 	}
 
@@ -115,7 +115,7 @@ public partial class ActorController : Node2D
 	#region Enemy AI
 	public void EnemyAISelectAction(BattleActor enemyUser, Godot.Collections.Array<BattleActor> battleActors)
 	{
-		// Easier naming
+		// Action Selection
 		UseableActionResource selectedAction;
 
 		if (GetUseableSkills(enemyUser).Count <= 0)
@@ -126,6 +126,7 @@ public partial class ActorController : Node2D
 			selectedAction = GetUseableSkills(enemyUser)[selectedActionIndex].GetUseableActionResource();
 		}
 
+		// Targeting
 		Godot.Collections.Array<BattleActor> _oppositeSideTargets = [];
 		Godot.Collections.Array<BattleActor> _sameSideTargets = [];
 
@@ -153,14 +154,48 @@ public partial class ActorController : Node2D
 			// We are only targeting dead party members
 			_sameSideTargets = GetDeadActors(_sameSideTargets);
 		} else {
+			// Target only alive party members
 			if (_oppositeSideTargets.Count != 0) _oppositeSideTargets = GetLiveActors(_oppositeSideTargets);
 			if (_sameSideTargets.Count != 0) _sameSideTargets = GetLiveActors(_sameSideTargets);
 		}
 
 		Godot.Collections.Array<BattleActor> _selectedTargets = [];
-		_selectedTargets.AddRange(_oppositeSideTargets);
-		_selectedTargets.AddRange(_sameSideTargets);
+		
 
+		switch(selectedAction.GetCursorMode())
+		{
+			case BattleConsts.CursorMode.Single:
+			{
+				// Pick a random target
+				if (_sameSideTargets.Count != 0)
+				{
+					int selectedTargetIndex = (int)(GD.Randi() % (_sameSideTargets.Count - 1));
+					_selectedTargets.Add(_sameSideTargets[selectedTargetIndex]);
+				} else {
+					int selectedTargetIndex = (int)(GD.Randi() % (_oppositeSideTargets.Count - 1));
+					_selectedTargets.Add(_oppositeSideTargets[selectedTargetIndex]);
+				}
+				break;
+			}
+
+			case BattleConsts.CursorMode.Side:
+			{
+				if (_sameSideTargets.Count != 0)
+				{
+					_selectedTargets = _sameSideTargets;
+				} else {
+					_selectedTargets = _oppositeSideTargets;
+				}
+				break;
+			}
+
+			case BattleConsts.CursorMode.All:
+			{
+				_selectedTargets.AddRange(_oppositeSideTargets);
+				_selectedTargets.AddRange(_sameSideTargets);
+				break;
+			}
+		}
 
 		EmitSignal(SignalName.EnemySelectAction, selectedAction, _selectedTargets);
 	}

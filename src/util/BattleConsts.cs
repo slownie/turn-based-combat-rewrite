@@ -60,4 +60,11 @@ public static partial class BattleConsts
 		Other
 	}
 
+	
+	public enum TriggerType
+	{
+		OnBattleStart,
+		OnBattleEnd
+	}
+
 }
