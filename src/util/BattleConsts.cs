@@ -26,6 +26,25 @@ public static partial class BattleConsts
 	}
 
 	/*
+		Integer values are used to determine fusion status effects.
+	*/
+	public enum StatusCondition
+	{
+		None=0,
+		Burn=1,
+		Drain=2,
+		Confuse=4,
+		Break=7,
+
+		Seal=3,
+		Overdrive=5,
+		Cleave=8,
+		Frostbite=6,
+		Immortality=9,
+		Elevate=11
+	}
+
+	/*
 		When the targets array is passed into the skill's function, the target type will
 		determine which target the effect is applied to.
 			- Single: Only one target, the targets array will already only have the one target in it.

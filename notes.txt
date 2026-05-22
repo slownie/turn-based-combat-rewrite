@@ -1,3 +1,4 @@
-Passive Effect Manager:
-- Stores an attack/defense/agility modifier that is modified by running 
-  the passive skill's function that is then applied to the damage calculation 
+
+
+You could make status effects their own resource but you would be making 
+arbitrary classes/functions

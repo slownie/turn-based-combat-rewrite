@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 public partial class BattleActor : Node2D
 {
@@ -23,6 +24,8 @@ public partial class BattleActor : Node2D
 	string _actorName = "Placeholder";
 	CharacterStats _characterStats;
 	Godot.Collections.Array<BaseSkillResource> _skills = [];
+
+	ActiveStatusCondition _activeStatusCondition;
 
 	bool _isPlayer = true;
 
@@ -112,6 +115,8 @@ public partial class BattleActor : Node2D
 
 		_skills = skills;
 
+		_activeStatusCondition = new ActiveStatusCondition();
+
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
 		_maxHPLabel.Text = _characterStats.GetMaxHP().ToString();
 		_curMPLabel.Text = _characterStats.GetCurMP().ToString();
@@ -167,6 +172,13 @@ public partial class BattleActor : Node2D
 
 	public Godot.Collections.Array<BaseSkillResource> GetSkills() { return _skills; }
 
+	public ActiveStatusCondition GetActiveStatusCondition() { return _activeStatusCondition; }
+	public void SetActiveStatusCondition(BattleConsts.StatusCondition statusCondition, int turnCount)
+	{
+		_activeStatusCondition.SetStatusCondition(statusCondition);
+		_activeStatusCondition.SetTurnCount(turnCount);
+	}
+
 	public bool GetIsPlayer() { return _isPlayer; }
 	public Texture2D GetBattleIcon() { return _battleIcon; }
 
@@ -177,7 +189,6 @@ public partial class BattleActor : Node2D
 			IsActive = true;
 		}
 	}
-
 
 	#endregion
 

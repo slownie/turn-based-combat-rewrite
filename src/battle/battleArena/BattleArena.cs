@@ -208,7 +208,7 @@ public partial class BattleArena : Control
 
 	private void OnActionFinished()
 	{
-		TimeScale = 1.0;
+		
 
 		// Victory Check
 		if (_actorController.GetLiveActors(_partyMembers).Count == 0)
@@ -222,6 +222,8 @@ public partial class BattleArena : Control
 			// Required due to Godot's order of operations
 			Callable.From(ResetActors).CallDeferred();
 		}
+
+		TimeScale = 1.0;
 	}
 
 	private void ResetActors()

@@ -42,6 +42,11 @@ public partial class ActorController : Node2D
 		target.EmitSignal(BattleActor.SignalName.MissReceived, target);
 	}
 
+	public void SetStatusCondition(BattleActor target, BattleConsts.StatusCondition statusCondition, int turnCount)
+	{
+		
+	}
+
 	public void AddBuff(BattleActor target, BaseBuff buffToApply, int turnDuration)
 	{
 		
