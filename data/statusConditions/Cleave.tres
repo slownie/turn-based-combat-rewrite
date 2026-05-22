@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://twg0jaqw4yyv"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_j7gu6"]
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_8v6gc"]
+[ext_resource type="Script" uid="uid://cilsbo2s8y8tj" path="res://src/dataClasses/actionEffects/statusEffects/SetIgnoreAffinityEffect.cs" id="2_uhr82"]
+
+[sub_resource type="Resource" id="Resource_pj3cf"]
+script = ExtResource("2_uhr82")
+enable = false
+metadata/_custom_type_script = "uid://cilsbo2s8y8tj"
+
+[sub_resource type="Resource" id="Resource_c1nef"]
+script = ExtResource("2_uhr82")
+metadata/_custom_type_script = "uid://cilsbo2s8y8tj"
+
+[resource]
+script = ExtResource("2_8v6gc")
+statusConditionName = "Cleave"
+triggerActions = Array[ExtResource("1_j7gu6")]([SubResource("Resource_c1nef")])
+cleanupActions = Array[ExtResource("1_j7gu6")]([SubResource("Resource_pj3cf")])
+metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

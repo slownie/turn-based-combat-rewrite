@@ -2,9 +2,16 @@
 
 [ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_vtpnq"]
 [ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_c3l7r"]
+[ext_resource type="Script" uid="uid://db7y2t40b6cqe" path="res://src/dataClasses/actionEffects/DamagePercentageEffect.cs" id="3_c3l7r"]
+
+[sub_resource type="Resource" id="Resource_05apm"]
+script = ExtResource("3_c3l7r")
+damagePercentage = 8
+metadata/_custom_type_script = "uid://db7y2t40b6cqe"
 
 [resource]
 script = ExtResource("2_c3l7r")
 statusConditionName = "Burn"
 triggerType = 4
+triggerActions = Array[ExtResource("1_vtpnq")]([SubResource("Resource_05apm")])
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://cxsvotgmcpifl"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_npcor"]
+[ext_resource type="Script" uid="uid://bvnxnfvynxixa" path="res://src/dataClasses/actionEffects/statusEffects/SetMenuEntryEffect.cs" id="2_ju8w4"]
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_xd3b6"]
+
+[sub_resource type="Resource" id="Resource_o2mt7"]
+script = ExtResource("2_ju8w4")
+menuEntryType = 1
+metadata/_custom_type_script = "uid://bvnxnfvynxixa"
+
+[sub_resource type="Resource" id="Resource_ic22r"]
+script = ExtResource("2_ju8w4")
+menuEntryType = 1
+enable = false
+metadata/_custom_type_script = "uid://bvnxnfvynxixa"
+
+[resource]
+script = ExtResource("2_xd3b6")
+statusConditionName = "Seal"
+triggerActions = Array[ExtResource("1_npcor")]([SubResource("Resource_ic22r")])
+cleanupActions = Array[ExtResource("1_npcor")]([SubResource("Resource_o2mt7")])
+metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Security.Cryptography.X509Certificates;
 
 public partial class BattleActor : Node2D
 {
@@ -10,7 +9,7 @@ public partial class BattleActor : Node2D
 
 	[Signal] public delegate void MPChangedEventHandler(int newMP);
 
-
+	[Signal] public delegate void ActorTurnStartEventHandler();
 
 	// Skill/Action Related Signals
 	[Signal] public delegate void DamageReceivedEventHandler(BattleActor actor, int value, bool isCrit);
@@ -81,6 +80,12 @@ public partial class BattleActor : Node2D
 
 
 	// Status Effect Parameters
+
+	/*
+		When true, the user will select a random action.
+		Primarily used by the Confuse status effect.
+	*/
+	public bool SelectRandomAction {get; set; } = false; 
 
 	/*
 		When true, user's HP will never reach 0.
@@ -189,6 +194,11 @@ public partial class BattleActor : Node2D
 
 	}
 
+	public void TurnStart()
+	{
+		EmitSignal(SignalName.ActorTurnStart);
+	}
+
 	#region Getters
 
 	public string GetActorName() { return _actorName; }
@@ -201,7 +211,18 @@ public partial class BattleActor : Node2D
 	public int GetCurMP() { return _characterStats.GetCurMP(); }
 	public int GetMaxMP() { return _characterStats.GetMaxMP(); }
 
-	public void AddCurHP(int amount) { 
+	public void AddCurHP(int amount) {
+		// This should also prevent OnDeath effects from activating since 
+		// HP never reaches 0 which would cause those effects to activate.
+		if (IsImmortal)
+		{
+			// Would this kill the actor?
+			if (_characterStats.GetCurHP() <= amount)
+			{
+				SetCurHP(1);
+			}
+		}
+
 		_characterStats.AddCurHP(amount); 
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
 	}
@@ -231,6 +252,10 @@ public partial class BattleActor : Node2D
 	public Godot.Collections.Array<BaseSkillResource> GetSkills() { return _skills; }
 
 	public ActiveStatusCondition GetActiveStatusCondition() { return _activeStatusCondition; }
+	public void SetActiveStatusCondition(ActiveStatusCondition newStatusCondition)
+	{
+		_activeStatusCondition = newStatusCondition;
+	}
 
 	public bool GetIsPlayer() { return _isPlayer; }
 	public Texture2D GetBattleIcon() { return _battleIcon; }

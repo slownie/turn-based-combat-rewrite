@@ -8,6 +8,8 @@ public partial class ActorController : Node2D
 	[Export] UseableSkillResource defaultEnemyAction;
 	[Signal] public delegate void EnemySelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 
+	[Signal] public delegate void RandomSelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
+
 	#region Stats
 	/*
 		These are used for skills costs, NOT skills.
@@ -21,6 +23,8 @@ public partial class ActorController : Node2D
 	#region Actions
 	public void TakeDamage(BattleActor target, int damage, bool didCrit)
 	{
+		if (target.IsIndestructable) damage = 0;
+
 		target.AddCurHP(damage);
 		target.EmitSignal(BattleActor.SignalName.DamageReceived, target, damage, didCrit);
 	}
@@ -42,9 +46,15 @@ public partial class ActorController : Node2D
 		target.EmitSignal(BattleActor.SignalName.MissReceived, target);
 	}
 
-	public void SetStatusCondition(BattleActor target, BattleConsts.StatusCondition statusCondition, int turnCount)
+	public void SetStatusCondition(BattleActor target, StatusConditionResource statusConditionResource, int turnCount)
 	{
-		
+		if (target.GetActiveStatusCondition() != null)
+		{
+			// Fusion Status Conditions
+		} else {
+			ActiveStatusCondition activeStatusCondition = new ActiveStatusCondition(statusConditionResource, turnCount);
+			target.SetActiveStatusCondition(activeStatusCondition);
+		}
 	}
 
 	public void AddBuff(BattleActor target, BaseBuff buffToApply, int turnDuration)
@@ -57,7 +67,22 @@ public partial class ActorController : Node2D
 		
 	}
 
-	public void EnableMenuEntry(BattleActor target, BattleConsts.MenuEntryType menuEntryType, bool enable)
+	public void SetSelectRandomAction(BattleActor target, bool enable)
+	{
+		target.SelectRandomAction = enable;
+	}
+
+	public void SetImmortality(BattleActor target, bool enable)
+	{
+		target.IsImmortal = enable;
+	}
+
+	public void SetIndestructable(BattleActor target, bool enable)
+	{
+		target.IsIndestructable = enable;
+	}
+
+	public void SetMenuEntry(BattleActor target, BattleConsts.MenuEntryType menuEntryType, bool enable)
 	{
 		switch(menuEntryType)
 		{
@@ -95,6 +120,7 @@ public partial class ActorController : Node2D
 	{
 		target.SkillSuccessGuarantee = guarantee;
 	}
+
 
 
 
@@ -252,6 +278,11 @@ public partial class ActorController : Node2D
 		}
 
 		EmitSignal(SignalName.EnemySelectAction, selectedAction, _selectedTargets);
+	}
+	
+	public void SelectRandomAction(BattleActor currentUser, Godot.Collections.Array<BattleActor> battleActors)
+	{
+		
 	}
 	#endregion
 

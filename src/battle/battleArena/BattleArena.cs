@@ -71,6 +71,7 @@ public partial class BattleArena : Control
 	{
 		_actorController = GetNode<ActorController>("ActorController");
 		_actorController.EnemySelectAction += OnActionTargetConfimed;
+		_actorController.RandomSelectAction += OnActionTargetConfimed;
 
 		// UI
 		_menuController = GetNode<UIMenuController>("UI/UIMenuController");
@@ -172,14 +173,26 @@ public partial class BattleArena : Control
 	{
 		TimeScale = 0.0;
 		_currentActor = actor;
-		_menuController.PartyTurnStart(_currentActor, _battleInventory);
+
+		if (_currentActor.SelectRandomAction)
+		{
+			_actorController.SelectRandomAction(_currentActor, _actors);
+		} else {
+			_menuController.PartyTurnStart(_currentActor, _battleInventory);
+		}
 	}
 
 	private void OnEnemyActorReady(BattleActor actor)
 	{
 		TimeScale = 0.0;
 		_currentActor = actor;
-		_actorController.EnemyAISelectAction(_currentActor, _actors);
+
+		if (_currentActor.SelectRandomAction)
+		{
+			_actorController.SelectRandomAction(_currentActor, _actors);
+		} else {
+			_actorController.EnemyAISelectAction(_currentActor, _actors);
+		}
 	}
 
 	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
@@ -245,13 +258,16 @@ public partial class BattleArena : Control
 
 	private void OnSkillUsed(BattleActor actor, UseableSkillResource.SkillCostType skillCostType, int amount)
 	{
-		if (amount != 0)
+		if (!actor.IgnoreSkillCosts)
 		{
-			if (skillCostType == UseableSkillResource.SkillCostType.HP)
+			if (amount != 0)
 			{
-				_actorController.AddActorCurHP(actor, -amount);
-			} else {
-				_actorController.AddActorCurMP(actor, -amount);
+				if (skillCostType == UseableSkillResource.SkillCostType.HP)
+				{
+					_actorController.AddActorCurHP(actor, -amount);
+				} else {
+					_actorController.AddActorCurMP(actor, -amount);
+				}
 			}
 		}
 	}

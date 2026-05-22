@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://c8kdp0f1y71xk"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_nh1l4"]
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_30iq5"]
+[ext_resource type="Script" uid="uid://bvnxnfvynxixa" path="res://src/dataClasses/actionEffects/statusEffects/SetMenuEntryEffect.cs" id="2_afcod"]
+
+[sub_resource type="Resource" id="Resource_rv3wk"]
+script = ExtResource("2_afcod")
+metadata/_custom_type_script = "uid://bvnxnfvynxixa"
+
+[sub_resource type="Resource" id="Resource_17vvh"]
+script = ExtResource("2_afcod")
+enable = false
+metadata/_custom_type_script = "uid://bvnxnfvynxixa"
+
+[resource]
+script = ExtResource("2_30iq5")
+statusConditionName = "Break"
+triggerActions = Array[ExtResource("1_nh1l4")]([SubResource("Resource_17vvh")])
+cleanupActions = Array[ExtResource("1_nh1l4")]([SubResource("Resource_rv3wk")])
+metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

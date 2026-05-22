@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://dq3v1fp84d7gh"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_k411o"]
+[ext_resource type="Script" uid="uid://o64rf5cf3yfc" path="res://src/dataClasses/actionEffects/statusEffects/SetActionSuccessEffect.cs" id="2_da8lv"]
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_e1bml"]
+
+[sub_resource type="Resource" id="Resource_nb1b3"]
+script = ExtResource("2_da8lv")
+enable = false
+metadata/_custom_type_script = "uid://o64rf5cf3yfc"
+
+[sub_resource type="Resource" id="Resource_tphjq"]
+script = ExtResource("2_da8lv")
+metadata/_custom_type_script = "uid://o64rf5cf3yfc"
+
+[resource]
+script = ExtResource("2_e1bml")
+statusConditionName = "Elevate"
+triggerActions = Array[ExtResource("1_k411o")]([SubResource("Resource_tphjq")])
+cleanupActions = Array[ExtResource("1_k411o")]([SubResource("Resource_nb1b3")])
+metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

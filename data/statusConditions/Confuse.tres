@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://ugjdhqoaw0wo"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_umoti"]
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_l3hcl"]
+[ext_resource type="Script" uid="uid://dyobwf0nw7bx4" path="res://src/dataClasses/actionEffects/statusEffects/SetSelectRandomActionEffect.cs" id="2_p7hwy"]
+
+[sub_resource type="Resource" id="Resource_3gocq"]
+script = ExtResource("2_p7hwy")
+enable = false
+metadata/_custom_type_script = "uid://dyobwf0nw7bx4"
+
+[sub_resource type="Resource" id="Resource_rpkkw"]
+script = ExtResource("2_p7hwy")
+metadata/_custom_type_script = "uid://dyobwf0nw7bx4"
+
+[resource]
+script = ExtResource("2_l3hcl")
+statusConditionName = "Confuse"
+triggerActions = Array[ExtResource("1_umoti")]([SubResource("Resource_rpkkw")])
+cleanupActions = Array[ExtResource("1_umoti")]([SubResource("Resource_3gocq")])
+metadata/_custom_type_script = "uid://bvlghdm4fgtn2"
