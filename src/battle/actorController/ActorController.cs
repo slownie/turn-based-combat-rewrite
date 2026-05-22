@@ -57,6 +57,45 @@ public partial class ActorController : Node2D
 		
 	}
 
+	public void EnableMenuEntry(BattleActor target, BattleConsts.MenuEntryType menuEntryType, bool enable)
+	{
+		switch(menuEntryType)
+		{
+			case BattleConsts.MenuEntryType.SkillPhysical:
+			{
+				target.CanSelectPhysSkills = enable;
+				break;
+			}
+
+			case BattleConsts.MenuEntryType.SkillElemental:
+			{
+				target.CanSelectElemSkills = enable;
+				break;
+			}
+
+			case BattleConsts.MenuEntryType.Item:
+			{
+				target.CanSelectItems = enable;
+				break;
+			}
+		}
+	}
+
+	public void SetIgnoreSkillCosts(BattleActor target, bool ignore)
+	{
+		target.IgnoreSkillCosts = ignore;
+	}
+
+	public void SetIgnoreAffinity(BattleActor target, bool ignore)
+	{
+		target.IgnoreAffinity = ignore;
+	}
+
+	public void SetSkillSuccessGuarnatee(BattleActor target, bool guarantee)
+	{
+		target.SkillSuccessGuarantee = guarantee;
+	}
+
 
 
 	#endregion

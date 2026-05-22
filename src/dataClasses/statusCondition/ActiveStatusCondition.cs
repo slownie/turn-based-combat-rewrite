@@ -6,6 +6,7 @@ public partial class ActiveStatusCondition : GodotObject
     BattleConsts.StatusCondition _statusCondition = BattleConsts.StatusCondition.None;
     int _turnCount = -1;
 
+
     public ActiveStatusCondition() {}
 
     public BattleConsts.StatusCondition GetStatusCondition() { return _statusCondition; }

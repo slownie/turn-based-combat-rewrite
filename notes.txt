@@ -1,4 +1,2 @@
 
 
-You could make status effects their own resource but you would be making 
-arbitrary classes/functions

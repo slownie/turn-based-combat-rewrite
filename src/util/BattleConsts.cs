@@ -79,13 +79,25 @@ public static partial class BattleConsts
 		Other
 	}
 
+	public enum MenuEntryType
+	{
+		SkillPhysical,
+		SkillElemental,
+		Item
+	}
 	
 	public enum TriggerType
 	{
+		Immediately,
+
 		OnBattleStart,
 		OnBattleEnd,
-		OnTurnStart,
-		OnTurnEnd
+
+		OnUserTurnStart,
+		OnUserTurnEnd,
+
+		OnUserTakeDamage,
+		
 	}
 
 	public enum StatBuffType

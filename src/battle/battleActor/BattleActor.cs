@@ -74,6 +74,58 @@ public partial class BattleActor : Node2D
 	// If 'false' this actor cannot be targeted by any action
 	public bool IsTargetable {get; set;} = true;
 
+
+	// Status Effect Parameters
+
+	/*
+		When true, user's HP will never reach 0.
+		Primarily used by the Immortality status effect.
+	*/
+	public bool IsImmortal {get; set; } = false;
+
+	/*
+		When true, any damage taken by this user will be reduced to 0.
+		Unused for now.
+	*/
+	public bool IsIndestructable {get; set; } = false;
+
+	/*
+		When true, user can select skills that require HP to use.
+		Primarily used by the Break status effect.
+	*/
+	public bool CanSelectPhysSkills {get; set;} = true;
+
+	/*
+		When true, user can select skills that require MP to use.
+		Primarily used by the Seal status effect.
+	*/
+	public bool CanSelectElemSkills {get; set;} = true;
+
+	/*
+		When true, user can select items.
+		Unused for now.
+	*/
+	public bool CanSelectItems {get; set;} = true;
+
+	/*
+		When true, user can select any skill regardless of the skill's cost.
+		The subtraction of the cost will also not occur.
+		Primarily used by the Overdrive status effect.
+	*/
+	public bool IgnoreSkillCosts {get; set;} = false;
+
+	/*
+		When true, user's attacks will ignore the target's affinity.
+		Primarily used by the Cleave status effect.
+	*/
+	public bool IgnoreAffinity {get; set;} = false;
+
+	/*
+		When true, all additional effects from a skill or item will occur.
+		Primarily used by the Elevate status effect.
+	*/
+	public bool SkillSuccessGuarantee {get; set;} = false; // Elevate
+
 	#endregion
 	
 	// Called when the node enters the scene tree for the first time.
