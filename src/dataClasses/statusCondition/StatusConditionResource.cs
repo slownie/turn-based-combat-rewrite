@@ -20,4 +20,11 @@ public partial class StatusConditionResource : Resource
         is removed through some other means.
     */
     [Export] Godot.Collections.Array<ActionEffectResource> cleanupActions = [];
+
+    public Godot.Collections.Array<ActionEffectResource> GetTriggerActions() { return triggerActions; }
+    public Godot.Collections.Array<ActionEffectResource> GetCleanupActions() { return cleanupActions; }
+
+    public BattleConsts.TriggerType GetTriggerType() { return triggerType; }
+
+    public Texture2D GetIcon() { return icon; }
 }

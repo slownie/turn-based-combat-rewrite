@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://d2btsltsk0c0v"]
 
 [ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_ypbgw"]
+[ext_resource type="Texture2D" uid="uid://cwk8hdaja08vv" path="res://assets/images/ui/statusConditionIcons/DrainIcon.png" id="2_5q8ml"]
 [ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_ia8tc"]
 [ext_resource type="Script" uid="uid://cwrsn0audxsdn" path="res://src/dataClasses/actionEffects/RejuvenatePercentageEffect.cs" id="3_ia8tc"]
 
@@ -13,5 +14,6 @@ metadata/_custom_type_script = "uid://cwrsn0audxsdn"
 script = ExtResource("2_ia8tc")
 statusConditionName = "Drain"
 triggerType = 3
+icon = ExtResource("2_5q8ml")
 triggerActions = Array[ExtResource("1_ypbgw")]([SubResource("Resource_5q8ml")])
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

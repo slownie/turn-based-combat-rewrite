@@ -10,6 +10,7 @@ public partial class BattleActor : Node2D
 	[Signal] public delegate void MPChangedEventHandler(int newMP);
 
 	[Signal] public delegate void ActorTurnStartEventHandler();
+	[Signal] public delegate void ActorTurnEndEventHandler();
 
 	// Skill/Action Related Signals
 	[Signal] public delegate void DamageReceivedEventHandler(BattleActor actor, int value, bool isCrit);
@@ -36,11 +37,17 @@ public partial class BattleActor : Node2D
 	AnimatedSprite2D _sprite;
 	Texture2D _battleIcon;
 
+	// Test UI
+	TextureRect _statusIcon;
+	Label _statusTurnLabel;
+
 	Label _curHPLabel;
 	Label _maxHPLabel;
 
 	Label _curMPLabel;
 	Label _maxMPLabel;
+
+	VBoxContainer _buffContainer;
 
 	#region Properties
 	bool isActive = true;
@@ -143,10 +150,13 @@ public partial class BattleActor : Node2D
 	{
 		_sprite = GetNode<AnimatedSprite2D>("Sprite");
 
-		_curHPLabel = GetNode<Label>("TestUI/HPContainer/CurHP");
-		_maxHPLabel = GetNode<Label>("TestUI/HPContainer/MaxHP");
-		_curMPLabel = GetNode<Label>("TestUI/MPContainer/CurMP");
-		_maxMPLabel = GetNode<Label>("TestUI/MPContainer/MaxMP");
+		_statusIcon = GetNode<TextureRect>("TestUI/StatusContainer/StatusIcon");
+		_statusTurnLabel = GetNode<Label>("TestUI/StatusContainer/StatusTurn");
+
+		_curHPLabel = GetNode<Label>("TestUI/StatContainer/HPContainer/CurHP");
+		_maxHPLabel = GetNode<Label>("TestUI/StatContainer/HPContainer/MaxHP");
+		_curMPLabel = GetNode<Label>("TestUI/StatContainer/MPContainer/CurMP");
+		_maxMPLabel = GetNode<Label>("TestUI/StatContainer/MPContainer/MaxMP");
 
 		IsActive = false;
 	}
@@ -197,6 +207,15 @@ public partial class BattleActor : Node2D
 	public void TurnStart()
 	{
 		EmitSignal(SignalName.ActorTurnStart);
+	}
+
+	public void TurnEnd()
+	{
+		EmitSignal(SignalName.ActorTurnEnd);
+		if (_activeStatusCondition != null)
+		{
+			_activeStatusCondition.DecrementTurn();
+		}
 	}
 
 	#region Getters
@@ -255,6 +274,19 @@ public partial class BattleActor : Node2D
 	public void SetActiveStatusCondition(ActiveStatusCondition newStatusCondition)
 	{
 		_activeStatusCondition = newStatusCondition;
+		_activeStatusCondition.TurnCountChanged += OnStatusConditionTurnCountChanged;
+		_activeStatusCondition.StatusConditionFinished += OnStatusConditionFinished;
+
+		// UI
+		_statusIcon.Texture = _activeStatusCondition.GetStatusIcon();
+		_statusTurnLabel.Text = _activeStatusCondition.GetTurnCount().ToString();
+	}
+
+	public void RemoveStatusCondition()
+	{
+		_activeStatusCondition = null;
+		_statusIcon.Texture = null;
+		_statusTurnLabel.Text = "";
 	}
 
 	public bool GetIsPlayer() { return _isPlayer; }
@@ -279,5 +311,17 @@ public partial class BattleActor : Node2D
 		IsTargetable = false;
 		EmitSignal(SignalName.HPDepleted);
 	}
+
+	// TEMP UI CODE
+	private void OnStatusConditionTurnCountChanged(int turnCount)
+	{
+		_statusTurnLabel.Text = turnCount.ToString();
+	}
+
+	private void OnStatusConditionFinished()
+	{
+		RemoveStatusCondition();
+	}
+
 	#endregion
 }

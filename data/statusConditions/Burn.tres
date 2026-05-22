@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://dqbbe40tkqv5f"]
 
 [ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_vtpnq"]
+[ext_resource type="Texture2D" uid="uid://unxtwplyb8bh" path="res://assets/images/ui/statusConditionIcons/BurnIcon.png" id="2_05apm"]
 [ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_c3l7r"]
 [ext_resource type="Script" uid="uid://db7y2t40b6cqe" path="res://src/dataClasses/actionEffects/DamagePercentageEffect.cs" id="3_c3l7r"]
 
@@ -13,5 +14,6 @@ metadata/_custom_type_script = "uid://db7y2t40b6cqe"
 script = ExtResource("2_c3l7r")
 statusConditionName = "Burn"
 triggerType = 4
+icon = ExtResource("2_05apm")
 triggerActions = Array[ExtResource("1_vtpnq")]([SubResource("Resource_05apm")])
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

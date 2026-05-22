@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_npcor"]
 [ext_resource type="Script" uid="uid://bvnxnfvynxixa" path="res://src/dataClasses/actionEffects/statusEffects/SetMenuEntryEffect.cs" id="2_ju8w4"]
 [ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_xd3b6"]
+[ext_resource type="Texture2D" uid="uid://cfi1okatcpff7" path="res://assets/images/ui/statusConditionIcons/SealIcon.png" id="3_ju8w4"]
 
 [sub_resource type="Resource" id="Resource_o2mt7"]
 script = ExtResource("2_ju8w4")
@@ -18,6 +19,7 @@ metadata/_custom_type_script = "uid://bvnxnfvynxixa"
 [resource]
 script = ExtResource("2_xd3b6")
 statusConditionName = "Seal"
+icon = ExtResource("3_ju8w4")
 triggerActions = Array[ExtResource("1_npcor")]([SubResource("Resource_ic22r")])
 cleanupActions = Array[ExtResource("1_npcor")]([SubResource("Resource_o2mt7")])
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

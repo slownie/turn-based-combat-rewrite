@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_nh1l4"]
 [ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_30iq5"]
 [ext_resource type="Script" uid="uid://bvnxnfvynxixa" path="res://src/dataClasses/actionEffects/statusEffects/SetMenuEntryEffect.cs" id="2_afcod"]
+[ext_resource type="Texture2D" uid="uid://d0760mm3ch5o4" path="res://assets/images/ui/statusConditionIcons/BreakIcon.png" id="3_afcod"]
 
 [sub_resource type="Resource" id="Resource_rv3wk"]
 script = ExtResource("2_afcod")
@@ -16,6 +17,7 @@ metadata/_custom_type_script = "uid://bvnxnfvynxixa"
 [resource]
 script = ExtResource("2_30iq5")
 statusConditionName = "Break"
+icon = ExtResource("3_afcod")
 triggerActions = Array[ExtResource("1_nh1l4")]([SubResource("Resource_17vvh")])
 cleanupActions = Array[ExtResource("1_nh1l4")]([SubResource("Resource_rv3wk")])
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

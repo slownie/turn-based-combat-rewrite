@@ -174,6 +174,9 @@ public partial class BattleArena : Control
 		TimeScale = 0.0;
 		_currentActor = actor;
 
+		_currentActor.TurnStart();
+		
+
 		if (_currentActor.SelectRandomAction)
 		{
 			_actorController.SelectRandomAction(_currentActor, _actors);
@@ -222,7 +225,7 @@ public partial class BattleArena : Control
 	private void OnActionFinished()
 	{
 		// Turn Decrement
-		
+		_currentActor.TurnEnd();
 
 		// Victory Check
 		if (_actorController.GetLiveActors(_partyMembers).Count == 0)
