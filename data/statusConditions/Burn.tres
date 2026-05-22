@@ -1,8 +1,10 @@
 [gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://dqbbe40tkqv5f"]
 
-[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_jsfu6"]
-[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_gtcm4"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_vtpnq"]
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_c3l7r"]
 
 [resource]
-script = ExtResource("2_gtcm4")
+script = ExtResource("2_c3l7r")
+statusConditionName = "Burn"
+triggerType = 4
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

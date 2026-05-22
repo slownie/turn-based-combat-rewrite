@@ -10,10 +10,15 @@ public partial class BattleActor : Node2D
 
 	[Signal] public delegate void MPChangedEventHandler(int newMP);
 
+
+
 	// Skill/Action Related Signals
 	[Signal] public delegate void DamageReceivedEventHandler(BattleActor actor, int value, bool isCrit);
 	[Signal] public delegate void HealReceivedEventHandler(BattleActor actor, int value);
 	[Signal] public delegate void RejuvenateReceivedEventHandler(BattleActor actor, int value);
+
+	[Signal] public delegate void StatusConditionReceivedEventHandler(BattleActor actor, StatusConditionResource statusConditionResource);
+	[Signal] public delegate void StatusConditionRemovedEventHandler(BattleActor actor, StatusConditionResource statusConditionResource);
 
 	[Signal] public delegate void MissReceivedEventHandler(BattleActor actor);
 
@@ -25,7 +30,7 @@ public partial class BattleActor : Node2D
 	CharacterStats _characterStats;
 	Godot.Collections.Array<BaseSkillResource> _skills = [];
 
-	ActiveStatusCondition _activeStatusCondition;
+	ActiveStatusCondition _activeStatusCondition = null;
 
 	bool _isPlayer = true;
 
@@ -167,7 +172,7 @@ public partial class BattleActor : Node2D
 
 		_skills = skills;
 
-		_activeStatusCondition = new ActiveStatusCondition();
+		_activeStatusCondition = null;
 
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
 		_maxHPLabel.Text = _characterStats.GetMaxHP().ToString();
@@ -181,6 +186,7 @@ public partial class BattleActor : Node2D
 
 		_isPlayer = isPlayer;
 		if (_isPlayer) _sprite.FlipH = true;
+
 	}
 
 	#region Getters
@@ -225,11 +231,6 @@ public partial class BattleActor : Node2D
 	public Godot.Collections.Array<BaseSkillResource> GetSkills() { return _skills; }
 
 	public ActiveStatusCondition GetActiveStatusCondition() { return _activeStatusCondition; }
-	public void SetActiveStatusCondition(BattleConsts.StatusCondition statusCondition, int turnCount)
-	{
-		_activeStatusCondition.SetStatusCondition(statusCondition);
-		_activeStatusCondition.SetTurnCount(turnCount);
-	}
 
 	public bool GetIsPlayer() { return _isPlayer; }
 	public Texture2D GetBattleIcon() { return _battleIcon; }

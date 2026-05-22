@@ -77,7 +77,7 @@ public partial class UIMenuController : Control
 
 		// If the player reaches this menu, then there are useable skills
 		// Even if _useableSkills is empty, skillMenu.Setup will execute without errors
-		skillMenu.Setup(_useableSkills);
+		skillMenu.Setup(_currentPartyActor, _useableSkills);
 		LoadMenu(skillMenu);
 
 		skillMenu.Position = _menuPosition;

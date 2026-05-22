@@ -5,11 +5,15 @@ public partial class UISkillMenuEntry : Control
 {
     [Export] Color hpColor = new Color("#ff0000");
 	[Export] Color mpColor = new Color("#00ff0d");
+    [Export] Color disabledColor = new Color("#A9A9A9");
+
+    bool _enabled = false;
 
     TextureRect _icon;
     Label _nameText;
     Label _costTypeText;
     Label _costAmountText;
+
 
     public override void _Ready()
     {
@@ -19,8 +23,11 @@ public partial class UISkillMenuEntry : Control
         _costAmountText = GetNode<Label>("HBoxContainer/CostAmount");
     }
 
-    public void Setup(UseableSkillResource skillResource)
+    public void Setup(UseableSkillResource skillResource, bool enabled)
     {
+        _enabled = enabled;
+        if (!_enabled) _nameText.Modulate = disabledColor;
+
         _icon.Texture = skillResource.GetIcon();
         _nameText.Text = skillResource.GetSkillName();
 
@@ -35,4 +42,6 @@ public partial class UISkillMenuEntry : Control
 
         _costAmountText.Text = skillResource.GetSkillCostAmount().ToString();
     }
+
+    public bool IsEnabled() { return _enabled; }
 }

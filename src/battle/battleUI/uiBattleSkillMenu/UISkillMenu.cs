@@ -39,7 +39,7 @@ public partial class UISkillMenu : UIBattleMenuBase
 
     public override void _Input(InputEvent @event)
     {
-        if (@event.IsActionPressed("AButton"))
+        if (@event.IsActionPressed("AButton") && _entries[index].IsEnabled())
         {
             EmitSignal(SignalName.SkillSelected, _skillList[index]);
         }
@@ -61,7 +61,7 @@ public partial class UISkillMenu : UIBattleMenuBase
 		}
     }
 
-    public void Setup(Godot.Collections.Array<UseableSkillResource> skillList)
+    public void Setup(BattleActor currentActor, Godot.Collections.Array<UseableSkillResource> skillList)
     {
         _skillList = skillList;
 
@@ -72,7 +72,25 @@ public partial class UISkillMenu : UIBattleMenuBase
             AddChild(skillEntry);
             skillEntry.Position = new Vector2(skillEntry.Position.X, skillEntry.Position.Y + (32 * i));
 
-            skillEntry.Setup(useableSkill);
+            // Can we use this skill?
+            bool skillIsUseable = true;
+            if (!currentActor.IgnoreSkillCosts)
+            {
+                if (useableSkill.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)
+                {
+                    if (currentActor.GetCurHP() <= useableSkill.GetSkillCostAmount() || !currentActor.CanSelectPhysSkills)
+                    {
+                        skillIsUseable = false;
+                    }
+                } else {
+                    if (currentActor.GetCurMP() < useableSkill.GetSkillCostAmount() || !currentActor.CanSelectElemSkills)
+                    {
+                        skillIsUseable = false;
+                    }
+                }
+            }
+
+            skillEntry.Setup(useableSkill, skillIsUseable);
             _entries.Add(skillEntry);
         }
 

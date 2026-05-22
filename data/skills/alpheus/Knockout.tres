@@ -38,7 +38,7 @@ metadata/_custom_type_script = "uid://f4ubms2rgfo3"
 [resource]
 script = ExtResource("2_y451f")
 skillCostType = 0
-skillCostAmount = 24
+skillCostAmount = 12
 useableActionResource = SubResource("Resource_157gb")
 skillName = "Knockout"
 metadata/_custom_type_script = "uid://dicj1dhgyboo"

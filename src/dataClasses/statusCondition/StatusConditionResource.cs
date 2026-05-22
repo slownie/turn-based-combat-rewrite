@@ -7,6 +7,8 @@ public partial class StatusConditionResource : Resource
     [Export] string statusConditionName = "";
     [Export] BattleConsts.TriggerType triggerType;
 
+    [Export] Texture2D icon;
+
     [ExportCategory("Actions")]
     /*
         These actions occur when the StatusCondition's trigger type is triggered.
