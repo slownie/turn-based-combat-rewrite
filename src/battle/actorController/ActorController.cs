@@ -259,6 +259,92 @@ public partial class ActorController : Node2D
 				// Pick a random target
 				if (_sameSideTargets.Count != 0)
 				{
+					_selectedTargets.Add(_sameSideTargets.PickRandom());
+				} else {
+					_selectedTargets.Add(_oppositeSideTargets.PickRandom());
+				}
+				break;
+			}
+
+			case BattleConsts.CursorMode.Side:
+			{
+				if (_sameSideTargets.Count != 0)
+				{
+					_selectedTargets = _sameSideTargets;
+				} else {
+					_selectedTargets = _oppositeSideTargets;
+				}
+				break;
+			}
+
+			case BattleConsts.CursorMode.All:
+			{
+				_selectedTargets.AddRange(_oppositeSideTargets);
+				_selectedTargets.AddRange(_sameSideTargets);
+				break;
+			}
+		}
+
+		EmitSignal(SignalName.EnemySelectAction, selectedAction, _selectedTargets);
+	}
+	
+	public void SelectRandomAction(BattleActor currentUser, Godot.Collections.Array<BattleActor> battleActors)
+	{
+		GD.Print("Random Action");
+		// Action Selection
+		UseableActionResource selectedAction;
+
+		if (GetUseableSkills(currentUser).Count <= 0)
+		{
+			selectedAction = defaultEnemyAction.GetUseableActionResource();
+		} else {
+			int selectedActionIndex = (int)(GD.Randi() % GetUseableSkills(currentUser).Count - 1);
+			selectedAction = GetUseableSkills(currentUser)[selectedActionIndex].GetUseableActionResource();
+		}
+
+		// Targeting
+		Godot.Collections.Array<BattleActor> _oppositeSideTargets = [];
+		Godot.Collections.Array<BattleActor> _sameSideTargets = [];
+
+		// Provide targeting parameters to TargetCursorController
+
+		// 1. Are we targeting the party, enemies, both, or the self?
+		if (selectedAction.GetTargetOppositeSide())
+		{
+			_oppositeSideTargets = GetPartyMembers(battleActors);
+		}
+
+		if (selectedAction.GetTargetSameSide())
+		{
+			_sameSideTargets = GetEnemies(battleActors);
+		}
+
+		if (selectedAction.GetTargetSelfOnly())
+		{
+			_sameSideTargets.Add(currentUser);
+		}
+
+		// 2. Are we targeting dead or alive actors?
+		if (selectedAction.GetTargetDeadOnly())
+		{
+			// We are only targeting dead party members
+			_sameSideTargets = GetDeadActors(_sameSideTargets);
+		} else {
+			// Target only alive party members
+			if (_oppositeSideTargets.Count != 0) _oppositeSideTargets = GetLiveActors(_oppositeSideTargets);
+			if (_sameSideTargets.Count != 0) _sameSideTargets = GetLiveActors(_sameSideTargets);
+		}
+
+		Godot.Collections.Array<BattleActor> _selectedTargets = [];
+		
+
+		switch(selectedAction.GetCursorMode())
+		{
+			case BattleConsts.CursorMode.Single:
+			{
+				// Pick a random target
+				if (_sameSideTargets.Count != 0)
+				{
 					int selectedTargetIndex = (int)(GD.Randi() % (_sameSideTargets.Count - 1));
 					_selectedTargets.Add(_sameSideTargets[selectedTargetIndex]);
 				} else {
@@ -288,11 +374,6 @@ public partial class ActorController : Node2D
 		}
 
 		EmitSignal(SignalName.EnemySelectAction, selectedAction, _selectedTargets);
-	}
-	
-	public void SelectRandomAction(BattleActor currentUser, Godot.Collections.Array<BattleActor> battleActors)
-	{
-		
 	}
 	
 	public void CheckForSideEffects(BattleActor currentUser, BattleConsts.TriggerType triggerType)

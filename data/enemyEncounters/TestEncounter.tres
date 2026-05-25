@@ -2,10 +2,9 @@
 
 [ext_resource type="Script" uid="uid://ded8acw4jwwi" path="res://src/dataClasses/enemies/EnemyEncounterResource.cs" id="1_7dn46"]
 [ext_resource type="Script" uid="uid://bbw1wa366hyuo" path="res://src/dataClasses/enemies/EnemyResource.cs" id="1_w56d4"]
-[ext_resource type="Resource" uid="uid://cujvq2eugmg5x" path="res://data/enemies/TestEnemy.tres" id="2_wcbxe"]
 [ext_resource type="Resource" uid="uid://cktx1kro85g4x" path="res://data/enemies/TestEnemy2.tres" id="3_ntnjp"]
 
 [resource]
 script = ExtResource("1_7dn46")
-enemies = Array[ExtResource("1_w56d4")]([ExtResource("2_wcbxe"), ExtResource("3_ntnjp")])
+enemies = Array[ExtResource("1_w56d4")]([ExtResource("3_ntnjp")])
 metadata/_custom_type_script = "uid://ded8acw4jwwi"

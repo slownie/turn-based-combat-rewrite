@@ -5,11 +5,10 @@
 [ext_resource type="Script" uid="uid://cfoqdpdkdpur5" path="res://src/dataClasses/partyMembers/PartyMemberDataResource.cs" id="1_iccj4"]
 [ext_resource type="Texture2D" uid="uid://cor5p3nuroajs" path="res://assets/images/battleActors/Testament/sTestamentIdle_strip4.png" id="3_es0o6"]
 [ext_resource type="Script" uid="uid://dkuf8p00m1ibl" path="res://src/dataClasses/skills/BaseSkillResource.cs" id="5_4uqfo"]
-[ext_resource type="Resource" uid="uid://clnbm17ilhsj" path="res://data/skills/alpheus/Wave.tres" id="6_aq5s4"]
-[ext_resource type="Resource" uid="uid://dfgkskl3badsp" path="res://data/skills/alpheus/Knockout.tres" id="7_pqivu"]
-[ext_resource type="Resource" uid="uid://dx56xapu1gg37" path="res://data/skills/alpheus/CriticalEye.tres" id="8_5wtsf"]
+[ext_resource type="Resource" uid="uid://b2aoxixcnvbra" path="res://data/skills/alpheus/Blaze.tres" id="7_4fsrl"]
+[ext_resource type="Resource" uid="uid://cbpbin4xgcvxp" path="res://data/skills/alpheus/Swirl.tres" id="8_r0vku"]
 [ext_resource type="Resource" uid="uid://do4mmjbxiic03" path="res://data/skills/alpheus/Drench.tres" id="9_4fsrl"]
-[ext_resource type="Resource" uid="uid://boa010fjv448h" path="res://data/skills/alpheus/RegenerativeFlow.tres" id="10_r0vku"]
+[ext_resource type="Resource" uid="uid://dygh85qfxbc6y" path="res://data/skills/alpheus/Fracture.tres" id="9_j63o3"]
 
 [sub_resource type="Resource" id="Resource_aq5s4"]
 script = ExtResource("1_4uqfo")
@@ -63,7 +62,7 @@ animations = [{
 script = ExtResource("1_iccj4")
 partyMemberName = "Alpheus"
 baseStats = SubResource("Resource_aq5s4")
-startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("6_aq5s4"), ExtResource("7_pqivu"), ExtResource("8_5wtsf"), ExtResource("9_4fsrl"), ExtResource("10_r0vku")])
+startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("9_4fsrl"), ExtResource("7_4fsrl"), ExtResource("8_r0vku"), ExtResource("9_j63o3")])
 spriteFrames = SubResource("SpriteFrames_r0vku")
 battleIcon = ExtResource("1_es0o6")
 metadata/_custom_type_script = "uid://cfoqdpdkdpur5"

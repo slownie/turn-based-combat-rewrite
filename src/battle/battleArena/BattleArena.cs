@@ -248,6 +248,8 @@ public partial class BattleArena : Control
 
 	private void OnActionFinished()
 	{
+		_actorController.CheckForSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnEnd);
+
 		// Turn Decrement
 		_currentActor.TurnEnd();
 
