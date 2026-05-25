@@ -9,6 +9,6 @@ public partial class SetMenuEntryEffect : ActionEffectResource
 
     public override void ExecuteEffect(BattleActor user, BattleActor target, ActorController actorController)
     {
-        actorController.SetMenuEntry(user, menuEntryType, enable);
+        actorController.SetMenuEntry(target, menuEntryType, enable);
     }
 }

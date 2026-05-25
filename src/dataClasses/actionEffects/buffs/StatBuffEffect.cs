@@ -2,11 +2,8 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class AttackEffect : ActionEffectResource
+public partial class StatBuffEffect : ActionEffectResource
 {
-    const int _chargeMultiplier = 3;
-    const int _focusMultiplier = 3;
-
     [Export] int baseDamage = 10;
     [Export] int baseAccuracy = 100;
     [Export] int baseCrit = 21;
@@ -25,15 +22,13 @@ public partial class AttackEffect : ActionEffectResource
             {
                 case BattleConsts.DamageCalculation.Strength:
                 {
-                    calculatedDamage = Mathf.RoundToInt((baseDamage + user.GetStrength()) * user.GetStrengthModifier()) ;
-                    if (user.IsChargeEnabled()) calculatedDamage *= _chargeMultiplier;
+                    calculatedDamage = baseDamage + user.GetStrength();
                     break;
                 }
 
                 case BattleConsts.DamageCalculation.Elemental:
                 {
-                    calculatedDamage = Mathf.RoundToInt((baseDamage + user.GetElemental()) * user.GetElementalModifier()) ;
-                    if (user.IsFocusEnabled()) calculatedDamage *= _focusMultiplier;
+                    calculatedDamage = baseDamage + user.GetElemental();
                     break;
                 }
 
@@ -50,5 +45,4 @@ public partial class AttackEffect : ActionEffectResource
             actorController.ActionMissed(target);
         }
     }
-
 }

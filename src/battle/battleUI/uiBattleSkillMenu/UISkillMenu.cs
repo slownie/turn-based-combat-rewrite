@@ -61,9 +61,9 @@ public partial class UISkillMenu : UIBattleMenuBase
 		}
     }
 
-    public void Setup(BattleActor currentActor, Godot.Collections.Array<UseableSkillResource> skillList)
+    public void Setup(BattleActor currentActor)
     {
-        _skillList = skillList;
+        _skillList = currentActor.GetUseableSkills();
 
         for (int i=0; i < _skillList.Count; i++)
         {

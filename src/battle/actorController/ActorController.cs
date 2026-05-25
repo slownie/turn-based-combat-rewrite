@@ -5,10 +5,15 @@ using System.Linq;
 
 public partial class ActorController : Node2D
 {
-	[Export] UseableSkillResource defaultEnemyAction;
-	[Signal] public delegate void EnemySelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
+	[Export] BattleTriggerController _battleTriggerController;
 
+	[Export] UseableSkillResource defaultEnemyAction;
+
+
+	[Signal] public delegate void EnemySelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 	[Signal] public delegate void RandomSelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
+	[Signal] public delegate void SideEffectActionEventHandler(Godot.Collections.Array<ActionEffectResource> sideEffects, BattleActor target);
+
 
 	#region Stats
 	/*
@@ -53,16 +58,23 @@ public partial class ActorController : Node2D
 			// Fusion Status Conditions
 		} else {
 			ActiveStatusCondition activeStatusCondition = new ActiveStatusCondition(statusConditionResource, turnCount);
+			
 			target.SetActiveStatusCondition(activeStatusCondition);
 		}
 	}
 
-	public void AddBuff(BattleActor target, BaseBuff buffToApply, int turnDuration)
+	public void AddBuff(BattleActor target, BuffResource buffToApply, int turnDuration)
+	{
+		ActiveBuff buff = new ActiveBuff(buffToApply, turnDuration);
+		target.AddBuff(buff);
+	}
+
+	public void RemoveBuff(BattleActor target)
 	{
 		
 	}
 
-	public void RemoveBuff(BattleActor target)
+	public void RemoveAllBuffs(BattleActor target)
 	{
 		
 	}
@@ -120,8 +132,6 @@ public partial class ActorController : Node2D
 	{
 		target.SkillSuccessGuarantee = guarantee;
 	}
-
-
 
 
 	#endregion
@@ -283,6 +293,25 @@ public partial class ActorController : Node2D
 	public void SelectRandomAction(BattleActor currentUser, Godot.Collections.Array<BattleActor> battleActors)
 	{
 		
+	}
+	
+	public void CheckForSideEffects(BattleActor currentUser, BattleConsts.TriggerType triggerType)
+	{
+		// Status Effect
+		if (currentUser.GetActiveStatusCondition() != null)
+		{
+			if (currentUser.GetActiveStatusCondition().GetTriggerType() == triggerType)
+			{
+				EmitSignal(SignalName.SideEffectAction, currentUser.GetActiveStatusCondition().GetTriggerActions(), currentUser);
+			}
+		}
+
+		// 2. Check status condition
+
+		// 3. Check buffs
+
+		// 4. Check equipment
+
 	}
 	#endregion
 

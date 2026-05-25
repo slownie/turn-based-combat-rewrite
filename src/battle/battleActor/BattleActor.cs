@@ -9,9 +9,6 @@ public partial class BattleActor : Node2D
 
 	[Signal] public delegate void MPChangedEventHandler(int newMP);
 
-	[Signal] public delegate void ActorTurnStartEventHandler();
-	[Signal] public delegate void ActorTurnEndEventHandler();
-
 	// Skill/Action Related Signals
 	[Signal] public delegate void DamageReceivedEventHandler(BattleActor actor, int value, bool isCrit);
 	[Signal] public delegate void HealReceivedEventHandler(BattleActor actor, int value);
@@ -26,11 +23,64 @@ public partial class BattleActor : Node2D
 	[Signal] public delegate void ReadinessChangedEventHandler(double readiness);
 	[Signal] public delegate void ReadyToActEventHandler(BattleActor battleActor);
 
+
 	string _actorName = "Placeholder";
 	CharacterStats _characterStats;
+
+	// EQUIPMENT HERE
+
 	Godot.Collections.Array<BaseSkillResource> _skills = [];
+	Godot.Collections.Array<UseableSkillResource> _useableSkills = [];
+	Godot.Collections.Array<PassiveSkillResource> _passiveSkills = [];
+	Godot.Collections.Array<ActivePassiveSkill> _activePassiveSkills = [];
 
 	ActiveStatusCondition _activeStatusCondition = null;
+
+	Godot.Collections.Array _buffs = [];
+
+	double _strengthModifier = 1;
+	double _elementalModifier = 1;
+	double _defenseModifier = 1;
+	double _agilityModifier = 1;
+
+	/*
+	Godot.Collections.Dictionary<BattleConsts.ElementType, double> _attackElementModifiers = new Godot.Collections.Dictionary<BattleConsts.ElementType, double>()
+	{
+		{BattleConsts.ElementType.Phys, 1},	
+		{BattleConsts.ElementType.Fire, 1},
+		{BattleConsts.ElementType.Water, 1},
+		{BattleConsts.ElementType.Wind, 1},
+		{BattleConsts.ElementType.Earth, 1},
+		{BattleConsts.ElementType.Steam, 1},
+		{BattleConsts.ElementType.Electric, 1},
+		{BattleConsts.ElementType.Metal, 1},
+		{BattleConsts.ElementType.Ice, 1},
+		{BattleConsts.ElementType.Life, 1},
+		{BattleConsts.ElementType.Gravity, 1},
+	};
+
+	Godot.Collections.Dictionary<BattleConsts.ElementType, double> _affinity = new Godot.Collections.Dictionary<BattleConsts.ElementType, double>()
+	{
+		{BattleConsts.ElementType.Phys, 1},	
+		{BattleConsts.ElementType.Fire, 1},
+		{BattleConsts.ElementType.Water, 1},
+		{BattleConsts.ElementType.Wind, 1},
+		{BattleConsts.ElementType.Earth, 1},
+		{BattleConsts.ElementType.Steam, 1},
+		{BattleConsts.ElementType.Electric, 1},
+		{BattleConsts.ElementType.Metal, 1},
+		{BattleConsts.ElementType.Ice, 1},
+		{BattleConsts.ElementType.Life, 1},
+		{BattleConsts.ElementType.Gravity, 1},
+	};
+	*/
+
+	const double _modifierMin = 0.25;
+	const double _modifierMax = 2;
+
+	bool _chargeEnabled = false;
+	bool _focusEnabled = false;
+
 
 	bool _isPlayer = true;
 
@@ -163,7 +213,7 @@ public partial class BattleActor : Node2D
 
 	public override void _Process(double delta)
 	{
-		Readiness += 10 * _characterStats.GetAgility() * TimeScale * delta;
+		Readiness += 10 * (_characterStats.GetAgility() * _agilityModifier) * TimeScale * delta;
 	}
 
 	public void Setup(
@@ -185,9 +235,29 @@ public partial class BattleActor : Node2D
 		_characterStats = characterStats;
 		_characterStats.HPDepleted += OnStatsHPDepleted;
 
+		_activeStatusCondition = null;
+
 		_skills = skills;
 
-		_activeStatusCondition = null;
+		// Skill sorting
+		foreach (BaseSkillResource skill in _skills)
+		{
+			if (skill is UseableSkillResource)
+			{
+				_useableSkills.Add(skill as UseableSkillResource);
+			}
+
+			if (skill is PassiveSkillResource)
+			{
+				PassiveSkillResource _passiveSkill = skill as PassiveSkillResource;
+				_passiveSkills.Add(_passiveSkill);
+
+				ActivePassiveSkill activePassiveSkill = new ActivePassiveSkill(_passiveSkill);
+				_activePassiveSkills.Add(activePassiveSkill);
+			}
+		}
+
+		
 
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
 		_maxHPLabel.Text = _characterStats.GetMaxHP().ToString();
@@ -204,17 +274,16 @@ public partial class BattleActor : Node2D
 
 	}
 
-	public void TurnStart()
-	{
-		EmitSignal(SignalName.ActorTurnStart);
-	}
-
 	public void TurnEnd()
 	{
-		EmitSignal(SignalName.ActorTurnEnd);
 		if (_activeStatusCondition != null)
 		{
 			_activeStatusCondition.DecrementTurn();
+		}
+
+		foreach(ActiveBuff activeBuff in _buffs)
+		{
+			activeBuff.DecrementTurn();
 		}
 	}
 
@@ -268,7 +337,45 @@ public partial class BattleActor : Node2D
 	public int GetDefense() { return _characterStats.GetDefense(); }
 	public int GetResistance() { return _characterStats.GetResistance(); }
 
+	public void AddStrengthModifier(double newValue)
+	{
+		_strengthModifier += newValue;
+		if (_modifierMin > _strengthModifier) _strengthModifier = _modifierMin;
+		if (_modifierMax < _strengthModifier) _strengthModifier = _modifierMax;
+	}
+	public void AddElementalModifier(double newValue)
+	{
+		_elementalModifier += newValue;
+		if (_modifierMin > _elementalModifier) _elementalModifier = _modifierMin;
+		if (_modifierMax < _elementalModifier) _elementalModifier = _modifierMax;
+	}
+	public void AddDefenseModifier(double newValue)
+	{
+		_defenseModifier += newValue;
+		if (_modifierMin > _defenseModifier) _defenseModifier = _modifierMin;
+		if (_modifierMax < _defenseModifier) _defenseModifier = _modifierMax;
+	}
+	public void AddAgilityModifier(double newValue)
+	{
+		_agilityModifier += newValue;
+		if (_modifierMin > _agilityModifier) _agilityModifier = _modifierMin;
+		if (_modifierMax < _agilityModifier) _agilityModifier = _modifierMax;
+	}
+	
+	public double GetStrengthModifier() { return _strengthModifier; }
+	public double GetElementalModifier() { return _elementalModifier; }
+	public double GetDefenseModifier() { return _defenseModifier; }
+	public double GetAgilityModifier() { return _agilityModifier; }
+
+	public void SetCharge(bool enable) { _chargeEnabled = enable; }
+	public void SetFocus(bool enable) { _focusEnabled = enable; }
+	public bool IsChargeEnabled() { return _chargeEnabled; }
+	public bool IsFocusEnabled() { return _focusEnabled; }
+
 	public Godot.Collections.Array<BaseSkillResource> GetSkills() { return _skills; }
+	public Godot.Collections.Array<UseableSkillResource> GetUseableSkills() { return _useableSkills; }
+	public Godot.Collections.Array<PassiveSkillResource> GetPassiveSkills() { return _passiveSkills; }
+	public Godot.Collections.Array<ActivePassiveSkill> GetActivePassiveSkills() { return _activePassiveSkills; }
 
 	public ActiveStatusCondition GetActiveStatusCondition() { return _activeStatusCondition; }
 	public void SetActiveStatusCondition(ActiveStatusCondition newStatusCondition)
@@ -287,6 +394,29 @@ public partial class BattleActor : Node2D
 		_activeStatusCondition = null;
 		_statusIcon.Texture = null;
 		_statusTurnLabel.Text = "";
+	}
+
+	public void AddBuff(ActiveBuff activeBuff)
+	{
+		// Can't use Contains since ActiveBuff(AttackBuff, 3) and ActiveBuff(AttackBuff, 2) are considered two different values
+		bool buffDoesNotExist = true;
+		foreach(ActiveBuff buff in _buffs)
+		{
+			if (buff.GetBuffResource() == activeBuff.GetBuffResource())
+			{
+				buff.AddTurnCount(activeBuff.GetTurnCount());
+				buffDoesNotExist = false;
+				break;
+			}
+		}
+
+		// Add the buff if it does not already exist
+		if (buffDoesNotExist)
+		{
+			_buffs.Add(activeBuff);
+			activeBuff.TurnCountChanged += OnBuffTurnCountChanged;
+			activeBuff.BuffFinished += OnBuffFinished;
+		}
 	}
 
 	public bool GetIsPlayer() { return _isPlayer; }
@@ -321,6 +451,16 @@ public partial class BattleActor : Node2D
 	private void OnStatusConditionFinished()
 	{
 		RemoveStatusCondition();
+	}
+
+	private void OnBuffTurnCountChanged(int turnCount)
+	{
+		
+	}
+
+	private void OnBuffFinished(ActiveBuff buff)
+	{
+		_buffs.Remove(buff);
 	}
 
 	#endregion

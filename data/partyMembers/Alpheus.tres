@@ -9,6 +9,7 @@
 [ext_resource type="Resource" uid="uid://dfgkskl3badsp" path="res://data/skills/alpheus/Knockout.tres" id="7_pqivu"]
 [ext_resource type="Resource" uid="uid://dx56xapu1gg37" path="res://data/skills/alpheus/CriticalEye.tres" id="8_5wtsf"]
 [ext_resource type="Resource" uid="uid://do4mmjbxiic03" path="res://data/skills/alpheus/Drench.tres" id="9_4fsrl"]
+[ext_resource type="Resource" uid="uid://boa010fjv448h" path="res://data/skills/alpheus/RegenerativeFlow.tres" id="10_r0vku"]
 
 [sub_resource type="Resource" id="Resource_aq5s4"]
 script = ExtResource("1_4uqfo")
@@ -62,7 +63,7 @@ animations = [{
 script = ExtResource("1_iccj4")
 partyMemberName = "Alpheus"
 baseStats = SubResource("Resource_aq5s4")
-startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("6_aq5s4"), ExtResource("7_pqivu"), ExtResource("8_5wtsf"), ExtResource("9_4fsrl")])
+startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("6_aq5s4"), ExtResource("7_pqivu"), ExtResource("8_5wtsf"), ExtResource("9_4fsrl"), ExtResource("10_r0vku")])
 spriteFrames = SubResource("SpriteFrames_r0vku")
 battleIcon = ExtResource("1_es0o6")
 metadata/_custom_type_script = "uid://cfoqdpdkdpur5"

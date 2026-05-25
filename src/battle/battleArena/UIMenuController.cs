@@ -16,7 +16,6 @@ public partial class UIMenuController : Control
 	Godot.Collections.Array<BattleActor> _battleActors = [];
 
 	BattleActor _currentPartyActor;
-	Godot.Collections.Array<UseableSkillResource> _useableSkills = [];
 	Godot.Collections.Array<InventoryItem> _battleInventory = [];
 	UseableSkillResource _selectedSkill;
 	UseableItemResource _selectedItem;
@@ -41,14 +40,10 @@ public partial class UIMenuController : Control
 	public void PartyTurnStart(BattleActor currentPartyActor, Godot.Collections.Array<InventoryItem> battleInventory)
 	{
 		_currentPartyActor = currentPartyActor;
-		foreach (BaseSkillResource skill in _currentPartyActor.GetSkills())
-		{
-			if (skill is UseableSkillResource) _useableSkills.Add(skill as UseableSkillResource);
-		}
 
 		_battleInventory = battleInventory;
 
-		bool skillMenuEnabled = 0 < _useableSkills.Count; 
+		bool skillMenuEnabled = 0 < _currentPartyActor.GetUseableSkills().Count; 
 		bool itemMenuEnabled = 0 < _battleInventory.Count;
 
 		CreateMainMenu(skillMenuEnabled, itemMenuEnabled);
@@ -77,7 +72,7 @@ public partial class UIMenuController : Control
 
 		// If the player reaches this menu, then there are useable skills
 		// Even if _useableSkills is empty, skillMenu.Setup will execute without errors
-		skillMenu.Setup(_currentPartyActor, _useableSkills);
+		skillMenu.Setup(_currentPartyActor);
 		LoadMenu(skillMenu);
 
 		skillMenu.Position = _menuPosition;
@@ -206,7 +201,6 @@ public partial class UIMenuController : Control
 		_menuStack = [];
 
 		_currentPartyActor = null; 
-		_useableSkills = [];
 		_selectedSkill = null;
 		_selectedItem = null;
 		_selectedItemIndex = -1;

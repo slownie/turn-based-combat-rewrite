@@ -17,6 +17,7 @@ public partial class BattleArena : Control
 	Godot.Collections.Array<InventoryItem> _battleInventory = [];
 
 	ActorController _actorController;
+	BattleTriggerController _battleTriggerController;
 
 	UIMenuController _menuController;
 	UITurnBar _turnBar;
@@ -72,6 +73,11 @@ public partial class BattleArena : Control
 		_actorController = GetNode<ActorController>("ActorController");
 		_actorController.EnemySelectAction += OnActionTargetConfimed;
 		_actorController.RandomSelectAction += OnActionTargetConfimed;
+		_actorController.SideEffectAction += OnSideEffectRequested;
+
+		_battleTriggerController = GetNode<BattleTriggerController>("BattleTriggerController");
+		_battleTriggerController.SideEffectsRequested += OnSideEffectRequested;
+
 
 		// UI
 		_menuController = GetNode<UIMenuController>("UI/UIMenuController");
@@ -86,6 +92,8 @@ public partial class BattleArena : Control
 
 		_battleTextController = GetNode<UIBattleTextController>("UI/UIBattleTextController");
 	}
+
+
 
     public override void _Input(InputEvent @event)
 	{
@@ -174,8 +182,7 @@ public partial class BattleArena : Control
 		TimeScale = 0.0;
 		_currentActor = actor;
 
-		_currentActor.TurnStart();
-		
+		_actorController.CheckForSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnStart);
 
 		if (_currentActor.SelectRandomAction)
 		{
@@ -190,6 +197,9 @@ public partial class BattleArena : Control
 		TimeScale = 0.0;
 		_currentActor = actor;
 
+		_actorController.CheckForSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnStart);
+
+
 		if (_currentActor.SelectRandomAction)
 		{
 			_actorController.SelectRandomAction(_currentActor, _actors);
@@ -198,6 +208,9 @@ public partial class BattleArena : Control
 		}
 	}
 
+	/*
+		"Primary" actions go into this function.
+	*/
 	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
 	{
 		foreach(ActionEffectResource actionEffect in selectedAction.GetActions())
@@ -218,8 +231,19 @@ public partial class BattleArena : Control
 				}
 			}
 		}
-
 		OnActionFinished();
+	}
+
+	/*
+		Secondary actions go into this function.
+		These effects require no/minimal (non-waiting) animations.
+	*/
+	private void OnSideEffectRequested(Godot.Collections.Array<ActionEffectResource> actions, BattleActor battleActor)
+	{
+		foreach(ActionEffectResource actionEffect in actions)
+		{
+			actionEffect.ExecuteEffect(battleActor, battleActor, _actorController);
+		}
 	}
 
 	private void OnActionFinished()

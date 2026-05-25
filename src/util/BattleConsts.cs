@@ -25,23 +25,12 @@ public static partial class BattleConsts
 		Gravity
 	}
 
-	/*
-		Integer values are used to determine fusion status effects.
-	*/
-	public enum StatusCondition
+	public enum AffinityType
 	{
-		None=0,
-		Burn=1,
-		Drain=2,
-		Confuse=4,
-		Break=7,
-
-		Seal=3,
-		Overdrive=5,
-		Cleave=8,
-		Frostbite=6,
-		Immortality=9,
-		Elevate=11
+		Normal,
+		Weak,
+		Resist,
+		Block
 	}
 
 	/*
@@ -96,8 +85,11 @@ public static partial class BattleConsts
 		OnUserTurnStart,
 		OnUserTurnEnd,
 
+		OnUserAnyAttack,
+		OnUserPhysicalAttack,
+		OnUserElementalAttack,
+
 		OnUserTakeDamage,
-		
 	}
 
 	public enum StatBuffType
