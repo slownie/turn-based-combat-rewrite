@@ -21,6 +21,7 @@ public partial class BattleActorTriggerContainer : GodotObject
     {
         _owner = owner;
 
+        _owner.AddSideEffect += AddSideEffect;
         _owner.RemoveSideEffect += RemoveSideEffect;
     }
 
@@ -32,7 +33,7 @@ public partial class BattleActorTriggerContainer : GodotObject
     
     public void RemoveSideEffect(BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect)
     {
-        
+        _sideEffects[triggerType].Remove(activePassiveEffect);
     }
 
     public Godot.Collections.Array<ActivePassiveEffect> GetTriggerEffects(BattleConsts.TriggerType triggerType)

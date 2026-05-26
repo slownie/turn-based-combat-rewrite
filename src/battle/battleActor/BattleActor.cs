@@ -24,6 +24,7 @@ public partial class BattleActor : Node2D
 	[Signal] public delegate void ReadyToActEventHandler(BattleActor battleActor);
 
 	// Side Effect Related Signals
+	[Signal] public delegate void AddSideEffectEventHandler(BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect);
 	[Signal] public delegate void RemoveSideEffectEventHandler(BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect);
 
 
@@ -380,7 +381,9 @@ public partial class BattleActor : Node2D
 	{
 		_activeStatusCondition = newStatusCondition;
 		_activeStatusCondition.TurnCountChanged += OnStatusConditionTurnCountChanged;
-		_activeStatusCondition.StatusConditionFinished += OnStatusConditionFinished;
+		_activeStatusCondition.TurnCountFinished += OnStatusConditionFinished;
+
+		EmitSignal(SignalName.AddSideEffect, (int)_activeStatusCondition.GetTriggerType(), _activeStatusCondition);
 
 		// UI
 		_statusIcon.Texture = _activeStatusCondition.GetStatusIcon();
@@ -389,6 +392,8 @@ public partial class BattleActor : Node2D
 
 	public void RemoveStatusCondition()
 	{
+		EmitSignal(SignalName.RemoveSideEffect, (int)_activeStatusCondition.GetTriggerType(), _activeStatusCondition);
+
 		_activeStatusCondition = null;
 		_statusIcon.Texture = null;
 		_statusTurnLabel.Text = "";

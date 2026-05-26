@@ -1,58 +1,57 @@
 using Godot;
 using System;
 
-public partial class ActiveStatusCondition : GodotObject
+public partial class ActiveStatusCondition : ActivePassiveEffect
 {
-    [Signal] public delegate void ActiveEffectEventHandler(Godot.Collections.Array<ActionEffectResource> actions);
     [Signal] public delegate void TurnCountChangedEventHandler(int currentTurnCount);
-    [Signal] public delegate void StatusConditionFinishedEventHandler();
+    [Signal] public delegate void TurnCountFinishedEventHandler();
 
-    StatusConditionResource _statusConditionResource;
     int _turnCount = -1;
-    BattleConsts.TriggerType _triggerType;
-
-    public ActiveStatusCondition() : this (null, -1) {}
-    public ActiveStatusCondition(StatusConditionResource statusConditionResource, int turnCount)
+    int turnCount
     {
-        _statusConditionResource = statusConditionResource;
-        _turnCount = turnCount;
-        _triggerType = _statusConditionResource.GetTriggerType();
-
-        CheckForDeletion();        
-    }
-
-    /*
-        Called by BattleArena after a turn has been completed.
-    */
-    public void DecrementTurn()
-    {
-        _turnCount -= 1;
-        CheckForDeletion();        
-    }
-
-    public Godot.Collections.Array<ActionEffectResource> GetTriggerActions() { return _statusConditionResource.GetPassiveActionResource().GetTriggerActions(); }
-    public Godot.Collections.Array<ActionEffectResource> GetCleanupActions() { return _statusConditionResource.GetPassiveActionResource().GetCleanupActions(); }
-
-    public int GetTurnCount() { return _turnCount; }
-    public void AddTurnCount(int turnCount) { 
-        _turnCount += turnCount; 
-        CheckForDeletion();        
-    }
-    public void SetTurnCount(int turnCount) { 
-        _turnCount = turnCount;
-        CheckForDeletion();        
-    }
-
-    public BattleConsts.TriggerType GetTriggerType() { return _statusConditionResource.GetTriggerType(); }
-
-    public Texture2D GetStatusIcon() { return _statusConditionResource.GetIcon(); }
-
-    private void CheckForDeletion()
-    {
-        if (_turnCount <= 0) {
-            EmitSignal(SignalName.StatusConditionFinished);
-        } else {
-            EmitSignal(SignalName.TurnCountChanged, _turnCount);
+        get { return _turnCount; }
+        set
+        {
+            _turnCount = value;
+            if (_turnCount <= 0)
+            {
+                EmitSignal(SignalName.TurnCountFinished);
+            } else {
+                EmitSignal(SignalName.TurnCountChanged, _turnCount);
+            }
         }
     }
+
+    Texture2D _icon;
+
+    public ActiveStatusCondition(StatusConditionResource statusConditionResource, int turnAmount)
+    {
+        _triggerEffects = statusConditionResource.GetPassiveActionResource().GetTriggerActions();
+        _cleanupEffects = statusConditionResource.GetPassiveActionResource().GetCleanupActions();
+        _triggerType = statusConditionResource.GetTriggerType();
+
+        turnCount = turnAmount;
+
+        _icon = statusConditionResource.GetIcon();
+    }
+
+    public void AddTurn(int newTurnCount)
+    {
+        turnCount += newTurnCount;
+    }
+
+    public void SetTurn(int newTurnCount)
+    {
+        turnCount = newTurnCount;
+    }
+
+    public void DecrementTurn()
+    {
+        turnCount -= 1;
+    }
+
+    public int GetTurnCount() { return turnCount; }
+
+
+    public Texture2D GetStatusIcon() { return _icon; }
 }

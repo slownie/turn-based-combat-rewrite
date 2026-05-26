@@ -3,50 +3,23 @@ using System;
 
 public partial class ActivePassiveEffect : GodotObject
 {
-    [Signal] public delegate void TurnCountChangedEventHandler(int currentTurnCount);
-    [Signal] public delegate void TurnCountFinishedEventHandler(ActivePassiveEffect self);
+    protected Godot.Collections.Array<ActionEffectResource> _startupEffects;
+    protected Godot.Collections.Array<ActionEffectResource> _triggerEffects;
+    protected Godot.Collections.Array<ActionEffectResource> _cleanupEffects;
 
-    Godot.Collections.Array<ActionEffectResource> _triggerEffects;
-    Godot.Collections.Array<ActionEffectResource> _cleanupEffects;
+    protected BattleConsts.TriggerType _triggerType;
 
-    BattleConsts.TriggerType _triggerType;
-
-    int _turnCount = -1;
-    int turnCount
-    {
-        get { return _turnCount; }
-        set
-        {
-            _turnCount = value;
-            if (_turnCount <= 0)
-            {
-                EmitSignal(SignalName.TurnCountFinished, this);
-            } else {
-                EmitSignal(SignalName.TurnCountChanged, _turnCount);
-            }
-        }
-    }
-
-    public ActivePassiveEffect() : this(null, -1, null) {}
-    public ActivePassiveEffect(Godot.Collections.Array<ActionEffectResource> triggerEffects, int turnAmount, Godot.Collections.Array<ActionEffectResource> cleanupEffects=null)
+    public ActivePassiveEffect() : this(null, null) {}
+    public ActivePassiveEffect(Godot.Collections.Array<ActionEffectResource> triggerEffects, Godot.Collections.Array<ActionEffectResource> startupEffects=null, Godot.Collections.Array<ActionEffectResource> cleanupEffects=null)
     {
         _triggerEffects = triggerEffects;
-        turnCount = turnAmount;
+        _startupEffects = startupEffects;
         _cleanupEffects = cleanupEffects;
     }
 
-    /*
-        Called by BattleArena after a turn has been completed.
-    */
-    public void DecrementTurn()
-    {
-        turnCount -= 1;
-    }
-
-    public int GetTurnCount() { return turnCount; }
-
+    public Godot.Collections.Array<ActionEffectResource> GetStartupEffects() { return _startupEffects; } 
     public Godot.Collections.Array<ActionEffectResource> GetTriggerEffects() { return _triggerEffects; }
-
-
+    public Godot.Collections.Array<ActionEffectResource> GetCleanupEffects() { return _cleanupEffects; }
+    
     public BattleConsts.TriggerType GetTriggerType() { return _triggerType; }
 }
