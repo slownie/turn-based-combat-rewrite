@@ -11,11 +11,11 @@ public partial class ActivePassiveSkill : GodotObject
     public ActivePassiveSkill() : this(null) {}
     public ActivePassiveSkill(PassiveSkillResource passiveSkillResource)
     {
-        _triggerType = passiveSkillResource.GetTriggerType();
+        _triggerType = passiveSkillResource.GetPassiveActionResource().GetTriggerType();
     }
 
-    public Godot.Collections.Array<ActionEffectResource> GetTriggerActions() { return _passiveSkillResource.GetTriggerActions(); }
-    public Godot.Collections.Array<ActionEffectResource> GetCleanupActions() { return _passiveSkillResource.GetCleanupActions(); }
+    public Godot.Collections.Array<ActionEffectResource> GetTriggerActions() { return _passiveSkillResource.GetPassiveActionResource().GetTriggerActions(); }
+    public Godot.Collections.Array<ActionEffectResource> GetCleanupActions() { return _passiveSkillResource.GetPassiveActionResource().GetCleanupActions(); }
 
     public BattleConsts.TriggerType GetTriggerType() { return _triggerType; }
 }

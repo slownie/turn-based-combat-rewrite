@@ -12,7 +12,6 @@ public partial class ActorController : Node2D
 
 	[Signal] public delegate void EnemySelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 	[Signal] public delegate void RandomSelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
-	[Signal] public delegate void SideEffectActionEventHandler(Godot.Collections.Array<ActionEffectResource> sideEffects, BattleActor target);
 
 
 	#region Stats
@@ -75,6 +74,11 @@ public partial class ActorController : Node2D
 	}
 
 	public void RemoveAllBuffs(BattleActor target)
+	{
+		
+	}
+
+	public void RemoveAllDebuffs(BattleActor target)
 	{
 		
 	}
@@ -376,24 +380,6 @@ public partial class ActorController : Node2D
 		EmitSignal(SignalName.EnemySelectAction, selectedAction, _selectedTargets);
 	}
 	
-	public void CheckForSideEffects(BattleActor currentUser, BattleConsts.TriggerType triggerType)
-	{
-		// Status Effect
-		if (currentUser.GetActiveStatusCondition() != null)
-		{
-			if (currentUser.GetActiveStatusCondition().GetTriggerType() == triggerType)
-			{
-				EmitSignal(SignalName.SideEffectAction, currentUser.GetActiveStatusCondition().GetTriggerActions(), currentUser);
-			}
-		}
-
-		// 2. Check status condition
-
-		// 3. Check buffs
-
-		// 4. Check equipment
-
-	}
 	#endregion
 
 	#region Sequences

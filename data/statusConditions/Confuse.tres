@@ -4,20 +4,26 @@
 [ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_l3hcl"]
 [ext_resource type="Script" uid="uid://dyobwf0nw7bx4" path="res://src/dataClasses/actionEffects/statusEffects/SetSelectRandomActionEffect.cs" id="2_p7hwy"]
 [ext_resource type="Texture2D" uid="uid://dhqhbwn0qnrch" path="res://assets/images/ui/statusConditionIcons/ConfuseIcon.png" id="3_p7hwy"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="4_3gocq"]
 
-[sub_resource type="Resource" id="Resource_3gocq"]
+[sub_resource type="Resource" id="Resource_rpkkw"]
 script = ExtResource("2_p7hwy")
 enable = false
 metadata/_custom_type_script = "uid://dyobwf0nw7bx4"
 
-[sub_resource type="Resource" id="Resource_rpkkw"]
+[sub_resource type="Resource" id="Resource_qjxmq"]
 script = ExtResource("2_p7hwy")
 metadata/_custom_type_script = "uid://dyobwf0nw7bx4"
+
+[sub_resource type="Resource" id="Resource_siepv"]
+script = ExtResource("4_3gocq")
+startupActions = Array[ExtResource("1_umoti")]([SubResource("Resource_qjxmq")])
+cleanupActions = Array[ExtResource("1_umoti")]([SubResource("Resource_rpkkw")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
 
 [resource]
 script = ExtResource("2_l3hcl")
 statusConditionName = "Confuse"
 icon = ExtResource("3_p7hwy")
-triggerActions = Array[ExtResource("1_umoti")]([SubResource("Resource_rpkkw")])
-cleanupActions = Array[ExtResource("1_umoti")]([SubResource("Resource_3gocq")])
+passiveActionResource = SubResource("Resource_siepv")
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

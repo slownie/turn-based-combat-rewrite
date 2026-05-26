@@ -4,20 +4,26 @@
 [ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_aoyll"]
 [ext_resource type="Script" uid="uid://di1ujgerdadef" path="res://src/dataClasses/actionEffects/statusEffects/SetIgnoreSkillCostEffect.cs" id="2_c6wu4"]
 [ext_resource type="Texture2D" uid="uid://c6yacygxxmw3r" path="res://assets/images/ui/statusConditionIcons/OverdriveIcon.png" id="3_c6wu4"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="4_eyt45"]
 
-[sub_resource type="Resource" id="Resource_eyt45"]
+[sub_resource type="Resource" id="Resource_6h1lq"]
 script = ExtResource("2_c6wu4")
 enable = false
 metadata/_custom_type_script = "uid://di1ujgerdadef"
 
-[sub_resource type="Resource" id="Resource_6h1lq"]
+[sub_resource type="Resource" id="Resource_f8x0m"]
 script = ExtResource("2_c6wu4")
 metadata/_custom_type_script = "uid://di1ujgerdadef"
+
+[sub_resource type="Resource" id="Resource_civv0"]
+script = ExtResource("4_eyt45")
+startupActions = Array[ExtResource("1_j50ie")]([SubResource("Resource_f8x0m")])
+cleanupActions = Array[ExtResource("1_j50ie")]([SubResource("Resource_6h1lq")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
 
 [resource]
 script = ExtResource("2_aoyll")
 statusConditionName = "Overdrive"
 icon = ExtResource("3_c6wu4")
-triggerActions = Array[ExtResource("1_j50ie")]([SubResource("Resource_6h1lq")])
-cleanupActions = Array[ExtResource("1_j50ie")]([SubResource("Resource_eyt45")])
+passiveActionResource = SubResource("Resource_civv0")
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

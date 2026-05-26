@@ -30,8 +30,8 @@ public partial class ActiveStatusCondition : GodotObject
         CheckForDeletion();        
     }
 
-    public Godot.Collections.Array<ActionEffectResource> GetTriggerActions() { return _statusConditionResource.GetTriggerActions(); }
-    public Godot.Collections.Array<ActionEffectResource> GetCleanupActions() { return _statusConditionResource.GetCleanupActions(); }
+    public Godot.Collections.Array<ActionEffectResource> GetTriggerActions() { return _statusConditionResource.GetPassiveActionResource().GetTriggerActions(); }
+    public Godot.Collections.Array<ActionEffectResource> GetCleanupActions() { return _statusConditionResource.GetPassiveActionResource().GetCleanupActions(); }
 
     public int GetTurnCount() { return _turnCount; }
     public void AddTurnCount(int turnCount) { 

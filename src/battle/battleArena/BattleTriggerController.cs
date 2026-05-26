@@ -1,29 +1,38 @@
 using Godot;
 using System;
 
+
+/*
+    The purpose of the BattleTriggerController is to keep track of the various 'passive' effects.
+
+*/
 public partial class BattleTriggerController : Node2D
 {
-    [Signal] public delegate void SideEffectsRequestedEventHandler(Godot.Collections.Array<ActionEffectResource> actionEffects, BattleActor actor);
+    [Signal] public delegate void SideEffectsRequestedEventHandler(Godot.Collections.Array<ActionEffectResource> actions, BattleActor battleActor);
+
+    Godot.Collections.Dictionary<BattleActor, BattleActorTriggerContainer> _triggerContainers = new Godot.Collections.Dictionary<BattleActor, BattleActorTriggerContainer>();
 
 
-    public void SetupActor(BattleActor actor)
+    public void CreateActorContainer(BattleActor battleActor)
     {
-        foreach(PassiveSkillResource passiveSkill in actor.GetPassiveSkills())
+        BattleActorTriggerContainer battleActorTriggerContainer = new BattleActorTriggerContainer(battleActor);
+        if (!_triggerContainers.ContainsKey(battleActor))
         {
-            ActivePassiveSkill activePassiveSkill = new ActivePassiveSkill(passiveSkill);
-            
-            switch (passiveSkill.GetTriggerType())
-            {
-                case BattleConsts.TriggerType.OnUserTurnStart:
-                {
-                    break;
-                }                
-            }
+            _triggerContainers.Add(battleActor, battleActorTriggerContainer);
         }
     }
 
-    private void OnSideEffectRequested(Godot.Collections.Array<ActionEffectResource> sideEffects, BattleActor actor)
+    public void RunActorSideEffects(BattleActor wantedActor, BattleConsts.TriggerType triggerType)
     {
-        EmitSignal(SignalName.SideEffectsRequested, sideEffects, actor);
+        BattleActorTriggerContainer battleActorTriggerContainer;
+        battleActorTriggerContainer = _triggerContainers[wantedActor];
+        if (battleActorTriggerContainer != null)
+        {
+            // Get Side Effects
+            foreach (ActivePassiveEffect activePassiveEffect in battleActorTriggerContainer.GetTriggerEffects(triggerType))
+            {
+                EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect.GetTriggerEffects(), wantedActor);
+            }
+        }
     }
 }

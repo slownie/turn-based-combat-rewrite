@@ -5,26 +5,14 @@ using System;
 public partial class StatusConditionResource : Resource
 {
     [Export] string statusConditionName = "";
-    [Export] BattleConsts.TriggerType triggerType;
 
     [Export] Texture2D icon;
 
-    [ExportCategory("Actions")]
-    /*
-        These actions occur when the StatusCondition's trigger type is triggered.
-    */
-    [Export] Godot.Collections.Array<ActionEffectResource> triggerActions = [];
+    
+    [Export] PassiveActionResource passiveActionResource;
 
-    /*
-        These actions occur when the StatusCondition's turn count reaches 0 or if the StatusCondition
-        is removed through some other means.
-    */
-    [Export] Godot.Collections.Array<ActionEffectResource> cleanupActions = [];
-
-    public Godot.Collections.Array<ActionEffectResource> GetTriggerActions() { return triggerActions; }
-    public Godot.Collections.Array<ActionEffectResource> GetCleanupActions() { return cleanupActions; }
-
-    public BattleConsts.TriggerType GetTriggerType() { return triggerType; }
+    public PassiveActionResource GetPassiveActionResource() { return passiveActionResource; }
+    public BattleConsts.TriggerType GetTriggerType() { return passiveActionResource.GetTriggerType(); }
 
     public Texture2D GetIcon() { return icon; }
 }

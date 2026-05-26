@@ -30,7 +30,7 @@ public partial class ActiveBuff : GodotObject
     // USED FOR TYPE CHECKING
     public BuffResource GetBuffResource() { return _buffResource; }
 
-    public Godot.Collections.Array<ActionEffectResource> GetTriggerActions() { return _buffResource.GetBuffActions(); }
+    public Godot.Collections.Array<ActionEffectResource> GetTriggerActions() { return _buffResource.GetPassiveActionResource().GetTriggerActions(); }
 
     public int GetTurnCount() { return _turnCount; }
     public void AddTurnCount(int turnCount) { 

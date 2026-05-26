@@ -32,8 +32,9 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ActorController" type="Node2D" parent="." unique_id=1453677100]
+[node name="ActorController" type="Node2D" parent="." unique_id=1453677100 node_paths=PackedStringArray("_battleTriggerController")]
 script = ExtResource("3_ma76s")
+_battleTriggerController = NodePath("../BattleTriggerController")
 defaultEnemyAction = ExtResource("4_yc600")
 
 [node name="BattleTriggerController" type="Node2D" parent="." unique_id=1462935268]

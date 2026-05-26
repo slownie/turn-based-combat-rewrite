@@ -77,7 +77,7 @@ public static partial class BattleConsts
 	
 	public enum TriggerType
 	{
-		Immediately,
+		Never, // Used for effects with only startups and cleanups
 
 		OnBattleStart,
 		OnBattleEnd,

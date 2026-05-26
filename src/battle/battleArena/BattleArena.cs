@@ -73,7 +73,6 @@ public partial class BattleArena : Control
 		_actorController = GetNode<ActorController>("ActorController");
 		_actorController.EnemySelectAction += OnActionTargetConfimed;
 		_actorController.RandomSelectAction += OnActionTargetConfimed;
-		_actorController.SideEffectAction += OnSideEffectRequested;
 
 		_battleTriggerController = GetNode<BattleTriggerController>("BattleTriggerController");
 		_battleTriggerController.SideEffectsRequested += OnSideEffectRequested;
@@ -134,6 +133,8 @@ public partial class BattleArena : Control
 
 			_actors.Add(newActor);
 			_partyMembers.Add(newActor);
+
+			_battleTriggerController.CreateActorContainer(newActor);
 		}
 
 		// Enemies
@@ -160,6 +161,8 @@ public partial class BattleArena : Control
 
 			_actors.Add(newActor);
 			_enemyMembers.Add(newActor);
+
+			_battleTriggerController.CreateActorContainer(newActor);
 		}
 
 		_turnBar.Setup(_actors);	
@@ -182,7 +185,7 @@ public partial class BattleArena : Control
 		TimeScale = 0.0;
 		_currentActor = actor;
 
-		_actorController.CheckForSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnStart);
+		_battleTriggerController.RunActorSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnStart);
 
 		if (_currentActor.SelectRandomAction)
 		{
@@ -197,8 +200,7 @@ public partial class BattleArena : Control
 		TimeScale = 0.0;
 		_currentActor = actor;
 
-		_actorController.CheckForSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnStart);
-
+		_battleTriggerController.RunActorSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnStart);
 
 		if (_currentActor.SelectRandomAction)
 		{
@@ -248,7 +250,8 @@ public partial class BattleArena : Control
 
 	private void OnActionFinished()
 	{
-		_actorController.CheckForSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnEnd);
+		_battleTriggerController.RunActorSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnEnd);
+
 
 		// Turn Decrement
 		_currentActor.TurnEnd();

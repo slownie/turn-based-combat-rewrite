@@ -23,6 +23,9 @@ public partial class BattleActor : Node2D
 	[Signal] public delegate void ReadinessChangedEventHandler(double readiness);
 	[Signal] public delegate void ReadyToActEventHandler(BattleActor battleActor);
 
+	// Side Effect Related Signals
+	[Signal] public delegate void RemoveSideEffectEventHandler(BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect);
+
 
 	string _actorName = "Placeholder";
 	CharacterStats _characterStats;
@@ -32,7 +35,6 @@ public partial class BattleActor : Node2D
 	Godot.Collections.Array<BaseSkillResource> _skills = [];
 	Godot.Collections.Array<UseableSkillResource> _useableSkills = [];
 	Godot.Collections.Array<PassiveSkillResource> _passiveSkills = [];
-	Godot.Collections.Array<ActivePassiveSkill> _activePassiveSkills = [];
 
 	ActiveStatusCondition _activeStatusCondition = null;
 
@@ -251,9 +253,6 @@ public partial class BattleActor : Node2D
 			{
 				PassiveSkillResource _passiveSkill = skill as PassiveSkillResource;
 				_passiveSkills.Add(_passiveSkill);
-
-				ActivePassiveSkill activePassiveSkill = new ActivePassiveSkill(_passiveSkill);
-				_activePassiveSkills.Add(activePassiveSkill);
 			}
 		}
 
@@ -375,7 +374,6 @@ public partial class BattleActor : Node2D
 	public Godot.Collections.Array<BaseSkillResource> GetSkills() { return _skills; }
 	public Godot.Collections.Array<UseableSkillResource> GetUseableSkills() { return _useableSkills; }
 	public Godot.Collections.Array<PassiveSkillResource> GetPassiveSkills() { return _passiveSkills; }
-	public Godot.Collections.Array<ActivePassiveSkill> GetActivePassiveSkills() { return _activePassiveSkills; }
 
 	public ActiveStatusCondition GetActiveStatusCondition() { return _activeStatusCondition; }
 	public void SetActiveStatusCondition(ActiveStatusCondition newStatusCondition)

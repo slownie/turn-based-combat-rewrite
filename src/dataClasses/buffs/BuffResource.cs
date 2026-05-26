@@ -7,12 +7,9 @@ public partial class BuffResource : Resource
     [Export] string buffName = "";
     [Export] Texture2D icon;
 
-    [Export] BattleConsts.TriggerType triggerType;
-    [Export] Godot.Collections.Array<ActionEffectResource> buffActions = [];
+    [Export] PassiveActionResource passiveActionResource;
 
-
-    public BattleConsts.TriggerType GetTriggerType() { return triggerType; }
-    public Godot.Collections.Array<ActionEffectResource> GetBuffActions() { return buffActions; }
+    public PassiveActionResource GetPassiveActionResource() { return passiveActionResource; }
 
     public Texture2D GetIcon() { return icon; }
 }

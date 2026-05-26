@@ -3,17 +3,23 @@
 [ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_ypbgw"]
 [ext_resource type="Texture2D" uid="uid://cwk8hdaja08vv" path="res://assets/images/ui/statusConditionIcons/DrainIcon.png" id="2_5q8ml"]
 [ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_ia8tc"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="3_h7bw0"]
 [ext_resource type="Script" uid="uid://cwrsn0audxsdn" path="res://src/dataClasses/actionEffects/RejuvenatePercentageEffect.cs" id="3_ia8tc"]
 
-[sub_resource type="Resource" id="Resource_5q8ml"]
+[sub_resource type="Resource" id="Resource_d3t0e"]
 script = ExtResource("3_ia8tc")
 rejuventagePercentage = -25
 metadata/_custom_type_script = "uid://cwrsn0audxsdn"
 
+[sub_resource type="Resource" id="Resource_gf58r"]
+script = ExtResource("3_h7bw0")
+triggerType = 3
+triggerActions = Array[ExtResource("1_ypbgw")]([SubResource("Resource_d3t0e")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
 [resource]
 script = ExtResource("2_ia8tc")
 statusConditionName = "Drain"
-triggerType = 3
 icon = ExtResource("2_5q8ml")
-triggerActions = Array[ExtResource("1_ypbgw")]([SubResource("Resource_5q8ml")])
+passiveActionResource = SubResource("Resource_gf58r")
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"
