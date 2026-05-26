@@ -90,6 +90,7 @@ public partial class ActorController : Node2D
 
 	public void SetImmortality(BattleActor target, bool enable)
 	{
+		GD.Print(target.GetActorName()+" Set Immortality - "+enable);
 		target.IsImmortal = enable;
 	}
 

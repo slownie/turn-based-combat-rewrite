@@ -26,6 +26,7 @@ public partial class ActiveStatusCondition : ActivePassiveEffect
 
     public ActiveStatusCondition(StatusConditionResource statusConditionResource, int turnAmount)
     {
+        _startupEffects = statusConditionResource.GetPassiveActionResource().GetStartupActions();
         _triggerEffects = statusConditionResource.GetPassiveActionResource().GetTriggerActions();
         _cleanupEffects = statusConditionResource.GetPassiveActionResource().GetCleanupActions();
         _triggerType = statusConditionResource.GetTriggerType();

@@ -15,11 +15,14 @@ public partial class BattleTriggerController : Node2D
 
     public void CreateActorContainer(BattleActor battleActor)
     {
-        BattleActorTriggerContainer battleActorTriggerContainer = new BattleActorTriggerContainer(battleActor);
+        BattleActorTriggerContainer battleActorTriggerContainer = new BattleActorTriggerContainer();
         if (!_triggerContainers.ContainsKey(battleActor))
         {
             _triggerContainers.Add(battleActor, battleActorTriggerContainer);
         }
+
+        battleActor.AddSideEffect += AddSideEffect;
+        battleActor.RemoveSideEffect += RemoveSideEffect;
     }
 
     public void RunActorSideEffects(BattleActor wantedActor, BattleConsts.TriggerType triggerType)
@@ -34,5 +37,23 @@ public partial class BattleTriggerController : Node2D
                 EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect.GetTriggerEffects(), wantedActor);
             }
         }
+    }
+
+    private void AddSideEffect(BattleActor user, BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect)
+    {
+        _triggerContainers[user].AddSideEffect(triggerType, activePassiveEffect);
+        if (activePassiveEffect.GetStartupEffects().Count != 0)
+        {
+            EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect.GetStartupEffects(), user);
+        }
+    }
+
+    private void RemoveSideEffect(BattleActor user, BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect)
+    {
+        if (activePassiveEffect.GetCleanupEffects().Count != 0)
+        {
+            EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect.GetCleanupEffects(), user);
+        }
+        _triggerContainers[user].RemoveSideEffect(triggerType, activePassiveEffect);
     }
 }

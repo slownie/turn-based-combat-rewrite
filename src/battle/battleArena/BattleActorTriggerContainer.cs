@@ -3,8 +3,6 @@ using System;
 
 public partial class BattleActorTriggerContainer : GodotObject
 {
-    BattleActor _owner;
-
     Godot.Collections.Dictionary<BattleConsts.TriggerType, Godot.Collections.Array<ActivePassiveEffect>> _sideEffects = 
     new Godot.Collections.Dictionary<BattleConsts.TriggerType, Godot.Collections.Array<ActivePassiveEffect>>()
     {
@@ -16,14 +14,7 @@ public partial class BattleActorTriggerContainer : GodotObject
         {BattleConsts.TriggerType.OnUserTurnEnd, []}
     };
 
-    public BattleActorTriggerContainer() : this(null) {}
-    public BattleActorTriggerContainer(BattleActor owner)
-    {
-        _owner = owner;
-
-        _owner.AddSideEffect += AddSideEffect;
-        _owner.RemoveSideEffect += RemoveSideEffect;
-    }
+    public BattleActorTriggerContainer() {}
 
     public void AddSideEffect(BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect)
     {

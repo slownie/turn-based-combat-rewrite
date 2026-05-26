@@ -24,8 +24,8 @@ public partial class BattleActor : Node2D
 	[Signal] public delegate void ReadyToActEventHandler(BattleActor battleActor);
 
 	// Side Effect Related Signals
-	[Signal] public delegate void AddSideEffectEventHandler(BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect);
-	[Signal] public delegate void RemoveSideEffectEventHandler(BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect);
+	[Signal] public delegate void AddSideEffectEventHandler(BattleActor user, BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect);
+	[Signal] public delegate void RemoveSideEffectEventHandler(BattleActor user, BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect);
 
 
 	string _actorName = "Placeholder";
@@ -302,16 +302,20 @@ public partial class BattleActor : Node2D
 	public void AddCurHP(int amount) {
 		// This should also prevent OnDeath effects from activating since 
 		// HP never reaches 0 which would cause those effects to activate.
+		// Gross code but this works
 		if (IsImmortal)
 		{
-			// Would this kill the actor?
-			if (_characterStats.GetCurHP() <= amount)
+			// Would this kill the actor? (amount is negative)
+			if (_characterStats.GetCurHP() + amount <= 0)
 			{
-				SetCurHP(1);
+				_characterStats.SetCurHP(1);
+			} else {
+				_characterStats.AddCurHP(amount); 
 			}
+		} else {
+			_characterStats.AddCurHP(amount); 
 		}
-
-		_characterStats.AddCurHP(amount); 
+		
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
 	}
 	
@@ -383,7 +387,7 @@ public partial class BattleActor : Node2D
 		_activeStatusCondition.TurnCountChanged += OnStatusConditionTurnCountChanged;
 		_activeStatusCondition.TurnCountFinished += OnStatusConditionFinished;
 
-		EmitSignal(SignalName.AddSideEffect, (int)_activeStatusCondition.GetTriggerType(), _activeStatusCondition);
+		EmitSignal(SignalName.AddSideEffect, this, (int)_activeStatusCondition.GetTriggerType(), _activeStatusCondition);
 
 		// UI
 		_statusIcon.Texture = _activeStatusCondition.GetStatusIcon();
@@ -392,7 +396,7 @@ public partial class BattleActor : Node2D
 
 	public void RemoveStatusCondition()
 	{
-		EmitSignal(SignalName.RemoveSideEffect, (int)_activeStatusCondition.GetTriggerType(), _activeStatusCondition);
+		EmitSignal(SignalName.RemoveSideEffect, this, (int)_activeStatusCondition.GetTriggerType(), _activeStatusCondition);
 
 		_activeStatusCondition = null;
 		_statusIcon.Texture = null;
