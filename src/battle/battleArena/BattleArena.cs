@@ -168,6 +168,8 @@ public partial class BattleArena : Control
 		_turnBar.Setup(_actors);	
 		_battleTextController.Setup(_actors);
 		IsActive = true;
+
+		_actorController.Setup(_partyMembers, _enemyMembers);
 	}
 
 	public void SetupInventory(Godot.Collections.Array<InventoryItem> inventory)
@@ -189,7 +191,7 @@ public partial class BattleArena : Control
 
 		if (_currentActor.SelectRandomAction)
 		{
-			_actorController.SelectRandomAction(_currentActor, _actors);
+			_actorController.SelectRandomAction(_currentActor);
 		} else {
 			_menuController.PartyTurnStart(_currentActor, _battleInventory);
 		}
@@ -204,9 +206,9 @@ public partial class BattleArena : Control
 
 		if (_currentActor.SelectRandomAction)
 		{
-			_actorController.SelectRandomAction(_currentActor, _actors);
+			_actorController.SelectRandomAction(_currentActor);
 		} else {
-			_actorController.EnemyAISelectAction(_currentActor, _actors);
+			_actorController.EnemyAISelectAction(_currentActor);
 		}
 	}
 
@@ -244,7 +246,7 @@ public partial class BattleArena : Control
 	{
 		foreach(ActionEffectResource actionEffect in actions)
 		{
-			actionEffect.ExecuteEffect(battleActor, battleActor, _actorController);
+			actionEffect.ExecuteEffect(_currentActor, battleActor, _actorController);
 		}
 	}
 

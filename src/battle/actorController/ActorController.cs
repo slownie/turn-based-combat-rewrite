@@ -5,6 +5,9 @@ using System.Linq;
 
 public partial class ActorController : Node2D
 {
+	/*
+		Required for any side effects that occur within actions.
+	*/
 	[Export] BattleTriggerController _battleTriggerController;
 
 	[Export] UseableSkillResource defaultEnemyAction;
@@ -13,6 +16,14 @@ public partial class ActorController : Node2D
 	[Signal] public delegate void EnemySelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 	[Signal] public delegate void RandomSelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 
+	Godot.Collections.Array<BattleActor> _partyActors = [];
+	Godot.Collections.Array<BattleActor> _enemyActors = [];
+
+	public void Setup(Godot.Collections.Array<BattleActor> partyActors, Godot.Collections.Array<BattleActor> enemyActors)
+	{
+		_partyActors = partyActors;
+		_enemyActors = enemyActors;
+	}
 
 	#region Stats
 	/*
@@ -29,7 +40,11 @@ public partial class ActorController : Node2D
 	{
 		if (target.IsIndestructable) damage = 0;
 
+		// Damage value should be negative
 		target.AddCurHP(damage);
+
+		_battleTriggerController.RunActorSideEffects(target, BattleConsts.TriggerType.OnUserTakeDamage);
+
 		target.EmitSignal(BattleActor.SignalName.DamageReceived, target, damage, didCrit);
 	}
 
@@ -83,6 +98,16 @@ public partial class ActorController : Node2D
 		
 	}
 
+	public int GetCounterDamage(BattleActor target)
+	{
+		return target.GetCounterDamage();
+	}
+
+	public void ResetCounterDamage(BattleActor target)
+	{
+		target.ResetCounterDamage();
+	}
+
 	public void SetSelectRandomAction(BattleActor target, bool enable)
 	{
 		target.SelectRandomAction = enable;
@@ -92,6 +117,12 @@ public partial class ActorController : Node2D
 	{
 		GD.Print(target.GetActorName()+" Set Immortality - "+enable);
 		target.IsImmortal = enable;
+	}
+
+	public void SetTrackDamage(BattleActor target, bool enable)
+	{
+		GD.Print(target.GetActorName()+" Set TrackDamage - "+enable);
+		target.TrackDamage = enable;
 	}
 
 	public void SetIndestructable(BattleActor target, bool enable)
@@ -208,7 +239,7 @@ public partial class ActorController : Node2D
 	#endregion
 
 	#region Enemy AI
-	public void EnemyAISelectAction(BattleActor enemyUser, Godot.Collections.Array<BattleActor> battleActors)
+	public void EnemyAISelectAction(BattleActor enemyUser)
 	{
 		// Action Selection
 		UseableActionResource selectedAction;
@@ -230,12 +261,12 @@ public partial class ActorController : Node2D
 		// 1. Are we targeting the party, enemies, both, or the self?
 		if (selectedAction.GetTargetOppositeSide())
 		{
-			_oppositeSideTargets = GetPartyMembers(battleActors);
+			_oppositeSideTargets = _partyActors;
 		}
 
 		if (selectedAction.GetTargetSameSide())
 		{
-			_sameSideTargets = GetEnemies(battleActors);
+			_sameSideTargets = _enemyActors;
 		}
 
 		if (selectedAction.GetTargetSelfOnly())
@@ -293,7 +324,7 @@ public partial class ActorController : Node2D
 		EmitSignal(SignalName.EnemySelectAction, selectedAction, _selectedTargets);
 	}
 	
-	public void SelectRandomAction(BattleActor currentUser, Godot.Collections.Array<BattleActor> battleActors)
+	public void SelectRandomAction(BattleActor currentUser)
 	{
 		GD.Print("Random Action");
 		// Action Selection
@@ -315,12 +346,12 @@ public partial class ActorController : Node2D
 		// 1. Are we targeting the party, enemies, both, or the self?
 		if (selectedAction.GetTargetOppositeSide())
 		{
-			_oppositeSideTargets = GetPartyMembers(battleActors);
+			_oppositeSideTargets = _partyActors;
 		}
 
 		if (selectedAction.GetTargetSameSide())
 		{
-			_sameSideTargets = GetEnemies(battleActors);
+			_sameSideTargets = _enemyActors;
 		}
 
 		if (selectedAction.GetTargetSelfOnly())
@@ -378,6 +409,7 @@ public partial class ActorController : Node2D
 		EmitSignal(SignalName.EnemySelectAction, selectedAction, _selectedTargets);
 	}
 	
+
 	#endregion
 
 	#region Sequences

@@ -84,6 +84,8 @@ public partial class BattleActor : Node2D
 	bool _chargeEnabled = false;
 	bool _focusEnabled = false;
 
+	int _counterDamage = 0;
+
 
 	bool _isPlayer = true;
 
@@ -146,6 +148,12 @@ public partial class BattleActor : Node2D
 		Primarily used by the Confuse status effect.
 	*/
 	public bool SelectRandomAction {get; set; } = false; 
+
+	/*
+		When true, the user will track the damage dealt to it.
+		Primarily used by the Frostbite status effect.
+	*/
+	public bool TrackDamage {get; set; } = false;
 
 	/*
 		When true, user's HP will never reach 0.
@@ -302,6 +310,14 @@ public partial class BattleActor : Node2D
 	public void AddCurHP(int amount) {
 		// This should also prevent OnDeath effects from activating since 
 		// HP never reaches 0 which would cause those effects to activate.
+
+		// Counter damage
+		if (TrackDamage)
+		{
+			_counterDamage += amount;
+			if (_counterDamage > 0) _counterDamage = 0;
+		}
+
 		// Gross code but this works
 		if (IsImmortal)
 		{
@@ -425,6 +441,10 @@ public partial class BattleActor : Node2D
 			activeBuff.BuffFinished += OnBuffFinished;
 		}
 	}
+
+	public int GetCounterDamage() { return _counterDamage; }
+	public void ResetCounterDamage() { _counterDamage = 0; }
+
 
 	public bool GetIsPlayer() { return _isPlayer; }
 	public Texture2D GetBattleIcon() { return _battleIcon; }

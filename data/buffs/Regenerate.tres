@@ -1,16 +1,15 @@
 [gd_resource type="Resource" script_class="BuffResource" format=3 uid="uid://12ucrnqyebf0"]
 
 [ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_7d13q"]
-[ext_resource type="Script" uid="uid://dsgx24vgl3pb" path="res://src/dataClasses/actionEffects/HealEffect.cs" id="2_atbcn"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="2_atbcn"]
 [ext_resource type="Script" uid="uid://bp8h5326g1kmp" path="res://src/dataClasses/buffs/BuffResource.cs" id="2_t17nn"]
 
 [sub_resource type="Resource" id="Resource_5l3pn"]
 script = ExtResource("2_atbcn")
-metadata/_custom_type_script = "uid://dsgx24vgl3pb"
+metadata/_custom_type_script = "uid://dg34628o553u4"
 
 [resource]
 script = ExtResource("2_t17nn")
 buffName = "Regenerate"
-triggerType = 3
-buffActions = Array[ExtResource("1_7d13q")]([SubResource("Resource_5l3pn")])
+passiveActionResource = SubResource("Resource_5l3pn")
 metadata/_custom_type_script = "uid://bp8h5326g1kmp"

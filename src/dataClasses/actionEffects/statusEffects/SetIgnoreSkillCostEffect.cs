@@ -8,6 +8,6 @@ public partial class SetIgnoreSkillCostEffect : ActionEffectResource
 
     public override void ExecuteEffect(BattleActor user, BattleActor target, ActorController actorController)
     {
-        actorController.SetIgnoreSkillCosts(user, enable);
+        actorController.SetIgnoreSkillCosts(target, enable);
     }
 }

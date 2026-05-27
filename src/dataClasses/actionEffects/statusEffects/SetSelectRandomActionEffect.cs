@@ -8,6 +8,6 @@ public partial class SetSelectRandomActionEffect : ActionEffectResource
 
     public override void ExecuteEffect(BattleActor user, BattleActor target, ActorController actorController)
     {
-        actorController.SetSelectRandomAction(user, enable);
+        actorController.SetSelectRandomAction(target, enable);
     }
 }
