@@ -44,6 +44,9 @@ public partial class AttackEffect : ActionEffectResource
                 }
             }
 
+            // Affinity Calculation
+            if (user.IgnoreAffinity) GD.Print("It pierced through the resistance!");
+
             actorController.TakeDamage(target, -calculatedDamage, didCrit);
         } else {
             // Miss

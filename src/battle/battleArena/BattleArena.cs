@@ -218,7 +218,7 @@ public partial class BattleArena : Control
 		foreach(ActionEffectResource actionEffect in selectedAction.GetActions())
 		{
 			// 1. Does the effect occur?
-			if (actionEffect.GetSuccessChance() > GD.Randi() % 99)
+			if (actionEffect.GetSuccessChance() > GD.Randi() % 99 || _currentActor.SkillSuccessGuarantee)
 			{
 				// 2. Who do we target?
 				if (selectedAction.GetTargetType() == BattleConsts.TargetType.Random)

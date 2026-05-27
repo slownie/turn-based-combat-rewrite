@@ -303,8 +303,7 @@ public partial class ActorController : Node2D
 		{
 			selectedAction = defaultEnemyAction.GetUseableActionResource();
 		} else {
-			int selectedActionIndex = (int)(GD.Randi() % GetUseableSkills(currentUser).Count - 1);
-			selectedAction = GetUseableSkills(currentUser)[selectedActionIndex].GetUseableActionResource();
+			selectedAction = GetUseableSkills(currentUser).PickRandom().GetUseableActionResource();
 		}
 
 		// Targeting
@@ -350,11 +349,9 @@ public partial class ActorController : Node2D
 				// Pick a random target
 				if (_sameSideTargets.Count != 0)
 				{
-					int selectedTargetIndex = (int)(GD.Randi() % (_sameSideTargets.Count - 1));
-					_selectedTargets.Add(_sameSideTargets[selectedTargetIndex]);
+					_selectedTargets.Add(_sameSideTargets.PickRandom());
 				} else {
-					int selectedTargetIndex = (int)(GD.Randi() % (_oppositeSideTargets.Count - 1));
-					_selectedTargets.Add(_oppositeSideTargets[selectedTargetIndex]);
+					_selectedTargets.Add(_oppositeSideTargets.PickRandom());
 				}
 				break;
 			}
