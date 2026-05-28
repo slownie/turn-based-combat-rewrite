@@ -219,20 +219,27 @@ public partial class BattleArena : Control
 	{
 		foreach(ActionEffectResource actionEffect in selectedAction.GetActions())
 		{
-			// 1. Does the effect occur?
-			if (actionEffect.GetSuccessChance() > GD.Randi() % 99 || _currentActor.SkillSuccessGuarantee)
+			// Do not run if currentActor is not alive
+			if (0 < _currentActor.GetCurHP())
 			{
-				// 2. Who do we target?
-				if (selectedAction.GetTargetType() == BattleConsts.TargetType.Random)
+				// 1. Does the effect occur?
+				if (actionEffect.GetSuccessChance() > GD.Randi() % 99 || _currentActor.SkillSuccessGuarantee)
 				{
-					int targetIndex = GD.RandRange(0, selectedActors.Count - 1);
-					actionEffect.ExecuteEffect(_currentActor, selectedActors[targetIndex], _actorController);
-				} else {
-					foreach (BattleActor target in selectedActors)
+					// 2. Who do we target?
+					if (selectedAction.GetTargetType() == BattleConsts.TargetType.Random)
 					{
-						actionEffect.ExecuteEffect(_currentActor, target, _actorController);
+						int targetIndex = GD.RandRange(0, selectedActors.Count - 1);
+						actionEffect.ExecuteEffect(_currentActor, selectedActors[targetIndex], _actorController);
+					} else {
+						foreach (BattleActor target in selectedActors)
+						{
+							actionEffect.ExecuteEffect(_currentActor, target, _actorController);
+						}
 					}
 				}
+			} else {
+				// Stop action execution, the user is dead
+				break;	
 			}
 		}
 		OnActionFinished();
@@ -244,6 +251,7 @@ public partial class BattleArena : Control
 	*/
 	private void OnSideEffectRequested(Godot.Collections.Array<ActionEffectResource> actions, BattleActor battleActor)
 	{
+		GD.Print(battleActor.GetActorName());
 		foreach(ActionEffectResource actionEffect in actions)
 		{
 			actionEffect.ExecuteEffect(_currentActor, battleActor, _actorController);
