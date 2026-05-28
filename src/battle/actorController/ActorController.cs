@@ -48,6 +48,15 @@ public partial class ActorController : Node2D
 		target.EmitSignal(BattleActor.SignalName.DamageReceived, target, damage, didCrit);
 	}
 
+	public void CounterAttack(BattleActor target, int damage)
+	{
+		if (target.IsIndestructable) damage = 0;
+
+		target.AddCurHP(damage);
+
+		target.EmitSignal(BattleActor.SignalName.DamageReceived, target, damage, false);
+	}
+
 	public void TakeHeal(BattleActor target, int heal)
 	{
 		target.AddCurHP(heal);
