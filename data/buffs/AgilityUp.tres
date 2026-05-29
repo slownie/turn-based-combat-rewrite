@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="BuffResource" format=3 uid="uid://csc5xlcbaijcj"]
+
+[ext_resource type="Texture2D" uid="uid://5nsmgewu77xx" path="res://assets/images/ui/buffs/AgilityBuff.png" id="1_5asjd"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_g0j1j"]
+[ext_resource type="Script" uid="uid://b78gilr1xu5fu" path="res://src/dataClasses/actionEffects/AddStatModifierEffect.cs" id="3_k1fch"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="4_6bfnf"]
+[ext_resource type="Script" uid="uid://bp8h5326g1kmp" path="res://src/dataClasses/buffs/BuffResource.cs" id="5_yoesm"]
+
+[sub_resource type="Resource" id="Resource_l106d"]
+script = ExtResource("3_k1fch")
+statBuff = 3
+statLevel = -0.5
+metadata/_custom_type_script = "uid://b78gilr1xu5fu"
+
+[sub_resource type="Resource" id="Resource_s3kdn"]
+script = ExtResource("3_k1fch")
+statBuff = 3
+statLevel = 0.5
+metadata/_custom_type_script = "uid://b78gilr1xu5fu"
+
+[sub_resource type="Resource" id="Resource_ikaep"]
+script = ExtResource("4_6bfnf")
+startupActions = Array[ExtResource("2_g0j1j")]([SubResource("Resource_s3kdn")])
+cleanupActions = Array[ExtResource("2_g0j1j")]([SubResource("Resource_l106d")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("5_yoesm")
+buffName = "Agility Up"
+icon = ExtResource("1_5asjd")
+passiveActionResource = SubResource("Resource_ikaep")
+metadata/_custom_type_script = "uid://bp8h5326g1kmp"

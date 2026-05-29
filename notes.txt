@@ -2,7 +2,7 @@ Todo [General]
 - Revive ✓
 - Enemy AI
 - Affinity
-- Critical Hits
+- Critical Hits ✓
 - Haste/Slow/Stun
 
 Todot [ERPG Specific]
