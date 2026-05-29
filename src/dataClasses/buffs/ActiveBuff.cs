@@ -1,55 +1,63 @@
 using Godot;
 using System;
 
-public partial class ActiveBuff : GodotObject
+public partial class ActiveBuff : ActivePassiveEffect
 {
     [Signal] public delegate void TurnCountChangedEventHandler(int currentTurnCount);
     [Signal] public delegate void BuffFinishedEventHandler(ActiveBuff activeBuff);
 
     BuffResource _buffResource;
     int _turnCount = -1;
+    int turnCount
+    {
+        get { return _turnCount; }
+        set
+        {
+            _turnCount = value;
+            if (_turnCount <= 0)
+            {
+                EmitSignal(SignalName.BuffFinished, this);
+            } else {
+                EmitSignal(SignalName.TurnCountChanged, _turnCount);
+            }
+        }
+    }
 
-    public ActiveBuff() : this (null, -1) {}
-    public ActiveBuff(BuffResource buffResource, int turnCount)
+    Texture2D _icon;
+
+    public ActiveBuff(BuffResource buffResource, int turnAmount)
     {
         _buffResource = buffResource;
-        _turnCount = turnCount;
 
-        CheckForDeletion();        
+        _startupEffects = buffResource.GetPassiveActionResource().GetStartupActions();
+        _triggerEffects = buffResource.GetPassiveActionResource().GetTriggerActions();
+        _cleanupEffects = buffResource.GetPassiveActionResource().GetCleanupActions();
+        _triggerType = buffResource.GetTriggerType();
+
+        turnCount = turnAmount;
+
+        _icon = buffResource.GetIcon();
     }
 
-    /*
-        Called by BattleArena after a turn has been completed.
-    */
+    public void AddTurn(int newTurnCount)
+    {
+        turnCount += newTurnCount;
+    }
+
+    public void SetTurn(int newTurnCount)
+    {
+        turnCount = newTurnCount;
+    }
+
     public void DecrementTurn()
     {
-        _turnCount -= 1;
-        CheckForDeletion();        
+        turnCount -= 1;
     }
+
+    public int GetTurnCount() { return turnCount; }
 
     // USED FOR TYPE CHECKING
     public BuffResource GetBuffResource() { return _buffResource; }
 
-    public Godot.Collections.Array<ActionEffectResource> GetTriggerActions() { return _buffResource.GetPassiveActionResource().GetTriggerActions(); }
-
-    public int GetTurnCount() { return _turnCount; }
-    public void AddTurnCount(int turnCount) { 
-        _turnCount += turnCount; 
-        CheckForDeletion();        
-    }
-    public void SetTurnCount(int turnCount) { 
-        _turnCount = turnCount;
-        CheckForDeletion();        
-    }
-
-    public Texture2D GetStatusIcon() { return _buffResource.GetIcon(); }
-
-    private void CheckForDeletion()
-    {
-        if (_turnCount <= 0) {
-            EmitSignal(SignalName.BuffFinished, this);
-        } else {
-            EmitSignal(SignalName.TurnCountChanged, _turnCount);
-        }
-    }
+    public Texture2D GetBuffIcon() { return _icon; }
 }

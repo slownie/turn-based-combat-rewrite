@@ -3,6 +3,8 @@ using System;
 
 public partial class BattleActor : Node2D
 {
+	[Export] PackedScene buffScene;
+
 	// Stat Signals
 	[Signal] public delegate void HPChangedEventHandler(int newHP);
 	[Signal] public delegate void HPDepletedEventHandler();
@@ -427,7 +429,7 @@ public partial class BattleActor : Node2D
 		{
 			if (buff.GetBuffResource() == activeBuff.GetBuffResource())
 			{
-				buff.AddTurnCount(activeBuff.GetTurnCount());
+				buff.AddTurn(activeBuff.GetTurnCount());
 				buffDoesNotExist = false;
 				break;
 			}
@@ -437,9 +439,17 @@ public partial class BattleActor : Node2D
 		if (buffDoesNotExist)
 		{
 			_buffs.Add(activeBuff);
+			EmitSignal(SignalName.AddSideEffect, this, (int)activeBuff.GetTriggerType(), activeBuff);
+
 			activeBuff.TurnCountChanged += OnBuffTurnCountChanged;
 			activeBuff.BuffFinished += OnBuffFinished;
 		}
+	}
+
+	public void RemoveBuff(ActiveBuff buffToRemove)
+	{
+		EmitSignal(SignalName.RemoveSideEffect, this, (int)buffToRemove.GetTriggerType(), buffToRemove);
+		_buffs.Remove(buffToRemove);
 	}
 
 	public int GetCounterDamage() { return _counterDamage; }
@@ -482,12 +492,12 @@ public partial class BattleActor : Node2D
 
 	private void OnBuffTurnCountChanged(int turnCount)
 	{
-		
+		GD.Print(turnCount);
 	}
 
 	private void OnBuffFinished(ActiveBuff buff)
 	{
-		_buffs.Remove(buff);
+		RemoveBuff(buff);
 	}
 
 	#endregion

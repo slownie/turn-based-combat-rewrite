@@ -81,7 +81,6 @@ public partial class ActorController : Node2D
 			// Fusion Status Conditions
 		} else {
 			ActiveStatusCondition activeStatusCondition = new ActiveStatusCondition(statusConditionResource, turnCount);
-			
 			target.SetActiveStatusCondition(activeStatusCondition);
 		}
 	}
@@ -90,6 +89,12 @@ public partial class ActorController : Node2D
 	{
 		ActiveBuff buff = new ActiveBuff(buffToApply, turnDuration);
 		target.AddBuff(buff);
+	}
+
+	public void AddStatBuff(BattleActor target, BuffResource buffToApply, double buffLevel, int turnDuration)
+	{
+		ActiveBuff buff = new ActiveBuff(buffToApply, turnDuration);
+
 	}
 
 	public void RemoveBuff(BattleActor target)

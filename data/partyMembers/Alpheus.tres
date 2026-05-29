@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://cfoqdpdkdpur5" path="res://src/dataClasses/partyMembers/PartyMemberDataResource.cs" id="1_iccj4"]
 [ext_resource type="Texture2D" uid="uid://cor5p3nuroajs" path="res://assets/images/battleActors/Testament/sTestamentIdle_strip4.png" id="3_es0o6"]
 [ext_resource type="Script" uid="uid://dkuf8p00m1ibl" path="res://src/dataClasses/skills/BaseSkillResource.cs" id="5_4uqfo"]
+[ext_resource type="Resource" uid="uid://dyqpme2b5oc7x" path="res://data/skills/alpheus/RegenrativeFlow.tres" id="7_pqivu"]
 [ext_resource type="Resource" uid="uid://do4mmjbxiic03" path="res://data/skills/alpheus/Drench.tres" id="9_4fsrl"]
 
 [sub_resource type="Resource" id="Resource_aq5s4"]
@@ -59,7 +60,7 @@ animations = [{
 script = ExtResource("1_iccj4")
 partyMemberName = "Alpheus"
 baseStats = SubResource("Resource_aq5s4")
-startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("9_4fsrl")])
+startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("9_4fsrl"), ExtResource("7_pqivu")])
 spriteFrames = SubResource("SpriteFrames_r0vku")
 battleIcon = ExtResource("1_es0o6")
 metadata/_custom_type_script = "uid://cfoqdpdkdpur5"

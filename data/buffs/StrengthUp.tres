@@ -3,16 +3,11 @@
 [ext_resource type="Texture2D" uid="uid://boyr7sxsyr4i2" path="res://assets/images/ui/buffs/AttackBuff.png" id="1_lcp01"]
 [ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_l106d"]
 [ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="3_s3kdn"]
-[ext_resource type="Script" uid="uid://djwti3fivc4q8" path="res://src/dataClasses/actionEffects/buffs/StatBuffEffect.cs" id="4_hm63y"]
 [ext_resource type="Script" uid="uid://bp8h5326g1kmp" path="res://src/dataClasses/buffs/BuffResource.cs" id="5_vjmgr"]
-
-[sub_resource type="Resource" id="Resource_mrugm"]
-script = ExtResource("4_hm63y")
-metadata/_custom_type_script = "uid://djwti3fivc4q8"
 
 [sub_resource type="Resource" id="Resource_ikaep"]
 script = ExtResource("3_s3kdn")
-startupActions = Array[ExtResource("2_l106d")]([SubResource("Resource_mrugm")])
+startupActions = Array[ExtResource("2_l106d")]([null])
 metadata/_custom_type_script = "uid://dg34628o553u4"
 
 [resource]

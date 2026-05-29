@@ -10,6 +10,8 @@ public partial class BuffResource : Resource
     [Export] PassiveActionResource passiveActionResource;
 
     public PassiveActionResource GetPassiveActionResource() { return passiveActionResource; }
+    public BattleConsts.TriggerType GetTriggerType() { return passiveActionResource.GetTriggerType(); }
+
 
     public Texture2D GetIcon() { return icon; }
 }

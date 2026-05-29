@@ -9,7 +9,7 @@ public partial class RejuvenatePercentageEffect : ActionEffectResource
 
     public override void ExecuteEffect(BattleActor user, BattleActor target, ActorController actorController)
     {
-        int calculatedRejuvenate = Mathf.FloorToInt(target.GetMaxHP() * (0.01 * rejuventagePercentage));
+        int calculatedRejuvenate = Mathf.FloorToInt(target.GetMaxMP() * (0.01 * rejuventagePercentage));
         actorController.TakeRejuvenate(target, calculatedRejuvenate);
     }
 }
