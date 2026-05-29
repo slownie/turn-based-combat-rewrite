@@ -21,10 +21,13 @@ public partial class AttackEffect : ActionEffectResource
             int calculatedDamage = 0;
             bool didCrit = false;
 
+            
+
             switch(damageCalculation)
             {
                 case BattleConsts.DamageCalculation.Strength:
                 {
+                    actorController.RunActorSideEffects(user, BattleConsts.TriggerType.OnUserPhysicalAttack);
                     calculatedDamage = Mathf.RoundToInt((baseDamage + user.GetStrength()) * user.GetStrengthModifier());
                     if (user.IsChargeEnabled()) calculatedDamage *= _chargeMultiplier;
                     break;
@@ -32,6 +35,7 @@ public partial class AttackEffect : ActionEffectResource
 
                 case BattleConsts.DamageCalculation.Elemental:
                 {
+                    actorController.RunActorSideEffects(user, BattleConsts.TriggerType.OnUserElementalAttack);
                     calculatedDamage = Mathf.RoundToInt((baseDamage + user.GetElemental()) * user.GetElementalModifier());
                     if (user.IsFocusEnabled()) calculatedDamage *= _focusMultiplier;
                     break;

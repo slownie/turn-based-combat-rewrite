@@ -14,4 +14,6 @@ public partial class BuffResource : Resource
 
 
     public Texture2D GetIcon() { return icon; }
+
+    public string GetBuffName() { return buffName; }
 }

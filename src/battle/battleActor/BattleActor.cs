@@ -48,6 +48,12 @@ public partial class BattleActor : Node2D
 	double _defenseModifier = 1;
 	double _agilityModifier = 1;
 
+	const double _modifierMin = 0.25;
+	const double _modifierMax = 2;
+
+	bool _chargeEnabled = false;
+	bool _focusEnabled = false;
+
 	/*
 	Godot.Collections.Dictionary<BattleConsts.ElementType, double> _attackElementModifiers = new Godot.Collections.Dictionary<BattleConsts.ElementType, double>()
 	{
@@ -80,11 +86,7 @@ public partial class BattleActor : Node2D
 	};
 	*/
 
-	const double _modifierMin = 0.25;
-	const double _modifierMax = 2;
-
-	bool _chargeEnabled = false;
-	bool _focusEnabled = false;
+	
 
 	int _counterDamage = 0;
 
@@ -443,6 +445,22 @@ public partial class BattleActor : Node2D
 
 			activeBuff.TurnCountChanged += OnBuffTurnCountChanged;
 			activeBuff.BuffFinished += OnBuffFinished;
+		}
+	}
+
+	/*
+		Searches for the specified BuffResource within the ActiveBuffs.
+		Primarily used for one-time effects such as Charge, Focus, and Endure.
+	*/
+	public void SetBuffIsPermanent(BuffResource buffToLookFor, bool isPermanent)
+	{
+		foreach(ActiveBuff buff in _buffs)
+		{
+			if (buff.GetBuffResource() == buffToLookFor)
+			{
+				buff.SetIsPermanent(isPermanent);
+				break;
+			}
 		}
 	}
 

@@ -12,6 +12,9 @@ public partial class BattleActorTriggerContainer : GodotObject
 
         {BattleConsts.TriggerType.OnUserTurnStart, []},
         {BattleConsts.TriggerType.OnUserTurnEnd, []},
+
+        {BattleConsts.TriggerType.OnUserPhysicalAttack, []},
+        {BattleConsts.TriggerType.OnUserElementalAttack, []},
         
         {BattleConsts.TriggerType.OnUserTakeDamage, []},
     };

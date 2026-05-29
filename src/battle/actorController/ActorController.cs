@@ -43,7 +43,7 @@ public partial class ActorController : Node2D
 		// Damage value should be negative
 		target.AddCurHP(damage);
 
-		_battleTriggerController.RunActorSideEffects(target, BattleConsts.TriggerType.OnUserTakeDamage);
+		RunActorSideEffects(target, BattleConsts.TriggerType.OnUserTakeDamage);
 
 		target.EmitSignal(BattleActor.SignalName.DamageReceived, target, damage, didCrit);
 	}
@@ -85,9 +85,10 @@ public partial class ActorController : Node2D
 		}
 	}
 
-	public void AddBuff(BattleActor target, BuffResource buffToApply, int turnDuration)
+	public void AddBuff(BattleActor target, BuffResource buffToApply, int turnDuration, bool isPermanent)
 	{
-		ActiveBuff buff = new ActiveBuff(buffToApply, turnDuration);
+		GD.Print(target.GetActorName()+" - "+buffToApply.GetBuffName()+" - "+turnDuration+" turns - "+isPermanent);
+		ActiveBuff buff = new ActiveBuff(buffToApply, turnDuration, isPermanent);
 		target.AddBuff(buff);
 	}
 
@@ -121,6 +122,23 @@ public partial class ActorController : Node2D
 				break;
 			}
 		}
+	}
+
+	public void SetCharge(BattleActor target, bool enable)
+	{
+		target.SetCharge(enable);
+	}
+
+	public void SetFocus(BattleActor target, bool enable)
+	{
+		target.SetFocus(enable);
+	}
+
+	
+
+	public void SetBuffIsPermanent(BattleActor target, BuffResource buffToLookFor, bool isPermanent)
+	{
+		target.SetBuffIsPermanent(buffToLookFor, isPermanent);
 	}
 
 	public void RemoveBuff(BattleActor target)
@@ -209,6 +227,10 @@ public partial class ActorController : Node2D
 		target.SkillSuccessGuarantee = guarantee;
 	}
 
+	public void RunActorSideEffects(BattleActor target, BattleConsts.TriggerType triggerType)
+	{
+		_battleTriggerController.RunActorSideEffects(target, triggerType);
+	}
 
 	#endregion
 

@@ -22,10 +22,12 @@ public partial class ActiveBuff : ActivePassiveEffect
             }
         }
     }
+    
+    bool _isPermanent = false;
 
     Texture2D _icon;
 
-    public ActiveBuff(BuffResource buffResource, int turnAmount)
+    public ActiveBuff(BuffResource buffResource, int turnAmount, bool isPermanent)
     {
         _buffResource = buffResource;
 
@@ -35,6 +37,7 @@ public partial class ActiveBuff : ActivePassiveEffect
         _triggerType = buffResource.GetTriggerType();
 
         turnCount = turnAmount;
+        _isPermanent = isPermanent;
 
         _icon = buffResource.GetIcon();
     }
@@ -51,10 +54,12 @@ public partial class ActiveBuff : ActivePassiveEffect
 
     public void DecrementTurn()
     {
-        turnCount -= 1;
+        if (!_isPermanent) turnCount -= 1;
     }
 
     public int GetTurnCount() { return turnCount; }
+
+    public void SetIsPermanent(bool isPermanent) { _isPermanent = isPermanent; }
 
     // USED FOR TYPE CHECKING
     public BuffResource GetBuffResource() { return _buffResource; }
