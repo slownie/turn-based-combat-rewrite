@@ -108,17 +108,21 @@ public partial class ActorController : Node2D
 				break;
 			}
 
-			
 			case BattleConsts.StatBuffType.Defense:
 			{
 				target.AddDefenseModifier(statLevel);
 				break;
 			}
 
-			
 			case BattleConsts.StatBuffType.Agility:
 			{
 				target.AddAgilityModifier(statLevel);
+				break;
+			}
+
+			case BattleConsts.StatBuffType.Crit:
+			{
+				target.AddCritModifier(statLevel);
 				break;
 			}
 		}

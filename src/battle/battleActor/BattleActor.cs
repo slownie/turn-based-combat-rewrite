@@ -47,6 +47,7 @@ public partial class BattleActor : Node2D
 	double _elementalModifier = 1;
 	double _defenseModifier = 1;
 	double _agilityModifier = 1;
+	double _critModifier = 1;
 
 	const double _modifierMin = 0.25;
 	const double _modifierMax = 2;
@@ -386,11 +387,18 @@ public partial class BattleActor : Node2D
 		if (_modifierMin > _agilityModifier) _agilityModifier = _modifierMin;
 		if (_modifierMax < _agilityModifier) _agilityModifier = _modifierMax;
 	}
+	public void AddCritModifier(double newValue)
+	{
+		_critModifier += newValue;
+		if (_modifierMin > _critModifier) _critModifier = _modifierMin;
+		if (_modifierMax < _critModifier) _critModifier = _modifierMax;
+	}
 	
 	public double GetStrengthModifier() { return _strengthModifier; }
 	public double GetElementalModifier() { return _elementalModifier; }
 	public double GetDefenseModifier() { return _defenseModifier; }
 	public double GetAgilityModifier() { return _agilityModifier; }
+	public double GetCritModifier() { return _critModifier; }
 
 	public void SetCharge(bool enable) { _chargeEnabled = enable; }
 	public void SetFocus(bool enable) { _focusEnabled = enable; }

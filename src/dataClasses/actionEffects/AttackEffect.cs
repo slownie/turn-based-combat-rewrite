@@ -4,6 +4,7 @@ using System;
 [GlobalClass]
 public partial class AttackEffect : ActionEffectResource
 {
+    const double _critMultiplier = 1.5;
     const int _chargeMultiplier = 3;
     const int _focusMultiplier = 3;
 
@@ -17,19 +18,24 @@ public partial class AttackEffect : ActionEffectResource
     {
         if (baseAccuracy > GD.Randi() % 99)
         {
-            // Hit
             int calculatedDamage = 0;
             bool didCrit = false;
-
             
-
             switch(damageCalculation)
             {
                 case BattleConsts.DamageCalculation.Strength:
                 {
                     actorController.RunActorSideEffects(user, BattleConsts.TriggerType.OnUserPhysicalAttack);
                     calculatedDamage = Mathf.RoundToInt((baseDamage + user.GetStrength()) * user.GetStrengthModifier());
-                    if (user.IsChargeEnabled()) calculatedDamage *= _chargeMultiplier;
+
+                    if ((baseCrit * user.GetCritModifier()) > GD.Randi() % 99)
+                    {
+                        GD.Print("It's a critical hit!");
+                        calculatedDamage = Mathf.RoundToInt(calculatedDamage * _critMultiplier);
+                        didCrit = true;
+                    } 
+
+                    if (user.IsChargeEnabled()) calculatedDamage = Mathf.RoundToInt(calculatedDamage * _chargeMultiplier);
                     break;
                 }
 
@@ -50,6 +56,8 @@ public partial class AttackEffect : ActionEffectResource
 
             // Affinity Calculation
             if (user.IgnoreAffinity) GD.Print("It pierced through the resistance!");
+
+            GD.Print("AttackEffect - "+calculatedDamage);
 
             actorController.TakeDamage(target, -calculatedDamage, didCrit);
         } else {

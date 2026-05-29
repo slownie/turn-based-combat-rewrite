@@ -1,4 +1,11 @@
+Todo [General]
+- Revive ✓
+- Enemy AI
+- Affinity
+- Critical Hits
+- Haste/Slow/Stun
 
-
-Todo
--
+Todot [ERPG Specific]
+- Status Fusion
+- Fusion Skills
+- Defensive Actions
