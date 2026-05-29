@@ -91,10 +91,36 @@ public partial class ActorController : Node2D
 		target.AddBuff(buff);
 	}
 
-	public void AddStatBuff(BattleActor target, BuffResource buffToApply, double buffLevel, int turnDuration)
+	public void AddStatModifier(BattleActor target, BattleConsts.StatBuffType statBuff, double statLevel)
 	{
-		ActiveBuff buff = new ActiveBuff(buffToApply, turnDuration);
+		switch(statBuff)
+		{
+			case BattleConsts.StatBuffType.Strength:
+			{
+				target.AddStrengthModifier(statLevel);
+				break;
+			}
+			
+			case BattleConsts.StatBuffType.Elemental:
+			{
+				target.AddElementalModifier(statLevel);
+				break;
+			}
 
+			
+			case BattleConsts.StatBuffType.Defense:
+			{
+				target.AddDefenseModifier(statLevel);
+				break;
+			}
+
+			
+			case BattleConsts.StatBuffType.Agility:
+			{
+				target.AddAgilityModifier(statLevel);
+				break;
+			}
+		}
 	}
 
 	public void RemoveBuff(BattleActor target)

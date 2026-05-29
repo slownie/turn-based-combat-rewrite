@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="BuffResource" format=3 uid="uid://b7mad7w8lq0ls"]
+
+[ext_resource type="Texture2D" uid="uid://dav44o0fa7l1" path="res://assets/images/ui/buffs/AttackDebuff.png" id="1_vfnu0"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_2plyq"]
+[ext_resource type="Script" uid="uid://b78gilr1xu5fu" path="res://src/dataClasses/actionEffects/AddStatModifierEffect.cs" id="3_s7noj"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="4_04f1d"]
+[ext_resource type="Script" uid="uid://bp8h5326g1kmp" path="res://src/dataClasses/buffs/BuffResource.cs" id="5_fctag"]
+
+[sub_resource type="Resource" id="Resource_l106d"]
+script = ExtResource("3_s7noj")
+statLevel = 0.5
+metadata/_custom_type_script = "uid://b78gilr1xu5fu"
+
+[sub_resource type="Resource" id="Resource_s3kdn"]
+script = ExtResource("3_s7noj")
+statLevel = -0.5
+metadata/_custom_type_script = "uid://b78gilr1xu5fu"
+
+[sub_resource type="Resource" id="Resource_ikaep"]
+script = ExtResource("4_04f1d")
+startupActions = Array[ExtResource("2_2plyq")]([SubResource("Resource_s3kdn")])
+cleanupActions = Array[ExtResource("2_2plyq")]([SubResource("Resource_l106d")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("5_fctag")
+buffName = "Strength Up"
+icon = ExtResource("1_vfnu0")
+passiveActionResource = SubResource("Resource_ikaep")
+metadata/_custom_type_script = "uid://bp8h5326g1kmp"
