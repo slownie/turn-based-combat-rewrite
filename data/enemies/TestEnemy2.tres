@@ -10,6 +10,7 @@
 script = ExtResource("1_b3yoq")
 _maxHP = 20
 _maxMP = 20
+_strength = 20
 _agility = 4
 metadata/_custom_type_script = "uid://elamptvvyimh"
 

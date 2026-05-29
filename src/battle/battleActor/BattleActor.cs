@@ -249,6 +249,7 @@ public partial class BattleActor : Node2D
 		
 		_characterStats = characterStats;
 		_characterStats.HPDepleted += OnStatsHPDepleted;
+		_characterStats.HPRevive += OnActorRevived;
 
 		_activeStatusCondition = null;
 
@@ -494,6 +495,13 @@ public partial class BattleActor : Node2D
 		Readiness = 0.0;
 		IsActive = false;
 		IsTargetable = false;
+		EmitSignal(SignalName.HPDepleted);
+	}
+
+	private void OnActorRevived()
+	{
+		IsActive = true;
+		IsTargetable = true;
 		EmitSignal(SignalName.HPDepleted);
 	}
 
