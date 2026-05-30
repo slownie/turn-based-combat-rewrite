@@ -122,6 +122,12 @@ public partial class ActorController : Node2D
 				break;
 			}
 
+			case BattleConsts.StatBuffType.Accuracy:
+			{
+				target.AddAccuraccyModifier(statLevel);
+				break;
+			}
+
 			case BattleConsts.StatBuffType.Crit:
 			{
 				target.AddCritModifier(statLevel);
@@ -236,6 +242,16 @@ public partial class ActorController : Node2D
 	public void RunActorSideEffects(BattleActor target, BattleConsts.TriggerType triggerType)
 	{
 		_battleTriggerController.RunActorSideEffects(target, triggerType);
+	}
+
+	public void AddStun(BattleActor target, double stunDuration)
+	{
+		target.AddStun(stunDuration);
+	}
+
+	public void SetStun(BattleActor target, double stunDuration)
+	{
+		target.SetStun(stunDuration);
 	}
 
 	#endregion

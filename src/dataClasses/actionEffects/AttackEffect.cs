@@ -26,7 +26,7 @@ public partial class AttackEffect : ActionEffectResource
 
     public override void ExecuteEffect(BattleActor user, BattleActor target, ActorController actorController)
     {
-        if (baseAccuracy > GD.Randi() % 99)
+        if (baseAccuracy + Mathf.RoundToInt(user.GetLuck() * user.GetAccuraccyModifier()) > GD.Randi() % 99)
         {
             int calculatedDamage = 0;
             bool didCrit = false;

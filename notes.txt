@@ -1,7 +1,7 @@
 Todo [General]
 - Revive ✓
-- Enemy AI
-- Affinity
+- Enemy AI ✓
+- Affinity ✓
 - Critical Hits ✓
 - Haste/Slow/Stun
 
@@ -10,3 +10,4 @@ Todot [ERPG Specific]
 - Fusion Skills
 - Defensive Actions
 - MP on Physical Attacks
+- Boss (Multiple Actions)

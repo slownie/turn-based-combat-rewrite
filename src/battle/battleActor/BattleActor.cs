@@ -50,10 +50,13 @@ public partial class BattleActor : Node2D
 	double _elementalModifier = 1;
 	double _defenseModifier = 1;
 	double _agilityModifier = 1;
+	double _accuraccyModifier = 1;
 	double _critModifier = 1;
 	
 	bool _chargeEnabled = false;
 	bool _focusEnabled = false;
+
+
 
 	/*
 	Godot.Collections.Dictionary<BattleConsts.ElementType, double> _attackElementModifiers = new Godot.Collections.Dictionary<BattleConsts.ElementType, double>()
@@ -74,7 +77,6 @@ public partial class BattleActor : Node2D
 
 	CharacterAffinity _characterAffinity;
 
-	
 
 	int _counterDamage = 0;
 
@@ -110,9 +112,12 @@ public partial class BattleActor : Node2D
 
 	public double TimeScale {get; set;} = 1.0;
 
+	// The default ready gain
+	double _battleSpeed = 10;
+
 	// When this value reaches '100.0', the battler is ready to take their turn
 	double readiness = 0.0;
-	public double Readiness
+	double Readiness
 	{
 		get {return readiness;}
 		set
@@ -126,6 +131,30 @@ public partial class BattleActor : Node2D
 				EmitSignal(SignalName.ReadyToAct, this);
 				SetProcess(false);
 			}
+		}
+	}
+
+	double tempo = 1.0;
+	double Tempo
+	{
+		get { return tempo; }
+		set
+		{
+			tempo = value;
+			if (tempo < _modifierMin) tempo = _modifierMin;
+			if (_modifierMax < tempo) tempo = _modifierMax;
+		}
+	}
+	const double tempoRate = 0.25;
+
+	double stun = 0.0;
+	double Stun
+	{
+		get { return stun; }
+		set
+		{
+			stun = value;
+			if (stun < 0.0) stun = 0.0;
 		}
 	}
 
@@ -216,7 +245,12 @@ public partial class BattleActor : Node2D
 
 	public override void _Process(double delta)
 	{
-		Readiness += 10 * (_characterStats.GetAgility() * _agilityModifier) * TimeScale * delta;
+		if (0.0 < Stun)
+		{
+			Stun -= _battleSpeed * TimeScale * delta;
+		} else {
+			Readiness += _battleSpeed * (_characterStats.GetAgility() * _agilityModifier) * TimeScale * delta;
+		}
 	}
 
 	public void Setup(
@@ -378,6 +412,12 @@ public partial class BattleActor : Node2D
 		if (_modifierMin > _agilityModifier) _agilityModifier = _modifierMin;
 		if (_modifierMax < _agilityModifier) _agilityModifier = _modifierMax;
 	}
+	public void AddAccuraccyModifier(double newValue)
+	{
+		_accuraccyModifier += newValue;
+		if (_modifierMin > _accuraccyModifier) _accuraccyModifier = _modifierMin;
+		if (_modifierMax < _accuraccyModifier) _accuraccyModifier = _modifierMax;
+	}
 	public void AddCritModifier(double newValue)
 	{
 		_critModifier += newValue;
@@ -389,6 +429,7 @@ public partial class BattleActor : Node2D
 	public double GetElementalModifier() { return _elementalModifier; }
 	public double GetDefenseModifier() { return _defenseModifier; }
 	public double GetAgilityModifier() { return _agilityModifier; }
+	public double GetAccuraccyModifier() { return _accuraccyModifier; }
 	public double GetCritModifier() { return _critModifier; }
 
 	public void SetCharge(bool enable) { _chargeEnabled = enable; }
@@ -415,7 +456,6 @@ public partial class BattleActor : Node2D
 		_statusIcon.Texture = _activeStatusCondition.GetStatusIcon();
 		_statusTurnLabel.Text = _activeStatusCondition.GetTurnCount().ToString();
 	}
-
 	public void RemoveStatusCondition()
 	{
 		EmitSignal(SignalName.RemoveSideEffect, this, (int)_activeStatusCondition.GetTriggerType(), _activeStatusCondition);
@@ -472,8 +512,20 @@ public partial class BattleActor : Node2D
 		_buffs.Remove(buffToRemove);
 	}
 
+	public void RemoveEveryBuff()
+	{
+		foreach (ActiveBuff activeBuff in _buffs)
+		{
+			RemoveBuff(activeBuff);
+		}
+	}
+
+
 	public int GetCounterDamage() { return _counterDamage; }
 	public void ResetCounterDamage() { _counterDamage = 0; }
+
+	public void AddStun(double newStun) { Stun += newStun; }
+	public void SetStun(double newStun) { Stun = newStun; }
 
 
 	public bool GetIsPlayer() { return _isPlayer; }
@@ -493,9 +545,14 @@ public partial class BattleActor : Node2D
 	private void OnStatsHPDepleted()
 	{
 		GD.Print(_actorName+" - is Dead!");
-		Readiness = 0.0;
 		IsActive = false;
 		IsTargetable = false;
+
+		// Variable resets
+		Readiness = 0.0;
+		RemoveStatusCondition();
+		RemoveEveryBuff();
+
 		EmitSignal(SignalName.HPDepleted);
 	}
 

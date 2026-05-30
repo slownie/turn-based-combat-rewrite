@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UseableSkillResource" format=3 uid="uid://2hulevsog8e5"]
+
+[ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="1_sh1bu"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_xsumm"]
+[ext_resource type="Script" uid="uid://npd3s2jsfv3w" path="res://src/dataClasses/actionEffects/AddStunEffect.cs" id="3_q4hq8"]
+[ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="4_nkmde"]
+[ext_resource type="Script" uid="uid://bijk8gwmj13d8" path="res://src/dataClasses/battleSequenceEffects/BattleSequenceEffectResource.cs" id="5_vu2ci"]
+
+[sub_resource type="Resource" id="Resource_ps31g"]
+script = ExtResource("3_q4hq8")
+stunDuration = 50.0
+metadata/_custom_type_script = "uid://npd3s2jsfv3w"
+
+[sub_resource type="Resource" id="Resource_k7kph"]
+script = ExtResource("4_nkmde")
+actions = Array[ExtResource("2_xsumm")]([SubResource("Resource_ps31g")])
+metadata/_custom_type_script = "uid://f4ubms2rgfo3"
+
+[resource]
+script = ExtResource("1_sh1bu")
+skillCostType = 0
+skillCostAmount = 4
+useableActionResource = SubResource("Resource_k7kph")
+skillName = "Stun Strike"
+metadata/_custom_type_script = "uid://dicj1dhgyboo"

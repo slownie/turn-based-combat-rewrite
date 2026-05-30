@@ -98,6 +98,7 @@ public static partial class BattleConsts
 		Elemental,
 		Defense,
 		Agility,
+		Accuracy,
 		Crit
 	}
 
