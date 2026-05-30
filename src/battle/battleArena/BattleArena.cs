@@ -72,6 +72,7 @@ public partial class BattleArena : Control
 	{
 		_actorController = GetNode<ActorController>("ActorController");
 		_actorController.EnemySelectAction += OnActionTargetConfimed;
+		_actorController.EnemySkillUsed += OnSkillUsed;
 		_actorController.RandomSelectAction += OnActionTargetConfimed;
 
 		_battleTriggerController = GetNode<BattleTriggerController>("BattleTriggerController");
@@ -298,17 +299,17 @@ public partial class BattleArena : Control
 		Action Middleware
 	*/
 
-	private void OnSkillUsed(BattleActor actor, UseableSkillResource.SkillCostType skillCostType, int amount)
+	private void OnSkillUsed(UseableSkillResource.SkillCostType skillCostType, int amount)
 	{
-		if (!actor.IgnoreSkillCosts)
+		if (!_currentActor.IgnoreSkillCosts)
 		{
 			if (amount != 0)
 			{
 				if (skillCostType == UseableSkillResource.SkillCostType.HP)
 				{
-					_actorController.AddActorCurHP(actor, -amount);
+					_actorController.AddActorCurHP(_currentActor, -amount);
 				} else {
-					_actorController.AddActorCurMP(actor, -amount);
+					_actorController.AddActorCurMP(_currentActor, -amount);
 				}
 			}
 		}

@@ -13,6 +13,8 @@ public partial class ActorController : Node2D
 	[Export] UseableSkillResource defaultEnemyAction;
 
 
+	[Signal] public delegate void EnemySkillUsedEventHandler(UseableSkillResource.SkillCostType skillCostType, int amount);
+
 	[Signal] public delegate void EnemySelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 	[Signal] public delegate void RandomSelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 
@@ -308,14 +310,43 @@ public partial class ActorController : Node2D
 	public void EnemyAISelectAction(BattleActor enemyUser)
 	{
 		// Action Selection
-		UseableActionResource selectedAction;
+		UseableSkillResource selectedAction;
 
 		if (GetUseableSkills(enemyUser).Count <= 0)
 		{
-			selectedAction = defaultEnemyAction.GetUseableActionResource();
+			// Empty skill list
+			selectedAction = defaultEnemyAction;
 		} else {
-			int selectedActionIndex = (int)(GD.Randi() % GetUseableSkills(enemyUser).Count - 1);
-			selectedAction = GetUseableSkills(enemyUser)[selectedActionIndex].GetUseableActionResource();
+			// Get available skills
+			Godot.Collections.Array<UseableSkillResource> availableSkills = [];
+
+			foreach(UseableSkillResource skill in GetUseableSkills(enemyUser))
+			{
+				if (!enemyUser.IgnoreSkillCosts)
+            	{
+					if (skill.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)
+					{
+						if (enemyUser.GetCurHP() <= skill.GetSkillCostAmount() || !enemyUser.CanSelectPhysSkills)
+						{
+							break;
+						}
+					} else {
+						if (enemyUser.GetCurMP() < skill.GetSkillCostAmount() || !enemyUser.CanSelectElemSkills)
+						{
+							break;
+						}
+					}
+            	}
+				availableSkills.Add(skill);
+			}
+
+			// No other available skills
+			if (availableSkills.Count <= 0)
+			{
+				selectedAction = defaultEnemyAction;
+			} else {
+				selectedAction = availableSkills.PickRandom();
+			}
 		}
 
 		// Targeting
@@ -325,23 +356,23 @@ public partial class ActorController : Node2D
 		// Provide targeting parameters to TargetCursorController
 
 		// 1. Are we targeting the party, enemies, both, or the self?
-		if (selectedAction.GetTargetOppositeSide())
+		if (selectedAction.GetUseableActionResource().GetTargetOppositeSide())
 		{
 			_oppositeSideTargets = _partyActors;
 		}
 
-		if (selectedAction.GetTargetSameSide())
+		if (selectedAction.GetUseableActionResource().GetTargetSameSide())
 		{
 			_sameSideTargets = _enemyActors;
 		}
 
-		if (selectedAction.GetTargetSelfOnly())
+		if (selectedAction.GetUseableActionResource().GetTargetSelfOnly())
 		{
 			_sameSideTargets.Add(enemyUser);
 		}
 
 		// 2. Are we targeting dead or alive actors?
-		if (selectedAction.GetTargetDeadOnly())
+		if (selectedAction.GetUseableActionResource().GetTargetDeadOnly())
 		{
 			// We are only targeting dead party members
 			_sameSideTargets = GetDeadActors(_sameSideTargets);
@@ -354,7 +385,7 @@ public partial class ActorController : Node2D
 		Godot.Collections.Array<BattleActor> _selectedTargets = [];
 		
 
-		switch(selectedAction.GetCursorMode())
+		switch(selectedAction.GetUseableActionResource().GetCursorMode())
 		{
 			case BattleConsts.CursorMode.Single:
 			{
@@ -387,7 +418,8 @@ public partial class ActorController : Node2D
 			}
 		}
 
-		EmitSignal(SignalName.EnemySelectAction, selectedAction, _selectedTargets);
+		EmitSignal(SignalName.EnemySkillUsed, (int)selectedAction.GetSkillCostType(), selectedAction.GetSkillCostAmount());
+		EmitSignal(SignalName.EnemySelectAction, selectedAction.GetUseableActionResource(), _selectedTargets);
 	}
 	
 	public void SelectRandomAction(BattleActor currentUser)

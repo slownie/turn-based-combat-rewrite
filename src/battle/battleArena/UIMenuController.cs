@@ -9,7 +9,7 @@ public partial class UIMenuController : Control
 	[Export] PackedScene targetMenuScene;
 
 	[Signal] public delegate void ActionTargetConfirmedEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
-	[Signal] public delegate void SkillUsedEventHandler(BattleActor actor, UseableSkillResource.SkillCostType skillCostType, int amount);
+	[Signal] public delegate void SkillUsedEventHandler(UseableSkillResource.SkillCostType skillCostType, int amount);
 	[Signal] public delegate void ItemUsedEventHandler(int itemIndex, int quantity);
 
 	ActorController _actorController;
@@ -153,7 +153,7 @@ public partial class UIMenuController : Control
 	{
 		if (_selectedSkill != null)
 		{
-			EmitSignal(SignalName.SkillUsed, _currentPartyActor, (int)_selectedSkill.GetSkillCostType(), _selectedSkill.GetSkillCostAmount());
+			EmitSignal(SignalName.SkillUsed, (int)_selectedSkill.GetSkillCostType(), _selectedSkill.GetSkillCostAmount());
 			EmitSignal(SignalName.ActionTargetConfirmed, _selectedSkill.GetUseableActionResource(), selectedActors);
 		}
 

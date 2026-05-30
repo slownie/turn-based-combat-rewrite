@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="1_lckmv"]
 [ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_jfrcf"]
 [ext_resource type="Script" uid="uid://bqfsgwyfg0kop" path="res://src/dataClasses/actionEffects/AddStatusConditionEffect.cs" id="3_gowgk"]
-[ext_resource type="Resource" uid="uid://b3xh3fqxha30" path="res://data/statusConditions/Frostbite.tres" id="4_jfrcf"]
+[ext_resource type="Resource" uid="uid://cxsvotgmcpifl" path="res://data/statusConditions/Seal.tres" id="4_jfrcf"]
 [ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="5_8y2da"]
 [ext_resource type="Script" uid="uid://bijk8gwmj13d8" path="res://src/dataClasses/battleSequenceEffects/BattleSequenceEffectResource.cs" id="6_md2v4"]
 
