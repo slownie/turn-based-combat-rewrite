@@ -125,6 +125,7 @@ public partial class BattleArena : Control
 				activePartyMember.GetPartyMemberName(), 
 				activePartyMember.GetCharacterStats(),
 				activePartyMember.GetEquippedSkills(),
+				activePartyMember.GetCharacterAffinity(),
 				activePartyMember.GetSpriteFrames(),
 				activePartyMember.GetBattleIcon(),
 				true
@@ -146,6 +147,7 @@ public partial class BattleArena : Control
 			_actorController.AddChild(newActor);
 			
 			CharacterStats enemyStats = new CharacterStats(enemy.GetBaseStats());
+			CharacterAffinity enemyAffinity = new CharacterAffinity(enemy.GetBaseAffinity());
 
 			newActor.Setup(
 				70+(i % 2*35)+(i / 3*40),
@@ -153,6 +155,7 @@ public partial class BattleArena : Control
 				enemy.GetEnemyName(), 
 				enemyStats,
 				enemy.GetSkills(),
+				enemyAffinity,
 				enemy.GetSpriteFrames(),
 				enemy.GetBattleIcon(),
 				false

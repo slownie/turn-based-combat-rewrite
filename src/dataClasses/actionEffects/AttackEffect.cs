@@ -4,6 +4,16 @@ using System;
 [GlobalClass]
 public partial class AttackEffect : ActionEffectResource
 {
+    // Affinity Modifiers
+    Godot.Collections.Dictionary<BattleConsts.AffinityType, double> _affinityModifiers = new Godot.Collections.Dictionary<BattleConsts.AffinityType, double>()
+    {
+        {BattleConsts.AffinityType.Normal, 1.0},
+        {BattleConsts.AffinityType.Weak, 1.5},
+        {BattleConsts.AffinityType.Resist, 0.5},
+        {BattleConsts.AffinityType.Block, 0.0},
+    };
+
+    // Buff Modifiers
     const double _critMultiplier = 1.5;
     const int _chargeMultiplier = 3;
     const int _focusMultiplier = 3;
@@ -55,7 +65,22 @@ public partial class AttackEffect : ActionEffectResource
             }
 
             // Affinity Calculation
-            if (user.IgnoreAffinity) GD.Print("It pierced through the resistance!");
+            if (user.IgnoreAffinity)
+            {
+                calculatedDamage = Mathf.RoundToInt(calculatedDamage * _affinityModifiers[BattleConsts.AffinityType.Weak]);
+
+                // TESTING
+                GD.Print("It pierced through the resistance!");
+            } else {
+                BattleConsts.AffinityType targetAffinity = target.GetAffinity(elementType);
+                double affinityModifier = _affinityModifiers[targetAffinity];
+                calculatedDamage = Mathf.RoundToInt(calculatedDamage * affinityModifier);
+
+                // TESTING
+                if (targetAffinity == BattleConsts.AffinityType.Weak) GD.Print("Weak!");
+                if (targetAffinity == BattleConsts.AffinityType.Resist) GD.Print("Resist");
+                if (targetAffinity == BattleConsts.AffinityType.Block) GD.Print("Block");
+            }
 
             GD.Print("AttackEffect - "+calculatedDamage);
 

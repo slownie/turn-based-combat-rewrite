@@ -6,6 +6,8 @@ public partial class EnemyResource : Resource
 {
     [Export] string enemyName = "";
     [Export] BaseStats baseStats;
+    [Export] BaseAffinity baseAffinity;
+
     [Export] Godot.Collections.Array<BaseSkillResource> skills = [];
 
     [Export] SpriteFrames spriteFrames;
@@ -14,7 +16,7 @@ public partial class EnemyResource : Resource
     public string GetEnemyName() { return enemyName; }
     public BaseStats GetBaseStats() { return baseStats; }
     public Godot.Collections.Array<BaseSkillResource> GetSkills() { return skills; }
-
+    public BaseAffinity GetBaseAffinity() { return baseAffinity; }
 
     public SpriteFrames GetSpriteFrames() { return spriteFrames; }
 

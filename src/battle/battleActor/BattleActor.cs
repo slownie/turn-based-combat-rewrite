@@ -29,6 +29,9 @@ public partial class BattleActor : Node2D
 	[Signal] public delegate void AddSideEffectEventHandler(BattleActor user, BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect);
 	[Signal] public delegate void RemoveSideEffectEventHandler(BattleActor user, BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect);
 
+	const double _modifierMin = 0.25;
+	const double _modifierMax = 2;
+
 
 	string _actorName = "Placeholder";
 	CharacterStats _characterStats;
@@ -48,10 +51,7 @@ public partial class BattleActor : Node2D
 	double _defenseModifier = 1;
 	double _agilityModifier = 1;
 	double _critModifier = 1;
-
-	const double _modifierMin = 0.25;
-	const double _modifierMax = 2;
-
+	
 	bool _chargeEnabled = false;
 	bool _focusEnabled = false;
 
@@ -70,22 +70,9 @@ public partial class BattleActor : Node2D
 		{BattleConsts.ElementType.Life, 1},
 		{BattleConsts.ElementType.Gravity, 1},
 	};
-
-	Godot.Collections.Dictionary<BattleConsts.ElementType, double> _affinity = new Godot.Collections.Dictionary<BattleConsts.ElementType, double>()
-	{
-		{BattleConsts.ElementType.Phys, 1},	
-		{BattleConsts.ElementType.Fire, 1},
-		{BattleConsts.ElementType.Water, 1},
-		{BattleConsts.ElementType.Wind, 1},
-		{BattleConsts.ElementType.Earth, 1},
-		{BattleConsts.ElementType.Steam, 1},
-		{BattleConsts.ElementType.Electric, 1},
-		{BattleConsts.ElementType.Metal, 1},
-		{BattleConsts.ElementType.Ice, 1},
-		{BattleConsts.ElementType.Life, 1},
-		{BattleConsts.ElementType.Gravity, 1},
-	};
 	*/
+
+	CharacterAffinity _characterAffinity;
 
 	
 
@@ -238,6 +225,8 @@ public partial class BattleActor : Node2D
 		string actorName, 
 		CharacterStats characterStats, 
 		Godot.Collections.Array<BaseSkillResource> skills,
+		CharacterAffinity characterAffinity,
+
 		SpriteFrames spriteFrames, 
 		Texture2D battleIcon,
 		bool isPlayer
@@ -270,6 +259,8 @@ public partial class BattleActor : Node2D
 				_passiveSkills.Add(_passiveSkill);
 			}
 		}
+
+		_characterAffinity = characterAffinity;
 
 		
 
@@ -404,6 +395,8 @@ public partial class BattleActor : Node2D
 	public void SetFocus(bool enable) { _focusEnabled = enable; }
 	public bool IsChargeEnabled() { return _chargeEnabled; }
 	public bool IsFocusEnabled() { return _focusEnabled; }
+
+	public BattleConsts.AffinityType GetAffinity(BattleConsts.ElementType elementKey) { return _characterAffinity.GetAffinity(elementKey); }
 
 	public Godot.Collections.Array<BaseSkillResource> GetSkills() { return _skills; }
 	public Godot.Collections.Array<UseableSkillResource> GetUseableSkills() { return _useableSkills; }

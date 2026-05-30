@@ -1,12 +1,19 @@
 [gd_resource type="Resource" script_class="PartyMemberDataResource" format=3 uid="uid://1b7i8tunlfiy"]
 
 [ext_resource type="Script" uid="uid://cfoqdpdkdpur5" path="res://src/dataClasses/partyMembers/PartyMemberDataResource.cs" id="1_0mqtt"]
+[ext_resource type="Script" uid="uid://cq1yfcauodijh" path="res://src/dataClasses/components/BaseAffinity.cs" id="1_bqktf"]
 [ext_resource type="Texture2D" uid="uid://dehtghxnp1n3b" path="res://assets/images/battleActors/Jam/JamBattleIcon.png" id="1_m5hiy"]
-[ext_resource type="Script" uid="uid://elamptvvyimh" path="res://src/components/BaseStats.cs" id="1_ushfx"]
+[ext_resource type="Script" uid="uid://elamptvvyimh" path="res://src/dataClasses/components/BaseStats.cs" id="1_ushfx"]
 [ext_resource type="Texture2D" uid="uid://d10ckyduld8r0" path="res://assets/images/battleActors/Jam/sJamIdle_strip4.png" id="3_0jh7a"]
 [ext_resource type="Script" uid="uid://dkuf8p00m1ibl" path="res://src/dataClasses/skills/BaseSkillResource.cs" id="5_bqktf"]
 [ext_resource type="Resource" uid="uid://cvkit1bpswrrx" path="res://data/skills/terra/RushCombo.tres" id="6_a3lub"]
 [ext_resource type="Resource" uid="uid://ddvtnoof5n8ch" path="res://data/skills/terra/Quake.tres" id="7_i8nwu"]
+
+[sub_resource type="Resource" id="Resource_a3lub"]
+script = ExtResource("1_bqktf")
+_fireAffinity = 1
+_earthAffinity = 2
+metadata/_custom_type_script = "uid://cq1yfcauodijh"
 
 [sub_resource type="Resource" id="Resource_2gw5i"]
 script = ExtResource("1_ushfx")
@@ -60,6 +67,7 @@ animations = [{
 script = ExtResource("1_0mqtt")
 partyMemberName = "Terra"
 baseStats = SubResource("Resource_2gw5i")
+baseAffinity = SubResource("Resource_a3lub")
 startingSkills = Array[ExtResource("5_bqktf")]([ExtResource("6_a3lub"), ExtResource("7_i8nwu")])
 spriteFrames = SubResource("SpriteFrames_bqktf")
 battleIcon = ExtResource("1_m5hiy")

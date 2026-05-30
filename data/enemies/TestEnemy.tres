@@ -1,10 +1,15 @@
 [gd_resource type="Resource" script_class="EnemyResource" format=3 uid="uid://cujvq2eugmg5x"]
 
+[ext_resource type="Script" uid="uid://cq1yfcauodijh" path="res://src/dataClasses/components/BaseAffinity.cs" id="1_2rbi7"]
 [ext_resource type="Texture2D" uid="uid://b8otbv5kooj7u" path="res://assets/images/battleActors/Faust/FaustBattleIcon.png" id="1_brnmf"]
 [ext_resource type="Script" uid="uid://bbw1wa366hyuo" path="res://src/dataClasses/enemies/EnemyResource.cs" id="1_nhxye"]
-[ext_resource type="Script" uid="uid://elamptvvyimh" path="res://src/components/BaseStats.cs" id="1_y1kul"]
+[ext_resource type="Script" uid="uid://elamptvvyimh" path="res://src/dataClasses/components/BaseStats.cs" id="1_y1kul"]
 [ext_resource type="SpriteFrames" uid="uid://ch7v1bthauhml" path="res://data/enemies/TestEnemySpriteFrames.tres" id="2_vdmrk"]
 [ext_resource type="Script" uid="uid://dkuf8p00m1ibl" path="res://src/dataClasses/skills/BaseSkillResource.cs" id="4_y1kul"]
+
+[sub_resource type="Resource" id="Resource_sswr7"]
+script = ExtResource("1_2rbi7")
+metadata/_custom_type_script = "uid://cq1yfcauodijh"
 
 [sub_resource type="Resource" id="Resource_2rbi7"]
 script = ExtResource("1_y1kul")
@@ -16,6 +21,7 @@ metadata/_custom_type_script = "uid://elamptvvyimh"
 script = ExtResource("1_nhxye")
 enemyName = "Test Enemy"
 baseStats = SubResource("Resource_2rbi7")
+baseAffinity = SubResource("Resource_sswr7")
 spriteFrames = ExtResource("2_vdmrk")
 battleIcon = ExtResource("1_brnmf")
 metadata/_custom_type_script = "uid://bbw1wa366hyuo"
