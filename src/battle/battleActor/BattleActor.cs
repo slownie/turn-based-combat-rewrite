@@ -145,7 +145,7 @@ public partial class BattleActor : Node2D
 			if (_modifierMax < tempo) tempo = _modifierMax;
 		}
 	}
-	const double tempoRate = 0.25;
+	const double _tempoRate = 0.1;
 
 	double stun = 0.0;
 	double Stun
@@ -245,11 +245,20 @@ public partial class BattleActor : Node2D
 
 	public override void _Process(double delta)
 	{
+		if (Tempo != 1.0)
+		{
+			// Tempo
+			if (Tempo < 1.0) Tempo += (_tempoRate * delta);
+			if (1.0 < Tempo) Tempo -= (_tempoRate * delta);
+		}
+
 		if (0.0 < Stun)
 		{
+			// Stun
 			Stun -= _battleSpeed * TimeScale * delta;
 		} else {
-			Readiness += _battleSpeed * (_characterStats.GetAgility() * _agilityModifier) * TimeScale * delta;
+			// Readiness
+			Readiness += _battleSpeed * (_characterStats.GetAgility() * _agilityModifier * Tempo) * TimeScale * delta;
 		}
 	}
 
@@ -332,9 +341,7 @@ public partial class BattleActor : Node2D
 
 	// Stats
 	public int GetCurHP() { return _characterStats.GetCurHP(); }
-
 	public int GetMaxHP() { return _characterStats.GetMaxHP(); }
-
 	public int GetCurMP() { return _characterStats.GetCurMP(); }
 	public int GetMaxMP() { return _characterStats.GetMaxMP(); }
 
@@ -365,17 +372,14 @@ public partial class BattleActor : Node2D
 		
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
 	}
-	
 	public void SetCurHP(int amount) { 
 		_characterStats.SetCurHP(amount); 
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();	
 	}
-	
 	public void AddCurMP(int amount) { 
 		_characterStats.AddCurMP(amount); 
 		_curMPLabel.Text = _characterStats.GetCurMP().ToString();
 	}
-	
 	public void SetCurMP(int amount) { 
 		_characterStats.SetCurMP(amount); 
 		_curMPLabel.Text = _characterStats.GetCurMP().ToString();
@@ -520,9 +524,11 @@ public partial class BattleActor : Node2D
 		}
 	}
 
-
 	public int GetCounterDamage() { return _counterDamage; }
 	public void ResetCounterDamage() { _counterDamage = 0; }
+
+	public void AddTempo(double newTempo) { Tempo += newTempo; }
+	public void SetTempo(double newTempo) { Tempo = newTempo; }
 
 	public void AddStun(double newStun) { Stun += newStun; }
 	public void SetStun(double newStun) { Stun = newStun; }

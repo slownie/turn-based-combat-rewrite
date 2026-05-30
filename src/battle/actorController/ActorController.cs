@@ -244,6 +244,16 @@ public partial class ActorController : Node2D
 		_battleTriggerController.RunActorSideEffects(target, triggerType);
 	}
 
+	public void AddTempo(BattleActor target, double newTempo)
+	{
+		target.AddTempo(newTempo);
+	}
+
+	public void SetTempo(BattleActor target, double newTempo)
+	{
+		target.SetTempo(newTempo);
+	}
+
 	public void AddStun(BattleActor target, double stunDuration)
 	{
 		target.AddStun(stunDuration);

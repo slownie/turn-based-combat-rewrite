@@ -10,7 +10,6 @@
 
 [sub_resource type="Resource" id="Resource_u367u"]
 script = ExtResource("1_orjis")
-_physAffinity = 3
 _waterAffinity = 1
 _earthAffinity = 2
 metadata/_custom_type_script = "uid://cq1yfcauodijh"
