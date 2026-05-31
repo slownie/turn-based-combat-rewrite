@@ -81,6 +81,14 @@ public partial class ActorController : Node2D
 		if (target.GetActiveStatusCondition() != null)
 		{
 			// Fusion Status Conditions
+			StatusConditionResource fusionStatusConditionResource = target.GetActiveStatusCondition().GetFusionStatusCondition(statusConditionResource.GetElementType());
+			if (fusionStatusConditionResource != null)
+			{
+				ActiveStatusCondition activeStatusCondition = new ActiveStatusCondition(fusionStatusConditionResource, turnCount);
+				target.SetActiveStatusCondition(activeStatusCondition);
+			} else {
+				GD.Print("Fusion Failed");
+			}
 		} else {
 			ActiveStatusCondition activeStatusCondition = new ActiveStatusCondition(statusConditionResource, turnCount);
 			target.SetActiveStatusCondition(activeStatusCondition);

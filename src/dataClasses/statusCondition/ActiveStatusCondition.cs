@@ -22,6 +22,9 @@ public partial class ActiveStatusCondition : ActivePassiveEffect
         }
     }
 
+    BattleConsts.ElementType elementType;
+    Godot.Collections.Dictionary<BattleConsts.ElementType, StatusConditionResource> _fusionStatusConditions;
+
     Texture2D _icon;
 
     public ActiveStatusCondition(StatusConditionResource statusConditionResource, int turnAmount)
@@ -30,6 +33,9 @@ public partial class ActiveStatusCondition : ActivePassiveEffect
         _triggerEffects = statusConditionResource.GetPassiveActionResource().GetTriggerActions();
         _cleanupEffects = statusConditionResource.GetPassiveActionResource().GetCleanupActions();
         _triggerType = statusConditionResource.GetTriggerType();
+
+        elementType = statusConditionResource.GetElementType();
+        _fusionStatusConditions = statusConditionResource.GetFusionStatusConditions();
 
         turnCount = turnAmount;
 
@@ -52,6 +58,16 @@ public partial class ActiveStatusCondition : ActivePassiveEffect
     }
 
     public int GetTurnCount() { return turnCount; }
+
+    public StatusConditionResource GetFusionStatusCondition(BattleConsts.ElementType elementType)
+    {
+        if (_fusionStatusConditions.ContainsKey(elementType))
+        {
+            return _fusionStatusConditions[elementType];
+        } else {
+            return null;
+        }
+    }
 
 
     public Texture2D GetStatusIcon() { return _icon; }
