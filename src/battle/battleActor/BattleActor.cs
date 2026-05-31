@@ -42,6 +42,7 @@ public partial class BattleActor : Node2D
 	Godot.Collections.Array<BaseSkillResource> _skills = [];
 	Godot.Collections.Array<UseableSkillResource> _useableSkills = [];
 	Godot.Collections.Array<PassiveSkillResource> _passiveSkills = [];
+	Godot.Collections.Array<FusionSkillResource> _fusionSkills = [];
 
 	ActiveStatusCondition _activeStatusCondition = null;
 
@@ -276,6 +277,7 @@ public partial class BattleActor : Node2D
 		int partyMemberFusionID,
 		CharacterStats characterStats, 
 		Godot.Collections.Array<BaseSkillResource> skills,
+		Godot.Collections.Array<FusionSkillResource> fusionSkills,
 		CharacterAffinity characterAffinity,
 
 		SpriteFrames spriteFrames, 
@@ -311,6 +313,8 @@ public partial class BattleActor : Node2D
 				_passiveSkills.Add(_passiveSkill);
 			}
 		}
+
+		_fusionSkills = fusionSkills;
 
 		_characterAffinity = characterAffinity;
 

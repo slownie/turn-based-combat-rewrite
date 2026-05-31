@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="FusionSkillResource" format=3 uid="uid://bka6k2xrni75h"]
+
+[ext_resource type="Script" uid="uid://dhbd03db6gml8" path="res://src/dataClasses/skills/FusionSkillResource.cs" id="1_qiggf"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_lyl8l"]
+[ext_resource type="Script" uid="uid://dsgx24vgl3pb" path="res://src/dataClasses/actionEffects/HealEffect.cs" id="3_22n3g"]
+[ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="4_to4y7"]
+[ext_resource type="Script" uid="uid://bijk8gwmj13d8" path="res://src/dataClasses/battleSequenceEffects/BattleSequenceEffectResource.cs" id="5_va5ip"]
+
+[sub_resource type="Resource" id="Resource_5ipj2"]
+script = ExtResource("3_22n3g")
+baseHeal = 50
+metadata/_custom_type_script = "uid://dsgx24vgl3pb"
+
+[sub_resource type="Resource" id="Resource_2s6wo"]
+script = ExtResource("4_to4y7")
+actions = Array[ExtResource("2_lyl8l")]([SubResource("Resource_5ipj2")])
+targetOppsiteSide = false
+targetSameSide = true
+metadata/_custom_type_script = "uid://f4ubms2rgfo3"
+
+[resource]
+script = ExtResource("1_qiggf")
+partnerFusionID = 1
+skillCostAmount = 24
+useableActionResource = SubResource("Resource_2s6wo")
+skillName = "Healing Hands"
+metadata/_custom_type_script = "uid://dhbd03db6gml8"

@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://c6p5glakoq6l3" path="res://src/battle/battleUI/uiTargetCursorController/UITargetCursorController.tscn" id="7_1m5vt"]
 [ext_resource type="PackedScene" uid="uid://bjxtgsde45reu" path="res://src/battle/battleUI/uiBattleSkillMenu/UISkillMenu.tscn" id="7_li7l2"]
 [ext_resource type="PackedScene" uid="uid://bx7oebb2xedxr" path="res://src/battle/battleUI/uiBattleItemMenu/UIItemMenu.tscn" id="8_pu6or"]
+[ext_resource type="PackedScene" uid="uid://is33svqom24v" path="res://src/battle/battleUI/uiBattleFusionMenu/UIFusionMenu.tscn" id="10_3wrnl"]
 [ext_resource type="Script" uid="uid://comggnfxr07sj" path="res://src/battle/battleUI/UIBattleTextController/UIBattleTextController.cs" id="11_cjual"]
 [ext_resource type="PackedScene" uid="uid://8l3cnqjdjof2" path="res://src/battle/battleUI/UIBattleTextController/UIBattleText/UIBattleText.tscn" id="12_ayey8"]
 
@@ -54,6 +55,7 @@ grow_vertical = 2
 script = ExtResource("5_fk1sc")
 mainMenuScene = ExtResource("6_ysmad")
 skillMenuScene = ExtResource("7_li7l2")
+fusionMenuScene = ExtResource("10_3wrnl")
 itemMenuScene = ExtResource("8_pu6or")
 targetMenuScene = ExtResource("7_1m5vt")
 

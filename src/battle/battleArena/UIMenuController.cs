@@ -18,6 +18,7 @@ public partial class UIMenuController : Control
 	BattleActor _currentPartyActor;
 	Godot.Collections.Array<InventoryItem> _battleInventory = [];
 	UseableSkillResource _selectedSkill;
+	FusionSkillResource _selectedFusionSkill;
 	UseableItemResource _selectedItem;
 	int _selectedItemIndex = -1;
 
