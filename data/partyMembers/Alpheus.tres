@@ -68,6 +68,7 @@ animations = [{
 [resource]
 script = ExtResource("1_iccj4")
 partyMemberName = "Alpheus"
+partyMemberFusionID = 1
 baseStats = SubResource("Resource_aq5s4")
 baseAffinity = SubResource("Resource_4fsrl")
 startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("7_r0vku"), ExtResource("8_j63o3"), ExtResource("9_b7b3e"), ExtResource("10_wnfgl")])

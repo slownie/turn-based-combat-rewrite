@@ -122,7 +122,8 @@ public partial class BattleArena : Control
 			newActor.Setup(
 				250+(i % 3*10)+(i / 3*25),
 				68+(i % 5*55),
-				activePartyMember.GetPartyMemberName(), 
+				activePartyMember.GetPartyMemberName(),
+				activePartyMember.GetPartyMemberFusionID(), 
 				activePartyMember.GetCharacterStats(),
 				activePartyMember.GetEquippedSkills(),
 				activePartyMember.GetCharacterAffinity(),
@@ -153,6 +154,7 @@ public partial class BattleArena : Control
 				70+(i % 2*35)+(i / 3*40),
 				58+(i % 3*30),
 				enemy.GetEnemyName(), 
+				-1,
 				enemyStats,
 				enemy.GetSkills(),
 				enemyAffinity,

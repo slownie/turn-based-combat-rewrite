@@ -34,6 +34,7 @@ public partial class BattleActor : Node2D
 
 
 	string _actorName = "Placeholder";
+	int _partyMemberFusionID = -1;
 	CharacterStats _characterStats;
 
 	// EQUIPMENT HERE
@@ -272,6 +273,7 @@ public partial class BattleActor : Node2D
 		int x, 
 		int y, 
 		string actorName, 
+		int partyMemberFusionID,
 		CharacterStats characterStats, 
 		Godot.Collections.Array<BaseSkillResource> skills,
 		CharacterAffinity characterAffinity,
@@ -285,6 +287,7 @@ public partial class BattleActor : Node2D
 		Position = newPosition;
 
 		_actorName = actorName;
+		_partyMemberFusionID = partyMemberFusionID;
 		
 		_characterStats = characterStats;
 		_characterStats.HPDepleted += OnStatsHPDepleted;
