@@ -47,10 +47,6 @@ script = ExtResource("1_r8nm7")
 sprite_frames = SubResource("SpriteFrames_xp4os")
 autoplay = "default"
 
-[node name="MPLabel" type="Label" parent="." unique_id=801517325]
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="TestUI" type="HBoxContainer" parent="." unique_id=1881284218]
 offset_left = -35.0
 offset_top = 25.0
@@ -124,3 +120,7 @@ text = "20"
 
 [node name="BuffContainer" type="VBoxContainer" parent="TestUI" unique_id=797833517]
 layout_mode = 2
+
+[node name="Tempo" type="Label" parent="TestUI" unique_id=801517325]
+layout_mode = 2
+text = "1"

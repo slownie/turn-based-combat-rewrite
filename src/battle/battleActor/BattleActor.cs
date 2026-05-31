@@ -96,6 +96,8 @@ public partial class BattleActor : Node2D
 	Label _curMPLabel;
 	Label _maxMPLabel;
 
+	Label _tempoLabel;
+
 	VBoxContainer _buffContainer;
 
 	#region Properties
@@ -145,7 +147,7 @@ public partial class BattleActor : Node2D
 			if (_modifierMax < tempo) tempo = _modifierMax;
 		}
 	}
-	const double _tempoRate = 0.1;
+	const double _tempoRate = 0.2;
 
 	double stun = 0.0;
 	double Stun
@@ -240,6 +242,8 @@ public partial class BattleActor : Node2D
 		_curMPLabel = GetNode<Label>("TestUI/StatContainer/MPContainer/CurMP");
 		_maxMPLabel = GetNode<Label>("TestUI/StatContainer/MPContainer/MaxMP");
 
+		_tempoLabel = GetNode<Label>("TestUI/Tempo");
+
 		IsActive = false;
 	}
 
@@ -248,8 +252,10 @@ public partial class BattleActor : Node2D
 		if (Tempo != 1.0)
 		{
 			// Tempo
-			if (Tempo < 1.0) Tempo += (_tempoRate * delta);
-			if (1.0 < Tempo) Tempo -= (_tempoRate * delta);
+			if (Tempo < 1.01) Tempo += (_tempoRate * TimeScale * delta);
+			if (1.01 < Tempo) Tempo -= (_tempoRate * TimeScale * delta);
+
+			_tempoLabel.Text = Tempo.ToString();
 		}
 
 		if (0.0 < Stun)
@@ -462,7 +468,8 @@ public partial class BattleActor : Node2D
 	}
 	public void RemoveStatusCondition()
 	{
-		EmitSignal(SignalName.RemoveSideEffect, this, (int)_activeStatusCondition.GetTriggerType(), _activeStatusCondition);
+		// Is there an Active Status Condition?
+		if (_activeStatusCondition != null) EmitSignal(SignalName.RemoveSideEffect, this, (int)_activeStatusCondition.GetTriggerType(), _activeStatusCondition);
 
 		_activeStatusCondition = null;
 		_statusIcon.Texture = null;

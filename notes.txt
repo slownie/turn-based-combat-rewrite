@@ -3,7 +3,7 @@ Todo [General]
 - Enemy AI ✓
 - Affinity ✓
 - Critical Hits ✓
-- Haste/Slow/Stun
+- Haste/Slow/Stun ✓
 
 Todot [ERPG Specific]
 - Status Fusion
