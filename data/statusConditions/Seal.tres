@@ -28,4 +28,5 @@ script = ExtResource("2_xd3b6")
 statusConditionName = "Seal"
 icon = ExtResource("3_ju8w4")
 passiveActionResource = SubResource("Resource_c4v57")
+elementType = 5
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

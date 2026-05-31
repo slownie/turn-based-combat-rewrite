@@ -26,4 +26,5 @@ script = ExtResource("2_tntp7")
 statusConditionName = "Immortality"
 icon = ExtResource("3_drkkt")
 passiveActionResource = SubResource("Resource_cpe5e")
+elementType = 9
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

@@ -6,6 +6,8 @@
 [ext_resource type="Script" uid="uid://bbw1wa366hyuo" path="res://src/dataClasses/enemies/EnemyResource.cs" id="3_l2yvg"]
 [ext_resource type="Texture2D" uid="uid://d2304qihy1axe" path="res://assets/images/battleActors/KyKiske/sKyIdle_strip4.png" id="4_cvqrr"]
 [ext_resource type="Script" uid="uid://dkuf8p00m1ibl" path="res://src/dataClasses/skills/BaseSkillResource.cs" id="4_l2yvg"]
+[ext_resource type="Resource" uid="uid://27p8vrgxlfgk" path="res://data/skills/PhysicalAttack.tres" id="6_u367u"]
+[ext_resource type="Resource" uid="uid://dlufl2gn6a5rt" path="res://data/skills/ElementalAttack.tres" id="7_d1gxa"]
 
 [sub_resource type="Resource" id="Resource_u367u"]
 script = ExtResource("1_orjis")
@@ -61,6 +63,7 @@ script = ExtResource("3_l2yvg")
 enemyName = "Test Enemy 2"
 baseStats = SubResource("Resource_2rbi7")
 baseAffinity = SubResource("Resource_u367u")
+skills = Array[ExtResource("4_l2yvg")]([ExtResource("6_u367u"), ExtResource("7_d1gxa")])
 spriteFrames = SubResource("SpriteFrames_hrueh")
 battleIcon = ExtResource("2_b3yoq")
 metadata/_custom_type_script = "uid://bbw1wa366hyuo"

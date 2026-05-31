@@ -26,4 +26,5 @@ script = ExtResource("2_aoyll")
 statusConditionName = "Overdrive"
 icon = ExtResource("3_c6wu4")
 passiveActionResource = SubResource("Resource_civv0")
+elementType = 6
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

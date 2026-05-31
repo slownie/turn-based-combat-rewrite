@@ -26,4 +26,5 @@ script = ExtResource("2_e1bml")
 statusConditionName = "Elevate"
 icon = ExtResource("3_da8lv")
 passiveActionResource = SubResource("Resource_sv1ac")
+elementType = 10
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

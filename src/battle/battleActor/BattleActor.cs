@@ -456,6 +456,8 @@ public partial class BattleActor : Node2D
 	public ActiveStatusCondition GetActiveStatusCondition() { return _activeStatusCondition; }
 	public void SetActiveStatusCondition(ActiveStatusCondition newStatusCondition)
 	{
+		if (_activeStatusCondition != null) RemoveStatusCondition();
+
 		_activeStatusCondition = newStatusCondition;
 		_activeStatusCondition.TurnCountChanged += OnStatusConditionTurnCountChanged;
 		_activeStatusCondition.TurnCountFinished += OnStatusConditionFinished;

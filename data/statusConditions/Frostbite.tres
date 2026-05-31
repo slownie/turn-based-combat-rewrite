@@ -21,4 +21,5 @@ script = ExtResource("1_ekqo8")
 statusConditionName = "Frostbite"
 icon = ExtResource("1_slwbl")
 passiveActionResource = SubResource("Resource_kh02c")
+elementType = 8
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

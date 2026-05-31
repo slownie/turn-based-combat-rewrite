@@ -26,4 +26,5 @@ script = ExtResource("2_8v6gc")
 statusConditionName = "Cleave"
 icon = ExtResource("3_uhr82")
 passiveActionResource = SubResource("Resource_owgfn")
+elementType = 7
 metadata/_custom_type_script = "uid://bvlghdm4fgtn2"
