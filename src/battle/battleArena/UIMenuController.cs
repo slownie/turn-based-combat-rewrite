@@ -5,6 +5,7 @@ public partial class UIMenuController : Control
 {
 	[Export] PackedScene mainMenuScene;
 	[Export] PackedScene skillMenuScene;
+	[Export] PackedScene fusionMenuScene;
 	[Export] PackedScene itemMenuScene;
 	[Export] PackedScene targetMenuScene;
 
@@ -77,6 +78,19 @@ public partial class UIMenuController : Control
 		LoadMenu(skillMenu);
 
 		skillMenu.Position = _menuPosition;
+	}
+
+	private void CreateFusionMenu()
+	{
+		UIFusionMenu fusionMenu = fusionMenuScene.Instantiate() as UIFusionMenu;
+		AddChild(fusionMenu);
+
+		Godot.Collections.Array<BattleActor> partyMembers = _actorController.GetPartyMembers(_battleActors);
+
+		fusionMenu.Setup(_currentPartyActor, partyMembers);
+		LoadMenu(fusionMenu);
+
+		fusionMenu.Position = _menuPosition;
 	}
 
 	private void CreateItemMenu()

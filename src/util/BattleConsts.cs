@@ -102,4 +102,8 @@ public static partial class BattleConsts
 		Crit
 	}
 
+	public static BattleActor FindActorByFusionID(int fusionID, Godot.Collections.Array<BattleActor> actors)
+	{
+		return null;
+	}
 }

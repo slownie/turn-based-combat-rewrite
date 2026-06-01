@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://d0v0tcqc7jwyw"]
+
+[ext_resource type="Script" uid="uid://c1rpm2pkh58o3" path="res://src/battle/battleUI/uiBattleFusionMenu/UIFusionMenu.cs" id="1_r0h2r"]
+[ext_resource type="PackedScene" uid="uid://bytwxvcceagbi" path="res://src/battle/battleUI/uiBattleFusionMenu/UIFusionMenuEntry.tscn" id="2_p6qdu"]
+[ext_resource type="PackedScene" uid="uid://kqvmptdjgic6" path="res://src/battle/battleUI/uiTargetCursor/UITargetCursor.tscn" id="3_fdxql"]
+
+[node name="UIFusionMenu" type="Control" unique_id=36211904]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_r0h2r")
+fusionMenuEntry = ExtResource("2_p6qdu")
+targetCursorScene = ExtResource("3_fdxql")

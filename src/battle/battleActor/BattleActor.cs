@@ -459,6 +459,7 @@ public partial class BattleActor : Node2D
 	public Godot.Collections.Array<BaseSkillResource> GetSkills() { return _skills; }
 	public Godot.Collections.Array<UseableSkillResource> GetUseableSkills() { return _useableSkills; }
 	public Godot.Collections.Array<PassiveSkillResource> GetPassiveSkills() { return _passiveSkills; }
+	public Godot.Collections.Array<FusionSkillResource> GetFusionSkills() { return _fusionSkills; }
 
 	public ActiveStatusCondition GetActiveStatusCondition() { return _activeStatusCondition; }
 	public void SetActiveStatusCondition(ActiveStatusCondition newStatusCondition)
