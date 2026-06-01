@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://c58lj7lxvrdpo"]
+
+[ext_resource type="Script" uid="uid://ddpugpo77dypc" path="res://src/battle/battleUI/uiBattleSkillMenu/UIFusionMenuEntry.cs" id="1_s5ttq"]
+[ext_resource type="Theme" uid="uid://h1nt1ofh7cv8" path="res://ui/BattleUITheme.tres" id="2_py68y"]
+
+[node name="UIFusionMenuEntry" type="Control" unique_id=1066653709]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s5ttq")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=728550559]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer" unique_id=1404613617]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="HBoxContainer" unique_id=1539551295]
+layout_mode = 2
+theme = ExtResource("2_py68y")
+text = "Skill Name"
+
+[node name="CostAmount" type="Label" parent="HBoxContainer" unique_id=336427540]
+layout_mode = 2
+theme = ExtResource("2_py68y")
+text = "0"
+
+[node name="CostType" type="Label" parent="HBoxContainer" unique_id=1434263778]
+layout_mode = 2
+theme = ExtResource("2_py68y")
+text = "HP"
+
+[node name="PartnerIcon" type="TextureRect" parent="HBoxContainer" unique_id=1351770439]
+layout_mode = 2
+expand_mode = 2
+flip_h = true
