@@ -70,6 +70,9 @@ public partial class UIFusionMenu : UIBattleMenuBase
             FusionSkillResource useableSkill = _fusionSkillList[i];
             UIFusionMenuEntry fusionEntry = fusionMenuEntry.Instantiate() as UIFusionMenuEntry;
             AddChild(fusionEntry);
+
+            BattleActor partner = BattleConsts.FindActorByFusionID(useableSkill.GetFusionID(), partyMembers);
+
             fusionEntry.Position = new Vector2(fusionEntry.Position.X, fusionEntry.Position.Y + (32 * i));
 
             // Can we use this skill?
@@ -90,7 +93,9 @@ public partial class UIFusionMenu : UIBattleMenuBase
                 }
             }
 
-            fusionEntry.Setup(useableSkill, skillIsUseable);
+            
+
+            fusionEntry.Setup(useableSkill, partner.GetBattleIcon(), skillIsUseable);
             _entries.Add(fusionEntry);
         }
 

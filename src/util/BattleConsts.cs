@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections;
+using System.Linq;
 
 public static partial class BattleConsts
 {
@@ -104,6 +106,10 @@ public static partial class BattleConsts
 
 	public static BattleActor FindActorByFusionID(int fusionID, Godot.Collections.Array<BattleActor> actors)
 	{
+		foreach(BattleActor battleActor in actors)
+		{
+			if (battleActor.GetFusionID() == fusionID) return battleActor;
+		}
 		return null;
 	}
 }

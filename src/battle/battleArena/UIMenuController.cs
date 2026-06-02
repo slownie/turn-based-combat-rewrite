@@ -86,6 +86,8 @@ public partial class UIMenuController : Control
 		AddChild(fusionMenu);
 
 		Godot.Collections.Array<BattleActor> partyMembers = _actorController.GetPartyMembers(_battleActors);
+		// Really shouldn't make a difference but its a bit cleaner
+		partyMembers.Remove(_currentPartyActor);
 
 		fusionMenu.Setup(_currentPartyActor, partyMembers);
 		LoadMenu(fusionMenu);

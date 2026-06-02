@@ -34,7 +34,7 @@ public partial class BattleActor : Node2D
 
 
 	string _actorName = "Placeholder";
-	int _partyMemberFusionID = -1;
+	int _fusionID = -1;
 	CharacterStats _characterStats;
 
 	// EQUIPMENT HERE
@@ -274,7 +274,7 @@ public partial class BattleActor : Node2D
 		int x, 
 		int y, 
 		string actorName, 
-		int partyMemberFusionID,
+		int fusionID,
 		CharacterStats characterStats, 
 		Godot.Collections.Array<BaseSkillResource> skills,
 		Godot.Collections.Array<FusionSkillResource> fusionSkills,
@@ -289,7 +289,7 @@ public partial class BattleActor : Node2D
 		Position = newPosition;
 
 		_actorName = actorName;
-		_partyMemberFusionID = partyMemberFusionID;
+		_fusionID = fusionID;
 		
 		_characterStats = characterStats;
 		_characterStats.HPDepleted += OnStatsHPDepleted;
@@ -404,6 +404,8 @@ public partial class BattleActor : Node2D
 	public int GetLuck() { return _characterStats.GetLuck(); }
 	public int GetDefense() { return _characterStats.GetDefense(); }
 	public int GetResistance() { return _characterStats.GetResistance(); }
+
+	public int GetFusionID() { return _fusionID; }
 
 	public void AddStrengthModifier(double newValue)
 	{

@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cor5p3nuroajs" path="res://assets/images/battleActors/Testament/sTestamentIdle_strip4.png" id="3_es0o6"]
 [ext_resource type="Script" uid="uid://dkuf8p00m1ibl" path="res://src/dataClasses/skills/BaseSkillResource.cs" id="5_4uqfo"]
 [ext_resource type="Script" uid="uid://dhbd03db6gml8" path="res://src/dataClasses/skills/FusionSkillResource.cs" id="6_j63o3"]
+[ext_resource type="Resource" uid="uid://bka6k2xrni75h" path="res://data/skills/fusionSkills/Heal.tres" id="7_b7b3e"]
 [ext_resource type="Resource" uid="uid://2tty76bjd4i2" path="res://data/skills/status/Ignite.tres" id="7_r0vku"]
 [ext_resource type="Resource" uid="uid://bb2c2shqtuda7" path="res://data/skills/status/Drench.tres" id="8_j63o3"]
 [ext_resource type="Resource" uid="uid://drqd3j1akdh8b" path="res://data/skills/status/Swirl.tres" id="9_b7b3e"]
@@ -73,6 +74,7 @@ partyMemberFusionID = 1
 baseStats = SubResource("Resource_aq5s4")
 baseAffinity = SubResource("Resource_4fsrl")
 startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("7_r0vku"), ExtResource("8_j63o3"), ExtResource("9_b7b3e"), ExtResource("10_wnfgl")])
+startingFusionSkills = Array[ExtResource("6_j63o3")]([ExtResource("7_b7b3e")])
 spriteFrames = SubResource("SpriteFrames_r0vku")
 battleIcon = ExtResource("1_es0o6")
 metadata/_custom_type_script = "uid://cfoqdpdkdpur5"

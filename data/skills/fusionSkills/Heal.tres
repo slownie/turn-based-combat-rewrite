@@ -20,7 +20,6 @@ metadata/_custom_type_script = "uid://f4ubms2rgfo3"
 
 [resource]
 script = ExtResource("1_qiggf")
-partnerFusionID = 1
 skillCostAmount = 24
 useableActionResource = SubResource("Resource_2s6wo")
 skillName = "Healing Hands"

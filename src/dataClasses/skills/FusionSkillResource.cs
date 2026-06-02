@@ -5,4 +5,6 @@ using System;
 public partial class FusionSkillResource : UseableSkillResource
 {
 	[Export] int partnerFusionID;
+
+	public int GetFusionID() { return partnerFusionID; }
 }

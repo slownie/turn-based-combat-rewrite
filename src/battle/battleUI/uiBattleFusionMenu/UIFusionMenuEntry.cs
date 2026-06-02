@@ -15,7 +15,6 @@ public partial class UIFusionMenuEntry : Control
     Label _costAmountText;
     TextureRect _partnerIcon;
 
-
     public override void _Ready()
     {
         _icon = GetNode<TextureRect>("HBoxContainer/Icon");
@@ -25,13 +24,14 @@ public partial class UIFusionMenuEntry : Control
         _partnerIcon = GetNode<TextureRect>("HBoxContainer/PartnerIcon");
     }
 
-    public void Setup(UseableSkillResource skillResource, bool enabled)
+    public void Setup(UseableSkillResource skillResource, Texture2D partnerIcon, bool enabled)
     {
         _enabled = enabled;
         if (!_enabled) _nameText.Modulate = disabledColor;
 
         _icon.Texture = skillResource.GetIcon();
         _nameText.Text = skillResource.GetSkillName();
+        _partnerIcon.Texture = partnerIcon;
 
         if (skillResource.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)
         {
