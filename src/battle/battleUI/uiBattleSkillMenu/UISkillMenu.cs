@@ -4,13 +4,20 @@ using System;
 public partial class UISkillMenu : UIBattleMenuBase
 {
     [Export] PackedScene skillMenuEntry;
+    [Export] PackedScene fusionMenuEntry;
     [Export] PackedScene targetCursorScene;
 
     [Signal] public delegate void SkillSelectedEventHandler(UseableSkillResource selectedSkill);
     [Signal] public delegate void SkillSelectionCancelledEventHandler();
 
+    [Signal] public delegate void FusionSkillSelectedEventHandler(FusionSkillResource fusionSkill, BattleActor partner);
+
     Godot.Collections.Array<UseableSkillResource> _skillList = [];
-    Godot.Collections.Array<UISkillMenuEntry> _entries = [];
+    Godot.Collections.Array<FusionSkillResource> _fusionSkillList = [];
+
+    Godot.Collections.Array<UISkillMenuEntry> _skillEntries = [];
+    Godot.Collections.Array<UIFusionMenuEntry> _fusionEntries = [];
+    
     int _index = 0;
     int index
     {
@@ -20,6 +27,7 @@ public partial class UISkillMenu : UIBattleMenuBase
             _index = value;
 		
 			// Clamp
+            
 			if (_entries.Count <= _index) _index = 0;
 			if (_index < 0) _index = _entries.Count - 1;
 

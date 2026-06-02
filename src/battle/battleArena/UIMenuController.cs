@@ -5,7 +5,6 @@ public partial class UIMenuController : Control
 {
 	[Export] PackedScene mainMenuScene;
 	[Export] PackedScene skillMenuScene;
-	[Export] PackedScene fusionMenuScene;
 	[Export] PackedScene itemMenuScene;
 	[Export] PackedScene targetMenuScene;
 
@@ -69,30 +68,20 @@ public partial class UIMenuController : Control
 		UISkillMenu skillMenu = skillMenuScene.Instantiate() as UISkillMenu;
 		AddChild(skillMenu);
 
+		
+		Godot.Collections.Array<BattleActor> partyMembers = _actorController.GetPartyMembers(_battleActors);
+		// Really shouldn't make a difference but its a bit cleaner
+		partyMembers.Remove(_currentPartyActor);
+
 		skillMenu.SkillSelected += OnSkillSelected;
 		skillMenu.SkillSelectionCancelled += UnloadMenu;
 
 		// If the player reaches this menu, then there are useable skills
 		// Even if _useableSkills is empty, skillMenu.Setup will execute without errors
-		skillMenu.Setup(_currentPartyActor);
+		skillMenu.Setup(_currentPartyActor, partyMembers);
 		LoadMenu(skillMenu);
 
 		skillMenu.Position = _menuPosition;
-	}
-
-	private void CreateFusionMenu()
-	{
-		UIFusionMenu fusionMenu = fusionMenuScene.Instantiate() as UIFusionMenu;
-		AddChild(fusionMenu);
-
-		Godot.Collections.Array<BattleActor> partyMembers = _actorController.GetPartyMembers(_battleActors);
-		// Really shouldn't make a difference but its a bit cleaner
-		partyMembers.Remove(_currentPartyActor);
-
-		fusionMenu.Setup(_currentPartyActor, partyMembers);
-		LoadMenu(fusionMenu);
-
-		fusionMenu.Position = _menuPosition;
 	}
 
 	private void CreateItemMenu()
