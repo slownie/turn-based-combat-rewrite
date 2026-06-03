@@ -1,16 +1,13 @@
 using Godot;
 using System;
 
-public partial class UIItemMenuEntry : Control
+public partial class UIItemMenuEntry : UIBattleMenuEntryBase
 {
-    TextureRect _icon;
-    Label _nameText;
     Label _quantityText;
 
     public override void _Ready()
     {
-        _icon = GetNode<TextureRect>("HBoxContainer/Icon");
-        _nameText = GetNode<Label>("HBoxContainer/Name");
+        base._Ready();
         _quantityText = GetNode<Label>("HBoxContainer/Quantity");
     }
 

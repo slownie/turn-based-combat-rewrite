@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://i6epsyq1nopc" path="res://src/battle/battleUI/uiBattleSkillMenu/UISkillMenu.cs" id="1_0dd3f"]
 [ext_resource type="PackedScene" uid="uid://d1hij2j0i2vih" path="res://src/battle/battleUI/uiBattleSkillMenu/UISkillMenuEntry.tscn" id="2_cokjg"]
 [ext_resource type="PackedScene" uid="uid://kqvmptdjgic6" path="res://src/battle/battleUI/uiTargetCursor/UITargetCursor.tscn" id="3_cokjg"]
+[ext_resource type="PackedScene" uid="uid://bytwxvcceagbi" path="res://src/battle/battleUI/uiBattleFusionMenu/UIFusionMenuEntry.tscn" id="3_idaww"]
 
 [node name="UISkillMenu" type="Control" unique_id=36211904]
 layout_mode = 3
@@ -13,4 +14,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_0dd3f")
 skillMenuEntry = ExtResource("2_cokjg")
+fusionMenuEntry = ExtResource("3_idaww")
 targetCursorScene = ExtResource("3_cokjg")
+
+[node name="SkillMenuEntries" type="Control" parent="." unique_id=1293715115]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="FusionMenuEntries" type="Control" parent="." unique_id=1816115012]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
