@@ -95,7 +95,6 @@ public partial class UIFusionMenu : UIBattleMenuBase
 
             
 
-            fusionEntry.Setup(useableSkill, partner.GetBattleIcon(), skillIsUseable);
             _entries.Add(fusionEntry);
         }
 

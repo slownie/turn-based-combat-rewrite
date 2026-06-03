@@ -21,4 +21,5 @@ partnerFusionID = 1
 skillCostType = 0
 skillCostAmount = 12
 useableActionResource = SubResource("Resource_f38qh")
+skillName = "Cross Combo"
 metadata/_custom_type_script = "uid://dhbd03db6gml8"

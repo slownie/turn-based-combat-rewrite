@@ -10,6 +10,7 @@ public partial class UIMenuController : Control
 
 	[Signal] public delegate void ActionTargetConfirmedEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 	[Signal] public delegate void SkillUsedEventHandler(UseableSkillResource.SkillCostType skillCostType, int amount);
+	[Signal] public delegate void FusionSkillUsedEventHandler(int partnerID, UseableSkillResource.SkillCostType skillCostType, int amount);
 	[Signal] public delegate void ItemUsedEventHandler(int itemIndex, int quantity);
 
 	ActorController _actorController;
@@ -73,6 +74,7 @@ public partial class UIMenuController : Control
 		partyMembers.Remove(_currentPartyActor);
 
 		skillMenu.SkillSelected += OnSkillSelected;
+		skillMenu.FusionSkillSelected += OnFusionSelected;
 		skillMenu.SkillSelectionCancelled += UnloadMenu;
 
 		// If the player reaches this menu, then there are useable skills
@@ -101,6 +103,12 @@ public partial class UIMenuController : Control
 	{
 		_selectedSkill = useableSkillResource;
 		CreateTargetCursor(_selectedSkill.GetUseableActionResource());
+	}
+
+	private void OnFusionSelected(FusionSkillResource fusionSkillResource)
+	{
+		_selectedFusionSkill = fusionSkillResource;
+		CreateTargetCursor(_selectedFusionSkill.GetUseableActionResource());
 	}
 
 	private void OnItemSelected(int selectedItemIndex)
@@ -162,6 +170,12 @@ public partial class UIMenuController : Control
 			EmitSignal(SignalName.ActionTargetConfirmed, _selectedSkill.GetUseableActionResource(), selectedActors);
 		}
 
+		if (_selectedFusionSkill != null)
+		{
+			EmitSignal(SignalName.FusionSkillUsed, _selectedFusionSkill.GetFusionID(), (int)_selectedFusionSkill.GetSkillCostType(), _selectedFusionSkill.GetSkillCostAmount());
+			EmitSignal(SignalName.ActionTargetConfirmed, _selectedFusionSkill.GetUseableActionResource(), selectedActors);
+		}
+
 		if (_selectedItemIndex != -1)
 		{
 			// You could include the item quantity here but I can't think of a situation where you would want that
@@ -207,6 +221,7 @@ public partial class UIMenuController : Control
 
 		_currentPartyActor = null; 
 		_selectedSkill = null;
+		_selectedFusionSkill = null;
 		_selectedItem = null;
 		_selectedItemIndex = -1;
 	}

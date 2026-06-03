@@ -11,7 +11,7 @@ public partial class UISkillMenu : UIBattleMenuBase
     [Export] PackedScene targetCursorScene;
 
     [Signal] public delegate void SkillSelectedEventHandler(UseableSkillResource selectedSkill);
-    [Signal] public delegate void FusionSkillSelectedEventHandler(FusionSkillResource fusionSkill, BattleActor partner);
+    [Signal] public delegate void FusionSkillSelectedEventHandler(FusionSkillResource fusionSkill);
     [Signal] public delegate void SkillSelectionCancelledEventHandler();
 
     Godot.Collections.Array<UISkillMenuEntry> _skillEntries = [];
@@ -67,7 +67,18 @@ public partial class UISkillMenu : UIBattleMenuBase
     {
         if (@event.IsActionPressed("AButton"))
         {
-            EmitSignal(SignalName.SkillSelected, _skillEntries[index].GetUseableSkill());
+            if (_currentMenuMode == MenuMode.Skill)
+            {
+                if (_skillEntries[index].IsEnabled())
+                {
+                    EmitSignal(SignalName.SkillSelected, _skillEntries[index].GetUseableSkill());
+                }
+            } else {
+                if (_fusionEntries[index].IsEnabled())
+                {
+                    EmitSignal(SignalName.FusionSkillSelected, _fusionEntries[index].GetFusionSkill());
+                }                
+            }
         }
 
 		// Quit Selection
@@ -138,32 +149,52 @@ public partial class UISkillMenu : UIBattleMenuBase
 
         for (int i=0; i < currentActor.GetFusionSkills().Count; i++)
         {
-            FusionSkillResource useableSkill = currentActor.GetFusionSkills()[i];
-            BattleActor partner = BattleConsts.FindActorByFusionID(useableSkill.GetFusionID(), partyMembers);
+            FusionSkillResource fusionSkill = currentActor.GetFusionSkills()[i];
+            BattleActor partnerActor = BattleConsts.FindActorByFusionID(fusionSkill.GetFusionID(), partyMembers);
 
             UIFusionMenuEntry fusionEntry = fusionMenuEntry.Instantiate() as UIFusionMenuEntry;
             _fusionMenu.AddChild(fusionEntry);
             fusionEntry.Position = new Vector2(fusionEntry.Position.X, fusionEntry.Position.Y + (32 * i));
 
             // Can we use this skill?
-            bool skillIsUseable = true;
+            bool userCanUseSkill = true;
             if (!currentActor.IgnoreSkillCosts)
             {
-                if (useableSkill.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)
+                if (fusionSkill.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)
                 {
-                    if (currentActor.GetCurHP() <= useableSkill.GetSkillCostAmount() || !currentActor.CanSelectPhysSkills)
+                    if (currentActor.GetCurHP() <= fusionSkill.GetSkillCostAmount() || !currentActor.CanSelectPhysSkills)
                     {
-                        skillIsUseable = false;
+                        userCanUseSkill = false;
                     }
                 } else {
-                    if (currentActor.GetCurMP() < useableSkill.GetSkillCostAmount() || !currentActor.CanSelectElemSkills)
+                    if (currentActor.GetCurMP() < fusionSkill.GetSkillCostAmount() || !currentActor.CanSelectElemSkills)
                     {
-                        skillIsUseable = false;
+                        userCanUseSkill = false;
                     }
                 }
             }
 
-            fusionEntry.Setup(useableSkill, partner.GetBattleIcon(), skillIsUseable);
+            bool partnerCanUseSkill = true;
+            if (!partnerActor.IgnoreSkillCosts)
+            {
+                if (fusionSkill.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)
+                {
+                    if (partnerActor.GetCurHP() <= fusionSkill.GetSkillCostAmount() || !partnerActor.CanSelectPhysSkills)
+                    {
+                        partnerCanUseSkill = false;
+                    }
+                } else {
+                    if (partnerActor.GetCurMP() < fusionSkill.GetSkillCostAmount() || !partnerActor.CanSelectElemSkills)
+                    {
+                        partnerCanUseSkill = false;
+                    }
+                }
+            }
+
+            if (partnerActor.SelectRandomAction) partnerCanUseSkill = false;
+
+
+            fusionEntry.Setup(fusionSkill, partnerActor.GetBattleIcon(), userCanUseSkill && partnerCanUseSkill);
             _fusionEntries.Add(fusionEntry);
         }
 

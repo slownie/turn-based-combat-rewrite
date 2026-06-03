@@ -84,6 +84,7 @@ public partial class BattleArena : Control
 		_menuController.BindServices(_actorController, _actors);
 		
 		_menuController.SkillUsed += OnSkillUsed;
+		_menuController.FusionSkillUsed += OnFusionUsed;
 		_menuController.ItemUsed += OnItemUsed;
 
 		_menuController.ActionTargetConfirmed += OnActionTargetConfimed;
@@ -317,6 +318,36 @@ public partial class BattleArena : Control
 					_actorController.AddActorCurHP(_currentActor, -amount);
 				} else {
 					_actorController.AddActorCurMP(_currentActor, -amount);
+				}
+			}
+		}
+	}
+
+	private void OnFusionUsed(int partnerID, UseableSkillResource.SkillCostType skillCostType, int amount)
+	{
+		_partnerActor = BattleConsts.FindActorByFusionID(partnerID, _partyMembers);
+		if (!_currentActor.IgnoreSkillCosts)
+		{
+			if (amount != 0)
+			{
+				if (skillCostType == UseableSkillResource.SkillCostType.HP)
+				{
+					_actorController.AddActorCurHP(_currentActor, -amount);
+				} else {
+					_actorController.AddActorCurMP(_currentActor, -amount);
+				}
+			}
+		}
+
+		if (!_partnerActor.IgnoreSkillCosts)
+		{
+			if (amount != 0)
+			{
+				if (skillCostType == UseableSkillResource.SkillCostType.HP)
+				{
+					_actorController.AddActorCurHP(_partnerActor, -amount);
+				} else {
+					_actorController.AddActorCurMP(_partnerActor, -amount);
 				}
 			}
 		}

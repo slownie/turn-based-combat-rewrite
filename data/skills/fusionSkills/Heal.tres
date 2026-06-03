@@ -20,7 +20,7 @@ metadata/_custom_type_script = "uid://f4ubms2rgfo3"
 
 [resource]
 script = ExtResource("1_qiggf")
-skillCostAmount = 24
+skillCostAmount = 4
 useableActionResource = SubResource("Resource_2s6wo")
 skillName = "Healing Hands"
 metadata/_custom_type_script = "uid://dhbd03db6gml8"

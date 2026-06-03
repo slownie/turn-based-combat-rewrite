@@ -6,6 +6,8 @@ public partial class UIFusionMenuEntry : UIBattleMenuEntryBase
     [Export] Color hpColor = new Color("#ff0000");
 	[Export] Color mpColor = new Color("#00ff0d");
 
+    FusionSkillResource _fusionSkillResource;
+
     Label _costTypeText;
     Label _costAmountText;
     TextureRect _partnerIcon;
@@ -18,16 +20,19 @@ public partial class UIFusionMenuEntry : UIBattleMenuEntryBase
         _partnerIcon = GetNode<TextureRect>("HBoxContainer/PartnerIcon");
     }
 
-    public void Setup(FusionSkillResource skillResource, Texture2D partnerIcon, bool enabled)
+    public void Setup(FusionSkillResource fusionSkillResource, Texture2D partnerIcon, bool enabled)
     {
+        _fusionSkillResource = fusionSkillResource;
+        GD.Print(_fusionSkillResource.GetSkillName());
+
         _enabled = enabled;
         if (!_enabled) _nameText.Modulate = disabledColor;
 
-        _icon.Texture = skillResource.GetIcon();
-        _nameText.Text = skillResource.GetSkillName();
+        _icon.Texture = _fusionSkillResource.GetIcon();
+        _nameText.Text = _fusionSkillResource.GetSkillName();
         _partnerIcon.Texture = partnerIcon;
 
-        if (skillResource.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)
+        if (_fusionSkillResource.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)
         {
             _costTypeText.Text = "HP";
             _costTypeText.Modulate = hpColor;
@@ -36,6 +41,8 @@ public partial class UIFusionMenuEntry : UIBattleMenuEntryBase
             _costTypeText.Modulate = mpColor;
         }
 
-        _costAmountText.Text = skillResource.GetSkillCostAmount().ToString();
+        _costAmountText.Text = _fusionSkillResource.GetSkillCostAmount().ToString();
     }
+
+    public FusionSkillResource GetFusionSkill() { return _fusionSkillResource; }
 }
