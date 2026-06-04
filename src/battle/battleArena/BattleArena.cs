@@ -7,6 +7,9 @@ public partial class BattleArena : Control
 
 	[Signal] public delegate void BattleFinishedEventHandler(BattleController.BattleConclusion battleConclusion);
 
+	enum DefensiveMode { Hit, Guard, Knockback, Backdash }
+	DefensiveMode _currentDefensiveMode = DefensiveMode.Hit;
+
 	Godot.Collections.Array<BattleActor> _actors = [];
 	Godot.Collections.Array<BattleActor> _partyMembers = [];
 	Godot.Collections.Array<BattleActor> _enemyMembers = [];
@@ -32,6 +35,7 @@ public partial class BattleArena : Control
 	GameCamera _gameCamera;
 
 	Timer _defenseTimer;
+	Label _timerLabel; // TESTING PURPOSES ONLY
 	
 	// UI Objects
 
@@ -84,6 +88,7 @@ public partial class BattleArena : Control
 		_battleTriggerController.SideEffectsRequested += OnSideEffectRequested;
 
 		_defenseTimer = GetNode<Timer>("DefenseTimer");
+		_timerLabel = GetNode<Label>("UI/TimerLabel");
 
 		// UI
 		_menuController = GetNode<UIMenuController>("UI/UIMenuController");
@@ -100,12 +105,43 @@ public partial class BattleArena : Control
 		_battleTextController = GetNode<UIBattleTextController>("UI/UIBattleTextController");
 	}
 
-
+    public override void _Process(double delta)
+	{
+		// TESTING CODE ONLY
+		if (0 < _defenseTimer.TimeLeft)
+		{
+			_timerLabel.Text = Math.Round(_defenseTimer.TimeLeft, 2).ToString();
+		}
+	}
 
     public override void _Input(InputEvent @event)
 	{
-		if (@event is InputEventKey keyEvent && keyEvent.Pressed)
+		// Defensive Actions
+		if (0 < _defenseTimer.TimeLeft)
 		{
+			if (@event.IsActionPressed("AButton"))
+			{
+				_currentDefensiveMode = DefensiveMode.Guard;
+				GD.Print("Guard");
+			}
+
+			if (@event.IsActionPressed("BButton"))
+			{
+				_currentDefensiveMode = DefensiveMode.Hit;
+				GD.Print("Hit");
+			}
+
+			if (@event.IsActionPressed("YButton"))
+			{
+				_currentDefensiveMode = DefensiveMode.Backdash;
+				GD.Print("Backdash");
+			}
+
+			if (@event.IsActionPressed("XButton"))
+			{
+				_currentDefensiveMode = DefensiveMode.Knockback;
+				GD.Print("Knockback");
+			}
 		}
 	}
 
@@ -262,14 +298,15 @@ public partial class BattleArena : Control
 	/*
 		"Primary" actions go into this function.
 	*/
-	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets)
+	private async void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets)
 	{
 		_selectedAction = selectedAction;
 		_selectedTargets = selectedTargets;
 
 		if (!_currentActor.GetIsPlayer())
 		{
-			
+			_defenseTimer.Start();
+			await ToSignal(_defenseTimer, Timer.SignalName.Timeout);
 		}
 
 		ExecuteActionEffects();

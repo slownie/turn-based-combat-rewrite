@@ -65,5 +65,12 @@ offset_bottom = 40.0
 script = ExtResource("11_cjual")
 battleTextScene = ExtResource("12_ayey8")
 
+[node name="TimerLabel" type="Label" parent="UI" unique_id=517490375]
+offset_left = 1.0
+offset_top = 157.0
+offset_right = 41.0
+offset_bottom = 180.0
+text = "0"
+
 [node name="DefenseTimer" type="Timer" parent="." unique_id=106329897]
-wait_time = 1.5
+one_shot = true
