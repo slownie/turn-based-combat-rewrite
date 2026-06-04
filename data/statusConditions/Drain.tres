@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://d2btsltsk0c0v"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_ypbgw"]
+[ext_resource type="Texture2D" uid="uid://cwk8hdaja08vv" path="res://assets/images/ui/statusConditionIcons/DrainIcon.png" id="2_5q8ml"]
+[ext_resource type="Resource" uid="uid://cxsvotgmcpifl" path="res://data/statusConditions/Seal.tres" id="2_i3b4c"]
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_ia8tc"]
+[ext_resource type="Resource" uid="uid://b3xh3fqxha30" path="res://data/statusConditions/Frostbite.tres" id="3_bh8s7"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="3_h7bw0"]
+[ext_resource type="Script" uid="uid://cwrsn0audxsdn" path="res://src/dataClasses/actionEffects/RejuvenatePercentageEffect.cs" id="3_ia8tc"]
+[ext_resource type="Resource" uid="uid://ctl1hqlls47gb" path="res://data/statusConditions/Immortality.tres" id="4_5j113"]
+
+[sub_resource type="Resource" id="Resource_d3t0e"]
+script = ExtResource("3_ia8tc")
+rejuventagePercentage = -25
+metadata/_custom_type_script = "uid://cwrsn0audxsdn"
+
+[sub_resource type="Resource" id="Resource_gf58r"]
+script = ExtResource("3_h7bw0")
+triggerType = 3
+triggerActions = Array[ExtResource("1_ypbgw")]([SubResource("Resource_d3t0e")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("2_ia8tc")
+statusConditionName = "Drain"
+icon = ExtResource("2_5q8ml")
+passiveActionResource = SubResource("Resource_gf58r")
+elementType = 2
+fusionStatusConditions = Dictionary[int, ExtResource("2_ia8tc")]({
+1: ExtResource("2_i3b4c"),
+2: null,
+3: ExtResource("3_bh8s7"),
+4: ExtResource("4_5j113")
+})
+metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

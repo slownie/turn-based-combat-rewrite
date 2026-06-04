@@ -14,12 +14,19 @@ public partial class ActivePartyMember : GodotObject
     CharacterStats _characterStats;
     int currentLevel = 1;
     int currentEXP = 0;
+    int _partyMemberFusionID;
+
 
     // Equipment
 
     // Skills
     Godot.Collections.Array<BaseSkillResource> _learnedSkills = [];
     Godot.Collections.Array<BaseSkillResource> _equippedSkills = []; 
+
+    Godot.Collections.Array<FusionSkillResource> _learnedFusionSkills = [];
+    Godot.Collections.Array<FusionSkillResource> _equippedFusionSkills = [];
+
+    CharacterAffinity _characterAffinity;
 
     // Battle Animation
     SpriteFrames _spriteFrames;
@@ -36,10 +43,18 @@ public partial class ActivePartyMember : GodotObject
         {
             _name = partyMemberDataResource.GetPartyMemberName();
             _characterStats = new CharacterStats(partyMemberDataResource.GetBaseStats());
+            _partyMemberFusionID = partyMemberDataResource.GetPartyMemberFusionID();
 
             // Skill Setup
             _learnedSkills = partyMemberDataResource.GetStartingSkills();
             _equippedSkills = _learnedSkills;
+
+            // TESTING ONLY
+            _learnedFusionSkills = partyMemberDataResource.GetStartingFusionSkills();
+            _equippedFusionSkills = _learnedFusionSkills;
+
+
+            _characterAffinity = new CharacterAffinity(partyMemberDataResource.GetBaseAffinity());
 
             _spriteFrames = partyMemberDataResource.GetSpriteFrames();
             _battleIcon = partyMemberDataResource.GetBattleIcon();
@@ -49,8 +64,11 @@ public partial class ActivePartyMember : GodotObject
     }
 
     public string GetPartyMemberName() { return _name; }
+    public int GetPartyMemberFusionID() { return _partyMemberFusionID; }
     public CharacterStats GetCharacterStats() { return _characterStats; }
     public Godot.Collections.Array<BaseSkillResource> GetEquippedSkills() { return _equippedSkills; }
+    public Godot.Collections.Array<FusionSkillResource> GetEquippedFusionSkills() { return _equippedFusionSkills; }
+    public CharacterAffinity GetCharacterAffinity() { return _characterAffinity; }
 
     public SpriteFrames GetSpriteFrames() { return _spriteFrames; }
     public Texture2D GetBattleIcon() { return _battleIcon; }

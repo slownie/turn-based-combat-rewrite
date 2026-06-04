@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://dq3v1fp84d7gh"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_k411o"]
+[ext_resource type="Script" uid="uid://o64rf5cf3yfc" path="res://src/dataClasses/actionEffects/statusEffects/SetActionSuccessEffect.cs" id="2_da8lv"]
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_e1bml"]
+[ext_resource type="Texture2D" uid="uid://dvwte624cfpu3" path="res://assets/images/ui/statusConditionIcons/ElevateIcon.png" id="3_da8lv"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="4_nb1b3"]
+
+[sub_resource type="Resource" id="Resource_tphjq"]
+script = ExtResource("2_da8lv")
+enable = false
+metadata/_custom_type_script = "uid://o64rf5cf3yfc"
+
+[sub_resource type="Resource" id="Resource_2x160"]
+script = ExtResource("2_da8lv")
+metadata/_custom_type_script = "uid://o64rf5cf3yfc"
+
+[sub_resource type="Resource" id="Resource_sv1ac"]
+script = ExtResource("4_nb1b3")
+startupActions = Array[ExtResource("1_k411o")]([SubResource("Resource_2x160")])
+cleanupActions = Array[ExtResource("1_k411o")]([SubResource("Resource_tphjq")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("2_e1bml")
+statusConditionName = "Elevate"
+icon = ExtResource("3_da8lv")
+passiveActionResource = SubResource("Resource_sv1ac")
+elementType = 10
+metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

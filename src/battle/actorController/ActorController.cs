@@ -5,14 +5,273 @@ using System.Linq;
 
 public partial class ActorController : Node2D
 {
+	/*
+		Required for any side effects that occur within actions.
+	*/
+	[Export] BattleTriggerController _battleTriggerController;
+
 	[Export] UseableSkillResource defaultEnemyAction;
+
+
+	[Signal] public delegate void EnemySkillUsedEventHandler(UseableSkillResource.SkillCostType skillCostType, int amount);
+
 	[Signal] public delegate void EnemySelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
+	[Signal] public delegate void RandomSelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
+
+	Godot.Collections.Array<BattleActor> _partyActors = [];
+	Godot.Collections.Array<BattleActor> _enemyActors = [];
+
+	public void Setup(Godot.Collections.Array<BattleActor> partyActors, Godot.Collections.Array<BattleActor> enemyActors)
+	{
+		_partyActors = partyActors;
+		_enemyActors = enemyActors;
+	}
 
 	#region Stats
+	/*
+		These are used for skills costs, NOT skills.
+	*/
 	public void AddActorCurHP(BattleActor target, int amount) { target.AddCurHP(amount); }
 	public void SetActorCurHP(BattleActor target, int amount) { target.SetCurHP(amount); }
 	public void AddActorCurMP(BattleActor target, int amount) { target.AddCurMP(amount); }
 	public void SetActorCurMP(BattleActor target, int amount) { target.SetCurMP(amount); }
+	#endregion
+
+	#region Actions
+	public void TakeDamage(BattleActor target, int damage, bool didCrit)
+	{
+		if (target.IsIndestructable) damage = 0;
+
+		// Damage value should be negative
+		target.AddCurHP(damage);
+
+		RunActorSideEffects(target, BattleConsts.TriggerType.OnUserTakeDamage);
+
+		target.EmitSignal(BattleActor.SignalName.DamageReceived, target, damage, didCrit);
+	}
+
+	public void CounterAttack(BattleActor target, int damage)
+	{
+		if (target.IsIndestructable) damage = 0;
+
+		target.AddCurHP(damage);
+
+		target.EmitSignal(BattleActor.SignalName.DamageReceived, target, damage, false);
+	}
+
+	public void TakeHeal(BattleActor target, int heal)
+	{
+		target.AddCurHP(heal);
+		target.EmitSignal(BattleActor.SignalName.HealReceived, target, heal);
+	}
+
+	public void TakeRejuvenate(BattleActor target, int rejuvenate)
+	{
+		target.AddCurMP(rejuvenate);
+		target.EmitSignal(BattleActor.SignalName.RejuvenateReceived, target, rejuvenate);
+	}
+
+	public void ActionMissed(BattleActor target)
+	{
+		target.EmitSignal(BattleActor.SignalName.MissReceived, target);
+	}
+
+	public void SetStatusCondition(BattleActor target, StatusConditionResource statusConditionResource, int turnCount)
+	{
+		if (target.GetActiveStatusCondition() != null)
+		{
+			// Fusion Status Conditions
+			StatusConditionResource fusionStatusConditionResource = target.GetActiveStatusCondition().GetFusionStatusCondition(statusConditionResource.GetElementType());
+			if (fusionStatusConditionResource != null)
+			{
+				ActiveStatusCondition activeStatusCondition = new ActiveStatusCondition(fusionStatusConditionResource, turnCount);
+				target.SetActiveStatusCondition(activeStatusCondition);
+			} else {
+				GD.Print("Fusion Failed");
+			}
+		} else {
+			ActiveStatusCondition activeStatusCondition = new ActiveStatusCondition(statusConditionResource, turnCount);
+			target.SetActiveStatusCondition(activeStatusCondition);
+		}
+	}
+
+	public void AddBuff(BattleActor target, BuffResource buffToApply, int turnDuration, bool isPermanent)
+	{
+		GD.Print(target.GetActorName()+" - "+buffToApply.GetBuffName()+" - "+turnDuration+" turns - "+isPermanent);
+		ActiveBuff buff = new ActiveBuff(buffToApply, turnDuration, isPermanent);
+		target.AddBuff(buff);
+	}
+
+	public void AddStatModifier(BattleActor target, BattleConsts.StatBuffType statBuff, double statLevel)
+	{
+		switch(statBuff)
+		{
+			case BattleConsts.StatBuffType.Strength:
+			{
+				target.AddStrengthModifier(statLevel);
+				break;
+			}
+			
+			case BattleConsts.StatBuffType.Elemental:
+			{
+				target.AddElementalModifier(statLevel);
+				break;
+			}
+
+			case BattleConsts.StatBuffType.Defense:
+			{
+				target.AddDefenseModifier(statLevel);
+				break;
+			}
+
+			case BattleConsts.StatBuffType.Agility:
+			{
+				target.AddAgilityModifier(statLevel);
+				break;
+			}
+
+			case BattleConsts.StatBuffType.Accuracy:
+			{
+				target.AddAccuraccyModifier(statLevel);
+				break;
+			}
+
+			case BattleConsts.StatBuffType.Crit:
+			{
+				target.AddCritModifier(statLevel);
+				break;
+			}
+		}
+	}
+
+	public void SetCharge(BattleActor target, bool enable)
+	{
+		target.SetCharge(enable);
+	}
+
+	public void SetFocus(BattleActor target, bool enable)
+	{
+		target.SetFocus(enable);
+	}
+
+	
+
+	public void SetBuffIsPermanent(BattleActor target, BuffResource buffToLookFor, bool isPermanent)
+	{
+		target.SetBuffIsPermanent(buffToLookFor, isPermanent);
+	}
+
+	public void RemoveBuff(BattleActor target)
+	{
+		
+	}
+
+	public void RemoveAllBuffs(BattleActor target)
+	{
+		
+	}
+
+	public void RemoveAllDebuffs(BattleActor target)
+	{
+		
+	}
+
+	public int GetCounterDamage(BattleActor target)
+	{
+		return target.GetCounterDamage();
+	}
+
+	public void ResetCounterDamage(BattleActor target)
+	{
+		target.ResetCounterDamage();
+	}
+
+	public void SetSelectRandomAction(BattleActor target, bool enable)
+	{
+		target.SelectRandomAction = enable;
+	}
+
+	public void SetImmortality(BattleActor target, bool enable)
+	{
+		GD.Print(target.GetActorName()+" Set Immortality - "+enable);
+		target.IsImmortal = enable;
+	}
+
+	public void SetTrackDamage(BattleActor target, bool enable)
+	{
+		GD.Print(target.GetActorName()+" Set TrackDamage - "+enable);
+		target.TrackDamage = enable;
+	}
+
+	public void SetIndestructable(BattleActor target, bool enable)
+	{
+		target.IsIndestructable = enable;
+	}
+
+	public void SetMenuEntry(BattleActor target, BattleConsts.MenuEntryType menuEntryType, bool enable)
+	{
+		switch(menuEntryType)
+		{
+			case BattleConsts.MenuEntryType.SkillPhysical:
+			{
+				target.CanSelectPhysSkills = enable;
+				break;
+			}
+
+			case BattleConsts.MenuEntryType.SkillElemental:
+			{
+				target.CanSelectElemSkills = enable;
+				break;
+			}
+
+			case BattleConsts.MenuEntryType.Item:
+			{
+				target.CanSelectItems = enable;
+				break;
+			}
+		}
+	}
+
+	public void SetIgnoreSkillCosts(BattleActor target, bool ignore)
+	{
+		target.IgnoreSkillCosts = ignore;
+	}
+
+	public void SetIgnoreAffinity(BattleActor target, bool ignore)
+	{
+		target.IgnoreAffinity = ignore;
+	}
+
+	public void SetSkillSuccessGuarnatee(BattleActor target, bool guarantee)
+	{
+		target.SkillSuccessGuarantee = guarantee;
+	}
+
+	public void RunActorSideEffects(BattleActor target, BattleConsts.TriggerType triggerType)
+	{
+		_battleTriggerController.RunActorSideEffects(target, triggerType);
+	}
+
+	public void AddTempo(BattleActor target, double newTempo)
+	{
+		target.AddTempo(newTempo);
+	}
+
+	public void SetTempo(BattleActor target, double newTempo)
+	{
+		target.SetTempo(newTempo);
+	}
+
+	public void AddStun(BattleActor target, double stunDuration)
+	{
+		target.AddStun(stunDuration);
+	}
+
+	public void SetStun(BattleActor target, double stunDuration)
+	{
+		target.SetStun(stunDuration);
+	}
+
 	#endregion
 
 	#region Queries
@@ -82,52 +341,207 @@ public partial class ActorController : Node2D
 	#endregion
 
 	#region Enemy AI
-	public void EnemyAISelectAction(BattleActor enemyUser, Godot.Collections.Array<BattleActor> battleActors)
+	public void EnemyAISelectAction(BattleActor enemyUser)
 	{
-		// Easier naming
-		UseableActionResource selectedAction;
+		// Action Selection
+		UseableSkillResource selectedAction;
 
 		if (GetUseableSkills(enemyUser).Count <= 0)
 		{
-			selectedAction = defaultEnemyAction.GetUseableActionResource();
+			// Empty skill list
+			selectedAction = defaultEnemyAction;
 		} else {
-			int selectedActionIndex = (int)(GD.Randi() % GetUseableSkills(enemyUser).Count - 1);
-			selectedAction = GetUseableSkills(enemyUser)[selectedActionIndex].GetUseableActionResource();
+			// Get available skills
+			Godot.Collections.Array<UseableSkillResource> availableSkills = [];
+
+			foreach(UseableSkillResource skill in GetUseableSkills(enemyUser))
+			{
+				if (!enemyUser.IgnoreSkillCosts)
+            	{
+					if (skill.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)
+					{
+						if (enemyUser.GetCurHP() <= skill.GetSkillCostAmount() || !enemyUser.CanSelectPhysSkills)
+						{
+							break;
+						}
+					} else {
+						if (enemyUser.GetCurMP() < skill.GetSkillCostAmount() || !enemyUser.CanSelectElemSkills)
+						{
+							break;
+						}
+					}
+            	}
+				availableSkills.Add(skill);
+			}
+
+			// No other available skills
+			if (availableSkills.Count <= 0)
+			{
+				selectedAction = defaultEnemyAction;
+			} else {
+				selectedAction = availableSkills.PickRandom();
+			}
 		}
 
-		Godot.Collections.Array<BattleActor> _partyTargets = [];
-		Godot.Collections.Array<BattleActor> _enemyTargets = [];
+		// Targeting
+		Godot.Collections.Array<BattleActor> _oppositeSideTargets = [];
+		Godot.Collections.Array<BattleActor> _sameSideTargets = [];
+
+		// Provide targeting parameters to TargetCursorController
+
+		// 1. Are we targeting the party, enemies, both, or the self?
+		if (selectedAction.GetUseableActionResource().GetTargetOppositeSide())
+		{
+			_oppositeSideTargets = _partyActors;
+		}
+
+		if (selectedAction.GetUseableActionResource().GetTargetSameSide())
+		{
+			_sameSideTargets = _enemyActors;
+		}
+
+		if (selectedAction.GetUseableActionResource().GetTargetSelfOnly())
+		{
+			_sameSideTargets.Add(enemyUser);
+		}
+
+		// 2. Are we targeting dead or alive actors?
+		if (selectedAction.GetUseableActionResource().GetTargetDeadOnly())
+		{
+			// We are only targeting dead party members
+			_sameSideTargets = GetDeadActors(_sameSideTargets);
+		} else {
+			// Target only alive party members
+			if (_oppositeSideTargets.Count != 0) _oppositeSideTargets = GetLiveActors(_oppositeSideTargets);
+			if (_sameSideTargets.Count != 0) _sameSideTargets = GetLiveActors(_sameSideTargets);
+		}
+
+		Godot.Collections.Array<BattleActor> _selectedTargets = [];
+		
+
+		switch(selectedAction.GetUseableActionResource().GetCursorMode())
+		{
+			case BattleConsts.CursorMode.Single:
+			{
+				// Pick a random target
+				if (_sameSideTargets.Count != 0)
+				{
+					_selectedTargets.Add(_sameSideTargets.PickRandom());
+				} else {
+					_selectedTargets.Add(_oppositeSideTargets.PickRandom());
+				}
+				break;
+			}
+
+			case BattleConsts.CursorMode.Side:
+			{
+				if (_sameSideTargets.Count != 0)
+				{
+					_selectedTargets = _sameSideTargets;
+				} else {
+					_selectedTargets = _oppositeSideTargets;
+				}
+				break;
+			}
+
+			case BattleConsts.CursorMode.All:
+			{
+				_selectedTargets.AddRange(_oppositeSideTargets);
+				_selectedTargets.AddRange(_sameSideTargets);
+				break;
+			}
+		}
+
+		EmitSignal(SignalName.EnemySkillUsed, (int)selectedAction.GetSkillCostType(), selectedAction.GetSkillCostAmount());
+		EmitSignal(SignalName.EnemySelectAction, selectedAction.GetUseableActionResource(), _selectedTargets);
+	}
+	
+	public void SelectRandomAction(BattleActor currentUser)
+	{
+		GD.Print("Random Action");
+		// Action Selection
+		UseableActionResource selectedAction;
+
+		if (GetUseableSkills(currentUser).Count <= 0)
+		{
+			selectedAction = defaultEnemyAction.GetUseableActionResource();
+		} else {
+			selectedAction = GetUseableSkills(currentUser).PickRandom().GetUseableActionResource();
+		}
+
+		// Targeting
+		Godot.Collections.Array<BattleActor> _oppositeSideTargets = [];
+		Godot.Collections.Array<BattleActor> _sameSideTargets = [];
 
 		// Provide targeting parameters to TargetCursorController
 
 		// 1. Are we targeting the party, enemies, both, or the self?
 		if (selectedAction.GetTargetOppositeSide())
 		{
-			_enemyTargets = GetEnemies(battleActors);
+			_oppositeSideTargets = _partyActors;
 		}
 
 		if (selectedAction.GetTargetSameSide())
 		{
-			_partyTargets = GetPartyMembers(battleActors);
+			_sameSideTargets = _enemyActors;
 		}
 
 		if (selectedAction.GetTargetSelfOnly())
 		{
-			_partyTargets.Add(enemyUser);
+			_sameSideTargets.Add(currentUser);
 		}
 
 		// 2. Are we targeting dead or alive actors?
 		if (selectedAction.GetTargetDeadOnly())
 		{
 			// We are only targeting dead party members
-			_partyTargets = GetDeadActors(_partyTargets);
+			_sameSideTargets = GetDeadActors(_sameSideTargets);
 		} else {
-			if (_enemyTargets.Count != 0) _enemyTargets = GetLiveActors(_enemyTargets);
-			if (_partyTargets.Count != 0) _partyTargets = GetLiveActors(_partyTargets);
+			// Target only alive party members
+			if (_oppositeSideTargets.Count != 0) _oppositeSideTargets = GetLiveActors(_oppositeSideTargets);
+			if (_sameSideTargets.Count != 0) _sameSideTargets = GetLiveActors(_sameSideTargets);
 		}
 
-		EmitSignal(SignalName.EnemySelectAction, selectedAction, battleActors);
+		Godot.Collections.Array<BattleActor> _selectedTargets = [];
+		
+
+		switch(selectedAction.GetCursorMode())
+		{
+			case BattleConsts.CursorMode.Single:
+			{
+				// Pick a random target
+				if (_sameSideTargets.Count != 0)
+				{
+					_selectedTargets.Add(_sameSideTargets.PickRandom());
+				} else {
+					_selectedTargets.Add(_oppositeSideTargets.PickRandom());
+				}
+				break;
+			}
+
+			case BattleConsts.CursorMode.Side:
+			{
+				if (_sameSideTargets.Count != 0)
+				{
+					_selectedTargets = _sameSideTargets;
+				} else {
+					_selectedTargets = _oppositeSideTargets;
+				}
+				break;
+			}
+
+			case BattleConsts.CursorMode.All:
+			{
+				_selectedTargets.AddRange(_oppositeSideTargets);
+				_selectedTargets.AddRange(_sameSideTargets);
+				break;
+			}
+		}
+
+		EmitSignal(SignalName.EnemySelectAction, selectedAction, _selectedTargets);
 	}
+	
+
 	#endregion
 
 	#region Sequences

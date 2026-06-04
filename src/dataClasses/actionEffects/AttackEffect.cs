@@ -4,7 +4,19 @@ using System;
 [GlobalClass]
 public partial class AttackEffect : ActionEffectResource
 {
-    [Signal] public delegate void AttackMissedEventHandler(BattleActor target);
+    // Affinity Modifiers
+    Godot.Collections.Dictionary<BattleConsts.AffinityType, double> _affinityModifiers = new Godot.Collections.Dictionary<BattleConsts.AffinityType, double>()
+    {
+        {BattleConsts.AffinityType.Normal, 1.0},
+        {BattleConsts.AffinityType.Weak, 1.5},
+        {BattleConsts.AffinityType.Resist, 0.5},
+        {BattleConsts.AffinityType.Block, 0.0},
+    };
+
+    // Buff Modifiers
+    const double _critMultiplier = 1.5;
+    const int _chargeMultiplier = 3;
+    const int _focusMultiplier = 3;
 
     [Export] int baseDamage = 10;
     [Export] int baseAccuracy = 100;
@@ -14,21 +26,39 @@ public partial class AttackEffect : ActionEffectResource
 
     public override void ExecuteEffect(BattleActor user, BattleActor target, ActorController actorController)
     {
-        if (baseAccuracy > GD.Randi() % 99)
+        if (baseAccuracy + Mathf.RoundToInt(user.GetLuck() * user.GetAccuraccyModifier()) > GD.Randi() % 99)
         {
-            // Hit
             int calculatedDamage = 0;
+            bool didCrit = false;
+            
             switch(damageCalculation)
             {
                 case BattleConsts.DamageCalculation.Strength:
                 {
-                    calculatedDamage = baseDamage + user.GetStrength();
+                    actorController.RunActorSideEffects(user, BattleConsts.TriggerType.OnUserPhysicalAttack);
+                    calculatedDamage = Mathf.RoundToInt((baseDamage + user.GetStrength()) * user.GetStrengthModifier());
+
+                    if ((baseCrit * user.GetCritModifier()) > GD.Randi() % 99)
+                    {
+                        GD.Print("It's a critical hit!");
+                        calculatedDamage = Mathf.RoundToInt(calculatedDamage * _critMultiplier);
+                        didCrit = true;
+                    } 
+
+                    if (user.IsChargeEnabled()) calculatedDamage = Mathf.RoundToInt(calculatedDamage * _chargeMultiplier);
+
+                    int restoreMPAmount = 0;
+                    restoreMPAmount = Mathf.RoundToInt(calculatedDamage * 0.5);
+                    if (0 < restoreMPAmount) actorController.TakeRejuvenate(user, restoreMPAmount);
+
                     break;
                 }
 
                 case BattleConsts.DamageCalculation.Elemental:
                 {
-                    calculatedDamage = baseDamage + user.GetElemental();
+                    actorController.RunActorSideEffects(user, BattleConsts.TriggerType.OnUserElementalAttack);
+                    calculatedDamage = Mathf.RoundToInt((baseDamage + user.GetElemental()) * user.GetElementalModifier());
+                    if (user.IsFocusEnabled()) calculatedDamage *= _focusMultiplier;
                     break;
                 }
 
@@ -39,10 +69,30 @@ public partial class AttackEffect : ActionEffectResource
                 }
             }
 
-            actorController.AddActorCurHP(target, -calculatedDamage);
+            // Affinity Calculation
+            if (user.IgnoreAffinity)
+            {
+                calculatedDamage = Mathf.RoundToInt(calculatedDamage * _affinityModifiers[BattleConsts.AffinityType.Weak]);
+
+                // TESTING
+                GD.Print("It pierced through the resistance!");
+            } else {
+                BattleConsts.AffinityType targetAffinity = target.GetAffinity(elementType);
+                double affinityModifier = _affinityModifiers[targetAffinity];
+                calculatedDamage = Mathf.RoundToInt(calculatedDamage * affinityModifier);
+
+                // TESTING
+                if (targetAffinity == BattleConsts.AffinityType.Weak) GD.Print("Weak!");
+                if (targetAffinity == BattleConsts.AffinityType.Resist) GD.Print("Resist");
+                if (targetAffinity == BattleConsts.AffinityType.Block) GD.Print("Block");
+            }
+
+            GD.Print("AttackEffect - "+calculatedDamage);
+
+            actorController.TakeDamage(target, -calculatedDamage, didCrit);
         } else {
             // Miss
-            EmitSignal(SignalName.AttackMissed, target);
+            actorController.ActionMissed(target);
         }
     }
 

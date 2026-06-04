@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://c8kdp0f1y71xk"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_nh1l4"]
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_30iq5"]
+[ext_resource type="Script" uid="uid://bvnxnfvynxixa" path="res://src/dataClasses/actionEffects/statusEffects/SetMenuEntryEffect.cs" id="2_afcod"]
+[ext_resource type="Resource" uid="uid://twg0jaqw4yyv" path="res://data/statusConditions/Cleave.tres" id="2_g7qvb"]
+[ext_resource type="Texture2D" uid="uid://d0760mm3ch5o4" path="res://assets/images/ui/statusConditionIcons/BreakIcon.png" id="3_afcod"]
+[ext_resource type="Resource" uid="uid://ctl1hqlls47gb" path="res://data/statusConditions/Immortality.tres" id="3_s7boy"]
+[ext_resource type="Resource" uid="uid://dq3v1fp84d7gh" path="res://data/statusConditions/Elevate.tres" id="4_1lmki"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="4_rv3wk"]
+
+[sub_resource type="Resource" id="Resource_17vvh"]
+script = ExtResource("2_afcod")
+metadata/_custom_type_script = "uid://bvnxnfvynxixa"
+
+[sub_resource type="Resource" id="Resource_lkw5d"]
+script = ExtResource("2_afcod")
+enable = false
+metadata/_custom_type_script = "uid://bvnxnfvynxixa"
+
+[sub_resource type="Resource" id="Resource_g7qvb"]
+script = ExtResource("4_rv3wk")
+startupActions = Array[ExtResource("1_nh1l4")]([SubResource("Resource_lkw5d")])
+cleanupActions = Array[ExtResource("1_nh1l4")]([SubResource("Resource_17vvh")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("2_30iq5")
+statusConditionName = "Break"
+icon = ExtResource("3_afcod")
+passiveActionResource = SubResource("Resource_g7qvb")
+elementType = 4
+fusionStatusConditions = Dictionary[int, ExtResource("2_30iq5")]({
+1: ExtResource("2_g7qvb"),
+2: ExtResource("3_s7boy"),
+3: ExtResource("4_1lmki"),
+4: null
+})
+metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

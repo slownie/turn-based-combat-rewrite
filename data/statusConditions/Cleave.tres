@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://twg0jaqw4yyv"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_j7gu6"]
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_8v6gc"]
+[ext_resource type="Script" uid="uid://cilsbo2s8y8tj" path="res://src/dataClasses/actionEffects/statusEffects/SetIgnoreAffinityEffect.cs" id="2_uhr82"]
+[ext_resource type="Texture2D" uid="uid://bwtrl75ad36pf" path="res://assets/images/ui/statusConditionIcons/CleaveIcon.png" id="3_uhr82"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="4_pj3cf"]
+
+[sub_resource type="Resource" id="Resource_c1nef"]
+script = ExtResource("2_uhr82")
+enable = false
+metadata/_custom_type_script = "uid://cilsbo2s8y8tj"
+
+[sub_resource type="Resource" id="Resource_vw7kc"]
+script = ExtResource("2_uhr82")
+metadata/_custom_type_script = "uid://cilsbo2s8y8tj"
+
+[sub_resource type="Resource" id="Resource_owgfn"]
+script = ExtResource("4_pj3cf")
+startupActions = Array[ExtResource("1_j7gu6")]([SubResource("Resource_vw7kc")])
+cleanupActions = Array[ExtResource("1_j7gu6")]([SubResource("Resource_c1nef")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("2_8v6gc")
+statusConditionName = "Cleave"
+icon = ExtResource("3_uhr82")
+passiveActionResource = SubResource("Resource_owgfn")
+elementType = 7
+metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

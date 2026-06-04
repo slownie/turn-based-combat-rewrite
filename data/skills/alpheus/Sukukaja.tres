@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="UseableSkillResource" format=3 uid="uid://dobns0pqhcg20"]
+
+[ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="1_wqnqw"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_m4d1w"]
+[ext_resource type="Resource" uid="uid://csc5xlcbaijcj" path="res://data/buffs/AgilityUp.tres" id="3_wqnqw"]
+[ext_resource type="Script" uid="uid://77x073pt6x6e" path="res://src/dataClasses/actionEffects/AddBuffEffect.cs" id="4_pq6ue"]
+[ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="5_3aexa"]
+[ext_resource type="Script" uid="uid://bijk8gwmj13d8" path="res://src/dataClasses/battleSequenceEffects/BattleSequenceEffectResource.cs" id="6_x3m07"]
+
+[sub_resource type="Resource" id="Resource_6ckhk"]
+script = ExtResource("4_pq6ue")
+buffResource = ExtResource("3_wqnqw")
+metadata/_custom_type_script = "uid://77x073pt6x6e"
+
+[sub_resource type="Resource" id="Resource_7do75"]
+script = ExtResource("5_3aexa")
+actions = Array[ExtResource("2_m4d1w")]([SubResource("Resource_6ckhk")])
+targetOppsiteSide = false
+targetSameSide = true
+metadata/_custom_type_script = "uid://f4ubms2rgfo3"
+
+[resource]
+script = ExtResource("1_wqnqw")
+skillCostAmount = 8
+useableActionResource = SubResource("Resource_7do75")
+skillName = "Sukukaja"
+metadata/_custom_type_script = "uid://dicj1dhgyboo"

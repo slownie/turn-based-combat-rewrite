@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bp2kyncoqe625"]
+
+[ext_resource type="Script" uid="uid://dgkqkxsy1lq88" path="res://src/battle/followerActor/FollowerActor.cs" id="1_u6ny7"]
+
+[node name="FollowerActor" type="Node2D" unique_id=611529014]
+script = ExtResource("1_u6ny7")

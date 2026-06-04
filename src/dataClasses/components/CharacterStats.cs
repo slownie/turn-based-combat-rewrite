@@ -6,10 +6,48 @@ public partial class CharacterStats : GodotObject
 {
 	[Signal] public delegate void HPChangedEventHandler();
 
+	[Signal] public delegate void HPReviveEventHandler();
+	[Signal] public delegate void HPDepletedEventHandler();
+
 	int _maxHP = 0;
 	int _maxMP = 0;
 	int _curHP = 0;
+	int curHP
+	{
+		get { return _curHP; }
+		set
+		{
+			// Did this revive the actor?
+			if (_curHP == 0 && 0 < value)
+			{
+				EmitSignal(SignalName.HPRevive);
+			}
+
+			_curHP = value;
+
+			// Did this kill the actor?
+			if (_curHP <= 0)
+			{
+				_curHP = 0;
+				EmitSignal(SignalName.HPDepleted);
+			}
+
+			if (_maxHP < _curHP) _curHP = _maxHP;
+		}
+	}
+
 	int _curMP = 0;
+	int curMP
+	{
+		get { return _curMP; }
+		set
+		{
+			_curMP = value;
+
+			if (_curHP < 0) { _curMP = 0; }
+			if (_maxMP < _curMP) { _curMP = _maxMP; }
+		}
+	}
 
 	int _strength = 0;
 	int _elemental = 0;
@@ -19,7 +57,7 @@ public partial class CharacterStats : GodotObject
     int _resistance = 0;
 
 	public CharacterStats() : this(null,-1,-1) {}
-	public CharacterStats(BaseStats baseStats, int curHP=-1,int curMP=-1)
+	public CharacterStats(BaseStats baseStats, int _curHP=-1,int _curMP=-1)
 	{
 		_maxHP = baseStats.GetMaxHP();
 		_maxMP = baseStats.GetMaxMP();
@@ -30,18 +68,18 @@ public partial class CharacterStats : GodotObject
 		_defense = baseStats.GetDefense();
 		_resistance = baseStats.GetResistance();
 
-		if (curHP == -1)
+		if (_curHP == -1)
 		{
-			_curHP = _maxHP;
+			curHP = _maxHP;
 		} else {
-			_curHP = curHP;
+			curHP = _curHP;
 		}
 
-		if (curMP == -1)
+		if (_curMP == -1)
 		{
-			_curMP = _maxMP;
+			curMP = _maxMP;
 		} else {
-			_curMP = curMP;
+			curMP = _curMP;
 		}
 	}
 
@@ -59,29 +97,21 @@ public partial class CharacterStats : GodotObject
 
 	public void AddCurHP(int amount)
 	{
-		_curHP += amount;
-		if (_curHP < 0) _curHP = 0;
-		if (_maxHP < _curHP) _curHP = _maxHP;
+		curHP += amount;
 	}
 
 	public void SetCurHP(int amount)
 	{
-		_curHP = amount;
-		if (_curHP < 0) _curHP = 0;
-		if (_maxHP < _curHP) _curHP = _maxHP;
+		curHP = amount;
 	}
 
 	public void AddCurMP(int amount)
 	{
-		_curMP += amount;
-		if (_curMP < 0) _curMP = 0;
-		if (_maxMP < _curMP) _curMP = _maxMP;
+		curMP += amount;
 	}
 
 	public void SetCurMP(int amount)
 	{
-		_curMP = amount;
-		if (_curMP < 0) _curMP = 0;
-		if (_maxMP < _curMP) _curMP = _maxMP;
+		curMP = amount;
 	}
 }

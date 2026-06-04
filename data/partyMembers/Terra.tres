@@ -1,19 +1,34 @@
 [gd_resource type="Resource" script_class="PartyMemberDataResource" format=3 uid="uid://1b7i8tunlfiy"]
 
 [ext_resource type="Script" uid="uid://cfoqdpdkdpur5" path="res://src/dataClasses/partyMembers/PartyMemberDataResource.cs" id="1_0mqtt"]
+[ext_resource type="Script" uid="uid://cq1yfcauodijh" path="res://src/dataClasses/components/BaseAffinity.cs" id="1_bqktf"]
 [ext_resource type="Texture2D" uid="uid://dehtghxnp1n3b" path="res://assets/images/battleActors/Jam/JamBattleIcon.png" id="1_m5hiy"]
-[ext_resource type="Script" uid="uid://elamptvvyimh" path="res://src/components/BaseStats.cs" id="1_ushfx"]
+[ext_resource type="Script" uid="uid://elamptvvyimh" path="res://src/dataClasses/components/BaseStats.cs" id="1_ushfx"]
 [ext_resource type="Texture2D" uid="uid://d10ckyduld8r0" path="res://assets/images/battleActors/Jam/sJamIdle_strip4.png" id="3_0jh7a"]
 [ext_resource type="Script" uid="uid://dkuf8p00m1ibl" path="res://src/dataClasses/skills/BaseSkillResource.cs" id="5_bqktf"]
-[ext_resource type="Resource" uid="uid://cvkit1bpswrrx" path="res://data/skills/terra/RushCombo.tres" id="6_a3lub"]
-[ext_resource type="Resource" uid="uid://ddvtnoof5n8ch" path="res://data/skills/terra/Quake.tres" id="7_i8nwu"]
-[ext_resource type="Resource" uid="uid://bb7n7ijhidmuh" path="res://data/skills/terra/Reinforce.tres" id="8_6b3wo"]
+[ext_resource type="Script" uid="uid://dhbd03db6gml8" path="res://src/dataClasses/skills/FusionSkillResource.cs" id="6_4oqrj"]
+[ext_resource type="Resource" uid="uid://cq5j5eomr0oal" path="res://data/skills/fusionSkills/CrossCombo.tres" id="7_bmjkj"]
+[ext_resource type="Resource" uid="uid://2tty76bjd4i2" path="res://data/skills/status/Ignite.tres" id="7_i8nwu"]
+[ext_resource type="Resource" uid="uid://bb2c2shqtuda7" path="res://data/skills/status/Drench.tres" id="8_6b3wo"]
+[ext_resource type="Resource" uid="uid://drqd3j1akdh8b" path="res://data/skills/status/Swirl.tres" id="9_4oqrj"]
+[ext_resource type="Resource" uid="uid://p10kgkn7jmy6" path="res://data/skills/status/Fracture.tres" id="10_bmjkj"]
+
+[sub_resource type="Resource" id="Resource_a3lub"]
+script = ExtResource("1_bqktf")
+_fireAffinity = 1
+_earthAffinity = 2
+metadata/_custom_type_script = "uid://cq1yfcauodijh"
 
 [sub_resource type="Resource" id="Resource_2gw5i"]
 script = ExtResource("1_ushfx")
 _maxHP = 40
 _maxMP = 15
+_strength = 8
+_elemental = 2
 _agility = 3
+_luck = 2
+_defense = 6
+_resistance = 2
 metadata/_custom_type_script = "uid://elamptvvyimh"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_m5hiy"]
@@ -56,7 +71,9 @@ animations = [{
 script = ExtResource("1_0mqtt")
 partyMemberName = "Terra"
 baseStats = SubResource("Resource_2gw5i")
-startingSkills = Array[ExtResource("5_bqktf")]([ExtResource("6_a3lub"), ExtResource("7_i8nwu"), ExtResource("8_6b3wo")])
+baseAffinity = SubResource("Resource_a3lub")
+startingSkills = Array[ExtResource("5_bqktf")]([ExtResource("7_i8nwu"), ExtResource("8_6b3wo"), ExtResource("9_4oqrj"), ExtResource("10_bmjkj")])
+startingFusionSkills = Array[ExtResource("6_4oqrj")]([ExtResource("7_bmjkj")])
 spriteFrames = SubResource("SpriteFrames_bqktf")
 battleIcon = ExtResource("1_m5hiy")
 metadata/_custom_type_script = "uid://cfoqdpdkdpur5"

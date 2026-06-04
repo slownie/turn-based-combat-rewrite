@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Collections;
+using System.Linq;
 
 public static partial class BattleConsts
 {
@@ -23,6 +25,14 @@ public static partial class BattleConsts
 		Ice,
 		Life,
 		Gravity
+	}
+
+	public enum AffinityType
+	{
+		Normal,
+		Weak,
+		Resist,
+		Block
 	}
 
 	/*
@@ -60,4 +70,46 @@ public static partial class BattleConsts
 		Other
 	}
 
+	public enum MenuEntryType
+	{
+		SkillPhysical,
+		SkillElemental,
+		Item
+	}
+	
+	public enum TriggerType
+	{
+		Never, // Used for effects with only startups and cleanups
+
+		OnBattleStart,
+		OnBattleEnd,
+
+		OnUserTurnStart,
+		OnUserTurnEnd,
+
+		OnUserAnyAttack,
+		OnUserPhysicalAttack,
+		OnUserElementalAttack,
+
+		OnUserTakeDamage,
+	}
+
+	public enum StatBuffType
+	{
+		Strength,
+		Elemental,
+		Defense,
+		Agility,
+		Accuracy,
+		Crit
+	}
+
+	public static BattleActor FindActorByFusionID(int fusionID, Godot.Collections.Array<BattleActor> actors)
+	{
+		foreach(BattleActor battleActor in actors)
+		{
+			if (battleActor.GetFusionID() == fusionID) return battleActor;
+		}
+		return null;
+	}
 }

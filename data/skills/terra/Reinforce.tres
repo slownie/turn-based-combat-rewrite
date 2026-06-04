@@ -11,7 +11,7 @@ metadata/_custom_type_script = "uid://f4ubms2rgfo3"
 
 [resource]
 script = ExtResource("2_axanv")
-skillCostAmount = 12
+skillCostAmount = 8
 useableActionResource = SubResource("Resource_hgnu4")
 skillName = "Reinforce"
 desc = "Raise defense of one ally."

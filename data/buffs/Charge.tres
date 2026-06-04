@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="BuffResource" format=3 uid="uid://cl18rfl6kcjqd"]
+
+[ext_resource type="Texture2D" uid="uid://lagjtm6pivex" path="res://assets/images/ui/buffs/Charge.png" id="1_gu0dv"]
+[ext_resource type="Script" uid="uid://bp8h5326g1kmp" path="res://src/dataClasses/buffs/BuffResource.cs" id="1_v2kfw"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_pn23q"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="3_i16iq"]
+[ext_resource type="Script" uid="uid://c2cf437myxwcv" path="res://src/dataClasses/actionEffects/SetHasChargeEffect.cs" id="3_pn23q"]
+
+[sub_resource type="Resource" id="Resource_i16iq"]
+script = ExtResource("3_pn23q")
+enable = false
+metadata/_custom_type_script = "uid://c2cf437myxwcv"
+
+[sub_resource type="Resource" id="Resource_r87d0"]
+script = ExtResource("3_pn23q")
+metadata/_custom_type_script = "uid://c2cf437myxwcv"
+
+[sub_resource type="Resource" id="Resource_ahc41"]
+script = ExtResource("3_i16iq")
+triggerType = 6
+triggerActions = Array[ExtResource("2_pn23q")]([SubResource("Resource_r87d0")])
+cleanupActions = Array[ExtResource("2_pn23q")]([SubResource("Resource_i16iq")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("1_v2kfw")
+buffName = "Charge"
+icon = ExtResource("1_gu0dv")
+passiveActionResource = SubResource("Resource_ahc41")
+metadata/_custom_type_script = "uid://bp8h5326g1kmp"

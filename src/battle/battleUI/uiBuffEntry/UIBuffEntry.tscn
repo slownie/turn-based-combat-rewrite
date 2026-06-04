@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://co2trofc03kjm"]
+
+[ext_resource type="Script" uid="uid://bldrnkftpumd4" path="res://src/battle/battleUI/uiBuffEntry/UIBuffEntry.cs" id="1_50yej"]
+[ext_resource type="Texture2D" uid="uid://boyr7sxsyr4i2" path="res://assets/images/ui/buffs/AttackBuff.png" id="2_8cpf3"]
+
+[node name="UIBuffEntry" type="HBoxContainer" unique_id=1130295892]
+script = ExtResource("1_50yej")
+
+[node name="Icon" type="TextureRect" parent="." unique_id=322715390]
+layout_mode = 2
+texture = ExtResource("2_8cpf3")
+expand_mode = 2
+
+[node name="TurnCount" type="Label" parent="." unique_id=778072020]
+layout_mode = 2
+text = "3"

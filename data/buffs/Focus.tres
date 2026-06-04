@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="BuffResource" format=3 uid="uid://cofbisid3nso6"]
+
+[ext_resource type="Texture2D" uid="uid://df02rmyi3buit" path="res://assets/images/ui/buffs/Focus.png" id="1_n8ula"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_7042a"]
+[ext_resource type="Script" uid="uid://owg4i63s3d53" path="res://src/dataClasses/actionEffects/SetHasFocusEffect.cs" id="3_7042a"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="4_l7xs0"]
+[ext_resource type="Script" uid="uid://bp8h5326g1kmp" path="res://src/dataClasses/buffs/BuffResource.cs" id="5_fhyr1"]
+
+[sub_resource type="Resource" id="Resource_t14ei"]
+script = ExtResource("3_7042a")
+enable = false
+metadata/_custom_type_script = "uid://owg4i63s3d53"
+
+[sub_resource type="Resource" id="Resource_l7xs0"]
+script = ExtResource("3_7042a")
+metadata/_custom_type_script = "uid://owg4i63s3d53"
+
+[sub_resource type="Resource" id="Resource_ahc41"]
+script = ExtResource("4_l7xs0")
+triggerType = 6
+triggerActions = Array[ExtResource("2_7042a")]([SubResource("Resource_l7xs0")])
+cleanupActions = Array[ExtResource("2_7042a")]([SubResource("Resource_t14ei")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("5_fhyr1")
+buffName = "Focus"
+icon = ExtResource("1_n8ula")
+passiveActionResource = SubResource("Resource_ahc41")
+metadata/_custom_type_script = "uid://bp8h5326g1kmp"

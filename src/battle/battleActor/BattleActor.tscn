@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cc4rk2p8p6ivm" path="res://src/battle/battleActor/BattleActor.cs" id="1_r8nm7"]
 [ext_resource type="Texture2D" uid="uid://cfyv67l08hkx8" path="res://assets/images/battleActors/SolBadguy/sSolBadguyIdle_strip4.png" id="2_86ltd"]
+[ext_resource type="Theme" uid="uid://h1nt1ofh7cv8" path="res://ui/BattleUITheme.tres" id="3_nsqsq"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nsqsq"]
 atlas = ExtResource("2_86ltd")
@@ -46,60 +47,80 @@ script = ExtResource("1_r8nm7")
 sprite_frames = SubResource("SpriteFrames_xp4os")
 autoplay = "default"
 
-[node name="MPLabel" type="Label" parent="." unique_id=801517325]
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="TestUI" type="HBoxContainer" parent="." unique_id=1881284218]
+offset_left = -35.0
+offset_top = 25.0
+offset_right = 52.0
+offset_bottom = 65.0
+theme_override_constants/separation = 4
 
-[node name="TestUI" type="VBoxContainer" parent="." unique_id=1721447135]
-offset_left = -22.0
-offset_top = 1.0
-offset_right = 27.0
-offset_bottom = 29.0
+[node name="StatusContainer" type="HBoxContainer" parent="TestUI" unique_id=61006631]
+layout_mode = 2
+size_flags_vertical = 4
+alignment = 1
 
-[node name="HPContainer" type="HBoxContainer" parent="TestUI" unique_id=868554181]
+[node name="StatusIcon" type="TextureRect" parent="TestUI/StatusContainer" unique_id=1917427812]
+layout_mode = 2
+stretch_mode = 3
+
+[node name="StatusTurn" type="Label" parent="TestUI/StatusContainer" unique_id=2084846418]
+layout_mode = 2
+theme = ExtResource("3_nsqsq")
+
+[node name="StatContainer" type="VBoxContainer" parent="TestUI" unique_id=1721447135]
 layout_mode = 2
 
-[node name="HP" type="Label" parent="TestUI/HPContainer" unique_id=1530749783]
+[node name="HPContainer" type="HBoxContainer" parent="TestUI/StatContainer" unique_id=868554181]
+layout_mode = 2
+
+[node name="HP" type="Label" parent="TestUI/StatContainer/HPContainer" unique_id=1530749783]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 0, 1)
 theme_override_font_sizes/font_size = 8
 text = "HP"
 
-[node name="CurHP" type="Label" parent="TestUI/HPContainer" unique_id=206089142]
+[node name="CurHP" type="Label" parent="TestUI/StatContainer/HPContainer" unique_id=206089142]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "20"
 
-[node name="Divider" type="Label" parent="TestUI/HPContainer" unique_id=1581164648]
+[node name="Divider" type="Label" parent="TestUI/StatContainer/HPContainer" unique_id=1581164648]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "/"
 
-[node name="MaxHP" type="Label" parent="TestUI/HPContainer" unique_id=1942268177]
+[node name="MaxHP" type="Label" parent="TestUI/StatContainer/HPContainer" unique_id=1942268177]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "20"
 
-[node name="MPContainer" type="HBoxContainer" parent="TestUI" unique_id=1263176805]
+[node name="MPContainer" type="HBoxContainer" parent="TestUI/StatContainer" unique_id=1263176805]
 layout_mode = 2
 
-[node name="MP" type="Label" parent="TestUI/MPContainer" unique_id=1829891011]
+[node name="MP" type="Label" parent="TestUI/StatContainer/MPContainer" unique_id=1829891011]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 1, 1, 1)
 theme_override_font_sizes/font_size = 8
 text = "MP"
 
-[node name="CurMP" type="Label" parent="TestUI/MPContainer" unique_id=1598199000]
+[node name="CurMP" type="Label" parent="TestUI/StatContainer/MPContainer" unique_id=1598199000]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "20"
 
-[node name="Divider" type="Label" parent="TestUI/MPContainer" unique_id=388210811]
+[node name="Divider" type="Label" parent="TestUI/StatContainer/MPContainer" unique_id=388210811]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "/"
 
-[node name="MaxMP" type="Label" parent="TestUI/MPContainer" unique_id=92019575]
+[node name="MaxMP" type="Label" parent="TestUI/StatContainer/MPContainer" unique_id=92019575]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "20"
+
+[node name="BuffContainer" type="VBoxContainer" parent="TestUI" unique_id=797833517]
+layout_mode = 2
+
+[node name="Tempo" type="Label" parent="TestUI" unique_id=801517325]
+layout_mode = 2
+text = "1"

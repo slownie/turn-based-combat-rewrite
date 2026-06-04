@@ -6,8 +6,10 @@
 [ext_resource type="Resource" uid="uid://djmfuvimqa11c" path="res://data/partyMembers/Alpheus.tres" id="4_dlaq4"]
 [ext_resource type="Script" uid="uid://df1x4c3otk6bt" path="res://src/dataClasses/items/UseableItemResource.cs" id="5_dlaq4"]
 [ext_resource type="Resource" uid="uid://cmljftwxwvufb" path="res://data/items/Potion.tres" id="6_4p64y"]
+[ext_resource type="Resource" uid="uid://d02umgi418wh7" path="res://data/items/Ether.tres" id="7_4p64y"]
+[ext_resource type="Resource" uid="uid://cheo5dmxxd60d" path="res://data/items/Revive.tres" id="8_ji6tv"]
 
 [node name="Main" type="Node" unique_id=1991083736]
 script = ExtResource("1_gwppc")
 startingPartyMembers = Array[ExtResource("2_k30t1")]([ExtResource("3_ktfyv"), ExtResource("4_dlaq4")])
-inventoryItems = Array[ExtResource("5_dlaq4")]([ExtResource("6_4p64y")])
+inventoryItems = Array[ExtResource("5_dlaq4")]([ExtResource("6_4p64y"), ExtResource("7_4p64y"), ExtResource("8_ji6tv")])

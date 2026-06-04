@@ -1,0 +1,35 @@
+[gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://dqbbe40tkqv5f"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_vtpnq"]
+[ext_resource type="Texture2D" uid="uid://unxtwplyb8bh" path="res://assets/images/ui/statusConditionIcons/BurnIcon.png" id="2_05apm"]
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_c3l7r"]
+[ext_resource type="Resource" uid="uid://cxsvotgmcpifl" path="res://data/statusConditions/Seal.tres" id="2_s2ars"]
+[ext_resource type="Script" uid="uid://db7y2t40b6cqe" path="res://src/dataClasses/actionEffects/DamagePercentageEffect.cs" id="3_c3l7r"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="3_m570m"]
+[ext_resource type="Resource" uid="uid://b54f5iiacjrg6" path="res://data/statusConditions/Overdrive.tres" id="3_v1rji"]
+[ext_resource type="Resource" uid="uid://twg0jaqw4yyv" path="res://data/statusConditions/Cleave.tres" id="4_mvern"]
+
+[sub_resource type="Resource" id="Resource_usslx"]
+script = ExtResource("3_c3l7r")
+damagePercentage = 8
+metadata/_custom_type_script = "uid://db7y2t40b6cqe"
+
+[sub_resource type="Resource" id="Resource_41vxq"]
+script = ExtResource("3_m570m")
+triggerType = 4
+triggerActions = Array[ExtResource("1_vtpnq")]([SubResource("Resource_usslx")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("2_c3l7r")
+statusConditionName = "Burn"
+icon = ExtResource("2_05apm")
+passiveActionResource = SubResource("Resource_41vxq")
+elementType = 1
+fusionStatusConditions = Dictionary[int, ExtResource("2_c3l7r")]({
+1: null,
+2: ExtResource("2_s2ars"),
+3: ExtResource("3_v1rji"),
+4: ExtResource("4_mvern")
+})
+metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

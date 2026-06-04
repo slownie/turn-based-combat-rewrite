@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://b3xh3fqxha30"]
+
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="1_ekqo8"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_ju1q8"]
+[ext_resource type="Texture2D" uid="uid://b8hebagitxlfv" path="res://assets/images/ui/statusConditionIcons/FrostbiteIcon.png" id="1_slwbl"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="2_slwbl"]
+[ext_resource type="Script" uid="uid://bq713fjkulvym" path="res://src/dataClasses/actionEffects/statusEffects/CounterAttackEffect.cs" id="4_kh02c"]
+
+[sub_resource type="Resource" id="Resource_r3mji"]
+script = ExtResource("4_kh02c")
+metadata/_custom_type_script = "uid://bq713fjkulvym"
+
+[sub_resource type="Resource" id="Resource_kh02c"]
+script = ExtResource("2_slwbl")
+triggerType = 8
+triggerActions = Array[ExtResource("1_ju1q8")]([SubResource("Resource_r3mji")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("1_ekqo8")
+statusConditionName = "Frostbite"
+icon = ExtResource("1_slwbl")
+passiveActionResource = SubResource("Resource_kh02c")
+elementType = 8
+metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

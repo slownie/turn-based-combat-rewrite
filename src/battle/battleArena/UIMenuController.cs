@@ -9,21 +9,24 @@ public partial class UIMenuController : Control
 	[Export] PackedScene targetMenuScene;
 
 	[Signal] public delegate void ActionTargetConfirmedEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
-	[Signal] public delegate void SkillUsedEventHandler(BattleActor actor, UseableSkillResource.SkillCostType skillCostType, int amount);
+	[Signal] public delegate void SkillUsedEventHandler(UseableSkillResource.SkillCostType skillCostType, int amount);
+	[Signal] public delegate void FusionSkillUsedEventHandler(int partnerID, UseableSkillResource.SkillCostType skillCostType, int amount);
 	[Signal] public delegate void ItemUsedEventHandler(int itemIndex, int quantity);
 
 	ActorController _actorController;
 	Godot.Collections.Array<BattleActor> _battleActors = [];
 
 	BattleActor _currentPartyActor;
-	Godot.Collections.Array<UseableSkillResource> _useableSkills = [];
 	Godot.Collections.Array<InventoryItem> _battleInventory = [];
 	UseableSkillResource _selectedSkill;
+	FusionSkillResource _selectedFusionSkill;
 	UseableItemResource _selectedItem;
 	int _selectedItemIndex = -1;
 
 	Godot.Collections.Array<UIBattleMenuBase> _menuStack = [];
 	UIBattleMenuBase _currentMenu;
+
+	Vector2 _menuPosition = new Vector2(160, 16);
 
     public override void _Ready()
 	{
@@ -39,14 +42,10 @@ public partial class UIMenuController : Control
 	public void PartyTurnStart(BattleActor currentPartyActor, Godot.Collections.Array<InventoryItem> battleInventory)
 	{
 		_currentPartyActor = currentPartyActor;
-		foreach (BaseSkillResource skill in _currentPartyActor.GetSkills())
-		{
-			if (skill is UseableSkillResource) _useableSkills.Add(skill as UseableSkillResource);
-		}
 
 		_battleInventory = battleInventory;
 
-		bool skillMenuEnabled = 0 < _useableSkills.Count; 
+		bool skillMenuEnabled = 0 < _currentPartyActor.GetUseableSkills().Count; 
 		bool itemMenuEnabled = 0 < _battleInventory.Count;
 
 		CreateMainMenu(skillMenuEnabled, itemMenuEnabled);
@@ -70,15 +69,20 @@ public partial class UIMenuController : Control
 		UISkillMenu skillMenu = skillMenuScene.Instantiate() as UISkillMenu;
 		AddChild(skillMenu);
 
+		Godot.Collections.Array<BattleActor> partyMembers = _actorController.GetPartyMembers(_battleActors);
+		// Really shouldn't make a difference but its a bit cleaner
+		partyMembers.Remove(_currentPartyActor);
+
 		skillMenu.SkillSelected += OnSkillSelected;
+		skillMenu.FusionSkillSelected += OnFusionSelected;
 		skillMenu.SkillSelectionCancelled += UnloadMenu;
 
 		// If the player reaches this menu, then there are useable skills
 		// Even if _useableSkills is empty, skillMenu.Setup will execute without errors
-		skillMenu.Setup(_useableSkills);
+		skillMenu.Setup(_currentPartyActor, partyMembers);
 		LoadMenu(skillMenu);
 
-		skillMenu.Position = new Vector2(64, 32);
+		skillMenu.Position = _menuPosition;
 	}
 
 	private void CreateItemMenu()
@@ -92,13 +96,19 @@ public partial class UIMenuController : Control
 		itemMenu.Setup(_battleInventory);
 		LoadMenu(itemMenu);
 
-		itemMenu.Position = new Vector2(64, 32);
+		itemMenu.Position = _menuPosition;
 	}
 
 	private void OnSkillSelected(UseableSkillResource useableSkillResource)
 	{
 		_selectedSkill = useableSkillResource;
 		CreateTargetCursor(_selectedSkill.GetUseableActionResource());
+	}
+
+	private void OnFusionSelected(FusionSkillResource fusionSkillResource)
+	{
+		_selectedFusionSkill = fusionSkillResource;
+		CreateTargetCursor(_selectedFusionSkill.GetUseableActionResource());
 	}
 
 	private void OnItemSelected(int selectedItemIndex)
@@ -156,8 +166,14 @@ public partial class UIMenuController : Control
 	{
 		if (_selectedSkill != null)
 		{
-			EmitSignal(SignalName.SkillUsed, _currentPartyActor, (int)_selectedSkill.GetSkillCostType(), _selectedSkill.GetSkillCostAmount());
+			EmitSignal(SignalName.SkillUsed, (int)_selectedSkill.GetSkillCostType(), _selectedSkill.GetSkillCostAmount());
 			EmitSignal(SignalName.ActionTargetConfirmed, _selectedSkill.GetUseableActionResource(), selectedActors);
+		}
+
+		if (_selectedFusionSkill != null)
+		{
+			EmitSignal(SignalName.FusionSkillUsed, _selectedFusionSkill.GetFusionID(), (int)_selectedFusionSkill.GetSkillCostType(), _selectedFusionSkill.GetSkillCostAmount());
+			EmitSignal(SignalName.ActionTargetConfirmed, _selectedFusionSkill.GetUseableActionResource(), selectedActors);
 		}
 
 		if (_selectedItemIndex != -1)
@@ -200,9 +216,12 @@ public partial class UIMenuController : Control
 			node.QueueFree();
 		}
 
+		_currentMenu = null;
+		_menuStack = [];
+
 		_currentPartyActor = null; 
-		_useableSkills = [];
 		_selectedSkill = null;
+		_selectedFusionSkill = null;
 		_selectedItem = null;
 		_selectedItemIndex = -1;
 	}

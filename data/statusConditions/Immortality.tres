@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="StatusConditionResource" format=3 uid="uid://ctl1hqlls47gb"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_j3yg2"]
+[ext_resource type="Script" uid="uid://bntvm5dotkyh" path="res://src/dataClasses/actionEffects/statusEffects/SetImmortalityEffect.cs" id="2_drkkt"]
+[ext_resource type="Script" uid="uid://bvlghdm4fgtn2" path="res://src/dataClasses/statusCondition/StatusConditionResource.cs" id="2_tntp7"]
+[ext_resource type="Texture2D" uid="uid://bllyefahqklpf" path="res://assets/images/ui/statusConditionIcons/ImmortalityIcon.png" id="3_drkkt"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="4_0omrt"]
+
+[sub_resource type="Resource" id="Resource_motqu"]
+script = ExtResource("2_drkkt")
+enable = false
+metadata/_custom_type_script = "uid://bntvm5dotkyh"
+
+[sub_resource type="Resource" id="Resource_ienvv"]
+script = ExtResource("2_drkkt")
+metadata/_custom_type_script = "uid://bntvm5dotkyh"
+
+[sub_resource type="Resource" id="Resource_cpe5e"]
+script = ExtResource("4_0omrt")
+startupActions = Array[ExtResource("1_j3yg2")]([SubResource("Resource_ienvv")])
+cleanupActions = Array[ExtResource("1_j3yg2")]([SubResource("Resource_motqu")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("2_tntp7")
+statusConditionName = "Immortality"
+icon = ExtResource("3_drkkt")
+passiveActionResource = SubResource("Resource_cpe5e")
+elementType = 9
+metadata/_custom_type_script = "uid://bvlghdm4fgtn2"

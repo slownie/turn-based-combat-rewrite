@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="PassiveSkillResource" format=3 uid="uid://bn1u17dyqv7on"]
+
+[ext_resource type="Script" uid="uid://c2rs1ebt6mlmh" path="res://src/dataClasses/skills/PassiveSkillResource.cs" id="1_077gn"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_88bgq"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="2_cdce5"]
+[ext_resource type="Script" uid="uid://bcytw7y8wvefn" path="res://src/dataClasses/actionEffects/HealPercentageEffect.cs" id="3_qh7fq"]
+
+[sub_resource type="Resource" id="Resource_fq84u"]
+script = ExtResource("3_qh7fq")
+healPercentage = 8
+metadata/_custom_type_script = "uid://bcytw7y8wvefn"
+
+[sub_resource type="Resource" id="Resource_64xgl"]
+script = ExtResource("2_cdce5")
+triggerType = 3
+triggerActions = Array[ExtResource("1_88bgq")]([SubResource("Resource_fq84u")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("1_077gn")
+passiveActionResource = SubResource("Resource_64xgl")
+skillName = "Regenerate 3"
+metadata/_custom_type_script = "uid://c2rs1ebt6mlmh"

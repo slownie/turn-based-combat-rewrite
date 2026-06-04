@@ -1,19 +1,35 @@
 [gd_resource type="Resource" script_class="PartyMemberDataResource" format=3 uid="uid://djmfuvimqa11c"]
 
-[ext_resource type="Script" uid="uid://elamptvvyimh" path="res://src/components/BaseStats.cs" id="1_4uqfo"]
+[ext_resource type="Script" uid="uid://elamptvvyimh" path="res://src/dataClasses/components/BaseStats.cs" id="1_4uqfo"]
+[ext_resource type="Script" uid="uid://cq1yfcauodijh" path="res://src/dataClasses/components/BaseAffinity.cs" id="1_5wtsf"]
 [ext_resource type="Texture2D" uid="uid://cb5uc65k5bepg" path="res://assets/images/battleActors/Testament/TestamentBattleIcon.png" id="1_es0o6"]
 [ext_resource type="Script" uid="uid://cfoqdpdkdpur5" path="res://src/dataClasses/partyMembers/PartyMemberDataResource.cs" id="1_iccj4"]
 [ext_resource type="Texture2D" uid="uid://cor5p3nuroajs" path="res://assets/images/battleActors/Testament/sTestamentIdle_strip4.png" id="3_es0o6"]
 [ext_resource type="Script" uid="uid://dkuf8p00m1ibl" path="res://src/dataClasses/skills/BaseSkillResource.cs" id="5_4uqfo"]
-[ext_resource type="Resource" uid="uid://clnbm17ilhsj" path="res://data/skills/alpheus/Wave.tres" id="6_aq5s4"]
-[ext_resource type="Resource" uid="uid://dfgkskl3badsp" path="res://data/skills/alpheus/Knockout.tres" id="7_pqivu"]
-[ext_resource type="Resource" uid="uid://dx56xapu1gg37" path="res://data/skills/alpheus/CriticalEye.tres" id="8_5wtsf"]
+[ext_resource type="Script" uid="uid://dhbd03db6gml8" path="res://src/dataClasses/skills/FusionSkillResource.cs" id="6_j63o3"]
+[ext_resource type="Resource" uid="uid://bka6k2xrni75h" path="res://data/skills/fusionSkills/Heal.tres" id="7_b7b3e"]
+[ext_resource type="Resource" uid="uid://2tty76bjd4i2" path="res://data/skills/status/Ignite.tres" id="7_r0vku"]
+[ext_resource type="Resource" uid="uid://bb2c2shqtuda7" path="res://data/skills/status/Drench.tres" id="8_j63o3"]
+[ext_resource type="Resource" uid="uid://drqd3j1akdh8b" path="res://data/skills/status/Swirl.tres" id="9_b7b3e"]
+[ext_resource type="Resource" uid="uid://p10kgkn7jmy6" path="res://data/skills/status/Fracture.tres" id="10_wnfgl"]
+[ext_resource type="Resource" uid="uid://wu75244pesrk" path="res://data/skills/alpheus/Sukunda.tres" id="13_wnfgl"]
+
+[sub_resource type="Resource" id="Resource_4fsrl"]
+script = ExtResource("1_5wtsf")
+_waterAffinity = 2
+_windAffinity = 1
+metadata/_custom_type_script = "uid://cq1yfcauodijh"
 
 [sub_resource type="Resource" id="Resource_aq5s4"]
 script = ExtResource("1_4uqfo")
 _maxHP = 25
 _maxMP = 30
+_strength = 5
+_elemental = 5
 _agility = 5
+_luck = 2
+_defense = 2
+_resistance = 6
 metadata/_custom_type_script = "uid://elamptvvyimh"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_aq5s4"]
@@ -55,8 +71,11 @@ animations = [{
 [resource]
 script = ExtResource("1_iccj4")
 partyMemberName = "Alpheus"
+partyMemberFusionID = 1
 baseStats = SubResource("Resource_aq5s4")
-startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("6_aq5s4"), ExtResource("7_pqivu"), ExtResource("8_5wtsf")])
+baseAffinity = SubResource("Resource_4fsrl")
+startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("7_r0vku"), ExtResource("8_j63o3"), ExtResource("9_b7b3e"), ExtResource("10_wnfgl"), ExtResource("13_wnfgl")])
+startingFusionSkills = Array[ExtResource("6_j63o3")]([ExtResource("7_b7b3e")])
 spriteFrames = SubResource("SpriteFrames_r0vku")
 battleIcon = ExtResource("1_es0o6")
 metadata/_custom_type_script = "uid://cfoqdpdkdpur5"
