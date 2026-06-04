@@ -82,6 +82,7 @@ public partial class FollowerActor : Node2D
     public void Setup(BattleActor leaderActor)
     {
         _leaderActor = leaderActor;
+		_leaderActor.HPDepleted += OnStatsHPDepleted;
     }
 
 	public override void _Process(double delta)
@@ -114,4 +115,14 @@ public partial class FollowerActor : Node2D
 			IsActive = true;
 		}
     }
+
+	private void OnStatsHPDepleted()
+	{
+		IsActive = false;
+
+		// Variable resets
+		Readiness = 0.0;
+
+		EmitSignal(SignalName.ReadinessChanged, Readiness);
+	}
 }
