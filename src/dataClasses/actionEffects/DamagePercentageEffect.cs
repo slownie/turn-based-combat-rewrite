@@ -8,7 +8,7 @@ public partial class DamagePercentageEffect : ActionEffectResource
 
     public override void ExecuteEffect(BattleActor user, BattleActor target, ActorController actorController)
     {
-        int calculatedDamage = Mathf.FloorToInt(target.GetMaxHP() * (0.01 * damagePercentage));
+        int calculatedDamage = Mathf.Max(1, Mathf.FloorToInt(target.GetMaxHP() * (0.01 * damagePercentage)));
         actorController.TakeDamage(target, -calculatedDamage, false);
     }
 
