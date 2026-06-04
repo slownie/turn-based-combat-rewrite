@@ -10,6 +10,8 @@ public partial class EnemyResource : Resource
 
     [Export] Godot.Collections.Array<BaseSkillResource> skills = [];
 
+    [Export(PropertyHint.Range, "0,4")] int followerActorAmount = 0;
+
     [Export] SpriteFrames spriteFrames;
     [Export] Texture2D battleIcon;
 
@@ -17,6 +19,8 @@ public partial class EnemyResource : Resource
     public BaseStats GetBaseStats() { return baseStats; }
     public Godot.Collections.Array<BaseSkillResource> GetSkills() { return skills; }
     public BaseAffinity GetBaseAffinity() { return baseAffinity; }
+
+    public int GetFollowerActorAmount() { return followerActorAmount; }
 
     public SpriteFrames GetSpriteFrames() { return spriteFrames; }
 

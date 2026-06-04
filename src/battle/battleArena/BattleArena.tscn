@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://b4m5jes4b48u2" path="res://src/battle/battleArena/BattleArena.cs" id="1_7r31s"]
 [ext_resource type="PackedScene" uid="uid://dd5i0y578f2c3" path="res://src/battle/battleActor/BattleActor.tscn" id="2_2kbwh"]
+[ext_resource type="PackedScene" uid="uid://bp2kyncoqe625" path="res://src/battle/followerActor/FollowerActor.tscn" id="3_3wrnl"]
 [ext_resource type="Script" uid="uid://jpm4necbdqwp" path="res://src/battle/actorController/ActorController.cs" id="3_ma76s"]
 [ext_resource type="PackedScene" uid="uid://cseqwi6oq3fss" path="res://src/battle/battleUI/uiTurnBar/UITurnBar.tscn" id="4_2kbwh"]
 [ext_resource type="Resource" uid="uid://c5fdarb44i3v0" path="res://data/skills/Attack.tres" id="4_yc600"]
@@ -23,6 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7r31s")
 battleActorScene = ExtResource("2_2kbwh")
+followerActorScene = ExtResource("3_3wrnl")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1520520660]
 layout_mode = 1

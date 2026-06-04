@@ -64,6 +64,7 @@ enemyName = "Test Enemy 2"
 baseStats = SubResource("Resource_2rbi7")
 baseAffinity = SubResource("Resource_u367u")
 skills = Array[ExtResource("4_l2yvg")]([ExtResource("6_u367u"), ExtResource("7_d1gxa")])
+followerActorAmount = 1
 spriteFrames = SubResource("SpriteFrames_hrueh")
 battleIcon = ExtResource("2_b3yoq")
 metadata/_custom_type_script = "uid://bbw1wa366hyuo"

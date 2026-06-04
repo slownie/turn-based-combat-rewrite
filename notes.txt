@@ -10,4 +10,4 @@ Todo [ERPG Specific]
 - Fusion Skills ✓
 - Defensive Actions
 - MP on Physical Attacks ✓
-- Boss (Multiple Actions)
+- Boss (Multiple Actions) ✓

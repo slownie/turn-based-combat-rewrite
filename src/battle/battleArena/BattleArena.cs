@@ -4,6 +4,7 @@ using System;
 public partial class BattleArena : Control
 {
 	[Export] PackedScene battleActorScene;
+	[Export] PackedScene followerActorScene;
 
 	[Signal] public delegate void BattleFinishedEventHandler(BattleController.BattleConclusion battleConclusion);
 
@@ -13,9 +14,13 @@ public partial class BattleArena : Control
 	Godot.Collections.Array<BattleActor> _actors = [];
 	Godot.Collections.Array<BattleActor> _partyMembers = [];
 	Godot.Collections.Array<BattleActor> _enemyMembers = [];
+	Godot.Collections.Array<FollowerActor> _enemyfollowerActors = [];
 	
 	BattleActor _currentActor;
+
+	// Secondary Actors
 	BattleActor _partnerActor;
+	FollowerActor _followerActor;
 
 	Godot.Collections.Array<BattleActor> _selectedTargets = [];
 	UseableActionResource _selectedAction;
@@ -55,6 +60,11 @@ public partial class BattleArena : Control
 				{
 					actor.IsActive = isActive;
 				}
+
+				foreach (FollowerActor followerActor in _enemyfollowerActors)
+				{
+					followerActor.IsActive = isActive;
+				}
 			}
 		}
 	}
@@ -73,6 +83,11 @@ public partial class BattleArena : Control
 			foreach(BattleActor actor in _actors)
 			{
 				actor.TimeScale = timeScale;
+			}
+
+			foreach (FollowerActor followerActor in _enemyfollowerActors)
+			{
+				followerActor.TimeScale = timeScale;
 			}
 		}
 	}
@@ -213,10 +228,27 @@ public partial class BattleArena : Control
 			_actors.Add(newActor);
 			_enemyMembers.Add(newActor);
 
+			// Create Followers
+			if (0 < enemy.GetFollowerActorAmount())
+			{
+				int initialReadiness = 20;
+				for (int j=0; j < enemy.GetFollowerActorAmount(); j++)
+				{
+					FollowerActor newFollower = followerActorScene.Instantiate() as FollowerActor;
+					_actorController.AddChild(newFollower);
+
+					newFollower.Setup(newActor);
+					newFollower.ReadyToAct += OnFollowerReady;
+
+					_enemyfollowerActors.Add(newFollower);
+					newFollower.AddReadiness(initialReadiness + (initialReadiness * j));
+				}
+			}
+
 			_battleTriggerController.CreateActorContainer(newActor);
 		}
 
-		_turnBar.Setup(_actors);	
+		_turnBar.Setup(_actors, _enemyfollowerActors);	
 		_battleTextController.Setup(_actors);
 		IsActive = true;
 
@@ -295,6 +327,14 @@ public partial class BattleArena : Control
 		}
 	}
 
+	private void OnFollowerReady(FollowerActor followerActor)
+	{
+		TimeScale = 0.0;
+		_followerActor = followerActor;
+
+		OnEnemyActorReady(followerActor.GetLeaderActor());
+	}
+
 	/*
 		"Primary" actions go into this function.
 	*/
@@ -354,7 +394,14 @@ public partial class BattleArena : Control
 
 	private void ResetActors()
 	{
-		_currentActor.ResetReadiness();
+		if (_followerActor != null)
+		{
+			// Is the follower ready?
+			_followerActor.ResetReadiness();
+			_followerActor = null;			
+		} else {
+			_currentActor.ResetReadiness();
+		}
 		_currentActor = null;
 
 		if (_partnerActor != null)
