@@ -14,6 +14,9 @@ public partial class BattleArena : Control
 	BattleActor _currentActor;
 	BattleActor _partnerActor;
 
+	Godot.Collections.Array<BattleActor> _selectedTargets = [];
+	UseableActionResource _selectedAction;
+
 	Godot.Collections.Array<InventoryItem> _battleInventory = [];
 
 	ActorController _actorController;
@@ -27,6 +30,8 @@ public partial class BattleArena : Control
 	MusicPlayer _musicPlayer;
 	SFXPlayer _sfxPlayer;
 	GameCamera _gameCamera;
+
+	Timer _defenseTimer;
 	
 	// UI Objects
 
@@ -78,6 +83,7 @@ public partial class BattleArena : Control
 		_battleTriggerController = GetNode<BattleTriggerController>("BattleTriggerController");
 		_battleTriggerController.SideEffectsRequested += OnSideEffectRequested;
 
+		_defenseTimer = GetNode<Timer>("DefenseTimer");
 
 		// UI
 		_menuController = GetNode<UIMenuController>("UI/UIMenuController");
@@ -190,6 +196,38 @@ public partial class BattleArena : Control
 	{
 	}
 
+	private void ExecuteActionEffects()
+	{
+		foreach(ActionEffectResource actionEffect in _selectedAction.GetActions())
+		{
+			// Do not run if currentActor is not alive
+			if (0 < _currentActor.GetCurHP())
+			{
+				// 1. Does the effect occur?
+				if (actionEffect.GetSuccessChance() > GD.Randi() % 99 || _currentActor.SkillSuccessGuarantee)
+				{
+					// 2. Who do we target?
+					if (_selectedAction.GetTargetType() == BattleConsts.TargetType.Random)
+					{
+						int targetIndex = GD.RandRange(0, _selectedTargets.Count - 1);
+						actionEffect.ExecuteEffect(_currentActor, _selectedTargets[targetIndex], _actorController);
+					} else {
+						foreach (BattleActor target in _selectedTargets)
+						{
+							actionEffect.ExecuteEffect(_currentActor, target, _actorController);
+						}
+					}
+				}
+			} else {
+				// Stop action execution, the user is dead
+				break;	
+			}
+		}
+		OnActionFinished();
+	}
+
+
+
 	#region Signal Functions
 	private void OnPartyMemberActorReady(BattleActor actor)
 	{
@@ -224,34 +262,17 @@ public partial class BattleArena : Control
 	/*
 		"Primary" actions go into this function.
 	*/
-	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedActors)
+	private void OnActionTargetConfimed(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets)
 	{
-		foreach(ActionEffectResource actionEffect in selectedAction.GetActions())
+		_selectedAction = selectedAction;
+		_selectedTargets = selectedTargets;
+
+		if (!_currentActor.GetIsPlayer())
 		{
-			// Do not run if currentActor is not alive
-			if (0 < _currentActor.GetCurHP())
-			{
-				// 1. Does the effect occur?
-				if (actionEffect.GetSuccessChance() > GD.Randi() % 99 || _currentActor.SkillSuccessGuarantee)
-				{
-					// 2. Who do we target?
-					if (selectedAction.GetTargetType() == BattleConsts.TargetType.Random)
-					{
-						int targetIndex = GD.RandRange(0, selectedActors.Count - 1);
-						actionEffect.ExecuteEffect(_currentActor, selectedActors[targetIndex], _actorController);
-					} else {
-						foreach (BattleActor target in selectedActors)
-						{
-							actionEffect.ExecuteEffect(_currentActor, target, _actorController);
-						}
-					}
-				}
-			} else {
-				// Stop action execution, the user is dead
-				break;	
-			}
+			
 		}
-		OnActionFinished();
+
+		ExecuteActionEffects();
 	}
 
 	/*
@@ -271,6 +292,9 @@ public partial class BattleArena : Control
 	{
 		_battleTriggerController.RunActorSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnEnd);
 
+		// Reset Variables
+		_selectedAction = null;
+		_selectedTargets = [];
 
 		// Turn Decrement
 		_currentActor.TurnEnd();

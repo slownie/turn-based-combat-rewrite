@@ -46,6 +46,11 @@ public partial class AttackEffect : ActionEffectResource
                     } 
 
                     if (user.IsChargeEnabled()) calculatedDamage = Mathf.RoundToInt(calculatedDamage * _chargeMultiplier);
+
+                    int restoreMPAmount = 0;
+                    restoreMPAmount = Mathf.RoundToInt(calculatedDamage * 0.5);
+                    if (0 < restoreMPAmount) actorController.TakeRejuvenate(user, restoreMPAmount);
+
                     break;
                 }
 

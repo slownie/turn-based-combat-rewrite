@@ -7,7 +7,7 @@ Todo [General]
 
 Todo [ERPG Specific]
 - Status Fusion ✓
-- Fusion Skills
+- Fusion Skills ✓
 - Defensive Actions
-- MP on Physical Attacks
+- MP on Physical Attacks ✓
 - Boss (Multiple Actions)

@@ -107,11 +107,11 @@ public partial class CharacterStats : GodotObject
 
 	public void AddCurMP(int amount)
 	{
-		_curMP += amount;
+		curMP += amount;
 	}
 
 	public void SetCurMP(int amount)
 	{
-		_curMP = amount;
+		curMP = amount;
 	}
 }
