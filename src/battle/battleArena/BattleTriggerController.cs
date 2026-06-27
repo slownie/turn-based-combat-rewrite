@@ -8,10 +8,16 @@ using System;
 */
 public partial class BattleTriggerController : Node2D
 {
-    [Signal] public delegate void SideEffectsRequestedEventHandler(ActivePassiveEffect activePassiveEffect, BattleActor battleActor);
+    [Signal] public delegate void SideEffectsRequestedEventHandler(ActivePassiveEffect activePassiveEffect, EffectDirective effectDirective, BattleActor battleActor);
 
     Godot.Collections.Dictionary<BattleActor, BattleActorTriggerContainer> _triggerContainers = new Godot.Collections.Dictionary<BattleActor, BattleActorTriggerContainer>();
 
+    public enum EffectDirective
+    {
+        Startup,
+        Trigger,
+        Cleanup
+    }
 
     public void CreateActorContainer(BattleActor battleActor)
     {
@@ -41,7 +47,7 @@ public partial class BattleTriggerController : Node2D
                     {
                        activePassiveEffect.SetHasBeenRan(true); 
                     }
-                    EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect, wantedActor);
+                    EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect, (int)EffectDirective.Trigger, wantedActor);
                 }
             }
         }
@@ -49,13 +55,10 @@ public partial class BattleTriggerController : Node2D
 
     private void AddSideEffect(BattleActor user, BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect)
     {
-        activePassiveEffect.RequestDeletion += OnRequestDeletion;
-
         _triggerContainers[user].AddSideEffect(triggerType, activePassiveEffect);
-        GD.Print(triggerType+" - "+activePassiveEffect);
         if (activePassiveEffect.GetStartupEffects().Count != 0)
         {
-            EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect.GetStartupEffects(), user);
+            EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect, (int)EffectDirective.Startup, user);
         }
     }
 
@@ -63,14 +66,8 @@ public partial class BattleTriggerController : Node2D
     {
         if (activePassiveEffect.GetCleanupEffects().Count != 0)
         {
-            EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect.GetCleanupEffects(), user);
+            EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect, (int)EffectDirective.Cleanup, user);
         }
         _triggerContainers[user].RemoveSideEffect(triggerType, activePassiveEffect);
-    }
-
-    private void OnRequestDeletion(ActivePassiveEffect activePassiveEffect, BattleActor user)
-    {
-        GD.Print("Delete Self");
-        RemoveSideEffect(user, activePassiveEffect.GetTriggerType(), activePassiveEffect);
     }
 }

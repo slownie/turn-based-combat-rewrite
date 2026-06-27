@@ -19,7 +19,8 @@ metadata/_custom_type_script = "uid://cq1yfcauodijh"
 script = ExtResource("1_b3yoq")
 _maxHP = 100
 _maxMP = 20
-_agility = 3
+_strength = 20
+_agility = 6
 metadata/_custom_type_script = "uid://elamptvvyimh"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l2yvg"]

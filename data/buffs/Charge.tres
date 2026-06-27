@@ -9,10 +9,12 @@
 [sub_resource type="Resource" id="Resource_i16iq"]
 script = ExtResource("3_pn23q")
 enable = false
+setForUser = true
 metadata/_custom_type_script = "uid://c2cf437myxwcv"
 
 [sub_resource type="Resource" id="Resource_r87d0"]
 script = ExtResource("3_pn23q")
+setForUser = true
 metadata/_custom_type_script = "uid://c2cf437myxwcv"
 
 [sub_resource type="Resource" id="Resource_ahc41"]

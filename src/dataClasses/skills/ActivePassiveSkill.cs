@@ -4,7 +4,6 @@ using System;
 public partial class ActivePassiveSkill : ActivePassiveEffect
 {
     PassiveSkillResource _passiveSkillResource;
-    bool _isActive = true;
 
     public ActivePassiveSkill(PassiveSkillResource passiveSkillResource) : base(
         passiveSkillResource.GetPassiveActionResource().GetTriggerActions(),
@@ -16,7 +15,4 @@ public partial class ActivePassiveSkill : ActivePassiveEffect
         _triggerType = _passiveSkillResource.GetPassiveActionResource().GetTriggerType();
         _runOnce = _passiveSkillResource.GetPassiveActionResource().GetRunOnce();
     }
-
-    public bool GetIsActive() { return _isActive; }
-    public void SetIsActive(bool value) { _isActive = value; }    
 }

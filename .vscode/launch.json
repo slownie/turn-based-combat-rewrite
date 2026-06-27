@@ -12,7 +12,7 @@
     // /Applications/Godot_mono.app/Contents/MacOS/Godot
     // C:/Users/[user]/Downloads/Godot_v4.2.1-stable_mono_win64/Godot.exe
     // C:/Program Files/Godot/Godot.exe
-      "program": "${env:GODOT}",
+      "program": "${env:GODOT4}",
       "args": [],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,

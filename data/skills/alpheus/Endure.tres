@@ -13,6 +13,7 @@ metadata/_custom_type_script = "uid://bcytw7y8wvefn"
 [sub_resource type="Resource" id="Resource_xqvuq"]
 script = ExtResource("2_u4lsj")
 triggerType = 12
+runOnce = true
 triggerActions = Array[ExtResource("1_yedi3")]([SubResource("Resource_uxolc")])
 metadata/_custom_type_script = "uid://dg34628o553u4"
 

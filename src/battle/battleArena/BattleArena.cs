@@ -360,31 +360,37 @@ public partial class BattleArena : Control
 		Secondary actions go into this function.
 		These effects require no/minimal (non-waiting) animations.
 	*/
-	private void OnSideEffectRequested(ActivePassiveEffect activePassiveEffect, BattleActor battleActor)
+	private void OnSideEffectRequested(ActivePassiveEffect activePassiveEffect, BattleTriggerController.EffectDirective effectDirective, BattleActor battleActor)
 	{
-		foreach(ActionEffectResource actionEffect in activePassiveEffect.GetTriggerEffects())
+		// Could compress this using a dictionary but I'm not in the mood for refactoring 
+		switch (effectDirective)
 		{
-			actionEffect.ExecuteEffect(_currentActor, battleActor, _actorController);
-		}
-
-		if (activePassiveEffect.GetRunOnce())
-		{
-			// Remove corresponding effect from actor
-			if (activePassiveEffect is ActivePassiveSkill)
+			case BattleTriggerController.EffectDirective.Startup:
 			{
-				ActivePassiveSkill activePassiveSkill = activePassiveEffect as ActivePassiveSkill;
-				activePassiveSkill.SetIsActive(false);
-
-			} else if (activePassiveEffect is ActiveBuff) {
-				ActiveBuff activeBuff = activePassiveEffect as ActiveBuff;
-				GD.Print(activeBuff);
-				battleActor.RemoveBuff(activeBuff);
-			} else {
-				// Effect does not have a corresponding class
-				// This shouldn't? happen in game
-				activePassiveEffect.EmitSignal(ActivePassiveEffect.SignalName.RequestDeletion, activePassiveEffect, battleActor);	
+				foreach(ActionEffectResource actionEffect in activePassiveEffect.GetStartupEffects())
+				{
+					actionEffect.ExecuteEffect(_currentActor, battleActor, _actorController);
+				}
+				break;
 			}
 
+			case BattleTriggerController.EffectDirective.Trigger:
+			{
+				foreach(ActionEffectResource actionEffect in activePassiveEffect.GetTriggerEffects())
+				{
+					actionEffect.ExecuteEffect(_currentActor, battleActor, _actorController);
+				}
+				break;
+			}
+
+			case BattleTriggerController.EffectDirective.Cleanup:
+			{
+				foreach(ActionEffectResource actionEffect in activePassiveEffect.GetCleanupEffects())
+				{
+					actionEffect.ExecuteEffect(_currentActor, battleActor, _actorController);
+				}
+				break;
+			}
 		}
 	}
 
