@@ -4,13 +4,13 @@ using System;
 public partial class UIBattleText : Marker2D
 {
 	// How far the label will move upwards	
-	[Export] double moveDistance = 32.0;
+	[Export] double moveDistance = 48.0;
 
 	// How long the label will be moving upwards
-	[Export] double moveTime = 0.3;
+	[Export] double moveTime = 0.6;
 
 	// How long it takes for the label to fade
-	[Export] double fadeTime = 0.2;
+	[Export] double fadeTime = 0.1;
 
 	Label _label;
 

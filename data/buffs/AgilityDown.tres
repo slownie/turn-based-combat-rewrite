@@ -29,4 +29,5 @@ script = ExtResource("5_7g1xu")
 buffName = "Agility Down"
 icon = ExtResource("1_yhpsl")
 passiveActionResource = SubResource("Resource_ikaep")
+isDebuff = true
 metadata/_custom_type_script = "uid://bp8h5326g1kmp"

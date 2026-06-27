@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="PassiveSkillResource" format=3 uid="uid://c4x8po06fyg5b"]
+
+[ext_resource type="Script" uid="uid://c2rs1ebt6mlmh" path="res://src/dataClasses/skills/PassiveSkillResource.cs" id="1_0jsu3"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_yedi3"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="2_u4lsj"]
+[ext_resource type="Script" uid="uid://bcytw7y8wvefn" path="res://src/dataClasses/actionEffects/HealPercentageEffect.cs" id="3_h5nqn"]
+
+[sub_resource type="Resource" id="Resource_uxolc"]
+script = ExtResource("3_h5nqn")
+healPercentage = 50
+metadata/_custom_type_script = "uid://bcytw7y8wvefn"
+
+[sub_resource type="Resource" id="Resource_xqvuq"]
+script = ExtResource("2_u4lsj")
+triggerType = 12
+runOnce = true
+triggerActions = Array[ExtResource("1_yedi3")]([SubResource("Resource_uxolc")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("1_0jsu3")
+passiveActionResource = SubResource("Resource_xqvuq")
+skillName = "Endure"
+metadata/_custom_type_script = "uid://c2rs1ebt6mlmh"

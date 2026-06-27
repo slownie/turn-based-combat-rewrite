@@ -23,21 +23,27 @@ public partial class ActiveBuff : ActivePassiveEffect
         }
     }
     
+    bool _isDebuff = false;
     bool _isPermanent = false;
+    bool _hasBeenUsed = false;
+
 
     Texture2D _icon;
 
-    public ActiveBuff(BuffResource buffResource, int turnAmount, bool isPermanent)
+    public ActiveBuff(BuffResource buffResource, int turnAmount) : base(
+        buffResource.GetPassiveActionResource().GetTriggerActions(),
+        buffResource.GetPassiveActionResource().GetStartupActions(),
+        buffResource.GetPassiveActionResource().GetCleanupActions()
+    )
     {
         _buffResource = buffResource;
-
-        _startupEffects = buffResource.GetPassiveActionResource().GetStartupActions();
-        _triggerEffects = buffResource.GetPassiveActionResource().GetTriggerActions();
-        _cleanupEffects = buffResource.GetPassiveActionResource().GetCleanupActions();
         _triggerType = buffResource.GetTriggerType();
-
+        
         turnCount = turnAmount;
-        _isPermanent = isPermanent;
+        
+        _isDebuff = buffResource.GetIsDebuff();
+        _isPermanent = buffResource.GetIsPermanent();
+        _runOnce = buffResource.GetRunOnce();
 
         _icon = buffResource.GetIcon();
     }
@@ -52,13 +58,26 @@ public partial class ActiveBuff : ActivePassiveEffect
         turnCount = newTurnCount;
     }
 
+    public void ForceDelete()
+    {
+        EmitSignal(SignalName.BuffFinished, this);
+    }
+
+    public void SetHasBeenUsed(bool value)
+    {
+        _hasBeenUsed = value;
+    }
+    public bool GetHasBeenUsed() { return _hasBeenUsed; }
+
     public void DecrementTurn()
     {
         if (!_isPermanent) turnCount -= 1;
     }
 
     public int GetTurnCount() { return turnCount; }
+    public bool GetIsDebuff() { return _isDebuff; }
 
+    public bool GetIsPermanent() { return _isPermanent; }
     public void SetIsPermanent(bool isPermanent) { _isPermanent = isPermanent; }
 
     // USED FOR TYPE CHECKING

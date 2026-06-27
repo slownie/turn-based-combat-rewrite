@@ -4,7 +4,7 @@ using System;
 [GlobalClass]
 public partial class CharacterStats : GodotObject
 {
-	[Signal] public delegate void HPChangedEventHandler();
+	[Signal] public delegate void HPChangedEventHandler(int newHP);
 
 	[Signal] public delegate void HPReviveEventHandler();
 	[Signal] public delegate void HPDepletedEventHandler();
@@ -98,11 +98,13 @@ public partial class CharacterStats : GodotObject
 	public void AddCurHP(int amount)
 	{
 		curHP += amount;
+		EmitSignal(SignalName.HPChanged, curHP);
 	}
 
 	public void SetCurHP(int amount)
 	{
 		curHP = amount;
+		EmitSignal(SignalName.HPChanged, curHP);
 	}
 
 	public void AddCurMP(int amount)

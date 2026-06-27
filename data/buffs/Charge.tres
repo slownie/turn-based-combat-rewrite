@@ -18,6 +18,7 @@ metadata/_custom_type_script = "uid://c2cf437myxwcv"
 [sub_resource type="Resource" id="Resource_ahc41"]
 script = ExtResource("3_i16iq")
 triggerType = 6
+runOnce = true
 triggerActions = Array[ExtResource("2_pn23q")]([SubResource("Resource_r87d0")])
 cleanupActions = Array[ExtResource("2_pn23q")]([SubResource("Resource_i16iq")])
 metadata/_custom_type_script = "uid://dg34628o553u4"
@@ -27,4 +28,5 @@ script = ExtResource("1_v2kfw")
 buffName = "Charge"
 icon = ExtResource("1_gu0dv")
 passiveActionResource = SubResource("Resource_ahc41")
+isPermanent = true
 metadata/_custom_type_script = "uid://bp8h5326g1kmp"

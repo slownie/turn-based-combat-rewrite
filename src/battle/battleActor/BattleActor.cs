@@ -41,12 +41,12 @@ public partial class BattleActor : Node2D
 
 	Godot.Collections.Array<BaseSkillResource> _skills = [];
 	Godot.Collections.Array<UseableSkillResource> _useableSkills = [];
-	Godot.Collections.Array<PassiveSkillResource> _passiveSkills = [];
+	Godot.Collections.Array<ActivePassiveSkill> _passiveSkills = [];
 	Godot.Collections.Array<FusionSkillResource> _fusionSkills = [];
 
 	ActiveStatusCondition _activeStatusCondition = null;
 
-	Godot.Collections.Array _buffs = [];
+	Godot.Collections.Array<ActiveBuff> _buffs = [];
 
 	double _strengthModifier = 1;
 	double _elementalModifier = 1;
@@ -79,7 +79,7 @@ public partial class BattleActor : Node2D
 
 	CharacterAffinity _characterAffinity;
 
-
+	UseableActionResource _queueAction;
 	int _counterDamage = 0;
 
 
@@ -307,18 +307,19 @@ public partial class BattleActor : Node2D
 				_useableSkills.Add(skill as UseableSkillResource);
 			}
 
+			// Create passive skills
 			if (skill is PassiveSkillResource)
 			{
+				// Unfortunately these have to be connected in another function due to execution order
 				PassiveSkillResource _passiveSkill = skill as PassiveSkillResource;
-				_passiveSkills.Add(_passiveSkill);
+				ActivePassiveSkill activePassiveSkill = new ActivePassiveSkill(_passiveSkill);
+				_passiveSkills.Add(activePassiveSkill);
 			}
 		}
 
 		_fusionSkills = fusionSkills;
 
 		_characterAffinity = characterAffinity;
-
-		
 
 		_curHPLabel.Text = _characterStats.GetCurHP().ToString();
 		_maxHPLabel.Text = _characterStats.GetMaxHP().ToString();
@@ -344,7 +345,18 @@ public partial class BattleActor : Node2D
 
 		foreach(ActiveBuff activeBuff in _buffs)
 		{
-			activeBuff.DecrementTurn();
+			if (activeBuff.GetHasBeenUsed())
+			{
+				activeBuff.ForceDelete();
+			}
+		}
+	}
+
+	public void ConnectPassiveSkills()
+	{
+		foreach(ActivePassiveSkill activePassiveSkill in _passiveSkills)
+		{
+			EmitSignal(SignalName.AddSideEffect, this, (int)activePassiveSkill.GetTriggerType(), activePassiveSkill);
 		}
 	}
 
@@ -353,6 +365,7 @@ public partial class BattleActor : Node2D
 	public string GetActorName() { return _actorName; }
 
 	// Stats
+	public CharacterStats GetCharacterStats() { return _characterStats; } // Primarily used to expose signals
 	public int GetCurHP() { return _characterStats.GetCurHP(); }
 	public int GetMaxHP() { return _characterStats.GetMaxHP(); }
 	public int GetCurMP() { return _characterStats.GetCurMP(); }
@@ -460,7 +473,7 @@ public partial class BattleActor : Node2D
 
 	public Godot.Collections.Array<BaseSkillResource> GetSkills() { return _skills; }
 	public Godot.Collections.Array<UseableSkillResource> GetUseableSkills() { return _useableSkills; }
-	public Godot.Collections.Array<PassiveSkillResource> GetPassiveSkills() { return _passiveSkills; }
+	public Godot.Collections.Array<ActivePassiveSkill> GetPassiveSkills() { return _passiveSkills; }
 	public Godot.Collections.Array<FusionSkillResource> GetFusionSkills() { return _fusionSkills; }
 
 	public ActiveStatusCondition GetActiveStatusCondition() { return _activeStatusCondition; }
@@ -511,6 +524,7 @@ public partial class BattleActor : Node2D
 			activeBuff.TurnCountChanged += OnBuffTurnCountChanged;
 			activeBuff.BuffFinished += OnBuffFinished;
 		}
+
 	}
 
 	/*
@@ -535,13 +549,35 @@ public partial class BattleActor : Node2D
 		_buffs.Remove(buffToRemove);
 	}
 
-	public void RemoveEveryBuff()
+	public void RemoveEachBuff()
 	{
 		foreach (ActiveBuff activeBuff in _buffs)
 		{
 			RemoveBuff(activeBuff);
 		}
 	}
+
+	// Remove all buffs with positive effects
+	public void RemoveAllBuffs()
+	{
+		foreach (ActiveBuff activeBuff in _buffs)
+		{
+			if (!activeBuff.GetIsDebuff()) RemoveBuff(activeBuff);
+		}
+	}
+
+	// Remove all buffs with negative effects
+	public void RemoveAllDebuffs()
+	{
+		foreach (ActiveBuff activeBuff in _buffs)
+		{
+			if (activeBuff.GetIsDebuff()) RemoveBuff(activeBuff);
+		}
+	}
+
+	public UseableActionResource GetQueueAction() { return _queueAction; }
+	public void SetQueueAction(UseableActionResource queueAction) { _queueAction = queueAction; }
+	public void RemoveQueueAction() { _queueAction = null; }
 
 	public int GetCounterDamage() { return _counterDamage; }
 	public void ResetCounterDamage() { _counterDamage = 0; }
@@ -551,7 +587,6 @@ public partial class BattleActor : Node2D
 
 	public void AddStun(double newStun) { Stun += newStun; }
 	public void SetStun(double newStun) { Stun = newStun; }
-
 
 	public bool GetIsPlayer() { return _isPlayer; }
 	public Texture2D GetBattleIcon() { return _battleIcon; }
@@ -575,8 +610,11 @@ public partial class BattleActor : Node2D
 
 		// Variable resets
 		Readiness = 0.0;
+		Tempo = 1.0;
+		Stun = 0.0;
 		RemoveStatusCondition();
-		RemoveEveryBuff();
+		RemoveEachBuff();
+		RemoveQueueAction();
 
 		EmitSignal(SignalName.HPDepleted);
 	}
@@ -601,7 +639,6 @@ public partial class BattleActor : Node2D
 
 	private void OnBuffTurnCountChanged(int turnCount)
 	{
-		GD.Print(turnCount);
 	}
 
 	private void OnBuffFinished(ActiveBuff buff)

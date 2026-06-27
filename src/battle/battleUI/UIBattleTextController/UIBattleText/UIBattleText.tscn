@@ -10,5 +10,6 @@ script = ExtResource("1_s0lql")
 offset_right = 40.0
 offset_bottom = 23.0
 theme = ExtResource("2_mke32")
+theme_override_font_sizes/font_size = 16
 text = "Battle Text"
 horizontal_alignment = 1

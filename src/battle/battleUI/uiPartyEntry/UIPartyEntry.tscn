@@ -1,6 +1,27 @@
 [gd_scene format=3 uid="uid://bf2l733misg3e"]
 
 [ext_resource type="Script" uid="uid://dy6gfn6w80m" path="res://src/battle/battleUI/uiPartyEntry/UIPartyEntry.cs" id="1_378q8"]
+[ext_resource type="Texture2D" uid="uid://cont8xpx1kw0o" path="res://assets/images/ui/LifeBarFill.png" id="2_l1kcn"]
+[ext_resource type="PackedScene" uid="uid://bnfsqmxhg6f6q" path="res://src/ui/uiBar/UIBar.tscn" id="2_o3g7i"]
+[ext_resource type="Texture2D" uid="uid://bdp0spvgiqovc" path="res://assets/images/ui/EnergyBarFill.png" id="3_x80sf"]
 
 [node name="UIPartyEntry" type="TextureRect" unique_id=1503550835]
 script = ExtResource("1_378q8")
+HPBarImage = ExtResource("2_l1kcn")
+MPBarImage = ExtResource("3_x80sf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=285327995]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Name" type="Label" parent="VBoxContainer" unique_id=16462912]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Party Member Name"
+
+[node name="HPBar" parent="VBoxContainer" unique_id=1658496861 instance=ExtResource("2_o3g7i")]
+layout_mode = 2
+
+[node name="MPBar" parent="VBoxContainer" unique_id=1901719736 instance=ExtResource("2_o3g7i")]
+layout_mode = 2

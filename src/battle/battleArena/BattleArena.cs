@@ -6,6 +6,9 @@ public partial class BattleArena : Control
 	[Export] PackedScene battleActorScene;
 	[Export] PackedScene followerActorScene;
 
+	[ExportCategory("UI")]
+	[Export] PackedScene partyEntryScene;
+
 	[Signal] public delegate void BattleFinishedEventHandler(BattleController.BattleConclusion battleConclusion);
 
 	enum DefensiveMode { Hit, Guard, Knockback, Backdash }
@@ -33,6 +36,7 @@ public partial class BattleArena : Control
 	UIMenuController _menuController;
 	UITurnBar _turnBar;
 	UIBattleTextController _battleTextController;
+	UIPartyEntries _partyEntries;
 
 	InventoryController _inventoryController;
 	MusicPlayer _musicPlayer;
@@ -115,6 +119,8 @@ public partial class BattleArena : Control
 
 		_menuController.ActionTargetConfirmed += OnActionTargetConfimed;
 
+		_partyEntries = GetNode<UIPartyEntries>("UI/UIPartyEntries");
+
 		_turnBar = GetNode<UITurnBar>("UI/UITurnBar");
 
 		_battleTextController = GetNode<UIBattleTextController>("UI/UIBattleTextController");
@@ -191,12 +197,14 @@ public partial class BattleArena : Control
 				true
 			);
 
-			newActor.ReadyToAct += OnPartyMemberActorReady;
+			newActor.ReadyToAct += OnActorReady;
 
 			_actors.Add(newActor);
 			_partyMembers.Add(newActor);
 
 			_battleTriggerController.CreateActorContainer(newActor);
+			// Execution order
+			newActor.ConnectPassiveSkills();
 		}
 
 		// Enemies
@@ -223,7 +231,7 @@ public partial class BattleArena : Control
 				false
 			);
 
-			newActor.ReadyToAct += OnEnemyActorReady;
+			newActor.ReadyToAct += OnActorReady;
 
 			_actors.Add(newActor);
 			_enemyMembers.Add(newActor);
@@ -246,9 +254,11 @@ public partial class BattleArena : Control
 			}
 
 			_battleTriggerController.CreateActorContainer(newActor);
+			newActor.ConnectPassiveSkills();
 		}
 
 		_turnBar.Setup(_actors, _enemyfollowerActors);	
+		_partyEntries.Setup(_partyMembers);
 		_battleTextController.Setup(_actors);
 		IsActive = true;
 
@@ -297,7 +307,7 @@ public partial class BattleArena : Control
 
 
 	#region Signal Functions
-	private void OnPartyMemberActorReady(BattleActor actor)
+	private void OnActorReady(BattleActor actor)
 	{
 		TimeScale = 0.0;
 		_currentActor = actor;
@@ -307,23 +317,15 @@ public partial class BattleArena : Control
 		if (_currentActor.SelectRandomAction)
 		{
 			_actorController.SelectRandomAction(_currentActor);
+		} else if (_currentActor.GetQueueAction() != null) {
+			_actorController.SelectSetAction(_currentActor, _currentActor.GetQueueAction());
 		} else {
-			_menuController.PartyTurnStart(_currentActor, _battleInventory);
-		}
-	}
-
-	private void OnEnemyActorReady(BattleActor actor)
-	{
-		TimeScale = 0.0;
-		_currentActor = actor;
-
-		_battleTriggerController.RunActorSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnStart);
-
-		if (_currentActor.SelectRandomAction)
-		{
-			_actorController.SelectRandomAction(_currentActor);
-		} else {
-			_actorController.EnemyAISelectAction(_currentActor);
+			if (_currentActor.GetIsPlayer())
+			{
+				_menuController.PartyTurnStart(_currentActor, _battleInventory);
+			} else {
+				_actorController.EnemyAISelectAction(_currentActor);
+			}
 		}
 	}
 
@@ -332,7 +334,7 @@ public partial class BattleArena : Control
 		TimeScale = 0.0;
 		_followerActor = followerActor;
 
-		OnEnemyActorReady(followerActor.GetLeaderActor());
+		OnActorReady(followerActor.GetLeaderActor());
 	}
 
 	/*
@@ -343,11 +345,13 @@ public partial class BattleArena : Control
 		_selectedAction = selectedAction;
 		_selectedTargets = selectedTargets;
 
+		/*
 		if (!_currentActor.GetIsPlayer())
 		{
 			_defenseTimer.Start();
 			await ToSignal(_defenseTimer, Timer.SignalName.Timeout);
 		}
+		*/
 
 		ExecuteActionEffects();
 	}
@@ -356,12 +360,31 @@ public partial class BattleArena : Control
 		Secondary actions go into this function.
 		These effects require no/minimal (non-waiting) animations.
 	*/
-	private void OnSideEffectRequested(Godot.Collections.Array<ActionEffectResource> actions, BattleActor battleActor)
+	private void OnSideEffectRequested(ActivePassiveEffect activePassiveEffect, BattleActor battleActor)
 	{
-		GD.Print(battleActor.GetActorName());
-		foreach(ActionEffectResource actionEffect in actions)
+		foreach(ActionEffectResource actionEffect in activePassiveEffect.GetTriggerEffects())
 		{
 			actionEffect.ExecuteEffect(_currentActor, battleActor, _actorController);
+		}
+
+		if (activePassiveEffect.GetRunOnce())
+		{
+			// Remove corresponding effect from actor
+			if (activePassiveEffect is ActivePassiveSkill)
+			{
+				ActivePassiveSkill activePassiveSkill = activePassiveEffect as ActivePassiveSkill;
+				activePassiveSkill.SetIsActive(false);
+
+			} else if (activePassiveEffect is ActiveBuff) {
+				ActiveBuff activeBuff = activePassiveEffect as ActiveBuff;
+				GD.Print(activeBuff);
+				battleActor.RemoveBuff(activeBuff);
+			} else {
+				// Effect does not have a corresponding class
+				// This shouldn't? happen in game
+				activePassiveEffect.EmitSignal(ActivePassiveEffect.SignalName.RequestDeletion, activePassiveEffect, battleActor);	
+			}
+
 		}
 	}
 

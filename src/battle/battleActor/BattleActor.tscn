@@ -69,9 +69,12 @@ theme = ExtResource("3_nsqsq")
 
 [node name="StatContainer" type="VBoxContainer" parent="TestUI" unique_id=1721447135]
 layout_mode = 2
+theme_override_constants/separation = -4
 
 [node name="HPContainer" type="HBoxContainer" parent="TestUI/StatContainer" unique_id=868554181]
 layout_mode = 2
+theme_override_constants/separation = 2
+alignment = 1
 
 [node name="HP" type="Label" parent="TestUI/StatContainer/HPContainer" unique_id=1530749783]
 layout_mode = 2
@@ -96,6 +99,8 @@ text = "20"
 
 [node name="MPContainer" type="HBoxContainer" parent="TestUI/StatContainer" unique_id=1263176805]
 layout_mode = 2
+theme_override_constants/separation = 2
+alignment = 1
 
 [node name="MP" type="Label" parent="TestUI/StatContainer/MPContainer" unique_id=1829891011]
 layout_mode = 2

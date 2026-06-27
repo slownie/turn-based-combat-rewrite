@@ -24,6 +24,9 @@ public partial class AttackEffect : ActionEffectResource
     [Export] BattleConsts.DamageCalculation damageCalculation = BattleConsts.DamageCalculation.Strength;
     [Export] BattleConsts.ElementType elementType = BattleConsts.ElementType.Phys;
 
+    [ExportCategory("Attack Flags")]
+    [Export] bool statusBonusDamage = false;
+
     public override void ExecuteEffect(BattleActor user, BattleActor target, ActorController actorController)
     {
         if (baseAccuracy + Mathf.RoundToInt(user.GetLuck() * user.GetAccuraccyModifier()) > GD.Randi() % 99)
@@ -40,6 +43,7 @@ public partial class AttackEffect : ActionEffectResource
 
                     if ((baseCrit * user.GetCritModifier()) > GD.Randi() % 99)
                     {
+                        actorController.RunActorSideEffects(user, BattleConsts.TriggerType.OnUserDoCritical);
                         GD.Print("It's a critical hit!");
                         calculatedDamage = Mathf.RoundToInt(calculatedDamage * _critMultiplier);
                         didCrit = true;
@@ -87,7 +91,16 @@ public partial class AttackEffect : ActionEffectResource
                 if (targetAffinity == BattleConsts.AffinityType.Block) GD.Print("Block");
             }
 
-            GD.Print("AttackEffect - "+calculatedDamage);
+            // Attack Flags
+            if (statusBonusDamage)
+            {
+                if (target.GetActiveStatusCondition() != null)
+                {
+                    calculatedDamage = Mathf.RoundToInt(calculatedDamage * _critMultiplier);
+                }
+            }
+
+            //GD.Print("AttackEffect - "+calculatedDamage);
 
             actorController.TakeDamage(target, -calculatedDamage, didCrit);
         } else {

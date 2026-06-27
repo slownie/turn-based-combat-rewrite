@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="UseableSkillResource" format=3 uid="uid://do4wabw0hsqwt"]
+
+[ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="1_wq15c"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_ty0i2"]
+[ext_resource type="Script" uid="uid://bagci00lqdh6b" path="res://src/dataClasses/actionEffects/buffs/RemoveEveryBuffEffect.cs" id="3_wq15c"]
+[ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="4_8fsbs"]
+[ext_resource type="Script" uid="uid://bijk8gwmj13d8" path="res://src/dataClasses/battleSequenceEffects/BattleSequenceEffectResource.cs" id="5_0wthb"]
+
+[sub_resource type="Resource" id="Resource_ty0i2"]
+script = ExtResource("3_wq15c")
+metadata/_custom_type_script = "uid://bagci00lqdh6b"
+
+[sub_resource type="Resource" id="Resource_s5wcb"]
+script = ExtResource("4_8fsbs")
+actions = Array[ExtResource("2_ty0i2")]([SubResource("Resource_ty0i2")])
+cursorMode = 2
+targetSameSide = true
+metadata/_custom_type_script = "uid://f4ubms2rgfo3"
+
+[resource]
+script = ExtResource("1_wq15c")
+skillCostAmount = 8
+useableActionResource = SubResource("Resource_s5wcb")
+skillName = "Dekunda"
+metadata/_custom_type_script = "uid://dicj1dhgyboo"

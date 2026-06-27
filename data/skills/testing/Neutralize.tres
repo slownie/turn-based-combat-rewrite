@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="UseableSkillResource" format=3 uid="uid://if5gcvdhojri"]
+
+[ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="1_nsskn"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_epyrt"]
+[ext_resource type="Script" uid="uid://cggrx7o40n7vy" path="res://src/dataClasses/actionEffects/buffs/RemoveAllDebuffsEffect.cs" id="3_gbrf1"]
+[ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="4_q4x5y"]
+[ext_resource type="Script" uid="uid://bijk8gwmj13d8" path="res://src/dataClasses/battleSequenceEffects/BattleSequenceEffectResource.cs" id="5_6ap1m"]
+
+[sub_resource type="Resource" id="Resource_m8hsa"]
+script = ExtResource("3_gbrf1")
+metadata/_custom_type_script = "uid://cggrx7o40n7vy"
+
+[sub_resource type="Resource" id="Resource_s5wcb"]
+script = ExtResource("4_q4x5y")
+actions = Array[ExtResource("2_epyrt")]([SubResource("Resource_m8hsa")])
+cursorMode = 1
+targetOppsiteSide = false
+targetSameSide = true
+metadata/_custom_type_script = "uid://f4ubms2rgfo3"
+
+[resource]
+script = ExtResource("1_nsskn")
+skillCostAmount = 8
+useableActionResource = SubResource("Resource_s5wcb")
+skillName = "Dekaja"
+metadata/_custom_type_script = "uid://dicj1dhgyboo"

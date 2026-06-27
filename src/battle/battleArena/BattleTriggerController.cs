@@ -8,7 +8,7 @@ using System;
 */
 public partial class BattleTriggerController : Node2D
 {
-    [Signal] public delegate void SideEffectsRequestedEventHandler(Godot.Collections.Array<ActionEffectResource> actions, BattleActor battleActor);
+    [Signal] public delegate void SideEffectsRequestedEventHandler(ActivePassiveEffect activePassiveEffect, BattleActor battleActor);
 
     Godot.Collections.Dictionary<BattleActor, BattleActorTriggerContainer> _triggerContainers = new Godot.Collections.Dictionary<BattleActor, BattleActorTriggerContainer>();
 
@@ -34,14 +34,17 @@ public partial class BattleTriggerController : Node2D
             // Get Side Effects
             foreach (ActivePassiveEffect activePassiveEffect in battleActorTriggerContainer.GetTriggerEffects(triggerType))
             {
-                EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect.GetTriggerEffects(), wantedActor);
+                EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect, wantedActor);
             }
         }
     }
 
     private void AddSideEffect(BattleActor user, BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect)
     {
+        activePassiveEffect.RequestDeletion += OnRequestDeletion;
+
         _triggerContainers[user].AddSideEffect(triggerType, activePassiveEffect);
+        GD.Print(triggerType+" - "+activePassiveEffect);
         if (activePassiveEffect.GetStartupEffects().Count != 0)
         {
             EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect.GetStartupEffects(), user);
@@ -55,5 +58,11 @@ public partial class BattleTriggerController : Node2D
             EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect.GetCleanupEffects(), user);
         }
         _triggerContainers[user].RemoveSideEffect(triggerType, activePassiveEffect);
+    }
+
+    private void OnRequestDeletion(ActivePassiveEffect activePassiveEffect, BattleActor user)
+    {
+        GD.Print("Delete Self");
+        RemoveSideEffect(user, activePassiveEffect.GetTriggerType(), activePassiveEffect);
     }
 }

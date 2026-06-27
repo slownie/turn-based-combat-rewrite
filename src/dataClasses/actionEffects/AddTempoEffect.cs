@@ -8,6 +8,7 @@ public partial class AddTempoEffect : ActionEffectResource
 
     public override void ExecuteEffect(BattleActor user, BattleActor target, ActorController actorController)
     {
+        GD.Print("Add Tempo");
         actorController.AddTempo(setForUser ? user : target, tempo);
     }
 }

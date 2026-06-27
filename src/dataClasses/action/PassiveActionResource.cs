@@ -6,6 +6,10 @@ public partial class PassiveActionResource : Resource
 {
     [Export] BattleConsts.TriggerType triggerType;
 
+    [ExportCategory("Flags")]
+    [Export] bool runOnce = false;
+
+
     /*
         These actions occur when the active class is being created.
     */
@@ -27,4 +31,6 @@ public partial class PassiveActionResource : Resource
     public Godot.Collections.Array<ActionEffectResource> GetStartupActions() { return startupActions; }
     public Godot.Collections.Array<ActionEffectResource> GetTriggerActions() { return triggerActions; }
     public Godot.Collections.Array<ActionEffectResource> GetCleanupActions() { return cleanupActions; }
+
+    public bool GetRunOnce() { return runOnce; }
 }

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="PassiveSkillResource" format=3 uid="uid://4lvdtms8xfue"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_bohr8"]
+[ext_resource type="Script" uid="uid://c2rs1ebt6mlmh" path="res://src/dataClasses/skills/PassiveSkillResource.cs" id="1_ils6q"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="2_dxign"]
+[ext_resource type="Script" uid="uid://cwrsn0audxsdn" path="res://src/dataClasses/actionEffects/RejuvenatePercentageEffect.cs" id="3_tsau7"]
+
+[sub_resource type="Resource" id="Resource_wswh6"]
+script = ExtResource("3_tsau7")
+rejuventagePercentage = 100
+metadata/_custom_type_script = "uid://cwrsn0audxsdn"
+
+[sub_resource type="Resource" id="Resource_1u2ni"]
+script = ExtResource("2_dxign")
+triggerType = 11
+runOnce = true
+triggerActions = Array[ExtResource("1_bohr8")]([SubResource("Resource_wswh6")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("1_ils6q")
+passiveActionResource = SubResource("Resource_1u2ni")
+skillName = "Resolve"
+metadata/_custom_type_script = "uid://c2rs1ebt6mlmh"

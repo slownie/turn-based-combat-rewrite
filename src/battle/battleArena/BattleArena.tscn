@@ -11,7 +11,9 @@
 [ext_resource type="PackedScene" uid="uid://bydk2ilq2jwy2" path="res://src/battle/battleUI/uiBattleMainMenu/UIBattleMainMenu.tscn" id="6_ysmad"]
 [ext_resource type="PackedScene" uid="uid://c6p5glakoq6l3" path="res://src/battle/battleUI/uiTargetCursorController/UITargetCursorController.tscn" id="7_1m5vt"]
 [ext_resource type="PackedScene" uid="uid://bjxtgsde45reu" path="res://src/battle/battleUI/uiBattleSkillMenu/UISkillMenu.tscn" id="7_li7l2"]
+[ext_resource type="Script" uid="uid://6c6gtklelbej" path="res://src/battle/battleArena/UIPartyEntries.cs" id="8_meg8v"]
 [ext_resource type="PackedScene" uid="uid://bx7oebb2xedxr" path="res://src/battle/battleUI/uiBattleItemMenu/UIItemMenu.tscn" id="8_pu6or"]
+[ext_resource type="PackedScene" uid="uid://bf2l733misg3e" path="res://src/battle/battleUI/uiPartyEntry/UIPartyEntry.tscn" id="9_iw6pb"]
 [ext_resource type="Script" uid="uid://comggnfxr07sj" path="res://src/battle/battleUI/UIBattleTextController/UIBattleTextController.cs" id="11_cjual"]
 [ext_resource type="PackedScene" uid="uid://8l3cnqjdjof2" path="res://src/battle/battleUI/UIBattleTextController/UIBattleText/UIBattleText.tscn" id="12_ayey8"]
 
@@ -46,6 +48,20 @@ script = ExtResource("5_27rxp")
 
 [node name="UITurnBar" parent="UI" unique_id=350606653 instance=ExtResource("4_2kbwh")]
 
+[node name="UIPartyEntries" type="VBoxContainer" parent="UI" unique_id=1848540120]
+visible = false
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -186.0
+offset_right = -186.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_constants/separation = 42
+script = ExtResource("8_meg8v")
+partyEntryScene = ExtResource("9_iw6pb")
+
 [node name="UIMenuController" type="Control" parent="UI" unique_id=1846249460]
 layout_mode = 3
 anchors_preset = 15
@@ -68,6 +84,7 @@ script = ExtResource("11_cjual")
 battleTextScene = ExtResource("12_ayey8")
 
 [node name="TimerLabel" type="Label" parent="UI" unique_id=517490375]
+visible = false
 offset_left = 1.0
 offset_top = 157.0
 offset_right = 41.0

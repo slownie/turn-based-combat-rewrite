@@ -90,8 +90,13 @@ public static partial class BattleConsts
 		OnUserAnyAttack,
 		OnUserPhysicalAttack,
 		OnUserElementalAttack,
+		OnUserDoCritical,
 
 		OnUserTakeDamage,
+		OnUserHalfHP,
+		OnUserQuarterHP,
+		OnUserDeath,
+		
 	}
 
 	public enum StatBuffType

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class UIBattlerEntry : TextureRect
+public partial class UIPartyEntry : TextureRect
 {
     [Export] Texture2D HPBarImage;
     [Export] Texture2D MPBarImage;
@@ -11,44 +11,44 @@ public partial class UIBattlerEntry : TextureRect
     UIBar mpBar;
     HBoxContainer buffIcons;
 
-    BattleActor battler;
+    BattleActor _partyActor;
 
     public override void _Ready()
     {
-        name = GetNode<Label>("HBoxContainer/BattlerEntry/Name");
-        hpBar = GetNode<UIBar>("HBoxContainer/BattlerEntry/Bars/UIHPBar");
+        name = GetNode<Label>("VBoxContainer/Name");
+
+        hpBar = GetNode<UIBar>("VBoxContainer/HPBar");
         hpBar.TextureProgress = HPBarImage;
 
-        mpBar = GetNode<UIBar>("HBoxContainer/BattlerEntry/Bars/UIMPBar");
+        mpBar = GetNode<UIBar>("VBoxContainer/MPBar");
         mpBar.TextureProgress = MPBarImage;
 
-        buffIcons = GetNode<HBoxContainer>("HBoxContainer/BuffIcons");
     }
     
-    public void SetupBattler(BattleActor _battler)
+    public void Setup(BattleActor partyActor)
     {
-        battler = _battler;
-        name.Text = battler.GetName();
+        _partyActor = partyActor;
+        name.Text = _partyActor.GetActorName();
 
-        // hpBar.Setup(battler..curHP, battler.GetStats().maxHP);
-        // mpBar.Setup(battler.GetStats().curMP, battler.GetStats().maxMP);
+        hpBar.Setup(_partyActor.GetCurHP(), _partyActor.GetMaxHP());
+        mpBar.Setup(_partyActor.GetCurMP(), _partyActor.GetMaxMP());
 
-        // battler.GetStats().HPChanged += OnBattlerHPChanged;
-        // battler.GetStats().MPChanged += OnBattlerMPChanged;
+        _partyActor.GetCharacterStats().HPChanged += OnBattlerHPChanged;
+        _partyActor.MPChanged += OnBattlerMPChanged;
 
         // battler.BuffsChanged += OnBuffsChanged;
     }
 
     // Update HPBar to new value
-    private void OnBattlerHPChanged()
+    private void OnBattlerHPChanged(int newHP)
     {
-        //hpBar.targetValue = battler.GetStats().curHP;
+        hpBar.targetValue = _partyActor.GetCurHP();
     }
 
     // Update MPBar to new value
-    private void OnBattlerMPChanged()
+    private void OnBattlerMPChanged(int newMP)
     {
-        //mpBar.targetValue = battler.GetStats().curMP;
+        mpBar.targetValue = _partyActor.GetCurMP();
     }
 
     private void OnBuffsChanged()

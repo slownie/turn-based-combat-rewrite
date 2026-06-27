@@ -47,6 +47,21 @@ public partial class ActorController : Node2D
 
 		RunActorSideEffects(target, BattleConsts.TriggerType.OnUserTakeDamage);
 
+		if (target.GetCurHP() <= Mathf.RoundToInt(target.GetMaxHP() * 0.5))
+		{
+			RunActorSideEffects(target, BattleConsts.TriggerType.OnUserHalfHP);
+		}
+
+		if (target.GetCurHP() <= Mathf.RoundToInt(target.GetMaxHP() * 0.25))
+		{
+			RunActorSideEffects(target, BattleConsts.TriggerType.OnUserQuarterHP);
+		}
+
+		if (target.GetCurHP() <= 0)
+		{
+			RunActorSideEffects(target, BattleConsts.TriggerType.OnUserDeath);
+		}
+
 		target.EmitSignal(BattleActor.SignalName.DamageReceived, target, damage, didCrit);
 	}
 
@@ -95,10 +110,15 @@ public partial class ActorController : Node2D
 		}
 	}
 
-	public void AddBuff(BattleActor target, BuffResource buffToApply, int turnDuration, bool isPermanent)
+	public void RemoveStatusCondition(BattleActor target)
 	{
-		GD.Print(target.GetActorName()+" - "+buffToApply.GetBuffName()+" - "+turnDuration+" turns - "+isPermanent);
-		ActiveBuff buff = new ActiveBuff(buffToApply, turnDuration, isPermanent);
+		target.RemoveStatusCondition();
+	}
+
+	public void AddBuff(BattleActor target, BuffResource buffToApply, int turnDuration)
+	{
+		GD.Print(target.GetActorName()+" - "+buffToApply.GetBuffName()+" - "+turnDuration+" turns - ");
+		ActiveBuff buff = new ActiveBuff(buffToApply, turnDuration);
 		target.AddBuff(buff);
 	}
 
@@ -154,31 +174,45 @@ public partial class ActorController : Node2D
 		target.SetFocus(enable);
 	}
 
-	
-
 	public void SetBuffIsPermanent(BattleActor target, BuffResource buffToLookFor, bool isPermanent)
 	{
 		target.SetBuffIsPermanent(buffToLookFor, isPermanent);
 	}
 
-	public void RemoveBuff(BattleActor target)
+	/*
+		Removes all the buffs the target has.
+	*/
+	public void RemoveEveryBuff(BattleActor target)
 	{
-		
+		target.RemoveEachBuff();
 	}
 
+
+	/*
+		Removes all the positive buffs the target has.
+	*/
 	public void RemoveAllBuffs(BattleActor target)
 	{
-		
+		target.RemoveAllBuffs();
 	}
 
+	/*
+		Removes all the negative buffs the target has.
+	*/
 	public void RemoveAllDebuffs(BattleActor target)
 	{
-		
+		target.RemoveAllDebuffs();
 	}
 
 	public int GetCounterDamage(BattleActor target)
 	{
 		return target.GetCounterDamage();
+	}
+
+	public void SetTrackDamage(BattleActor target, bool enable)
+	{
+		GD.Print(target.GetActorName()+" Set TrackDamage - "+enable);
+		target.TrackDamage = enable;
 	}
 
 	public void ResetCounterDamage(BattleActor target)
@@ -191,16 +225,20 @@ public partial class ActorController : Node2D
 		target.SelectRandomAction = enable;
 	}
 
+	public void SetQueueAction(BattleActor target, UseableActionResource queueAction)
+	{
+		target.SetQueueAction(queueAction);
+	}
+
+	public void RemoveQueueAction(BattleActor target)
+	{
+		target.RemoveQueueAction();
+	}
+
 	public void SetImmortality(BattleActor target, bool enable)
 	{
 		GD.Print(target.GetActorName()+" Set Immortality - "+enable);
 		target.IsImmortal = enable;
-	}
-
-	public void SetTrackDamage(BattleActor target, bool enable)
-	{
-		GD.Print(target.GetActorName()+" Set TrackDamage - "+enable);
-		target.TrackDamage = enable;
 	}
 
 	public void SetIndestructable(BattleActor target, bool enable)
@@ -275,6 +313,10 @@ public partial class ActorController : Node2D
 	#endregion
 
 	#region Queries
+
+	/*
+		Return all actors whose curHP is greater than 0.
+	*/
 	public Godot.Collections.Array<BattleActor> GetLiveActors(Godot.Collections.Array<BattleActor> battleActors)
 	{
 		Godot.Collections.Array<BattleActor> actors = [];
@@ -284,9 +326,17 @@ public partial class ActorController : Node2D
 		return actors;
 	}
 
+	
+	/*
+		Return all actors whose curHP is greater than 0 but is not equal to their maxMP.
+	*/
 	public Godot.Collections.Array<BattleActor> GetHurtActors(Godot.Collections.Array<BattleActor> battleActors)
 	{
-		return null;
+		Godot.Collections.Array<BattleActor> actors = [];
+		IEnumerable<BattleActor> aliveQuery = battleActors.Where(battleActor => battleActor.GetMaxMP() > battleActor.GetCurHP() && battleActor.GetCurHP() > 0);
+		foreach (BattleActor actor in aliveQuery) actors.Add(actor);
+
+		return actors;
 	}
 
 	/*
@@ -454,6 +504,79 @@ public partial class ActorController : Node2D
 
 		EmitSignal(SignalName.EnemySkillUsed, (int)selectedAction.GetSkillCostType(), selectedAction.GetSkillCostAmount());
 		EmitSignal(SignalName.EnemySelectAction, selectedAction.GetUseableActionResource(), _selectedTargets);
+	}
+
+	public void SelectSetAction(BattleActor currentUser, UseableActionResource selectedAction)
+	{
+		// Targeting
+		Godot.Collections.Array<BattleActor> _oppositeSideTargets = [];
+		Godot.Collections.Array<BattleActor> _sameSideTargets = [];
+
+		// Provide targeting parameters to TargetCursorController
+
+		// 1. Are we targeting the party, enemies, both, or the self?
+		if (selectedAction.GetTargetOppositeSide())
+		{
+			_oppositeSideTargets = _partyActors;
+		}
+
+		if (selectedAction.GetTargetSameSide())
+		{
+			_sameSideTargets = _enemyActors;
+		}
+
+		if (selectedAction.GetTargetSelfOnly())
+		{
+			_sameSideTargets.Add(currentUser);
+		}
+
+		// 2. Are we targeting dead or alive actors?
+		if (selectedAction.GetTargetDeadOnly())
+		{
+			// We are only targeting dead party members
+			_sameSideTargets = GetDeadActors(_sameSideTargets);
+		} else {
+			// Target only alive party members
+			if (_oppositeSideTargets.Count != 0) _oppositeSideTargets = GetLiveActors(_oppositeSideTargets);
+			if (_sameSideTargets.Count != 0) _sameSideTargets = GetLiveActors(_sameSideTargets);
+		}
+
+		Godot.Collections.Array<BattleActor> _selectedTargets = [];
+
+		switch(selectedAction.GetCursorMode())
+		{
+			case BattleConsts.CursorMode.Single:
+			{
+				// Pick a random target
+				if (_sameSideTargets.Count != 0)
+				{
+					_selectedTargets.Add(_sameSideTargets.PickRandom());
+				} else {
+					_selectedTargets.Add(_oppositeSideTargets.PickRandom());
+				}
+				break;
+			}
+
+			case BattleConsts.CursorMode.Side:
+			{
+				if (_sameSideTargets.Count != 0)
+				{
+					_selectedTargets = _sameSideTargets;
+				} else {
+					_selectedTargets = _oppositeSideTargets;
+				}
+				break;
+			}
+
+			case BattleConsts.CursorMode.All:
+			{
+				_selectedTargets.AddRange(_oppositeSideTargets);
+				_selectedTargets.AddRange(_sameSideTargets);
+				break;
+			}
+		}
+
+		EmitSignal(SignalName.EnemySelectAction, selectedAction, _selectedTargets);
 	}
 	
 	public void SelectRandomAction(BattleActor currentUser)

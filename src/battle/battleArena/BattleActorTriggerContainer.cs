@@ -15,11 +15,18 @@ public partial class BattleActorTriggerContainer : GodotObject
 
         {BattleConsts.TriggerType.OnUserPhysicalAttack, []},
         {BattleConsts.TriggerType.OnUserElementalAttack, []},
+        {BattleConsts.TriggerType.OnUserDoCritical, []},        
         
         {BattleConsts.TriggerType.OnUserTakeDamage, []},
+        {BattleConsts.TriggerType.OnUserHalfHP, []},
+        {BattleConsts.TriggerType.OnUserQuarterHP, []},
+        
+        {BattleConsts.TriggerType.OnUserDeath, []}
     };
 
-    public BattleActorTriggerContainer() {}
+    public BattleActorTriggerContainer()
+    {
+    }
 
     public void AddSideEffect(BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect)
     {

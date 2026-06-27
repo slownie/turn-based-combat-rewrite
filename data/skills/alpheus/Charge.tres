@@ -10,7 +10,7 @@
 [sub_resource type="Resource" id="Resource_6ckhk"]
 script = ExtResource("4_ors13")
 buffResource = ExtResource("3_h3xbp")
-turnCount = 1
+turnCount = -1
 metadata/_custom_type_script = "uid://77x073pt6x6e"
 
 [sub_resource type="Resource" id="Resource_7do75"]
@@ -22,7 +22,7 @@ metadata/_custom_type_script = "uid://f4ubms2rgfo3"
 
 [resource]
 script = ExtResource("1_h3xbp")
-skillCostAmount = 8
+skillCostAmount = 20
 useableActionResource = SubResource("Resource_7do75")
 skillName = "Charge"
 metadata/_custom_type_script = "uid://dicj1dhgyboo"

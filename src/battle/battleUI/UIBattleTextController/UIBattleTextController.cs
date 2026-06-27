@@ -7,7 +7,7 @@ public partial class UIBattleTextController : Control
 
 	[ExportCategory("Damage")]
 	[Export] Color damageColor = new Color("#ff0000");
-	[Export] Color critColor = new Color("#FF5C00");
+	[Export] Color critColor = new Color("#ffc400");
 	
 	[ExportCategory("Healing")]
 	[Export] Color healColor = new Color("#00ff00");
