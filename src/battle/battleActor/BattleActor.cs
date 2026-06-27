@@ -345,10 +345,7 @@ public partial class BattleActor : Node2D
 
 		foreach(ActiveBuff activeBuff in _buffs)
 		{
-			if (activeBuff.GetHasBeenUsed())
-			{
-				activeBuff.ForceDelete();
-			}
+			activeBuff.DecrementTurn();
 		}
 	}
 

@@ -27,7 +27,6 @@ public partial class ActiveBuff : ActivePassiveEffect
     bool _isPermanent = false;
     bool _hasBeenUsed = false;
 
-
     Texture2D _icon;
 
     public ActiveBuff(BuffResource buffResource, int turnAmount) : base(
@@ -58,20 +57,24 @@ public partial class ActiveBuff : ActivePassiveEffect
         turnCount = newTurnCount;
     }
 
-    public void ForceDelete()
-    {
-        EmitSignal(SignalName.BuffFinished, this);
-    }
-
-    public void SetHasBeenUsed(bool value)
-    {
-        _hasBeenUsed = value;
-    }
+    public void SetHasBeenUsed(bool value) { _hasBeenUsed = value; }
     public bool GetHasBeenUsed() { return _hasBeenUsed; }
 
     public void DecrementTurn()
     {
-        if (!_isPermanent) turnCount -= 1;
+        if (!_isPermanent) {
+            // Signal for deletion if buff has been ran and only wants to be run once
+            if (_runOnce && _hasBeenRan)
+            {
+                turnCount = 0;
+            } else {
+                // Only decrement if the buff is not run once
+                if (!_runOnce)
+                {
+                    turnCount -= 1;
+                }
+            }
+        }
     }
 
     public int GetTurnCount() { return turnCount; }

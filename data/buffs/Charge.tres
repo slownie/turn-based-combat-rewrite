@@ -28,5 +28,4 @@ script = ExtResource("1_v2kfw")
 buffName = "Charge"
 icon = ExtResource("1_gu0dv")
 passiveActionResource = SubResource("Resource_ahc41")
-isPermanent = true
 metadata/_custom_type_script = "uid://bp8h5326g1kmp"

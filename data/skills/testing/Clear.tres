@@ -2,17 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="1_aafqh"]
 [ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_b0rog"]
-[ext_resource type="Script" uid="uid://eknkajc3q102" path="res://src/dataClasses/actionEffects/RemoveStatusConditionEffect.cs" id="3_aafqh"]
 [ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="4_0g7rp"]
 [ext_resource type="Script" uid="uid://bijk8gwmj13d8" path="res://src/dataClasses/battleSequenceEffects/BattleSequenceEffectResource.cs" id="5_omr8y"]
 
-[sub_resource type="Resource" id="Resource_b0rog"]
-script = ExtResource("3_aafqh")
-metadata/_custom_type_script = "uid://eknkajc3q102"
-
 [sub_resource type="Resource" id="Resource_s5wcb"]
 script = ExtResource("4_0g7rp")
-actions = Array[ExtResource("2_b0rog")]([SubResource("Resource_b0rog")])
 metadata/_custom_type_script = "uid://f4ubms2rgfo3"
 
 [resource]

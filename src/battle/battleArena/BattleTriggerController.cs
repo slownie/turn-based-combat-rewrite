@@ -34,7 +34,15 @@ public partial class BattleTriggerController : Node2D
             // Get Side Effects
             foreach (ActivePassiveEffect activePassiveEffect in battleActorTriggerContainer.GetTriggerEffects(triggerType))
             {
-                EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect, wantedActor);
+                // Only run effects that have not been ran
+                if (!activePassiveEffect.GetHasBeenRan())
+                {
+                    if (activePassiveEffect.GetRunOnce())
+                    {
+                       activePassiveEffect.SetHasBeenRan(true); 
+                    }
+                    EmitSignal(SignalName.SideEffectsRequested, activePassiveEffect, wantedActor);
+                }
             }
         }
     }
