@@ -28,11 +28,12 @@ public partial class ActiveStatusCondition : ActivePassiveEffect
     Texture2D _icon;
 
     public ActiveStatusCondition(StatusConditionResource statusConditionResource, int turnAmount) : base (
-        statusConditionResource.GetPassiveActionResource().GetStartupActions(),
         statusConditionResource.GetPassiveActionResource().GetTriggerActions(),
+        statusConditionResource.GetPassiveActionResource().GetStartupActions(),
         statusConditionResource.GetPassiveActionResource().GetCleanupActions()
     )
     {
+
         _triggerType = statusConditionResource.GetTriggerType();
 
         elementType = statusConditionResource.GetElementType();

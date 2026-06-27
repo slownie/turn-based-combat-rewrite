@@ -260,9 +260,10 @@ public partial class BattleArena : Control
 		_turnBar.Setup(_actors, _enemyfollowerActors);	
 		_partyEntries.Setup(_partyMembers);
 		_battleTextController.Setup(_actors);
-		IsActive = true;
 
 		_actorController.Setup(_partyMembers, _enemyMembers);
+
+		StartBattle();
 	}
 
 	public void SetupInventory(Godot.Collections.Array<InventoryItem> inventory)
@@ -272,6 +273,12 @@ public partial class BattleArena : Control
 
 	public void StartBattle()
 	{
+		foreach(BattleActor actor in _actors)
+		{
+			_battleTriggerController.RunActorSideEffects(actor, BattleConsts.TriggerType.OnBattleStart);
+		}
+
+		IsActive = true;
 	}
 
 	private void ExecuteActionEffects()

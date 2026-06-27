@@ -11,6 +11,7 @@
 [ext_resource type="Resource" uid="uid://b113ram37keo8" path="res://data/skills/alpheus/Charge.tres" id="10_r0vku"]
 [ext_resource type="Resource" uid="uid://4lvdtms8xfue" path="res://data/skills/alpheus/Resolve.tres" id="11_b7b3e"]
 [ext_resource type="Resource" uid="uid://c4x8po06fyg5b" path="res://data/skills/alpheus/Endure.tres" id="11_j63o3"]
+[ext_resource type="Resource" uid="uid://duw05pe0j8rcd" path="res://data/skills/testing/AutoBurn.tres" id="12_b7b3e"]
 
 [sub_resource type="Resource" id="Resource_4fsrl"]
 script = ExtResource("1_5wtsf")
@@ -72,7 +73,7 @@ partyMemberName = "Alpheus"
 partyMemberFusionID = 1
 baseStats = SubResource("Resource_aq5s4")
 baseAffinity = SubResource("Resource_4fsrl")
-startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("11_j63o3"), ExtResource("10_r0vku"), ExtResource("11_b7b3e")])
+startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("11_j63o3"), ExtResource("10_r0vku"), ExtResource("11_b7b3e"), ExtResource("12_b7b3e")])
 startingFusionSkills = Array[ExtResource("6_j63o3")]([ExtResource("7_b7b3e")])
 spriteFrames = SubResource("SpriteFrames_r0vku")
 battleIcon = ExtResource("1_es0o6")
