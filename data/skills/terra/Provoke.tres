@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="PassiveSkillResource" format=3 uid="uid://cn0c7j31sbiwi"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_24du2"]
+[ext_resource type="Script" uid="uid://c2rs1ebt6mlmh" path="res://src/dataClasses/skills/PassiveSkillResource.cs" id="1_umoq6"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="2_4vm58"]
+[ext_resource type="Script" uid="uid://c3w3815nvyhts" path="res://src/dataClasses/actionEffects/AddTempoEffect.cs" id="3_x3yl8"]
+
+[sub_resource type="Resource" id="Resource_l4pht"]
+script = ExtResource("3_x3yl8")
+tempo = 1.0
+metadata/_custom_type_script = "uid://c3w3815nvyhts"
+
+[sub_resource type="Resource" id="Resource_vkw0w"]
+script = ExtResource("2_4vm58")
+triggerType = 9
+triggerActions = Array[ExtResource("1_24du2")]([SubResource("Resource_l4pht")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("1_umoq6")
+passiveActionResource = SubResource("Resource_vkw0w")
+skillName = "Provoke"
+metadata/_custom_type_script = "uid://c2rs1ebt6mlmh"

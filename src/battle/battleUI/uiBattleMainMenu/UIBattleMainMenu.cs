@@ -5,6 +5,7 @@ public partial class UIBattleMainMenu : UIBattleMenuBase
 {
     [Export] UseableSkillResource attackAction;
     [Export] UseableSkillResource passAction;
+    [Export] UseableSkillResource escapeAction;
 
     [Signal] public delegate void ActionSelectedEventHandler(UseableSkillResource selectedAction);
     [Signal] public delegate void SkillMenuRequestedEventHandler();
@@ -52,6 +53,12 @@ public partial class UIBattleMainMenu : UIBattleMenuBase
             } else {
                 GD.Print("No Skills");
             }
+        }
+
+        // Escape
+        if (@event.IsActionPressed("RButton"))
+        {
+            EmitSignal(SignalName.ActionSelected, escapeAction);
         }
     }
 

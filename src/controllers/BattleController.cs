@@ -88,6 +88,7 @@ public partial class BattleController : CanvasLayer
 
 			case BattleConclusion.Escape:
 			{
+				GD.Print("Escaped!");
 				break;
 			}
 

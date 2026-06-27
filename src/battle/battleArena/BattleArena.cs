@@ -96,12 +96,16 @@ public partial class BattleArena : Control
 		}
 	}
 
+	bool _canEscape = true;
+	bool _didEscape = false;
+
 	public override void _Ready()
 	{
 		_actorController = GetNode<ActorController>("ActorController");
 		_actorController.EnemySelectAction += OnActionTargetConfimed;
 		_actorController.EnemySkillUsed += OnSkillUsed;
 		_actorController.RandomSelectAction += OnActionTargetConfimed;
+		_actorController.EscapeSuccess += OnEscapeSuccess;
 
 		_battleTriggerController = GetNode<BattleTriggerController>("BattleTriggerController");
 		_battleTriggerController.SideEffectsRequested += OnSideEffectRequested;
@@ -403,15 +407,15 @@ public partial class BattleArena : Control
 
 	private void OnActionFinished()
 	{
-		_battleTriggerController.RunActorSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnEnd);
-
 		// Reset Variables
 		_selectedAction = null;
 		_selectedTargets = [];
 
 		// Turn Decrement
-		_currentActor.TurnEnd();
-
+		if (!_didEscape) {
+			_battleTriggerController.RunActorSideEffects(_currentActor, BattleConsts.TriggerType.OnUserTurnEnd);
+			_currentActor.TurnEnd();
+		}
 		// Victory Check
 		if (_actorController.GetLiveActors(_partyMembers).Count == 0)
 		{
@@ -420,6 +424,9 @@ public partial class BattleArena : Control
 		} else if (_actorController.GetLiveActors(_enemyMembers).Count == 0) {
 			IsActive = false;
 			EmitSignal(SignalName.BattleFinished, (int)BattleController.BattleConclusion.Victory);
+		} else if (_didEscape) {
+			IsActive = false;
+			EmitSignal(SignalName.BattleFinished, (int)BattleController.BattleConclusion.Escape);
 		} else {
 			// Required due to Godot's order of operations
 			Callable.From(ResetActors).CallDeferred();
@@ -445,6 +452,11 @@ public partial class BattleArena : Control
 			_partnerActor.ResetReadiness();
 			_partnerActor = null;
 		}
+	}
+
+	private void OnEscapeSuccess()
+	{
+		_didEscape = true;
 	}
 
 	/*

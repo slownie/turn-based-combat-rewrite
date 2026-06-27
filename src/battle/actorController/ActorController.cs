@@ -17,6 +17,7 @@ public partial class ActorController : Node2D
 
 	[Signal] public delegate void EnemySelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 	[Signal] public delegate void RandomSelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
+	[Signal] public delegate void EscapeSuccessEventHandler();
 
 	Godot.Collections.Array<BattleActor> _partyActors = [];
 	Godot.Collections.Array<BattleActor> _enemyActors = [];
@@ -233,6 +234,11 @@ public partial class ActorController : Node2D
 	public void RemoveQueueAction(BattleActor target)
 	{
 		target.RemoveQueueAction();
+	}
+
+	public void DidEscape()
+	{
+		EmitSignal(SignalName.EscapeSuccess); 
 	}
 
 	public void SetImmortality(BattleActor target, bool enable)

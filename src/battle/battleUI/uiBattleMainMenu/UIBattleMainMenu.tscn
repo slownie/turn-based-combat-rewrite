@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b5c6re2xliapi" path="res://src/battle/battleUI/uiBattleMainMenu/UIBattleMainMenu.cs" id="1_gp4c5"]
 [ext_resource type="Resource" uid="uid://c5fdarb44i3v0" path="res://data/skills/Attack.tres" id="2_e3kr8"]
 [ext_resource type="Resource" uid="uid://dqtftmh6xbku5" path="res://data/skills/Pass.tres" id="3_7gv0k"]
+[ext_resource type="Resource" uid="uid://c035lq5hduilr" path="res://data/skills/basics/Escape.tres" id="4_7gv0k"]
 
 [node name="UIBattleMainMenu" type="Control" unique_id=533249634]
 layout_mode = 3
@@ -14,6 +15,7 @@ grow_vertical = 2
 script = ExtResource("1_gp4c5")
 attackAction = ExtResource("2_e3kr8")
 passAction = ExtResource("3_7gv0k")
+escapeAction = ExtResource("4_7gv0k")
 
 [node name="ButtonContainer" type="HBoxContainer" parent="." unique_id=1781435491]
 layout_mode = 1

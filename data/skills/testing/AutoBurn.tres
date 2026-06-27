@@ -9,13 +9,13 @@
 [sub_resource type="Resource" id="Resource_3nrtd"]
 script = ExtResource("3_mw7ym")
 statusCondition = ExtResource("4_u7d1o")
-setForUser = true
 metadata/_custom_type_script = "uid://bqfsgwyfg0kop"
 
 [sub_resource type="Resource" id="Resource_qvxlm"]
 script = ExtResource("2_4lgn5")
+triggerType = 1
 runOnce = true
-startupActions = Array[ExtResource("1_3nrtd")]([SubResource("Resource_3nrtd")])
+triggerActions = Array[ExtResource("1_3nrtd")]([SubResource("Resource_3nrtd")])
 metadata/_custom_type_script = "uid://dg34628o553u4"
 
 [resource]
