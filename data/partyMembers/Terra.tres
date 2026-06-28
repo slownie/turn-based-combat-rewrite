@@ -8,7 +8,6 @@
 [ext_resource type="Script" uid="uid://dkuf8p00m1ibl" path="res://src/dataClasses/skills/BaseSkillResource.cs" id="5_bqktf"]
 [ext_resource type="Script" uid="uid://dhbd03db6gml8" path="res://src/dataClasses/skills/FusionSkillResource.cs" id="6_4oqrj"]
 [ext_resource type="Resource" uid="uid://cq5j5eomr0oal" path="res://data/skills/fusionSkills/CrossCombo.tres" id="7_bmjkj"]
-[ext_resource type="Resource" uid="uid://cn0c7j31sbiwi" path="res://data/skills/terra/Provoke.tres" id="9_a3lub"]
 [ext_resource type="Resource" uid="uid://cvkit1bpswrrx" path="res://data/skills/terra/RushCombo.tres" id="10_6b3wo"]
 [ext_resource type="Resource" uid="uid://ptyg636g52ww" path="res://data/skills/terra/RockThrow.tres" id="11_4oqrj"]
 
@@ -71,7 +70,7 @@ script = ExtResource("1_0mqtt")
 partyMemberName = "Terra"
 baseStats = SubResource("Resource_2gw5i")
 baseAffinity = SubResource("Resource_a3lub")
-startingSkills = Array[ExtResource("5_bqktf")]([ExtResource("9_a3lub"), ExtResource("10_6b3wo"), ExtResource("11_4oqrj")])
+startingSkills = Array[ExtResource("5_bqktf")]([ExtResource("10_6b3wo"), ExtResource("11_4oqrj")])
 startingFusionSkills = Array[ExtResource("6_4oqrj")]([ExtResource("7_bmjkj")])
 spriteFrames = SubResource("SpriteFrames_bqktf")
 battleIcon = ExtResource("1_m5hiy")

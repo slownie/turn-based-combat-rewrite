@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://bydk2ilq2jwy2"]
 
+[ext_resource type="Theme" uid="uid://duwx00x2wfrwv" path="res://ui/BattleUIMainMenuTheme.tres" id="1_8v0oa"]
 [ext_resource type="Script" uid="uid://b5c6re2xliapi" path="res://src/battle/battleUI/uiBattleMainMenu/UIBattleMainMenu.cs" id="1_gp4c5"]
 [ext_resource type="Resource" uid="uid://c5fdarb44i3v0" path="res://data/skills/basics/Attack.tres" id="2_e3kr8"]
 [ext_resource type="Resource" uid="uid://dqtftmh6xbku5" path="res://data/skills/basics/Pass.tres" id="3_7gv0k"]
@@ -12,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_8v0oa")
 script = ExtResource("1_gp4c5")
 attackAction = ExtResource("2_e3kr8")
 passAction = ExtResource("3_7gv0k")
@@ -22,8 +24,9 @@ layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_top = -70.0
+offset_top = -56.0
 offset_right = 212.0
+offset_bottom = 14.0
 grow_vertical = 0
 
 [node name="ItemsContainer" type="HBoxContainer" parent="ButtonContainer" unique_id=841200860]
@@ -36,11 +39,11 @@ text = "Y"
 
 [node name="ItemsLabel" type="Label" parent="ButtonContainer/ItemsContainer" unique_id=1086118575]
 layout_mode = 2
-text = "- Items"
+text = "Items"
 
 [node name="Skills&PassContainer" type="VBoxContainer" parent="ButtonContainer" unique_id=1141809597]
 layout_mode = 2
-theme_override_constants/separation = 24
+alignment = 1
 
 [node name="SkillsContainer" type="HBoxContainer" parent="ButtonContainer/Skills&PassContainer" unique_id=1538903849]
 layout_mode = 2
@@ -52,7 +55,7 @@ text = "X"
 
 [node name="SkillsLabel" type="Label" parent="ButtonContainer/Skills&PassContainer/SkillsContainer" unique_id=1879889951]
 layout_mode = 2
-text = "- Skills"
+text = "Skills"
 
 [node name="PassContainer" type="HBoxContainer" parent="ButtonContainer/Skills&PassContainer" unique_id=113316539]
 layout_mode = 2
@@ -64,7 +67,7 @@ text = "B"
 
 [node name="PassLabel" type="Label" parent="ButtonContainer/Skills&PassContainer/PassContainer" unique_id=1735266299]
 layout_mode = 2
-text = "- Pass"
+text = "Pass"
 
 [node name="AttackContainer" type="HBoxContainer" parent="ButtonContainer" unique_id=504688468]
 layout_mode = 2
@@ -76,4 +79,4 @@ text = "A"
 
 [node name="AttackLabel" type="Label" parent="ButtonContainer/AttackContainer" unique_id=1059959765]
 layout_mode = 2
-text = "- Attack"
+text = "Attack"

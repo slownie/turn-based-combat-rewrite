@@ -43,7 +43,7 @@ public partial class BattleArena : Control
 	SFXPlayer _sfxPlayer;
 	GameCamera _gameCamera;
 
-
+	Timer _actionPauseTimer;
 
 	Timer _defenseTimer;
 	Label _timerLabel; // TESTING PURPOSES ONLY
@@ -101,6 +101,9 @@ public partial class BattleArena : Control
 	bool _canEscape = true;
 	bool _didEscape = false;
 
+	int _normalBattleSpeed = 5; // Used when the number of actors is greater than 4
+	int _fastBattleSpeed = 8; // Used when the number of actors is less than 4
+
 	public override void _Ready()
 	{
 		_actorController = GetNode<ActorController>("ActorController");
@@ -112,7 +115,10 @@ public partial class BattleArena : Control
 		_battleTriggerController = GetNode<BattleTriggerController>("BattleTriggerController");
 		_battleTriggerController.SideEffectsRequested += OnSideEffectRequested;
 
+		_actionPauseTimer = GetNode<Timer>("ActionPauseTimer");
 		_defenseTimer = GetNode<Timer>("DefenseTimer");
+
+
 		_timerLabel = GetNode<Label>("UI/TimerLabel");
 
 		// UI
@@ -287,7 +293,7 @@ public partial class BattleArena : Control
 		IsActive = true;
 	}
 
-	private void ExecuteActionEffects()
+	private async void ExecuteActionEffects()
 	{
 		foreach(ActionEffectResource actionEffect in _selectedAction.GetActions())
 		{
@@ -309,6 +315,8 @@ public partial class BattleArena : Control
 						}
 					}
 				}
+				_actionPauseTimer.Start();
+				await ToSignal(_actionPauseTimer, Timer.SignalName.Timeout);
 			} else {
 				// Stop action execution, the user is dead
 				break;	

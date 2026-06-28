@@ -117,7 +117,7 @@ public partial class BattleActor : Node2D
 	public double TimeScale {get; set;} = 1.0;
 
 	// The default ready gain
-	double _battleSpeed = 5;
+	double _battleSpeed = 7;
 
 	// When this value reaches '100.0', the battler is ready to take their turn
 	double readiness = 0.0;

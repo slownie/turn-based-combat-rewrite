@@ -183,34 +183,37 @@ public partial class UISkillMenu : UIBattleMenuBase
                 }
             }
 
-            bool partnerCanUseSkill = true;
-            if (!partnerActor.IgnoreSkillCosts)
+            if (partnerActor != null)
             {
-                if (fusionSkill.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)
+                bool partnerCanUseSkill = true;
+                if (!partnerActor.IgnoreSkillCosts)
                 {
-                    if (partnerActor.GetCurHP() <= fusionSkill.GetSkillCostAmount() || !partnerActor.CanSelectPhysSkills)
+                    if (fusionSkill.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)
                     {
-                        partnerCanUseSkill = false;
-                    }
-                } else {
-                    if (partnerActor.GetCurMP() < fusionSkill.GetSkillCostAmount() || !partnerActor.CanSelectElemSkills)
-                    {
-                        partnerCanUseSkill = false;
+                        if (partnerActor.GetCurHP() <= fusionSkill.GetSkillCostAmount() || !partnerActor.CanSelectPhysSkills)
+                        {
+                            partnerCanUseSkill = false;
+                        }
+                    } else {
+                        if (partnerActor.GetCurMP() < fusionSkill.GetSkillCostAmount() || !partnerActor.CanSelectElemSkills)
+                        {
+                            partnerCanUseSkill = false;
+                        }
                     }
                 }
+
+                if (partnerActor.SelectRandomAction) partnerCanUseSkill = false;
+
+
+                fusionEntry.Setup(fusionSkill, partnerActor.GetBattleIcon(), userCanUseSkill && partnerCanUseSkill);
+                _fusionEntries.Add(fusionEntry);
             }
-
-            if (partnerActor.SelectRandomAction) partnerCanUseSkill = false;
-
-
-            fusionEntry.Setup(fusionSkill, partnerActor.GetBattleIcon(), userCanUseSkill && partnerCanUseSkill);
-            _fusionEntries.Add(fusionEntry);
         }
 
         _targetCursor = targetCursorScene.Instantiate() as UITargetCursor;
         AddChild(_targetCursor);
 
-        if (_fusionEntries.Count <= 0) { SwapMenu(); } 
+        //if (_fusionEntries.Count <= 0) { SwapMenu(); } 
 
         index = 0;
         SetProcessInput(true);

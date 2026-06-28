@@ -15,7 +15,7 @@ metadata/_custom_type_script = "uid://cq1yfcauodijh"
 script = ExtResource("1_y1kul")
 _maxHP = 20
 _strength = 3
-_agility = 1
+_agility = 2
 metadata/_custom_type_script = "uid://elamptvvyimh"
 
 [resource]

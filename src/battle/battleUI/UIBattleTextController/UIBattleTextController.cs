@@ -41,7 +41,7 @@ public partial class UIBattleTextController : Control
 		UIBattleText battleText = battleTextScene.Instantiate() as UIBattleText;
 		AddChild(battleText);
 
-		Vector2 textPosition = new Vector2(actor.GlobalPosition.X, actor.GlobalPosition.Y - 16);
+		Vector2 textPosition = new Vector2(actor.GlobalPosition.X + 32, actor.GlobalPosition.Y - 16);
 		battleText.Setup(textPosition, damage.ToString(), useColor);
 	}
 
@@ -52,7 +52,7 @@ public partial class UIBattleTextController : Control
 		UIBattleText battleText = battleTextScene.Instantiate() as UIBattleText;
 		AddChild(battleText);
 
-		Vector2 textPosition = new Vector2(actor.GlobalPosition.X, actor.GlobalPosition.Y - 16);
+		Vector2 textPosition = new Vector2(actor.GlobalPosition.X + 32, actor.GlobalPosition.Y - 16);
 		battleText.Setup(textPosition, heal.ToString(), useColor);
 	}
 
@@ -63,7 +63,7 @@ public partial class UIBattleTextController : Control
 		UIBattleText battleText = battleTextScene.Instantiate() as UIBattleText;
 		AddChild(battleText);
 
-		Vector2 textPosition = new Vector2(actor.GlobalPosition.X, actor.GlobalPosition.Y - 64);
+		Vector2 textPosition = new Vector2(actor.GlobalPosition.X + 32, actor.GlobalPosition.Y - 16);
 		battleText.Setup(textPosition, rejuvenate.ToString(), useColor);
 	}
 
@@ -74,7 +74,7 @@ public partial class UIBattleTextController : Control
 		UIBattleText battleText = battleTextScene.Instantiate() as UIBattleText;
 		AddChild(battleText);
 
-		Vector2 textPosition = new Vector2(actor.GlobalPosition.X, actor.GlobalPosition.Y - 64);
+		Vector2 textPosition = new Vector2(actor.GlobalPosition.X + 32, actor.GlobalPosition.Y - 16);
 		battleText.Setup(textPosition, "Missed!", useColor);
 	}
 }

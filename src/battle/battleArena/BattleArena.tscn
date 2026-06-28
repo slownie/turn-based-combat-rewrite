@@ -102,5 +102,21 @@ offset_right = 41.0
 offset_bottom = 180.0
 text = "0"
 
+[node name="ActionBox" type="HBoxContainer" parent="UI" unique_id=840172989]
+offset_left = 135.0
+offset_top = 1.0
+offset_right = 274.0
+offset_bottom = 43.0
+
+[node name="ActionIcon" type="TextureRect" parent="UI/ActionBox" unique_id=1862706976]
+layout_mode = 2
+
+[node name="ActionName" type="Label" parent="UI/ActionBox" unique_id=1941843450]
+layout_mode = 2
+
+[node name="ActionPauseTimer" type="Timer" parent="." unique_id=1689123400]
+wait_time = 0.5
+one_shot = true
+
 [node name="DefenseTimer" type="Timer" parent="." unique_id=106329897]
 one_shot = true
