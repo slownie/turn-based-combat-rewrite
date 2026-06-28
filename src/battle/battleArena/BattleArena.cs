@@ -224,7 +224,7 @@ public partial class BattleArena : Control
 			CharacterAffinity enemyAffinity = new CharacterAffinity(enemy.GetBaseAffinity());
 
 			newActor.Setup(
-				70+(i % 2*35)+(i / 3*40),
+				40+(i % 2*35)+(i / 3*40),
 				58+(i % 3*30),
 				enemy.GetEnemyName(), 
 				-1,

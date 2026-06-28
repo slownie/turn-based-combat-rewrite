@@ -26,6 +26,8 @@ public partial class AttackEffect : ActionEffectResource
 
     [ExportCategory("Attack Flags")]
     [Export] bool statusBonusDamage = false;
+    [Export] bool cannotKill = false;
+    [Export] bool canCrit = true;
 
     public override void ExecuteEffect(BattleActor user, BattleActor target, ActorController actorController)
     {
@@ -41,14 +43,17 @@ public partial class AttackEffect : ActionEffectResource
                     actorController.RunActorSideEffects(user, BattleConsts.TriggerType.OnUserPhysicalAttack);
                     calculatedDamage = Mathf.RoundToInt((baseDamage + user.GetStrength()) * user.GetStrengthModifier());
 
-                    if ((baseCrit * user.GetCritModifier()) > GD.Randi() % 99)
+                    if (canCrit)
                     {
-                        actorController.RunActorSideEffects(user, BattleConsts.TriggerType.OnUserDoCritical);
-                        GD.Print("It's a critical hit!");
-                        calculatedDamage = Mathf.RoundToInt(calculatedDamage * _critMultiplier);
-                        didCrit = true;
-                    } 
-
+                        if ((baseCrit * user.GetCritModifier()) > GD.Randi() % 99)
+                        {
+                            actorController.RunActorSideEffects(user, BattleConsts.TriggerType.OnUserDoCritical);
+                            GD.Print("It's a critical hit!");
+                            calculatedDamage = Mathf.RoundToInt(calculatedDamage * _critMultiplier);
+                            didCrit = true;
+                        } 
+                    }
+                    
                     if (user.IsChargeEnabled()) calculatedDamage = Mathf.RoundToInt(calculatedDamage * _chargeMultiplier);
 
                     int restoreMPAmount = 0;
@@ -97,6 +102,14 @@ public partial class AttackEffect : ActionEffectResource
                 if (target.GetActiveStatusCondition() != null)
                 {
                     calculatedDamage = Mathf.RoundToInt(calculatedDamage * _critMultiplier);
+                }
+            }
+
+            if (cannotKill)
+            {
+                // Sajam voice: Will it kill?
+                if (target.GetCurHP() <= calculatedDamage)
+                {
                 }
             }
 

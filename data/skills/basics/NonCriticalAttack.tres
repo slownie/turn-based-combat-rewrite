@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="UseableSkillResource" format=3 uid="uid://cofvp53es6eo7"]
+
+[ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="1_njgwe"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_1pahg"]
+[ext_resource type="Script" uid="uid://b1e2fc42rjbqm" path="res://src/dataClasses/actionEffects/AttackEffect.cs" id="3_2py6a"]
+[ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="4_jxx52"]
+[ext_resource type="Script" uid="uid://bijk8gwmj13d8" path="res://src/dataClasses/battleSequenceEffects/BattleSequenceEffectResource.cs" id="5_d0hbi"]
+
+[sub_resource type="Resource" id="Resource_pei8x"]
+script = ExtResource("3_2py6a")
+baseCrit = 0
+canCrit = false
+metadata/_custom_type_script = "uid://b1e2fc42rjbqm"
+
+[sub_resource type="Resource" id="Resource_or4fy"]
+script = ExtResource("4_jxx52")
+actions = Array[ExtResource("2_1pahg")]([SubResource("Resource_pei8x")])
+metadata/_custom_type_script = "uid://f4ubms2rgfo3"
+
+[resource]
+script = ExtResource("1_njgwe")
+skillCostType = 0
+useableActionResource = SubResource("Resource_or4fy")
+skillName = "Attack"
+desc = "Deal light damage to 1 foe.
+The player should not see this."
+metadata/_custom_type_script = "uid://dicj1dhgyboo"

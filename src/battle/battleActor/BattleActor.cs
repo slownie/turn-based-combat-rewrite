@@ -229,6 +229,10 @@ public partial class BattleActor : Node2D
 	*/
 	public bool SkillSuccessGuarantee {get; set;} = false; // Elevate
 
+	/*
+	
+	*/
+
 	#endregion
 	
 	// Called when the node enters the scene tree for the first time.
