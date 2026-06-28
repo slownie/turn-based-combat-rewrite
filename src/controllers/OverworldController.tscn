@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://d1s5s2oh2xdn3"]
 
 [ext_resource type="Script" uid="uid://xsc3nl4xwirp" path="res://src/controllers/OverworldController.cs" id="1_gimri"]
+[ext_resource type="PackedScene" uid="uid://g6dqg22timw3" path="res://src/overworld/overworldMenu/OverworldMenuController.tscn" id="2_m00kg"]
 
 [node name="OverworldController" type="Node2D" unique_id=240939576]
 script = ExtResource("1_gimri")
+
+[node name="OverworldMenu" parent="." unique_id=1337779182 instance=ExtResource("2_m00kg")]

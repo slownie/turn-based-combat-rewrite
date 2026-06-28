@@ -3,8 +3,18 @@ using System;
 
 public partial class OverworldPlayer : CharacterBody2D
 {
+	[Signal] public delegate void OverworldMenuRequestedEventHandler();
+
 	public const float Speed = 200.0f;
-	public const float JumpVelocity = -400.0f;
+
+    public override void _Input(InputEvent @event)
+	{
+		if (@event.IsActionPressed("YButton"))
+		{
+			EmitSignal(SignalName.OverworldMenuRequested);
+		}
+	}
+
 
 	public override void _PhysicsProcess(double delta)
 	{

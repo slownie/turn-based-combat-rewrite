@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cg6l8w8ann86n"]
+
+[ext_resource type="Script" uid="uid://dowouviibvag5" path="res://src/overworld/overworldMenu/components/UIGoldDisplay.cs" id="1_q4r66"]
+
+[node name="UIGoldDisplay" type="Control" unique_id=1987738392]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_q4r66")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1345185152]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="GoldAmount" type="Label" parent="HBoxContainer" unique_id=2001458989]
+layout_mode = 2
+
+[node name="GoldSymbol" type="Label" parent="HBoxContainer" unique_id=1687036310]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 0, 1)
+text = "G"

@@ -3,14 +3,28 @@ using System;
 
 public partial class OverworldController : Node2D
 {
+	[Export] PackedScene _overworldMenuScene;
+
+
 	Node2D _loadedScene;
 	OverworldPlayer _overworldPlayer;
+
+	
+	OverworldMenuController _overworldMenuController;
+
+	GameState _gameState;
 
 	[Signal] public delegate void SwitchToBattleEventHandler(EnemyEncounterResource enemyEncounterResource);
 
     public override void _Ready()
-    {
-    }
+	{
+		_overworldMenuController = GetNode<OverworldMenuController>("OverworldMenuController");
+	}
+
+	public void BindServices(GameState gameState)
+	{
+		_gameState = gameState;
+	}
 
 	public void SetActive(bool isActive)
 	{
@@ -39,6 +53,7 @@ public partial class OverworldController : Node2D
 	private void OnNewRoomLoaded()
 	{
 		_overworldPlayer = _loadedScene.GetNode<OverworldPlayer>("OverworldPlayer");
+		_overworldPlayer.OverworldMenuRequested += OnOverworldMenuRequested;
 
 		// 1. Story Progress
 
@@ -53,6 +68,17 @@ public partial class OverworldController : Node2D
 		// 3. Interactables
 
 		// 4. Transitions
+	}
+
+	private void OnOverworldMenuRequested()
+	{
+		GetTree().Paused = true;
+
+	}
+
+	private void CloseOverworldMenu()
+	{
+		
 	}
 
 	private void OnEncounterStart(EnemyEncounterResource enemyEncounterResource)
