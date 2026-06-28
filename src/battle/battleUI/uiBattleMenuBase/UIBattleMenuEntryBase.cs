@@ -17,4 +17,6 @@ public partial class UIBattleMenuEntryBase : Control
     }
 
     public bool IsEnabled() { return _enabled; }
+
+    public virtual string GetMenuDesc() { return ""; }
 }

@@ -25,4 +25,5 @@ script = ExtResource("1_h3xbp")
 skillCostAmount = 20
 useableActionResource = SubResource("Resource_7do75")
 skillName = "Charge"
+desc = "Gain [Charge]."
 metadata/_custom_type_script = "uid://dicj1dhgyboo"

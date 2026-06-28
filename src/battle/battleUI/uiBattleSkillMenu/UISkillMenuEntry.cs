@@ -41,4 +41,5 @@ public partial class UISkillMenuEntry : UIBattleMenuEntryBase
     }
 
     public UseableSkillResource GetUseableSkill() { return _skillResource; }
+    public override string GetMenuDesc() { return _skillResource.GetDesc(); }
 }

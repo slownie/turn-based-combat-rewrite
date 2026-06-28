@@ -28,9 +28,11 @@ public partial class UIMenuController : Control
 
 	Vector2 _menuPosition = new Vector2(160, 16);
 
+	Label _descLabel;
+
     public override void _Ready()
 	{
-		
+		_descLabel = GetNode<Label>("DescLabel");
 	}
 
 	public void BindServices(ActorController actorController, Godot.Collections.Array<BattleActor> battleActors)
@@ -76,6 +78,7 @@ public partial class UIMenuController : Control
 		skillMenu.SkillSelected += OnSkillSelected;
 		skillMenu.FusionSkillSelected += OnFusionSelected;
 		skillMenu.SkillSelectionCancelled += UnloadMenu;
+		skillMenu.DescriptionUpdate += OnEntryChanged;
 
 		// If the player reaches this menu, then there are useable skills
 		// Even if _useableSkills is empty, skillMenu.Setup will execute without errors
@@ -92,11 +95,17 @@ public partial class UIMenuController : Control
 
 		itemMenu.ItemSelected += OnItemSelected;
 		itemMenu.ItemSelectionCancelled += UnloadMenu;
+		itemMenu.DescriptionUpdate += OnEntryChanged;
 
 		itemMenu.Setup(_battleInventory);
 		LoadMenu(itemMenu);
 
 		itemMenu.Position = _menuPosition;
+	}
+
+	private void OnEntryChanged(string newEntryText)
+	{
+		_descLabel.Text = newEntryText;
 	}
 
 	private void OnSkillSelected(UseableSkillResource useableSkillResource)
@@ -160,6 +169,8 @@ public partial class UIMenuController : Control
 		// 3. Pass data to controller
 		targetMenu.Setup(_partyTargets, _enemyTargets, useableActionResource.GetCursorMode());
 		LoadMenu(targetMenu);
+
+		_descLabel.Text = "";
 	}
 
 	private void OnTargetsSelected(Godot.Collections.Array<BattleActor> selectedActors)
@@ -183,6 +194,8 @@ public partial class UIMenuController : Control
 			EmitSignal(SignalName.ActionTargetConfirmed, _selectedItem.GetUseableActionResource(), selectedActors);
 		}
 
+
+
 		Cleanup();
 	}
 
@@ -197,6 +210,7 @@ public partial class UIMenuController : Control
 
 	private void UnloadMenu()
 	{
+		_descLabel.Text = "";
 		// Only unload the menu if we are not on the main menu
 		if (1 < _menuStack.Count)
 		{
@@ -213,7 +227,8 @@ public partial class UIMenuController : Control
 		// Destroy all menus/targetting
 		foreach (Node node in GetChildren())
 		{
-			node.QueueFree();
+			// Really stupid way of doing this
+			if (node != _descLabel) node.QueueFree();
 		}
 
 		_currentMenu = null;

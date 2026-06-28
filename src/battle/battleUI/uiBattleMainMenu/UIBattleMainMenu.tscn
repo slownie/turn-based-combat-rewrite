@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bydk2ilq2jwy2"]
 
 [ext_resource type="Script" uid="uid://b5c6re2xliapi" path="res://src/battle/battleUI/uiBattleMainMenu/UIBattleMainMenu.cs" id="1_gp4c5"]
-[ext_resource type="Resource" uid="uid://c5fdarb44i3v0" path="res://data/skills/Attack.tres" id="2_e3kr8"]
-[ext_resource type="Resource" uid="uid://dqtftmh6xbku5" path="res://data/skills/Pass.tres" id="3_7gv0k"]
+[ext_resource type="Resource" uid="uid://c5fdarb44i3v0" path="res://data/skills/basics/Attack.tres" id="2_e3kr8"]
+[ext_resource type="Resource" uid="uid://dqtftmh6xbku5" path="res://data/skills/basics/Pass.tres" id="3_7gv0k"]
 [ext_resource type="Resource" uid="uid://c035lq5hduilr" path="res://data/skills/basics/Escape.tres" id="4_7gv0k"]
 
 [node name="UIBattleMainMenu" type="Control" unique_id=533249634]

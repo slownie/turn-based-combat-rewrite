@@ -18,6 +18,7 @@ public partial class InventoryItem : GodotObject
 
 	public Texture2D GetIcon() { return _itemResource.GetIcon(); }
 	public string GetItemName() { return _itemResource.GetItemName(); }
+	public string GetItemDesc() { return _itemResource.GetDesc(); }
 	public int GetItemQuantity() { return _quantity; }
 
 	public void AddItemQuantity(int itemQuantity) { _quantity += itemQuantity; } 

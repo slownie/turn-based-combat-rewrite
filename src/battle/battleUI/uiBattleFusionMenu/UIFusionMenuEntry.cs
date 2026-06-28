@@ -45,4 +45,5 @@ public partial class UIFusionMenuEntry : UIBattleMenuEntryBase
     }
 
     public FusionSkillResource GetFusionSkill() { return _fusionSkillResource; }
+    public override string GetMenuDesc() { return _fusionSkillResource.GetDesc(); }
 }

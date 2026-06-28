@@ -29,5 +29,6 @@ skillCostType = 0
 skillCostAmount = 4
 useableActionResource = SubResource("Resource_vrv36")
 skillName = "Rush Combo"
-desc = "Deal physical damage to one foe. Hit 3 times."
+desc = "Deal physical damage to one foe.
+Hit 3 times."
 metadata/_custom_type_script = "uid://dicj1dhgyboo"

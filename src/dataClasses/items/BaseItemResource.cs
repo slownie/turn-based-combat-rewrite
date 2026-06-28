@@ -5,7 +5,7 @@ using System;
 public partial class BaseItemResource : Resource
 {
     [Export] string itemName = "";
-    [Export] string desc = "";
+    [Export(PropertyHint.MultilineText)] string desc = "";
     [Export] Texture2D icon;
 
     public string GetItemName() { return itemName; }

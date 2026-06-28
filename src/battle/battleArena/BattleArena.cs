@@ -43,6 +43,8 @@ public partial class BattleArena : Control
 	SFXPlayer _sfxPlayer;
 	GameCamera _gameCamera;
 
+
+
 	Timer _defenseTimer;
 	Label _timerLabel; // TESTING PURPOSES ONLY
 	

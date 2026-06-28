@@ -5,7 +5,7 @@ using System;
 public abstract partial class BaseSkillResource : Resource
 {
     [Export] string skillName = "";
-    [Export] string desc = "";
+    [Export(PropertyHint.MultilineText)] string desc = "";
     [Export] Texture2D icon;
 
     public string GetSkillName() { return skillName; }

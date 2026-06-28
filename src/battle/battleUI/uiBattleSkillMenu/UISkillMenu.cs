@@ -48,6 +48,13 @@ public partial class UISkillMenu : UIBattleMenuBase
                     _targetCursor.Position = new Vector2(_fusionEntries[_index].Position.X, _fusionEntries[_index].Position.Y + 16);
                 }
             }
+
+            // Update Desc
+            if (_currentMenuMode == MenuMode.Skill) {
+                EmitSignal(SignalName.DescriptionUpdate, _skillEntries[_index].GetMenuDesc());
+            } else {
+                EmitSignal(SignalName.DescriptionUpdate, _fusionEntries[_index].GetMenuDesc());
+            }
         }
     }
 
@@ -60,6 +67,8 @@ public partial class UISkillMenu : UIBattleMenuBase
     {
         _skillMenu = GetNode<Control>("SkillMenuEntries");
         _fusionMenu = GetNode<Control>("FusionMenuEntries");
+
+
         SetProcessInput(false);
     }
 

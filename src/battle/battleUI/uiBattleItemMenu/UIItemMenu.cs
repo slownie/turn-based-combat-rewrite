@@ -27,6 +27,8 @@ public partial class UIItemMenu : UIBattleMenuBase
             {
                 _targetCursor.Position = new Vector2(_entries[_index].Position.X, _entries[_index].Position.Y + 16);
             }
+
+            EmitSignal(SignalName.DescriptionUpdate, _entries[_index].GetMenuDesc());
         }
     }
 

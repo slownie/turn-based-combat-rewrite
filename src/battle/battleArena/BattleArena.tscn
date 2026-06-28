@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bp2kyncoqe625" path="res://src/battle/followerActor/FollowerActor.tscn" id="3_3wrnl"]
 [ext_resource type="Script" uid="uid://jpm4necbdqwp" path="res://src/battle/actorController/ActorController.cs" id="3_ma76s"]
 [ext_resource type="PackedScene" uid="uid://cseqwi6oq3fss" path="res://src/battle/battleUI/uiTurnBar/UITurnBar.tscn" id="4_2kbwh"]
-[ext_resource type="Resource" uid="uid://c5fdarb44i3v0" path="res://data/skills/Attack.tres" id="4_yc600"]
+[ext_resource type="Resource" uid="uid://c5fdarb44i3v0" path="res://data/skills/basics/Attack.tres" id="4_yc600"]
 [ext_resource type="Script" uid="uid://c0ferc8ijluby" path="res://src/battle/battleArena/BattleTriggerController.cs" id="5_27rxp"]
 [ext_resource type="Script" uid="uid://bghwbpceoptk8" path="res://src/battle/battleArena/UIMenuController.cs" id="5_fk1sc"]
 [ext_resource type="PackedScene" uid="uid://bydk2ilq2jwy2" path="res://src/battle/battleUI/uiBattleMainMenu/UIBattleMainMenu.tscn" id="6_ysmad"]
@@ -74,6 +74,17 @@ mainMenuScene = ExtResource("6_ysmad")
 skillMenuScene = ExtResource("7_li7l2")
 itemMenuScene = ExtResource("8_pu6or")
 targetMenuScene = ExtResource("7_1m5vt")
+
+[node name="DescLabel" type="Label" parent="UI/UIMenuController" unique_id=31876383]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 8
 
 [node name="UIBattleTextController" type="Control" parent="UI" unique_id=1633982608]
 layout_mode = 3
