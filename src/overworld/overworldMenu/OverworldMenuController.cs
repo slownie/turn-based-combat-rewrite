@@ -19,6 +19,12 @@ public partial class OverworldMenuController : Control
 	public void BindServices(GameState gameState)
 	{
 		_gameState = gameState;
+		GD.Print(_gameState);
+	}
+
+	public void OpenMenu()
+	{
+		CreateBaseMenu();
 	}
 
 
@@ -26,7 +32,7 @@ public partial class OverworldMenuController : Control
 	{
 		OverworldBaseMenu overworldBaseMenu = _baseMenuScene.Instantiate() as OverworldBaseMenu;
 		AddChild(overworldBaseMenu);
-
+		overworldBaseMenu.Setup(_gameState);
 
 		LoadMenu(overworldBaseMenu);
 	}

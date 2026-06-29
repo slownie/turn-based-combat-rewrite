@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cg6l8w8ann86n"]
 
-[ext_resource type="Script" uid="uid://dowouviibvag5" path="res://src/overworld/overworldMenu/components/UIGoldDisplay.cs" id="1_q4r66"]
+[ext_resource type="Script" uid="uid://dowouviibvag5" path="res://src/overworld/overworldMenu/components/goldDisplay/UIGoldDisplay.cs" id="1_q4r66"]
 
 [node name="UIGoldDisplay" type="Control" unique_id=1987738392]
 layout_mode = 3

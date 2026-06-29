@@ -57,6 +57,8 @@ public partial class Main : Node
 		_overworldController = overworldControllerScene.Instantiate() as OverworldController;
 		AddChild(_overworldController);
 
+		
+
 		PackedScene initialOverworldScene = GD.Load<PackedScene>("res://scenes/overworld/TestOverworld.tscn");
 		_overworldController.LoadScene(initialOverworldScene);
 
@@ -89,6 +91,10 @@ public partial class Main : Node
 
 		// TODO: REMOVE WHEN YOU ACTUALLY GET A WORKING MENU
 		_gameState.NewGame(startingPartyMembers, inventoryItems);
+
+		_overworldController.BindServices(
+			_gameState
+		);
 	}
 
 	private void BattleStart(EnemyEncounterResource enemyEncounterResource)

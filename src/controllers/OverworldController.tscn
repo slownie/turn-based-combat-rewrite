@@ -6,4 +6,4 @@
 [node name="OverworldController" type="Node2D" unique_id=240939576]
 script = ExtResource("1_gimri")
 
-[node name="OverworldMenu" parent="." unique_id=1337779182 instance=ExtResource("2_m00kg")]
+[node name="OverworldMenuController" parent="." unique_id=1337779182 instance=ExtResource("2_m00kg")]

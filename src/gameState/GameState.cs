@@ -6,6 +6,8 @@ public partial class GameState : GodotObject
     Godot.Collections.Array<ActivePartyMember> _activePartyMembers = [];
     Godot.Collections.Array<InventoryItem> _consumableItems = [];
 
+    int _goldAmount;
+
     public GameState()
     {
         
@@ -25,6 +27,7 @@ public partial class GameState : GodotObject
             _consumableItems.Add(inventoryItem);
         }
         
+        _goldAmount = 100;
     }
 
     public void SaveGameData()
@@ -39,4 +42,5 @@ public partial class GameState : GodotObject
 
     public Godot.Collections.Array<ActivePartyMember> GetActivePartyMembers() { return _activePartyMembers; }
     public Godot.Collections.Array<InventoryItem> GetInventoryItems() { return _consumableItems; }
+    public int GetGoldAmount() { return _goldAmount; }
 }

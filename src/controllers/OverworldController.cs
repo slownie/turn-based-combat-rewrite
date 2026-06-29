@@ -24,6 +24,8 @@ public partial class OverworldController : Node2D
 	public void BindServices(GameState gameState)
 	{
 		_gameState = gameState;
+
+		_overworldMenuController.BindServices(_gameState);
 	}
 
 	public void SetActive(bool isActive)
@@ -74,6 +76,7 @@ public partial class OverworldController : Node2D
 	{
 		GetTree().Paused = true;
 
+		_overworldMenuController.OpenMenu();
 	}
 
 	private void CloseOverworldMenu()

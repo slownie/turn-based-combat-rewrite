@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://g6dqg22timw3"]
 
 [ext_resource type="Script" uid="uid://bes3gv4bwl44q" path="res://src/overworld/overworldMenu/OverworldMenuController.cs" id="1_fqmo8"]
+[ext_resource type="PackedScene" uid="uid://bpfw4xnxebhqi" path="res://src/overworld/overworldMenu/baseMenu/OverworldBaseMenu.tscn" id="2_g50kt"]
 
 [node name="OverworldMenuController" type="Control" unique_id=1337779182]
+process_mode = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,3 +12,4 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_fqmo8")
+_baseMenuScene = ExtResource("2_g50kt")
