@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dj1jj225qswd4"]
 
-[ext_resource type="Script" uid="uid://dgha7idrb36ru" path="res://src/overworld/overworldMenu/baseMenuEntry/UIBaseMenuEntry.cs" id="1_doobt"]
+[ext_resource type="Script" uid="uid://dgha7idrb36ru" path="res://src/overworld/overworldMenu/baseMenu/baseMenuEntry/UIBaseMenuEntry.cs" id="1_doobt"]
 
 [node name="UIBaseMenuEntry" type="Control" unique_id=1809078397]
 layout_mode = 3

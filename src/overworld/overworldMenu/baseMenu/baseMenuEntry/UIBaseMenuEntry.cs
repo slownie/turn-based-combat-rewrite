@@ -78,5 +78,5 @@ public partial class UIBaseMenuEntry : Control
 		_textLabel.Text = text;
 	}
 
-	public MainMenuType GetItemOptionMenuType() { return _mainMenuType; }
+	public MainMenuType GetMenuType() { return _mainMenuType; }
 }

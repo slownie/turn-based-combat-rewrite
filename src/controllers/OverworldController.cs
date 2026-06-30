@@ -26,6 +26,7 @@ public partial class OverworldController : Node2D
 		_gameState = gameState;
 
 		_overworldMenuController.BindServices(_gameState);
+		_overworldMenuController.CloseMenuRequested += OnCloseOverworldMenuRequested;
 	}
 
 	public void SetActive(bool isActive)
@@ -79,9 +80,9 @@ public partial class OverworldController : Node2D
 		_overworldMenuController.OpenMenu();
 	}
 
-	private void CloseOverworldMenu()
+	private void OnCloseOverworldMenuRequested()
 	{
-		
+		GetTree().Paused = false;
 	}
 
 	private void OnEncounterStart(EnemyEncounterResource enemyEncounterResource)

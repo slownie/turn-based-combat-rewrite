@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://d1sdyv4rgmf2p"]
+
+[ext_resource type="Script" uid="uid://b2ophlxtn740f" path="res://src/overworld/overworldMenu/skillsMenu/OverworldSkillsMenu.cs" id="1_wdysm"]
+
+[node name="OverworldSkillsMenu" type="Control" unique_id=1025298153]
+process_mode = 2
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wdysm")
+
+[node name="EquippedSkillsContainer" type="VBoxContainer" parent="." unique_id=941678449]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LearnedSkillsContainer" type="VBoxContainer" parent="." unique_id=1908258176]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PartyMemberLabel" type="Label" parent="." unique_id=1426282222]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 23.0
+grow_horizontal = 0
+text = "Party Member Name"
+horizontal_alignment = 2

@@ -3,12 +3,20 @@ using System;
 
 public partial class OverworldMenuController : Control
 {
+	// Maybe change these to GD.Loads?
 	[Export] PackedScene _baseMenuScene;
+
+	[Export] PackedScene _skillsMenuScene;
+	[Export] PackedScene _itemsMenuScene;
+	[Export] PackedScene _equipmentMenuScene;
+	[Export] PackedScene _partyMenuScene;
+	[Export] PackedScene _settingsMenuScene;
+	[Export] PackedScene _saveMenuScene;
+
+	[Signal] public delegate void CloseMenuRequestedEventHandler();
 
 	Godot.Collections.Array<UIOverworldMenuBase> _menuStack = [];
 	UIOverworldMenuBase _currentMenu;
-
-	Vector2 _menuPosition = new Vector2(160, 16);
 
 	GameState _gameState;
     
@@ -19,7 +27,6 @@ public partial class OverworldMenuController : Control
 	public void BindServices(GameState gameState)
 	{
 		_gameState = gameState;
-		GD.Print(_gameState);
 	}
 
 	public void OpenMenu()
@@ -35,6 +42,75 @@ public partial class OverworldMenuController : Control
 		overworldBaseMenu.Setup(_gameState);
 
 		LoadMenu(overworldBaseMenu);
+
+		overworldBaseMenu.EntrySelected += OnBaseMenuSelected;
+		overworldBaseMenu.SelectionCancelled += OnBaseMenuCancelled;
+	}
+
+	private void CreateSkillsMenu()
+	{
+		OverworldSkillsMenu overworldSkillsMenu = _skillsMenuScene.Instantiate() as OverworldSkillsMenu;
+		AddChild(overworldSkillsMenu);
+		overworldSkillsMenu.Setup(_gameState.GetActivePartyMembers());
+
+		LoadMenu(overworldSkillsMenu);
+
+		overworldSkillsMenu.ExitMenu += UnloadMenu;
+	}
+
+	private void CreateItemsMenu()
+	{
+		OverworldItemsMenu overworldItemsMenu = _itemsMenuScene.Instantiate() as OverworldItemsMenu;
+		AddChild(overworldItemsMenu);
+		overworldItemsMenu.Setup(_gameState);
+
+		LoadMenu(overworldItemsMenu);
+
+		overworldItemsMenu.ExitMenu += UnloadMenu;
+	}
+
+	private void OnBaseMenuSelected(UIBaseMenuEntry.MainMenuType mainMenuType)
+	{
+		switch(mainMenuType)
+		{
+			case UIBaseMenuEntry.MainMenuType.Skills:
+			{
+				CreateSkillsMenu();
+				break;
+			}
+
+			case UIBaseMenuEntry.MainMenuType.Items:
+			{
+				CreateItemsMenu();
+				break;
+			}
+
+			case UIBaseMenuEntry.MainMenuType.Equipment:
+			{
+				break;
+			}
+
+			case UIBaseMenuEntry.MainMenuType.Party:
+			{
+				break;
+			}
+
+			case UIBaseMenuEntry.MainMenuType.Settings:
+			{
+				break;
+			}
+
+			case UIBaseMenuEntry.MainMenuType.Save:
+			{
+				break;
+			}
+		}
+	}
+
+	private void OnBaseMenuCancelled()
+	{
+		Cleanup();
+		EmitSignal(SignalName.CloseMenuRequested);
 	}
 
 	private void LoadMenu(UIOverworldMenuBase overworldMenu)

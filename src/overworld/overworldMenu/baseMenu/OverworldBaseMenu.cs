@@ -5,8 +5,10 @@ public partial class OverworldBaseMenu : UIOverworldMenuBase
 {
 	[Export] PackedScene menuEntryScene;
 	[Export] PackedScene partyMenuEntryScene;
-	
-	
+
+	[Signal] public delegate void EntrySelectedEventHandler(UIBaseMenuEntry.MainMenuType mainMenuType);
+	[Signal] public delegate void SelectionCancelledEventHandler();
+
 	Godot.Collections.Array<UIPartyMenuEntry> _partyEntries = [];
 
 	VBoxContainer _menuContainer;
@@ -54,6 +56,9 @@ public partial class OverworldBaseMenu : UIOverworldMenuBase
 	{
 		if (@event.IsActionPressed("MoveUp")) index -= 1;
 		if (@event.IsActionPressed("MoveDown")) index += 1;
+
+		if (@event.IsActionPressed("AButton")) EmitSignal(SignalName.EntrySelected, (int)_currentEntry.GetMenuType());
+		if (@event.IsActionPressed("BButton")) EmitSignal(SignalName.SelectionCancelled);
 	}
 
 	public void Setup(GameState gameState)

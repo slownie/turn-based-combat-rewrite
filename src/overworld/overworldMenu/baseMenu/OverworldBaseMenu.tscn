@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cg6l8w8ann86n" path="res://src/overworld/overworldMenu/components/goldDisplay/UIGoldDisplay.tscn" id="1_sjy14"]
 [ext_resource type="Script" uid="uid://c3vqjvk53h0j" path="res://src/overworld/overworldMenu/baseMenu/OverworldBaseMenu.cs" id="1_xsctw"]
 [ext_resource type="PackedScene" uid="uid://j2qp622qqx2q" path="res://src/overworld/overworldMenu/components/partyMenuEntry/UIPartyMenuEntry.tscn" id="2_8k3c3"]
-[ext_resource type="PackedScene" uid="uid://dj1jj225qswd4" path="res://src/overworld/overworldMenu/baseMenuEntry/UIBaseMenuEntry.tscn" id="2_goo5m"]
+[ext_resource type="PackedScene" uid="uid://dj1jj225qswd4" path="res://src/overworld/overworldMenu/baseMenu/baseMenuEntry/UIBaseMenuEntry.tscn" id="2_goo5m"]
 
 [node name="OverworldBaseMenu" type="Control" unique_id=1833163728]
 process_mode = 2
