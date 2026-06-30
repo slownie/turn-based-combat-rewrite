@@ -16,6 +16,8 @@ public partial class PartyMemberDataResource : Resource
 
     [Export] int startingLevel = 1;
 
+    [Export] WeaponItemResource.WeaponType weaponType;
+
     [Export] Godot.Collections.Array<BaseSkillResource> startingSkills = [];
 
     // TESTING ONLY
@@ -27,6 +29,7 @@ public partial class PartyMemberDataResource : Resource
     public string GetPartyMemberName() { return partyMemberName; }
     public int GetPartyMemberFusionID() { return partyMemberFusionID; }
     public BaseStats GetBaseStats() { return baseStats; }
+    public WeaponItemResource.WeaponType GetWeaponType() { return weaponType; }
     public Godot.Collections.Array<BaseSkillResource> GetStartingSkills() { return startingSkills; }
     public Godot.Collections.Array<FusionSkillResource> GetStartingFusionSkills() { return startingFusionSkills; }
     public BaseAffinity GetBaseAffinity() { return baseAffinity; }

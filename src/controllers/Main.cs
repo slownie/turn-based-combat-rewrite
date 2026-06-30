@@ -19,7 +19,8 @@ public partial class Main : Node
 
 	// FOR TESTING PURPOSES ONLY
 	[Export] Godot.Collections.Array<PartyMemberDataResource> startingPartyMembers = [];
-	[Export] Godot.Collections.Array<UseableItemResource> inventoryItems = [];
+	[Export] Godot.Collections.Array<BaseItemResource> inventoryItems = [];
+	[Export] Godot.Collections.Array<EquipmentItemResource> equipmentItems = [];
 
 	public override void _Ready()
 	{
@@ -90,7 +91,7 @@ public partial class Main : Node
 		
 
 		// TODO: REMOVE WHEN YOU ACTUALLY GET A WORKING MENU
-		_gameState.NewGame(startingPartyMembers, inventoryItems);
+		_gameState.NewGame(startingPartyMembers, inventoryItems, equipmentItems);
 
 		_overworldController.BindServices(
 			_gameState

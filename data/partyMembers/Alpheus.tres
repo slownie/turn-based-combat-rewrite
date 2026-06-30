@@ -70,6 +70,7 @@ partyMemberName = "Alpheus"
 partyMemberFusionID = 1
 baseStats = SubResource("Resource_aq5s4")
 baseAffinity = SubResource("Resource_4fsrl")
+weaponType = 1
 startingSkills = Array[ExtResource("5_4uqfo")]([ExtResource("10_r0vku")])
 startingFusionSkills = Array[ExtResource("6_j63o3")]([ExtResource("7_b7b3e")])
 spriteFrames = SubResource("SpriteFrames_r0vku")

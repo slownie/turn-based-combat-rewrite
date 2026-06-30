@@ -116,4 +116,14 @@ public partial class CharacterStats : GodotObject
 	{
 		curMP = amount;
 	}
+
+	public void ApplyMaxHP(int newMaxHP) { _maxHP += newMaxHP; }
+	public void ApplyMaxMP(int newMaxMP) { _maxMP += newMaxMP; }
+	public void ApplyStrength(int newStrength) { _strength += newStrength; }
+	public void ApplyElemental(int newElemental) { _elemental += newElemental; }
+	public void ApplyAgility(int newAgility) { _agility += newAgility; }
+	public void ApplyLuck(int newLuck) { _luck += newLuck; }
+	public void ApplyDefense(int newDefense) { _defense += newDefense; }
+	public void ApplyResistance(int newResistance) { _resistance += newResistance; }
+
 }

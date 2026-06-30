@@ -18,6 +18,9 @@ public partial class ActivePartyMember : GodotObject
 
 
     // Equipment
+    EquipmentItem _equippedWeapon = null;
+    EquipmentItem _equippedArmor = null;
+    EquipmentItem _equippedAccessory = null;
 
     // Skills
     Godot.Collections.Array<BaseSkillResource> _learnedSkills = [];
@@ -95,5 +98,47 @@ public partial class ActivePartyMember : GodotObject
     public void SetPartyMemberMP(int amount)
     {
         
+    }
+
+    /*
+        Equipment
+    */
+    public void EquipWeapon(EquipmentItem weaponItem)
+    {
+        // Unequip the current weapon if it exists
+        if (_equippedWeapon != null)
+        {
+            RemoveStats(_equippedWeapon.GetEquipmentBaseStats());
+            _equippedWeapon.RemoveUser();
+        }
+
+        _equippedWeapon = weaponItem;
+        ApplyStats(_equippedWeapon.GetEquipmentBaseStats());
+        _equippedWeapon.SetUser(this);
+    }
+
+    private void ApplyStats(BaseStats baseStats)
+    {
+        // I'm not even sure if this is computitionally more efficient but w/e
+        if (baseStats.GetMaxHP() != 0) _characterStats.ApplyMaxHP(baseStats.GetMaxHP());
+        if (baseStats.GetMaxMP() != 0) _characterStats.ApplyMaxMP(baseStats.GetMaxMP());
+        if (baseStats.GetStrength() != 0) _characterStats.ApplyStrength(baseStats.GetStrength());
+        if (baseStats.GetElemental() != 0) _characterStats.ApplyElemental(baseStats.GetElemental());
+        if (baseStats.GetAgility() != 0) _characterStats.ApplyAgility(baseStats.GetAgility());
+        if (baseStats.GetLuck() != 0) _characterStats.ApplyLuck(baseStats.GetLuck());
+        if (baseStats.GetDefense() != 0) _characterStats.ApplyDefense(baseStats.GetDefense());
+        if (baseStats.GetResistance() != 0) _characterStats.ApplyResistance(baseStats.GetResistance());
+    }
+
+    private void RemoveStats(BaseStats baseStats)
+    {
+        if (baseStats.GetMaxHP() != 0) _characterStats.ApplyMaxHP(baseStats.GetMaxHP());
+        if (baseStats.GetMaxMP() != 0) _characterStats.ApplyMaxMP(baseStats.GetMaxMP());
+        if (baseStats.GetStrength() != 0) _characterStats.ApplyStrength(baseStats.GetStrength());
+        if (baseStats.GetElemental() != 0) _characterStats.ApplyElemental(baseStats.GetElemental());
+        if (baseStats.GetAgility() != 0) _characterStats.ApplyAgility(baseStats.GetAgility());
+        if (baseStats.GetLuck() != 0) _characterStats.ApplyLuck(baseStats.GetLuck());
+        if (baseStats.GetDefense() != 0) _characterStats.ApplyDefense(baseStats.GetDefense());
+        if (baseStats.GetResistance() != 0) _characterStats.ApplyResistance(baseStats.GetResistance());
     }
 }

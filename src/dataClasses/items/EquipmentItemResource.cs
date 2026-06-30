@@ -6,11 +6,11 @@ public partial class EquipmentItemResource : BaseItemResource
 {
 	public enum EquipmentType
 	{
-		Weapon,
 		Armor,
 		Accessory
 	}
 
+	[Export] EquipmentType equipmentType;
 	[Export] BaseStats baseStats;
 	[Export] PassiveActionResource passiveActionResource;
 
@@ -18,4 +18,6 @@ public partial class EquipmentItemResource : BaseItemResource
 
 	public PassiveActionResource GetPassiveActionResource() { return passiveActionResource; }
 	public bool GetRunOnce() { return passiveActionResource.GetRunOnce(); }
+
+	public EquipmentType GetEquipmentType() { return equipmentType; }
 }

@@ -4,7 +4,13 @@ using System;
 public partial class GameState : GodotObject
 {
     Godot.Collections.Array<ActivePartyMember> _activePartyMembers = [];
+
+    // Does it make sense to have these seperate arrays? We'll find out soon enough
     Godot.Collections.Array<InventoryItem> _consumableItems = [];
+    Godot.Collections.Array<EquipmentItem> _weaponInventory = [];
+    Godot.Collections.Array<EquipmentItem> _armorInventory = [];
+    Godot.Collections.Array<EquipmentItem> _accessoryInventory = [];
+    Godot.Collections.Array<InventoryItem> _keyItems = [];
 
     int _goldAmount;
 
@@ -13,7 +19,10 @@ public partial class GameState : GodotObject
         
     }
 
-    public void NewGame(Godot.Collections.Array<PartyMemberDataResource> partyMembers, Godot.Collections.Array<UseableItemResource> startingInventory)
+    public void NewGame(Godot.Collections.Array<PartyMemberDataResource> partyMembers, 
+        Godot.Collections.Array<BaseItemResource> startingInventory,
+        Godot.Collections.Array<EquipmentItemResource> equipmentInventory
+    )
     {
         foreach (PartyMemberDataResource partyMemberData in partyMembers)
         {
@@ -25,6 +34,22 @@ public partial class GameState : GodotObject
         {
             InventoryItem inventoryItem = new InventoryItem(itemResource, 3);
             _consumableItems.Add(inventoryItem);
+        }
+
+        foreach (EquipmentItemResource itemResource in equipmentInventory)
+        {
+            EquipmentItem equipmentItem = new EquipmentItem(itemResource);
+            if (itemResource is WeaponItemResource)
+            {
+                _weaponInventory.Add(equipmentItem);
+            } else {
+                if (itemResource.GetEquipmentType() == EquipmentItemResource.EquipmentType.Armor)
+                {
+                    _armorInventory.Add(equipmentItem);
+                } else {
+                    _accessoryInventory.Add(equipmentItem);
+                }
+            }
         }
         
         _goldAmount = 100;
@@ -42,5 +67,12 @@ public partial class GameState : GodotObject
 
     public Godot.Collections.Array<ActivePartyMember> GetActivePartyMembers() { return _activePartyMembers; }
     public Godot.Collections.Array<InventoryItem> GetInventoryItems() { return _consumableItems; }
+
+    public Godot.Collections.Array<EquipmentItem> GetWeaponInventory() { return _weaponInventory; }
+    public Godot.Collections.Array<EquipmentItem> GetArmorInventory() { return _armorInventory; }
+    public Godot.Collections.Array<EquipmentItem> GetAccessoryInventory() { return _accessoryInventory; }
+    
+    public Godot.Collections.Array<InventoryItem> GetKeyItems() { return _keyItems; }
+
     public int GetGoldAmount() { return _goldAmount; }
 }
