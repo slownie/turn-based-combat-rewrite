@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://cg6l8w8ann86n" path="res://src/overworld/overworldMenu/components/goldDisplay/UIGoldDisplay.tscn" id="1_sjy14"]
 [ext_resource type="Script" uid="uid://c3vqjvk53h0j" path="res://src/overworld/overworldMenu/baseMenu/OverworldBaseMenu.cs" id="1_xsctw"]
 [ext_resource type="PackedScene" uid="uid://j2qp622qqx2q" path="res://src/overworld/overworldMenu/components/partyMenuEntry/UIPartyMenuEntry.tscn" id="2_8k3c3"]
+[ext_resource type="PackedScene" uid="uid://dj1jj225qswd4" path="res://src/overworld/overworldMenu/baseMenuEntry/UIBaseMenuEntry.tscn" id="2_goo5m"]
 
 [node name="OverworldBaseMenu" type="Control" unique_id=1833163728]
 process_mode = 2
@@ -13,28 +14,31 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xsctw")
+menuEntryScene = ExtResource("2_goo5m")
 partyMenuEntryScene = ExtResource("2_8k3c3")
 
 [node name="MenuEntries" type="VBoxContainer" parent="." unique_id=1335073294]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 7.0
+offset_right = 92.0
+offset_bottom = 158.0
+theme_override_constants/separation = 24
 
 [node name="PartyEntries" type="VBoxContainer" parent="." unique_id=981574762]
 layout_mode = 0
-offset_left = 199.0
-offset_top = 1.0
-offset_right = 239.0
-offset_bottom = 41.0
+offset_left = 238.0
+offset_right = 322.0
+offset_bottom = 179.0
+theme_override_constants/separation = 64
 
 [node name="UIGoldDisplay" parent="." unique_id=1987738392 instance=ExtResource("1_sjy14")]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_right = 0.0
-offset_left = 85.0
-offset_top = -30.0
-offset_right = 85.0
-offset_bottom = -30.0
+offset_left = 40.0
+offset_top = -27.0
+offset_right = 40.0
+offset_bottom = -27.0
 grow_horizontal = 1
 grow_vertical = 0

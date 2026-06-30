@@ -7,3 +7,4 @@
 script = ExtResource("1_gimri")
 
 [node name="OverworldMenuController" parent="." unique_id=1337779182 instance=ExtResource("2_m00kg")]
+z_index = 50

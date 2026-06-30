@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://j2qp622qqx2q"]
 
 [ext_resource type="Script" uid="uid://dm6tfvaumrkte" path="res://src/overworld/overworldMenu/components/partyMenuEntry/UIPartyMenuEntry.cs" id="1_0fiar"]
-[ext_resource type="PackedScene" uid="uid://bnfsqmxhg6f6q" path="res://src/ui/uiBar/UIBar.tscn" id="2_nypv5"]
-[ext_resource type="Texture2D" uid="uid://cont8xpx1kw0o" path="res://assets/images/ui/LifeBarFill.png" id="2_qutbl"]
-[ext_resource type="Texture2D" uid="uid://bdp0spvgiqovc" path="res://assets/images/ui/EnergyBarFill.png" id="3_0yvnh"]
+[ext_resource type="Texture2D" uid="uid://bvwtk5hdbtgue" path="res://assets/images/ui/bars/MiniLifeBarFill.png" id="2_qutbl"]
+[ext_resource type="Texture2D" uid="uid://b3dbrvxuj7gt1" path="res://assets/images/ui/bars/MiniEnergyBarFill.png" id="3_0yvnh"]
+[ext_resource type="PackedScene" uid="uid://dpw8ft55wc5v1" path="res://src/ui/uiMiniBar/UIMiniBar.tscn" id="4_pv1r8"]
 
 [node name="UIPartyMenuEntry" type="Control" unique_id=1220146529]
 layout_mode = 3
@@ -26,8 +26,8 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Party Member Name"
 
-[node name="HPBar" parent="VBoxContainer" unique_id=1658496861 instance=ExtResource("2_nypv5")]
+[node name="HPBar" parent="VBoxContainer" unique_id=1658496861 instance=ExtResource("4_pv1r8")]
 layout_mode = 2
 
-[node name="MPBar" parent="VBoxContainer" unique_id=196676836 instance=ExtResource("2_nypv5")]
+[node name="MPBar" parent="VBoxContainer" unique_id=28372419 instance=ExtResource("4_pv1r8")]
 layout_mode = 2
