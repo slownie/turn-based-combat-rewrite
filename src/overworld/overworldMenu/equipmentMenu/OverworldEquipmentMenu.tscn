@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bcugmg5fcvbwi"]
+
+[ext_resource type="Script" uid="uid://bfffjws41r5d1" path="res://src/overworld/overworldMenu/equipmentMenu/OverworldEquipmentMenu.cs" id="1_ycyst"]
+
+[node name="OverworldEquipmentMenu" type="Control" unique_id=1154230753]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ycyst")
