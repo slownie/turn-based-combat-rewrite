@@ -204,7 +204,7 @@ public partial class BattleArena : Control
 				activePartyMember.GetEquippedSkills(),
 				activePartyMember.GetEquippedFusionSkills(),
 				activePartyMember.GetCharacterAffinity(),
-				activePartyMember.GetSpriteFrames(),
+				activePartyMember.GetBattleAnimScene(),
 				activePartyMember.GetBattleIcon(),
 				true
 			);
@@ -238,7 +238,7 @@ public partial class BattleArena : Control
 				enemy.GetSkills(),
 				[],
 				enemyAffinity,
-				enemy.GetSpriteFrames(),
+				enemy.GetBattleAnimScene(),
 				enemy.GetBattleIcon(),
 				false
 			);

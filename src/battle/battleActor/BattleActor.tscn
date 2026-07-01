@@ -1,53 +1,10 @@
 [gd_scene format=3 uid="uid://dd5i0y578f2c3"]
 
 [ext_resource type="Script" uid="uid://cc4rk2p8p6ivm" path="res://src/battle/battleActor/BattleActor.cs" id="1_r8nm7"]
-[ext_resource type="Texture2D" uid="uid://cfyv67l08hkx8" path="res://assets/images/battleActors/SolBadguy/sSolBadguyIdle_strip4.png" id="2_86ltd"]
 [ext_resource type="Theme" uid="uid://h1nt1ofh7cv8" path="res://ui/BattleUITheme.tres" id="3_nsqsq"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_nsqsq"]
-atlas = ExtResource("2_86ltd")
-region = Rect2(0, 0, 32, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1gwkg"]
-atlas = ExtResource("2_86ltd")
-region = Rect2(32, 0, 32, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rixa8"]
-atlas = ExtResource("2_86ltd")
-region = Rect2(64, 0, 32, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_12fia"]
-atlas = ExtResource("2_86ltd")
-region = Rect2(96, 0, 32, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_xp4os"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_nsqsq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1gwkg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rixa8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_12fia")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
 
 [node name="BattleActor" type="Node2D" unique_id=710992607]
 script = ExtResource("1_r8nm7")
-
-[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=872489255]
-sprite_frames = SubResource("SpriteFrames_xp4os")
-autoplay = "default"
-frame = 1
-frame_progress = 0.4111678
 
 [node name="TestUI" type="HBoxContainer" parent="." unique_id=1881284218]
 visible = false

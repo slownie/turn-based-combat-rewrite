@@ -32,7 +32,7 @@ public partial class ActivePartyMember : GodotObject
     CharacterAffinity _characterAffinity;
 
     // Battle Animation
-    SpriteFrames _spriteFrames;
+    PackedScene _battleAnimScene;
     Texture2D _battleIcon;
 
     public ActivePartyMember() : this(null) {}
@@ -59,7 +59,7 @@ public partial class ActivePartyMember : GodotObject
 
             _characterAffinity = new CharacterAffinity(partyMemberDataResource.GetBaseAffinity());
 
-            _spriteFrames = partyMemberDataResource.GetSpriteFrames();
+            _battleAnimScene = partyMemberDataResource.GetBattleAnimScene();
             _battleIcon = partyMemberDataResource.GetBattleIcon();
         } else {
             GD.Print("ActivePartyMember - partyMemberDataResource not found, disregard if this is at the start of the program");
@@ -73,7 +73,7 @@ public partial class ActivePartyMember : GodotObject
     public Godot.Collections.Array<FusionSkillResource> GetEquippedFusionSkills() { return _equippedFusionSkills; }
     public CharacterAffinity GetCharacterAffinity() { return _characterAffinity; }
 
-    public SpriteFrames GetSpriteFrames() { return _spriteFrames; }
+    public PackedScene GetBattleAnimScene() { return _battleAnimScene; }
     public Texture2D GetBattleIcon() { return _battleIcon; }
 
     /*

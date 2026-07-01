@@ -23,7 +23,7 @@ public partial class PartyMemberDataResource : Resource
     // TESTING ONLY
     [Export] Godot.Collections.Array<FusionSkillResource> startingFusionSkills = [];
 
-    [Export] SpriteFrames spriteFrames;
+    [Export] PackedScene battleAnimScene;
     [Export] Texture2D battleIcon;
 
     public string GetPartyMemberName() { return partyMemberName; }
@@ -34,6 +34,6 @@ public partial class PartyMemberDataResource : Resource
     public Godot.Collections.Array<FusionSkillResource> GetStartingFusionSkills() { return startingFusionSkills; }
     public BaseAffinity GetBaseAffinity() { return baseAffinity; }
 
-    public SpriteFrames GetSpriteFrames() { return spriteFrames; }
+    public PackedScene GetBattleAnimScene() { return battleAnimScene; }
     public Texture2D GetBattleIcon() { return battleIcon; }
 }

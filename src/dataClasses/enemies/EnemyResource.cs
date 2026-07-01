@@ -12,7 +12,7 @@ public partial class EnemyResource : Resource
 
     [Export(PropertyHint.Range, "0,4")] int followerActorAmount = 0;
 
-    [Export] SpriteFrames spriteFrames;
+    [Export] PackedScene battleAnimScene;
     [Export] Texture2D battleIcon;
 
     public string GetEnemyName() { return enemyName; }
@@ -22,7 +22,7 @@ public partial class EnemyResource : Resource
 
     public int GetFollowerActorAmount() { return followerActorAmount; }
 
-    public SpriteFrames GetSpriteFrames() { return spriteFrames; }
+    public PackedScene GetBattleAnimScene() { return battleAnimScene; }
 
     public Texture2D GetBattleIcon() { return battleIcon; }
 }

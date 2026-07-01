@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://dqcq87gwn88a6"]
+
+[ext_resource type="PackedScene" uid="uid://6ev7juafx3ux" path="res://src/battle/battleActor/BattleActorAnim.tscn" id="1_6v2oq"]
+[ext_resource type="Texture2D" uid="uid://blqxh3ggq58xc" path="res://assets/images/battleActors/Faust/sFaustIdle_strip4.png" id="2_6v2oq"]
+
+[sub_resource type="Animation" id="Animation_huxvb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_uamx3"]
+resource_name = "idle"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2qopk"]
+_data = {
+&"RESET": SubResource("Animation_huxvb"),
+&"idle": SubResource("Animation_uamx3")
+}
+
+[node name="FaustAnim" unique_id=1632062099 instance=ExtResource("1_6v2oq")]
+
+[node name="Sprite" parent="." index="0" unique_id=964982624]
+texture = ExtResource("2_6v2oq")
+hframes = 4
+
+[node name="AnimationPlayer" parent="." index="1" unique_id=341338015]
+libraries/ = SubResource("AnimationLibrary_2qopk")

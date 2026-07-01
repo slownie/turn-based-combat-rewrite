@@ -85,8 +85,9 @@ public partial class BattleActor : Node2D
 
 	bool _isPlayer = true;
 
-	AnimatedSprite2D _sprite;
+	BattleActorAnim _battleActorAnim;
 	Texture2D _battleIcon;
+
 
 	// Test UI
 	TextureRect _statusIcon;
@@ -238,8 +239,6 @@ public partial class BattleActor : Node2D
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_sprite = GetNode<AnimatedSprite2D>("Sprite");
-
 		_statusIcon = GetNode<TextureRect>("TestUI/StatusContainer/StatusIcon");
 		_statusTurnLabel = GetNode<Label>("TestUI/StatusContainer/StatusTurn");
 
@@ -284,7 +283,7 @@ public partial class BattleActor : Node2D
 		Godot.Collections.Array<FusionSkillResource> fusionSkills,
 		CharacterAffinity characterAffinity,
 
-		SpriteFrames spriteFrames, 
+		PackedScene battleActorAnim, 
 		Texture2D battleIcon,
 		bool isPlayer
 	)
@@ -330,14 +329,16 @@ public partial class BattleActor : Node2D
 		_curMPLabel.Text = _characterStats.GetCurMP().ToString();
 		_maxMPLabel.Text = _characterStats.GetMaxMP().ToString();
 
-		_sprite.SpriteFrames = spriteFrames;
-		_sprite.Play("default");
+		// Animation
+		_battleActorAnim = battleActorAnim.Instantiate() as BattleActorAnim;
+		AddChild(_battleActorAnim);
+
+		_battleActorAnim.PlayAnimation("idle");
 
 		_battleIcon = battleIcon;
 
 		_isPlayer = isPlayer;
-		if (_isPlayer) _sprite.FlipH = true;
-
+		_battleActorAnim.Setup(_isPlayer);
 	}
 
 	public void TurnEnd()
