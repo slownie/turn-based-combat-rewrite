@@ -34,7 +34,7 @@ public partial class UIPartyEntry : TextureRect
         mpBar.Setup(_partyActor.GetCurMP(), _partyActor.GetMaxMP());
 
         _partyActor.GetCharacterStats().HPChanged += OnBattlerHPChanged;
-        _partyActor.MPChanged += OnBattlerMPChanged;
+        _partyActor.GetCharacterStats().MPChanged += OnBattlerMPChanged;
 
         // battler.BuffsChanged += OnBuffsChanged;
     }

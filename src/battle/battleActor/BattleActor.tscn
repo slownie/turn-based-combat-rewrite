@@ -46,8 +46,11 @@ script = ExtResource("1_r8nm7")
 [node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=872489255]
 sprite_frames = SubResource("SpriteFrames_xp4os")
 autoplay = "default"
+frame = 1
+frame_progress = 0.4111678
 
 [node name="TestUI" type="HBoxContainer" parent="." unique_id=1881284218]
+visible = false
 offset_left = -35.0
 offset_top = 25.0
 offset_right = 52.0

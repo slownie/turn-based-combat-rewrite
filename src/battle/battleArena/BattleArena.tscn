@@ -49,16 +49,15 @@ script = ExtResource("5_27rxp")
 [node name="UITurnBar" parent="UI" unique_id=350606653 instance=ExtResource("4_2kbwh")]
 
 [node name="UIPartyEntries" type="VBoxContainer" parent="UI" unique_id=1848540120]
-visible = false
 anchors_preset = 11
 anchor_left = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -186.0
-offset_right = -186.0
+offset_left = -83.0
+offset_right = -83.0
 grow_horizontal = 0
 grow_vertical = 2
-theme_override_constants/separation = 42
+theme_override_constants/separation = 64
 script = ExtResource("8_meg8v")
 partyEntryScene = ExtResource("9_iw6pb")
 

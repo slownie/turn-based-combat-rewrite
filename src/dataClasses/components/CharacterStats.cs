@@ -5,6 +5,7 @@ using System;
 public partial class CharacterStats : GodotObject
 {
 	[Signal] public delegate void HPChangedEventHandler(int newHP);
+	[Signal] public delegate void MPChangedEventHandler(int newMP);
 
 	[Signal] public delegate void HPReviveEventHandler();
 	[Signal] public delegate void HPDepletedEventHandler();
@@ -24,6 +25,7 @@ public partial class CharacterStats : GodotObject
 			}
 
 			_curHP = value;
+			EmitSignal(SignalName.HPChanged, curHP);
 
 			// Did this kill the actor?
 			if (_curHP <= 0)
@@ -43,6 +45,7 @@ public partial class CharacterStats : GodotObject
 		set
 		{
 			_curMP = value;
+			EmitSignal(SignalName.MPChanged, curMP);
 
 			if (_curHP < 0) { _curMP = 0; }
 			if (_maxMP < _curMP) { _curMP = _maxMP; }
@@ -98,13 +101,11 @@ public partial class CharacterStats : GodotObject
 	public void AddCurHP(int amount)
 	{
 		curHP += amount;
-		EmitSignal(SignalName.HPChanged, curHP);
 	}
 
 	public void SetCurHP(int amount)
 	{
 		curHP = amount;
-		EmitSignal(SignalName.HPChanged, curHP);
 	}
 
 	public void AddCurMP(int amount)
