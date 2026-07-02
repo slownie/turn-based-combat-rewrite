@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cii6vieh8fjan"]
+
+[ext_resource type="Script" uid="uid://vh7c0ccxhlmy" path="res://src/overworld/overworldMenu/equipmentMenu/equipmentEntry/EquipmentEntry.cs" id="1_l71cg"]
+
+[node name="EquipmentEntry" type="Control" unique_id=646007602]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l71cg")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1094194812]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer" unique_id=1693306363]
+layout_mode = 2
+
+[node name="Text" type="Label" parent="HBoxContainer" unique_id=810908374]
+layout_mode = 2
+text = "Equipment Entry"

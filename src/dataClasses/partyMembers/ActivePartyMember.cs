@@ -117,6 +117,10 @@ public partial class ActivePartyMember : GodotObject
         _equippedWeapon.SetUser(this);
     }
 
+    public EquipmentItem GetEquippedWeapon() { return _equippedWeapon; }
+    public EquipmentItem GetEquippedArmor() { return _equippedArmor; }
+    public EquipmentItem GetEquippedAccessory() { return _equippedAccessory; }
+
     private void ApplyStats(BaseStats baseStats)
     {
         // I'm not even sure if this is computitionally more efficient but w/e

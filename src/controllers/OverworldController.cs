@@ -18,7 +18,7 @@ public partial class OverworldController : Node2D
 
     public override void _Ready()
 	{
-		_overworldMenuController = GetNode<OverworldMenuController>("OverworldMenuController");
+		_overworldMenuController = GetNode<OverworldMenuController>("Menus/OverworldMenuController");
 	}
 
 	public void BindServices(GameState gameState)

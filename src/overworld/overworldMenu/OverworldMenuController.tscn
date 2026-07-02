@@ -4,6 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bpfw4xnxebhqi" path="res://src/overworld/overworldMenu/baseMenu/OverworldBaseMenu.tscn" id="2_g50kt"]
 [ext_resource type="PackedScene" uid="uid://d1sdyv4rgmf2p" path="res://src/overworld/overworldMenu/skillsMenu/OverworldSkillsMenu.tscn" id="3_5hgfm"]
 [ext_resource type="PackedScene" uid="uid://clmhbwhim5cos" path="res://src/overworld/overworldMenu/itemsMenu/OverworldItemsMenu.tscn" id="4_ad73n"]
+[ext_resource type="PackedScene" uid="uid://bcugmg5fcvbwi" path="res://src/overworld/overworldMenu/equipmentMenu/OverworldEquipmentMenu.tscn" id="5_4gauj"]
 
 [node name="OverworldMenuController" type="Control" unique_id=1337779182]
 process_mode = 2
@@ -13,3 +14,4 @@ script = ExtResource("1_fqmo8")
 _baseMenuScene = ExtResource("2_g50kt")
 _skillsMenuScene = ExtResource("3_5hgfm")
 _itemsMenuScene = ExtResource("4_ad73n")
+_equipmentMenuScene = ExtResource("5_4gauj")

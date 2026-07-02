@@ -25,9 +25,15 @@ public partial class UIStatsDisplay : Control
 		
 	}
 
-	public void Setup()
+	public void Setup(CharacterStats characterStats)
 	{
-		
+		_HPValue.Text = characterStats.GetMaxHP().ToString();
+		_MPValue.Text = characterStats.GetMaxMP().ToString();
+		_strengthValue.Text = characterStats.GetStrength().ToString();
+		_elementalValue.Text = characterStats.GetElemental().ToString();
+		_agilityValue.Text = characterStats.GetAgility().ToString();
+		_luckValue.Text = characterStats.GetLuck().ToString();
+		_defenseValue.Text = characterStats.GetDefense().ToString();
+		_resistanceValue.Text = characterStats.GetResistance().ToString();
 	}
-
 }

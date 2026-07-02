@@ -69,6 +69,17 @@ public partial class OverworldMenuController : Control
 		overworldItemsMenu.ExitMenu += UnloadMenu;
 	}
 
+	private void CreateEquipmentMenu()
+	{
+		OverworldEquipmentMenu overworldEquipmentMenu = _equipmentMenuScene.Instantiate() as OverworldEquipmentMenu;
+		AddChild(overworldEquipmentMenu);
+		overworldEquipmentMenu.Setup(_gameState);
+
+		LoadMenu(overworldEquipmentMenu);
+
+		GD.Print("Menu created");
+	}
+
 	private void OnBaseMenuSelected(UIBaseMenuEntry.MainMenuType mainMenuType)
 	{
 		switch(mainMenuType)
@@ -87,6 +98,8 @@ public partial class OverworldMenuController : Control
 
 			case UIBaseMenuEntry.MainMenuType.Equipment:
 			{
+				GD.Print("Equipment");
+				CreateEquipmentMenu();
 				break;
 			}
 

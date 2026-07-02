@@ -15,7 +15,7 @@ script = ExtResource("1_ey4gm")
 layout_mode = 1
 offset_right = 40.0
 offset_bottom = 40.0
-theme_override_constants/h_separation = 128
+theme_override_constants/h_separation = 32
 columns = 2
 
 [node name="HP" type="HBoxContainer" parent="GridContainer" unique_id=524192051]

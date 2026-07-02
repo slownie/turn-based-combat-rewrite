@@ -6,5 +6,6 @@
 [node name="OverworldController" type="Node2D" unique_id=240939576]
 script = ExtResource("1_gimri")
 
-[node name="OverworldMenuController" parent="." unique_id=1337779182 instance=ExtResource("2_m00kg")]
-z_index = 50
+[node name="Menus" type="CanvasLayer" parent="." unique_id=1533853043]
+
+[node name="OverworldMenuController" parent="Menus" unique_id=1337779182 instance=ExtResource("2_m00kg")]
