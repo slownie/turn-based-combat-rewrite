@@ -115,7 +115,7 @@ public partial class AttackEffect : ActionEffectResource
 
             //GD.Print("AttackEffect - "+calculatedDamage);
 
-            actorController.TakeDamage(target, -calculatedDamage, didCrit);
+            actorController.TakeDamage(user, target, -calculatedDamage, didCrit);
         } else {
             // Miss
             actorController.ActionMissed(target);

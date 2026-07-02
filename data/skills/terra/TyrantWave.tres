@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="UseableSkillResource" format=3 uid="uid://cr8m3ppfdvs02"]
+
+[ext_resource type="Script" uid="uid://dicj1dhgyboo" path="res://src/dataClasses/skills/UseableSkillResource.cs" id="1_djc70"]
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="2_r7cc5"]
+[ext_resource type="Script" uid="uid://b1e2fc42rjbqm" path="res://src/dataClasses/actionEffects/AttackEffect.cs" id="3_ilnkd"]
+[ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="4_35gcj"]
+[ext_resource type="Script" uid="uid://bijk8gwmj13d8" path="res://src/dataClasses/battleSequenceEffects/BattleSequenceEffectResource.cs" id="5_g4nci"]
+
+[sub_resource type="Resource" id="Resource_mgtsc"]
+script = ExtResource("3_ilnkd")
+baseDamage = 50
+baseCrit = 0
+canCrit = false
+metadata/_custom_type_script = "uid://b1e2fc42rjbqm"
+
+[sub_resource type="Resource" id="Resource_h1bal"]
+script = ExtResource("4_35gcj")
+actions = Array[ExtResource("2_r7cc5")]([SubResource("Resource_mgtsc")])
+cursorMode = 1
+metadata/_custom_type_script = "uid://f4ubms2rgfo3"
+
+[resource]
+script = ExtResource("1_djc70")
+skillCostType = 0
+skillCostAmount = 24
+useableActionResource = SubResource("Resource_h1bal")
+skillName = "Tyrant Wave"
+metadata/_custom_type_script = "uid://dicj1dhgyboo"

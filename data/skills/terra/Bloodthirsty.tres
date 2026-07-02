@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="PassiveSkillResource" format=3 uid="uid://ba4bmgafgnrd0"]
+
+[ext_resource type="Script" uid="uid://cl18h8ryg2l0g" path="res://src/dataClasses/actionEffects/ActionEffectResource.cs" id="1_5y4hx"]
+[ext_resource type="Script" uid="uid://c2rs1ebt6mlmh" path="res://src/dataClasses/skills/PassiveSkillResource.cs" id="1_63bqe"]
+[ext_resource type="Script" uid="uid://dg34628o553u4" path="res://src/dataClasses/action/PassiveActionResource.cs" id="2_d8po6"]
+[ext_resource type="Script" uid="uid://bcytw7y8wvefn" path="res://src/dataClasses/actionEffects/HealPercentageEffect.cs" id="3_c8ygr"]
+
+[sub_resource type="Resource" id="Resource_c5s6g"]
+script = ExtResource("3_c8ygr")
+setForUser = true
+metadata/_custom_type_script = "uid://bcytw7y8wvefn"
+
+[sub_resource type="Resource" id="Resource_ey8jp"]
+script = ExtResource("2_d8po6")
+triggerType = 9
+oneShot = true
+triggerActions = Array[ExtResource("1_5y4hx")]([SubResource("Resource_c5s6g")])
+metadata/_custom_type_script = "uid://dg34628o553u4"
+
+[resource]
+script = ExtResource("1_63bqe")
+passiveActionResource = SubResource("Resource_ey8jp")
+skillName = "Bloodthirsty"
+metadata/_custom_type_script = "uid://c2rs1ebt6mlmh"

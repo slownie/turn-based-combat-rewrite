@@ -92,6 +92,8 @@ public static partial class BattleConsts
 		OnUserElementalAttack,
 		OnUserDoCritical,
 
+		OnTargetDeath,
+
 		OnUserTakeDamage,
 		OnUserHalfHP,
 		OnUserQuarterHP,

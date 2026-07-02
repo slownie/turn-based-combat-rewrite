@@ -8,6 +8,7 @@ public partial class PassiveActionResource : Resource
 
     [ExportCategory("Flags")]
     [Export] bool runOnce = false;
+    [Export] bool oneShot = false;
 
 
     /*
@@ -33,4 +34,5 @@ public partial class PassiveActionResource : Resource
     public Godot.Collections.Array<ActionEffectResource> GetCleanupActions() { return cleanupActions; }
 
     public bool GetRunOnce() { return runOnce; }
+    public bool GetOneShot() { return oneShot; }
 }

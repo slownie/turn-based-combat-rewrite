@@ -43,6 +43,7 @@ public partial class ActiveBuff : ActivePassiveEffect
         _isDebuff = buffResource.GetIsDebuff();
         _isPermanent = buffResource.GetIsPermanent();
         _runOnce = buffResource.GetRunOnce();
+        _oneShot = buffResource.GetPassiveActionResource().GetOneShot();
 
         _icon = buffResource.GetIcon();
     }

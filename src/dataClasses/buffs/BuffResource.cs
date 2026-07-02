@@ -19,6 +19,7 @@ public partial class BuffResource : Resource
     public bool GetIsDebuff() { return isDebuff; }
     public bool GetIsPermanent() { return isPermanent; }
     public bool GetRunOnce() { return passiveActionResource.GetRunOnce(); }
+    public bool GetOneShot() { return passiveActionResource.GetOneShot(); }
 
     public Texture2D GetIcon() { return icon; }
 

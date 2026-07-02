@@ -10,6 +10,8 @@
 [ext_resource type="Resource" uid="uid://cq5j5eomr0oal" path="res://data/skills/fusionSkills/CrossCombo.tres" id="7_bmjkj"]
 [ext_resource type="Resource" uid="uid://cvkit1bpswrrx" path="res://data/skills/terra/RushCombo.tres" id="10_6b3wo"]
 [ext_resource type="Resource" uid="uid://ptyg636g52ww" path="res://data/skills/terra/RockThrow.tres" id="11_4oqrj"]
+[ext_resource type="Resource" uid="uid://ba4bmgafgnrd0" path="res://data/skills/terra/Bloodthirsty.tres" id="11_6b3wo"]
+[ext_resource type="Resource" uid="uid://cr8m3ppfdvs02" path="res://data/skills/terra/TyrantWave.tres" id="12_4oqrj"]
 
 [sub_resource type="Resource" id="Resource_a3lub"]
 script = ExtResource("1_bqktf")
@@ -70,7 +72,7 @@ script = ExtResource("1_0mqtt")
 partyMemberName = "Terra"
 baseStats = SubResource("Resource_2gw5i")
 baseAffinity = SubResource("Resource_a3lub")
-startingSkills = Array[ExtResource("5_bqktf")]([ExtResource("10_6b3wo"), ExtResource("11_4oqrj")])
+startingSkills = Array[ExtResource("5_bqktf")]([ExtResource("10_6b3wo"), ExtResource("11_4oqrj"), ExtResource("11_6b3wo"), ExtResource("12_4oqrj")])
 startingFusionSkills = Array[ExtResource("6_4oqrj")]([ExtResource("7_bmjkj")])
 spriteFrames = SubResource("SpriteFrames_bqktf")
 battleIcon = ExtResource("1_m5hiy")

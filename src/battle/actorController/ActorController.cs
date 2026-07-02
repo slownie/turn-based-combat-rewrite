@@ -39,7 +39,7 @@ public partial class ActorController : Node2D
 	#endregion
 
 	#region Actions
-	public void TakeDamage(BattleActor target, int damage, bool didCrit)
+	public void TakeDamage(BattleActor user, BattleActor target, int damage, bool didCrit)
 	{
 		if (target.IsIndestructable) damage = 0;
 
@@ -61,6 +61,7 @@ public partial class ActorController : Node2D
 		if (target.GetCurHP() <= 0)
 		{
 			RunActorSideEffects(target, BattleConsts.TriggerType.OnUserDeath);
+			RunActorSideEffects(user, BattleConsts.TriggerType.OnTargetDeath);
 		}
 
 		target.EmitSignal(BattleActor.SignalName.DamageReceived, target, damage, didCrit);
