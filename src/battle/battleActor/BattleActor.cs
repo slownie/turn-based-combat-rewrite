@@ -29,6 +29,9 @@ public partial class BattleActor : Node2D
 	[Signal] public delegate void AddSideEffectEventHandler(BattleActor user, BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect);
 	[Signal] public delegate void RemoveSideEffectEventHandler(BattleActor user, BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect);
 
+	// Animation Signals
+	[Signal] public delegate void AnimationFinished();
+
 	const double _modifierMin = 0.25;
 	const double _modifierMax = 2;
 
@@ -333,7 +336,7 @@ public partial class BattleActor : Node2D
 		_battleActorAnim = battleActorAnim.Instantiate() as BattleActorAnim;
 		AddChild(_battleActorAnim);
 
-		_battleActorAnim.PlayAnimation("idle");
+		SetAnimation("idle");
 
 		_battleIcon = battleIcon;
 
@@ -360,6 +363,11 @@ public partial class BattleActor : Node2D
 		{
 			EmitSignal(SignalName.AddSideEffect, this, (int)activePassiveSkill.GetTriggerType(), activePassiveSkill);
 		}
+	}
+
+	public void SetAnimation(string animationName)
+	{
+		_battleActorAnim.PlayAnimation(animationName);
 	}
 
 	#region Getters

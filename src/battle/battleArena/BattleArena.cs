@@ -295,6 +295,7 @@ public partial class BattleArena : Control
 
 	private async void ExecuteActionEffects()
 	{
+		_currentActor.SetAnimation("attack");
 		foreach(ActionEffectResource actionEffect in _selectedAction.GetActions())
 		{
 			// Do not run if currentActor is not alive

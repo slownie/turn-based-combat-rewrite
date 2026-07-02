@@ -10,6 +10,7 @@ public partial class BattleActorAnim : Marker2D
 	{
 		_sprite = GetNode<Sprite2D>("Sprite");
 		_animationplayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		_animationplayer.AnimationFinished += OnAnimationFinished;
 	}
 
 	public void Setup(bool isPlayer)
@@ -23,6 +24,11 @@ public partial class BattleActorAnim : Marker2D
 	public void PlayAnimation(string animationName)
 	{
 		_animationplayer.Play(animationName);
+	}
+
+	private void OnAnimationFinished(StringName animationName)
+	{
+		_animationplayer.Play("idle");
 	}
 
 }
