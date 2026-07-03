@@ -45,7 +45,7 @@ public partial class ActorController : Node2D
 
 		// Damage value should be negative
 		target.AddCurHP(damage);
-
+		
 		RunActorSideEffects(target, BattleConsts.TriggerType.OnUserTakeDamage);
 
 		if (target.GetCurHP() <= Mathf.RoundToInt(target.GetMaxHP() * 0.5))

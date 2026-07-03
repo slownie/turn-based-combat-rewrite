@@ -30,7 +30,7 @@ public partial class BattleActor : Node2D
 	[Signal] public delegate void RemoveSideEffectEventHandler(BattleActor user, BattleConsts.TriggerType triggerType, ActivePassiveEffect activePassiveEffect);
 
 	// Animation Signals
-	[Signal] public delegate void AnimationFinished();
+	[Signal] public delegate void AnimationFinishedEventHandler();
 
 	const double _modifierMin = 0.25;
 	const double _modifierMax = 2;

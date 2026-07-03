@@ -27,6 +27,9 @@ public partial class UseableActionResource : Resource
 
 	// Todo, specify enable conditions in UseableSkill/UseableItem
 	
+	public ActionEffectResource GetActionAtIndex(int index) { 
+		return actions[index]; 
+	}
 	public Godot.Collections.Array<ActionEffectResource> GetActions() { return actions; }
 	public BattleConsts.TargetType GetTargetType() { return targetType; }
 	public BattleConsts.CursorMode GetCursorMode() { return cursorMode; }
@@ -41,4 +44,6 @@ public partial class UseableActionResource : Resource
 	public bool GetTargetSelfOnly() { return targetSelfOnly; }
 	public bool GetTargetDeadOnly() { return targetDeadOnly; }
 	
+
+	public Godot.Collections.Array<BattleSequenceEffectResource> GetBattleSequence() { return sequences; }
 }

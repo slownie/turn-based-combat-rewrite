@@ -1,6 +1,10 @@
 using Godot;
 using System;
 
-public partial class WaitEffect : Node
+[GlobalClass]
+public partial class WaitEffect : BattleSequenceEffectResource
 {
+    [Export] double seconds;
+
+    public double GetSeconds() { return seconds; }
 }

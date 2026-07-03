@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bcbvjr813rh1t"]
+
+[ext_resource type="Script" uid="uid://c2hjmjbtmn7jh" path="res://src/battle/avxf/HitEffect.cs" id="1_ljio6"]
+
+[node name="HitEffect" type="AnimatedSprite2D" unique_id=671248213]
+script = ExtResource("1_ljio6")

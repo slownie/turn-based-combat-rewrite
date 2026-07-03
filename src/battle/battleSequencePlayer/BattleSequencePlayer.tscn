@@ -4,3 +4,6 @@
 
 [node name="BattleSequencePlayer" type="Node2D" unique_id=704811150]
 script = ExtResource("1_d2wtp")
+
+[node name="Timer" type="Timer" parent="." unique_id=427299684]
+one_shot = true

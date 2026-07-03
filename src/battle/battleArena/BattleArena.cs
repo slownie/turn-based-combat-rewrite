@@ -27,11 +27,13 @@ public partial class BattleArena : Control
 
 	Godot.Collections.Array<BattleActor> _selectedTargets = [];
 	UseableActionResource _selectedAction;
+	int _actionIndex = 0;
 
 	Godot.Collections.Array<InventoryItem> _battleInventory = [];
 
 	ActorController _actorController;
 	BattleTriggerController _battleTriggerController;
+	BattleSequencePlayer _battleSequencePlayer;
 
 	UIMenuController _menuController;
 	UITurnBar _turnBar;
@@ -114,6 +116,10 @@ public partial class BattleArena : Control
 
 		_battleTriggerController = GetNode<BattleTriggerController>("BattleTriggerController");
 		_battleTriggerController.SideEffectsRequested += OnSideEffectRequested;
+
+		_battleSequencePlayer = GetNode<BattleSequencePlayer>("BattleSequencePlayer");
+		_battleSequencePlayer.ExecuteAction += OnActionRequested;
+		_battleSequencePlayer.BattleSequenceFinished += OnActionFinished;
 
 		_actionPauseTimer = GetNode<Timer>("ActionPauseTimer");
 		_defenseTimer = GetNode<Timer>("DefenseTimer");
@@ -293,9 +299,34 @@ public partial class BattleArena : Control
 		IsActive = true;
 	}
 
+	// Execute the action effect specified at the index
+	private async void OnActionRequested()
+	{
+		ActionEffectResource actionEffect = _selectedAction.GetActionAtIndex(_actionIndex);
+
+		// 1. Does the effect occur?
+		if (actionEffect.GetSuccessChance() > GD.Randi() % 99 || _currentActor.SkillSuccessGuarantee)
+		{
+			// 2. Who do we target?
+			if (_selectedAction.GetTargetType() == BattleConsts.TargetType.Random)
+			{
+				int targetIndex = GD.RandRange(0, _selectedTargets.Count - 1);
+				actionEffect.ExecuteEffect(_currentActor, _selectedTargets[targetIndex], _actorController);
+			} else {
+				foreach (BattleActor target in _selectedTargets)
+				{
+					actionEffect.ExecuteEffect(_currentActor, target, _actorController);
+				}
+			}
+			_actionPauseTimer.Start();
+			await ToSignal(_actionPauseTimer, Timer.SignalName.Timeout);
+		}
+
+		_actionIndex += 1;
+	}
+
 	private async void ExecuteActionEffects()
 	{
-		_currentActor.SetAnimation("attack");
 		foreach(ActionEffectResource actionEffect in _selectedAction.GetActions())
 		{
 			// Do not run if currentActor is not alive
@@ -375,7 +406,13 @@ public partial class BattleArena : Control
 		}
 		*/
 
-		ExecuteActionEffects();
+		if (0 < _selectedAction.GetBattleSequence().Count)
+		{
+			_actionIndex = 0;
+			_battleSequencePlayer.RunSequence(_selectedAction, _currentActor, _selectedTargets);
+		} else {
+			ExecuteActionEffects();
+		}
 	}
 
 	/*
@@ -420,6 +457,7 @@ public partial class BattleArena : Control
 	{
 		// Reset Variables
 		_selectedAction = null;
+		_actionIndex = 0;
 		_selectedTargets = [];
 
 		// Turn Decrement

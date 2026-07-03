@@ -5,14 +5,34 @@
 [ext_resource type="Script" uid="uid://f4ubms2rgfo3" path="res://src/dataClasses/action/UseableActionResource.cs" id="3_4qlhq"]
 [ext_resource type="Script" uid="uid://b1e2fc42rjbqm" path="res://src/dataClasses/actionEffects/AttackEffect.cs" id="3_or4fy"]
 [ext_resource type="Script" uid="uid://bijk8gwmj13d8" path="res://src/dataClasses/battleSequenceEffects/BattleSequenceEffectResource.cs" id="5_pei8x"]
+[ext_resource type="Script" uid="uid://bmsnvh7uieyot" path="res://src/dataClasses/battleSequenceEffects/PlayHitEffect.cs" id="6_hqvbu"]
+[ext_resource type="SpriteFrames" uid="uid://dd0ml6etj4jpd" path="res://data/battleAnimations/actions/Bash.tres" id="7_8esnd"]
+[ext_resource type="Script" uid="uid://fr10ke68kiey" path="res://src/dataClasses/battleSequenceEffects/DoAction.cs" id="8_ulgnx"]
+[ext_resource type="Script" uid="uid://b6igi6dl7tb6c" path="res://src/dataClasses/battleSequenceEffects/ActorPlayAnimation.cs" id="9_8esnd"]
 
 [sub_resource type="Resource" id="Resource_pei8x"]
 script = ExtResource("3_or4fy")
 metadata/_custom_type_script = "uid://b1e2fc42rjbqm"
 
+[sub_resource type="Resource" id="Resource_ox8ff"]
+script = ExtResource("6_hqvbu")
+spriteFrames = ExtResource("7_8esnd")
+metadata/_custom_type_script = "uid://bmsnvh7uieyot"
+
+[sub_resource type="Resource" id="Resource_yipki"]
+script = ExtResource("8_ulgnx")
+metadata/_custom_type_script = "uid://fr10ke68kiey"
+
+[sub_resource type="Resource" id="Resource_ulgnx"]
+script = ExtResource("9_8esnd")
+animationName = "hit"
+waitToFinish = false
+metadata/_custom_type_script = "uid://b6igi6dl7tb6c"
+
 [sub_resource type="Resource" id="Resource_or4fy"]
 script = ExtResource("3_4qlhq")
 actions = Array[ExtResource("1_4qlhq")]([SubResource("Resource_pei8x")])
+sequences = Array[ExtResource("5_pei8x")]([SubResource("Resource_ox8ff"), SubResource("Resource_yipki"), SubResource("Resource_ulgnx")])
 metadata/_custom_type_script = "uid://f4ubms2rgfo3"
 
 [resource]

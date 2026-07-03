@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://cq1yfcauodijh" path="res://src/dataClasses/components/BaseAffinity.cs" id="1_bqktf"]
 [ext_resource type="Texture2D" uid="uid://dehtghxnp1n3b" path="res://assets/images/battleActors/Jam/JamBattleIcon.png" id="1_m5hiy"]
 [ext_resource type="Script" uid="uid://elamptvvyimh" path="res://src/dataClasses/components/BaseStats.cs" id="1_ushfx"]
-[ext_resource type="PackedScene" uid="uid://3oolmar4rgut" path="res://data/battleAnimations/Jam.tscn" id="3_i8nwu"]
+[ext_resource type="PackedScene" uid="uid://3oolmar4rgut" path="res://data/battleAnimations/actors/Jam.tscn" id="3_i8nwu"]
 [ext_resource type="Script" uid="uid://dkuf8p00m1ibl" path="res://src/dataClasses/skills/BaseSkillResource.cs" id="5_bqktf"]
 [ext_resource type="Script" uid="uid://dhbd03db6gml8" path="res://src/dataClasses/skills/FusionSkillResource.cs" id="6_4oqrj"]
 [ext_resource type="Resource" uid="uid://cq5j5eomr0oal" path="res://data/skills/fusionSkills/CrossCombo.tres" id="7_bmjkj"]
