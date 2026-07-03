@@ -32,7 +32,6 @@ public partial class BattleSequencePlayer : Node2D
 	public async void RunSequence(UseableActionResource selectedAction, BattleActor user, Godot.Collections.Array<BattleActor> targets)
 	{
 		_sequence = selectedAction.GetBattleSequence().Duplicate();
-		GD.Print(_sequence);
 		while (_sequence.Count != 0)
 		{
 			BattleSequenceEffectResource currentEffect = _sequence[0];
@@ -40,11 +39,15 @@ public partial class BattleSequencePlayer : Node2D
 			{
 				case PlayHitEffect hitEffect:
 				{
-					HitEffect sceneHitEffect = hitEffectScene.Instantiate() as HitEffect;
-					AddChild(sceneHitEffect);
+					foreach (BattleActor target in targets)
+					{
+						HitEffect sceneHitEffect = hitEffectScene.Instantiate() as HitEffect;
+						AddChild(sceneHitEffect);
 
-					sceneHitEffect.Setup(targets[0].Position, hitEffect.GetSpriteFrames());
-					await ToSignal(sceneHitEffect, HitEffect.SignalName.HitEffectFinished);
+						sceneHitEffect.Setup(target.Position, hitEffect.GetSpriteFrames());
+						await ToSignal(sceneHitEffect, HitEffect.SignalName.HitEffectFinished);
+					}
+					
 					break;
 				}
 
