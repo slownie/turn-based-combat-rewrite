@@ -39,6 +39,7 @@ public partial class BattleArena : Control
 	UITurnBar _turnBar;
 	UIBattleTextController _battleTextController;
 	UIPartyEntries _partyEntries;
+	ActionBox _actionBox;
 
 	InventoryController _inventoryController;
 	MusicPlayer _musicPlayer;
@@ -138,6 +139,8 @@ public partial class BattleArena : Control
 		_menuController.ActionTargetConfirmed += OnActionTargetConfimed;
 
 		_partyEntries = GetNode<UIPartyEntries>("UI/UIPartyEntries");
+
+		_actionBox = GetNode<ActionBox>("UI/ActionBox");
 
 		_turnBar = GetNode<UITurnBar>("UI/UITurnBar");
 
@@ -413,6 +416,8 @@ public partial class BattleArena : Control
 		} else {
 			ExecuteActionEffects();
 		}
+
+		// Setup UI
 	}
 
 	/*
@@ -455,6 +460,8 @@ public partial class BattleArena : Control
 
 	private void OnActionFinished()
 	{
+		_actionBox.Reset();
+
 		// Reset Variables
 		_selectedAction = null;
 		_actionIndex = 0;
@@ -512,8 +519,11 @@ public partial class BattleArena : Control
 		Action Middleware
 	*/
 
-	private void OnSkillUsed(UseableSkillResource.SkillCostType skillCostType, int amount)
+	private void OnSkillUsed(UseableSkillResource selectedSkill)
 	{
+		UseableSkillResource.SkillCostType skillCostType = selectedSkill.GetSkillCostType();
+		int amount = selectedSkill.GetSkillCostAmount();
+
 		if (!_currentActor.IgnoreSkillCosts)
 		{
 			if (amount != 0)
@@ -526,10 +536,16 @@ public partial class BattleArena : Control
 				}
 			}
 		}
+
+		_actionBox.Setup(selectedSkill.GetSkillName(), selectedSkill.GetIcon());
 	}
 
-	private void OnFusionUsed(int partnerID, UseableSkillResource.SkillCostType skillCostType, int amount)
+	private void OnFusionUsed(FusionSkillResource selectedFusionSkill)
 	{
+		int partnerID = selectedFusionSkill.GetFusionID();
+		UseableSkillResource.SkillCostType skillCostType = selectedFusionSkill.GetSkillCostType();
+		int amount = selectedFusionSkill.GetSkillCostAmount();
+
 		_partnerActor = BattleConsts.FindActorByFusionID(partnerID, _partyMembers);
 		if (!_currentActor.IgnoreSkillCosts)
 		{
@@ -556,11 +572,16 @@ public partial class BattleArena : Control
 				}
 			}
 		}
+
+		_actionBox.Setup(selectedFusionSkill.GetSkillName(), selectedFusionSkill.GetIcon());
 	}
 
 	private void OnItemUsed(int itemIndex, int quantity)
 	{
+		UseableItemResource selectedItem = _battleInventory[itemIndex].GetItemResource() as UseableItemResource;
 		_inventoryController.AddItemQuantity(_battleInventory, itemIndex, -quantity);
+
+		_actionBox.Setup(selectedItem.GetItemName(), selectedItem.GetIcon());
 	}
 	#endregion
 }

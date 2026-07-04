@@ -13,7 +13,7 @@ public partial class ActorController : Node2D
 	[Export] UseableSkillResource defaultEnemyAction;
 
 
-	[Signal] public delegate void EnemySkillUsedEventHandler(UseableSkillResource.SkillCostType skillCostType, int amount);
+	[Signal] public delegate void EnemySkillUsedEventHandler(UseableSkillResource selectedSkill);
 
 	[Signal] public delegate void EnemySelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
 	[Signal] public delegate void RandomSelectActionEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
@@ -508,7 +508,7 @@ public partial class ActorController : Node2D
 			}
 		}
 
-		EmitSignal(SignalName.EnemySkillUsed, (int)selectedAction.GetSkillCostType(), selectedAction.GetSkillCostAmount());
+		EmitSignal(SignalName.EnemySkillUsed, selectedAction);
 		EmitSignal(SignalName.EnemySelectAction, selectedAction.GetUseableActionResource(), _selectedTargets);
 	}
 

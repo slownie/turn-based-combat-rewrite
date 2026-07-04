@@ -9,8 +9,8 @@ public partial class UIMenuController : Control
 	[Export] PackedScene targetMenuScene;
 
 	[Signal] public delegate void ActionTargetConfirmedEventHandler(UseableActionResource selectedAction, Godot.Collections.Array<BattleActor> selectedTargets);
-	[Signal] public delegate void SkillUsedEventHandler(UseableSkillResource.SkillCostType skillCostType, int amount);
-	[Signal] public delegate void FusionSkillUsedEventHandler(int partnerID, UseableSkillResource.SkillCostType skillCostType, int amount);
+	[Signal] public delegate void SkillUsedEventHandler(UseableSkillResource selectedSkill);
+	[Signal] public delegate void FusionSkillUsedEventHandler(FusionSkillResource selectedFusionSkill);
 	[Signal] public delegate void ItemUsedEventHandler(int itemIndex, int quantity);
 
 	ActorController _actorController;
@@ -177,13 +177,13 @@ public partial class UIMenuController : Control
 	{
 		if (_selectedSkill != null)
 		{
-			EmitSignal(SignalName.SkillUsed, (int)_selectedSkill.GetSkillCostType(), _selectedSkill.GetSkillCostAmount());
+			EmitSignal(SignalName.SkillUsed, _selectedSkill);
 			EmitSignal(SignalName.ActionTargetConfirmed, _selectedSkill.GetUseableActionResource(), selectedActors);
 		}
 
 		if (_selectedFusionSkill != null)
 		{
-			EmitSignal(SignalName.FusionSkillUsed, _selectedFusionSkill.GetFusionID(), (int)_selectedFusionSkill.GetSkillCostType(), _selectedFusionSkill.GetSkillCostAmount());
+			EmitSignal(SignalName.FusionSkillUsed, _selectedFusionSkill);
 			EmitSignal(SignalName.ActionTargetConfirmed, _selectedFusionSkill.GetUseableActionResource(), selectedActors);
 		}
 

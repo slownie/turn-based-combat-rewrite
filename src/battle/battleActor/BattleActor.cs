@@ -91,6 +91,7 @@ public partial class BattleActor : Node2D
 	BattleActorAnim _battleActorAnim;
 	Texture2D _battleIcon;
 
+	Vector2 _initialPosition;
 
 	// Test UI
 	TextureRect _statusIcon;
@@ -293,6 +294,7 @@ public partial class BattleActor : Node2D
 	{
 		Vector2 newPosition = new Vector2(x, y);
 		Position = newPosition;
+		_initialPosition = Position;
 
 		_actorName = actorName;
 		_fusionID = fusionID;
