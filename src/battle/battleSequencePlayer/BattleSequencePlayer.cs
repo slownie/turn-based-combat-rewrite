@@ -42,7 +42,7 @@ public partial class BattleSequencePlayer : Node2D
 				case PlayHitEffect hitEffect:
 				{
 					SignalGroup signalGroup = new SignalGroup();
-					Godot.Collections.Array<HitEffect> hitEffects = [];				
+					Godot.Collections.Array hitEffects = [];				
 
 
 					foreach (BattleActor target in targets)
@@ -54,7 +54,7 @@ public partial class BattleSequencePlayer : Node2D
 						sceneHitEffect.Setup(target.Position, hitEffect.GetSpriteFrames());
 					}
 
-					signalGroup.StartAwait(hitEffects);
+					signalGroup.StartAwait(hitEffects, "HitEffectFinished");
 
 						
 					await ToSignal(signalGroup, SignalGroup.SignalName.SignalsCompleted);

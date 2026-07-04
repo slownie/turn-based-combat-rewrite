@@ -12,12 +12,12 @@ public partial class SignalGroup : RefCounted
         
     }
 
-    public void StartAwait(Godot.Collections.Array<HitEffect> hitEffects)
+    public void StartAwait(Godot.Collections.Array signalGroup, string signalName)
     {
-        _counter = hitEffects.Count;
-        foreach (HitEffect hitEffect in hitEffects)
+        _counter = signalGroup.Count;
+        foreach (Node node in signalGroup)
         {
-            hitEffect.HitEffectFinished += OnSignalComplete;
+            node.Connect(signalName, Callable.From(OnSignalComplete), (uint)GodotObject.ConnectFlags.OneShot);
         }
     }
 
