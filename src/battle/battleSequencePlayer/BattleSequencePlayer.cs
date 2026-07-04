@@ -17,6 +17,8 @@ public partial class BattleSequencePlayer : Node2D
 	MusicPlayer _musicPlayer;
 	SFXPlayer _sfxPlayer;
 
+	int _signalCounter = 0;
+
     public override void _Ready()
 	{
 		_timer = GetNode<Timer>("Timer");
@@ -39,14 +41,23 @@ public partial class BattleSequencePlayer : Node2D
 			{
 				case PlayHitEffect hitEffect:
 				{
+					SignalGroup signalGroup = new SignalGroup();
+					Godot.Collections.Array<HitEffect> hitEffects = [];				
+
+
 					foreach (BattleActor target in targets)
 					{
 						HitEffect sceneHitEffect = hitEffectScene.Instantiate() as HitEffect;
 						AddChild(sceneHitEffect);
+						hitEffects.Add(sceneHitEffect);
 
 						sceneHitEffect.Setup(target.Position, hitEffect.GetSpriteFrames());
-						await ToSignal(sceneHitEffect, HitEffect.SignalName.HitEffectFinished);
 					}
+
+					signalGroup.StartAwait(hitEffects);
+
+						
+					await ToSignal(signalGroup, SignalGroup.SignalName.SignalsCompleted);
 					
 					break;
 				}

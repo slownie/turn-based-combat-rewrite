@@ -7,13 +7,18 @@ public partial class SignalGroup : RefCounted
 
     int _counter = 0;
 
-    public void AddSignal()
+    public SignalGroup()
     {
-        _counter += 1;
+        
     }
 
-    public void StartAwait(int awaitCounter, StringName signalName)
+    public void StartAwait(Godot.Collections.Array<HitEffect> hitEffects)
     {
+        _counter = hitEffects.Count;
+        foreach (HitEffect hitEffect in hitEffects)
+        {
+            hitEffect.HitEffectFinished += OnSignalComplete;
+        }
     }
 
     private void OnSignalComplete()
