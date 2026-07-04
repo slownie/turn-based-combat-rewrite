@@ -9,16 +9,26 @@ public partial class MoveToPositionEffect : BattleSequenceEffectResource
         None,
         Initial,
         Center,
-    
+        Target,
+        Custom
     }
 
     [Export] BattleArenaPosition battleArenaPosition;
+    [Export] float moveSpeed = 0.5f;
+
+    [Export] Vector2 positionOffset;
+
     [ExportCategory("Flags")]
     [Export] Vector2 customPosition;
-    [Export] bool moveToTarget;
+    [Export] bool flipXOnStart;
+    [Export] bool flipXOnEnd;
 
-    BattleArenaPosition GetBattleArenaPosition() { return battleArenaPosition; }
-    Vector2 GetCustomPosition() { return customPosition; }
-    bool GetMoveToTarget() { return moveToTarget; }
+    public BattleArenaPosition GetBattleArenaPosition() { return battleArenaPosition; }
+    public float GetMoveSpeed() { return moveSpeed; }
 
+    public Vector2 GetPositionOffset() { return positionOffset; }
+
+    public Vector2 GetCustomPosition() { return customPosition; }
+    public bool GetFlipXOnStart() { return flipXOnStart; }
+    public bool GetFlipXOnEnd() { return flipXOnEnd; }
 }

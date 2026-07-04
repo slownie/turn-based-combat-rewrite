@@ -53,6 +53,8 @@ public partial class BattleArena : Control
 	
 	// UI Objects
 
+	Marker2D _centerPosition;
+
 	/*
 		Allows for pausing the Active Time Battler during combat intro, a cutscene, or combat end
 	*/
@@ -109,6 +111,8 @@ public partial class BattleArena : Control
 
 	public override void _Ready()
 	{
+		
+
 		_actorController = GetNode<ActorController>("ActorController");
 		_actorController.EnemySelectAction += OnActionTargetConfimed;
 		_actorController.EnemySkillUsed += OnSkillUsed;
@@ -127,6 +131,8 @@ public partial class BattleArena : Control
 
 
 		_timerLabel = GetNode<Label>("UI/TimerLabel");
+
+		_centerPosition = GetNode<Marker2D>("PositionMarkers/CenterMarker");
 
 		// UI
 		_menuController = GetNode<UIMenuController>("UI/UIMenuController");
@@ -284,6 +290,13 @@ public partial class BattleArena : Control
 
 		_actorController.Setup(_partyMembers, _enemyMembers);
 
+		_battleSequencePlayer.BindServices(
+			_gameCamera,
+			_musicPlayer,
+			_sfxPlayer,
+			_centerPosition
+		);
+
 		StartBattle();
 	}
 
@@ -408,6 +421,10 @@ public partial class BattleArena : Control
 			await ToSignal(_defenseTimer, Timer.SignalName.Timeout);
 		}
 		*/
+
+		// Slight delay before action executes
+		_actionPauseTimer.Start();
+		await ToSignal(_actionPauseTimer, Timer.SignalName.Timeout);
 
 		if (0 < _selectedAction.GetBattleSequence().Count)
 		{

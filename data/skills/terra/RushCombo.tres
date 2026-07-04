@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://bmsnvh7uieyot" path="res://src/dataClasses/battleSequenceEffects/PlayHitEffect.cs" id="6_23jm5"]
 [ext_resource type="SpriteFrames" uid="uid://dd0ml6etj4jpd" path="res://data/battleAnimations/actions/Bash.tres" id="7_86iar"]
 [ext_resource type="Script" uid="uid://fr10ke68kiey" path="res://src/dataClasses/battleSequenceEffects/DoAction.cs" id="8_theyr"]
+[ext_resource type="Script" uid="uid://cpbdh32emhps5" path="res://src/dataClasses/battleSequenceEffects/MoveToPositionEffect.cs" id="9_86iar"]
 
 [sub_resource type="Resource" id="Resource_w3pn5"]
 script = ExtResource("3_dcmmj")
@@ -48,10 +49,15 @@ metadata/_custom_type_script = "uid://bmsnvh7uieyot"
 script = ExtResource("8_theyr")
 metadata/_custom_type_script = "uid://fr10ke68kiey"
 
+[sub_resource type="Resource" id="Resource_theyr"]
+script = ExtResource("9_86iar")
+moveToTarget = true
+metadata/_custom_type_script = "uid://cpbdh32emhps5"
+
 [sub_resource type="Resource" id="Resource_vrv36"]
 script = ExtResource("3_aldw1")
 actions = Array[ExtResource("1_il7en")]([SubResource("Resource_w3pn5"), SubResource("Resource_dcmmj"), SubResource("Resource_uewjh")])
-sequences = Array[ExtResource("4_vrv36")]([SubResource("Resource_6aq2m"), SubResource("Resource_vwavh"), SubResource("Resource_gwwfp"), SubResource("Resource_tfcbb"), SubResource("Resource_d7o26"), SubResource("Resource_rp2wm")])
+sequences = Array[ExtResource("4_vrv36")]([SubResource("Resource_6aq2m"), SubResource("Resource_vwavh"), SubResource("Resource_gwwfp"), SubResource("Resource_tfcbb"), SubResource("Resource_d7o26"), SubResource("Resource_rp2wm"), SubResource("Resource_theyr")])
 metadata/_custom_type_script = "uid://f4ubms2rgfo3"
 
 [resource]

@@ -6,6 +6,8 @@ public partial class BattleActorAnim : Marker2D
 	Sprite2D _sprite;
 	AnimationPlayer _animationplayer;
 
+	bool _isPlayer;
+
 	public override void _Ready()
 	{
 		_sprite = GetNode<Sprite2D>("Sprite");
@@ -15,7 +17,8 @@ public partial class BattleActorAnim : Marker2D
 
 	public void Setup(bool isPlayer)
 	{
-		if (isPlayer)
+		_isPlayer = isPlayer;
+		if (_isPlayer)
 		{
 			_sprite.FlipH = true;
 		}
@@ -29,6 +32,12 @@ public partial class BattleActorAnim : Marker2D
 	private void OnAnimationFinished(StringName animationName)
 	{
 		_animationplayer.Play("idle");
+	}
+
+	public void SetFlipX(bool value)
+	{
+		if (_isPlayer) _sprite.FlipH = !value;
+		else _sprite.FlipH = value;
 	}
 
 }

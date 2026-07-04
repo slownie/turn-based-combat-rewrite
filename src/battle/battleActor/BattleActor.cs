@@ -603,6 +603,9 @@ public partial class BattleActor : Node2D
 	public bool GetIsPlayer() { return _isPlayer; }
 	public Texture2D GetBattleIcon() { return _battleIcon; }
 
+	public Vector2 GetInitialPosition() { return _initialPosition; }
+	public void SetFlipX(bool value) { _battleActorAnim.SetFlipX(value); } 
+
 	public void ResetReadiness() { 
 		Readiness = 0.0; 
 		if (_characterStats.GetCurHP() > 0)
