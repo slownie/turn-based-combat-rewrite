@@ -9,7 +9,7 @@ public partial class OverworldPlayer : CharacterBody2D
 
     public override void _Input(InputEvent @event)
 	{
-		if (@event.IsActionPressed("YButton"))
+		if (@event.IsActionPressed("XButton"))
 		{
 			EmitSignal(SignalName.OverworldMenuRequested);
 		}

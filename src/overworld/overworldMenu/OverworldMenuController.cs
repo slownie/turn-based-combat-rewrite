@@ -77,7 +77,19 @@ public partial class OverworldMenuController : Control
 
 		LoadMenu(overworldEquipmentMenu);
 
-		GD.Print("Menu created");
+		overworldEquipmentMenu.CreateEquipSelectMenu += CreateEquipSelectMenu;
+		overworldEquipmentMenu.ExitMenu += UnloadMenu;
+	}
+
+	private void CreateEquipSelectMenu(PackedScene equipMenuScene, int partyMemberIndex, EquipmentItemResource.EquipmentType equipmentType)
+	{
+		OverworldEquipSelectMenu overworldEquipSelectMenu = equipMenuScene.Instantiate() as OverworldEquipSelectMenu;
+		AddChild(overworldEquipSelectMenu);
+		overworldEquipSelectMenu.Setup(_gameState, partyMemberIndex, equipmentType);
+
+		LoadMenu(overworldEquipSelectMenu);
+
+		overworldEquipSelectMenu.ExitMenu += UnloadMenu;
 	}
 
 	private void OnBaseMenuSelected(UIBaseMenuEntry.MainMenuType mainMenuType)

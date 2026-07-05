@@ -39,15 +39,22 @@ public partial class GameState : GodotObject
         foreach (EquipmentItemResource itemResource in equipmentInventory)
         {
             EquipmentItem equipmentItem = new EquipmentItem(itemResource);
-            if (itemResource is WeaponItemResource)
+            switch (itemResource.GetEquipmentType())
             {
-                _weaponInventory.Add(equipmentItem);
-            } else {
-                if (itemResource.GetEquipmentType() == EquipmentItemResource.EquipmentType.Armor)
+                case EquipmentItemResource.EquipmentType.Weapon:
+                {
+                    _weaponInventory.Add(equipmentItem);
+                    break;
+                }
+                case EquipmentItemResource.EquipmentType.Armor:
                 {
                     _armorInventory.Add(equipmentItem);
-                } else {
+                    break;
+                }
+                case EquipmentItemResource.EquipmentType.Accessory:
+                {
                     _accessoryInventory.Add(equipmentItem);
+                    break;
                 }
             }
         }

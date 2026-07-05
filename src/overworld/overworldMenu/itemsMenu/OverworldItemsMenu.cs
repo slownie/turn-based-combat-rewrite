@@ -6,8 +6,6 @@ public partial class OverworldItemsMenu : UIOverworldMenuBase
 	[Export] PackedScene itemMenuEntryScene;
 	[Export] PackedScene partyMenuEntryScene;
 
-	[Signal] public delegate void ExitMenuEventHandler();
-
 	Godot.Collections.Array<UIPartyMenuEntry> _partyEntries = [];
 
 	VBoxContainer _menuContainer;

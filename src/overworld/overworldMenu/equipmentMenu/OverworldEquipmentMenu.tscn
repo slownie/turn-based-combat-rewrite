@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bcugmg5fcvbwi"]
 
 [ext_resource type="Script" uid="uid://bfffjws41r5d1" path="res://src/overworld/overworldMenu/equipmentMenu/OverworldEquipmentMenu.cs" id="1_ycyst"]
+[ext_resource type="PackedScene" uid="uid://jve2ivqnbtb7" path="res://src/overworld/overworldMenu/equipmentMenu/equipSelectMenu/OverworldEquipSelectMenu.tscn" id="2_puisq"]
 [ext_resource type="PackedScene" uid="uid://cii6vieh8fjan" path="res://src/overworld/overworldMenu/equipmentMenu/equipmentEntry/EquipmentEntry.tscn" id="2_qc8fc"]
 [ext_resource type="PackedScene" uid="uid://bu0pauh0l7wyv" path="res://src/overworld/overworldMenu/components/statsDisplay/UIStatsDisplay.tscn" id="3_eb8ys"]
 
@@ -9,6 +10,7 @@ process_mode = 2
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_ycyst")
+equipSelectMenuScene = ExtResource("2_puisq")
 
 [node name="PartyMemberLabel" type="Label" parent="." unique_id=1245467176]
 layout_mode = 0
@@ -34,9 +36,11 @@ layout_mode = 2
 
 [node name="ArmorEntry" parent="EquipmentList" unique_id=800542622 instance=ExtResource("2_qc8fc")]
 layout_mode = 2
+equipmentType = 1
 
 [node name="AccessoryEntry" parent="EquipmentList" unique_id=1251087020 instance=ExtResource("2_qc8fc")]
 layout_mode = 2
+equipmentType = 2
 
 [node name="UIStatsDisplay" parent="." unique_id=1395545522 instance=ExtResource("3_eb8ys")]
 layout_mode = 1

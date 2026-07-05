@@ -5,8 +5,6 @@ public partial class OverworldSkillsMenu : UIOverworldMenuBase
 {
 	[Export] PackedScene _skillEntryScene;
 
-	[Signal] public delegate void ExitMenuEventHandler();
-
 	Godot.Collections.Array<ActivePartyMember> _partyMembers = [];
 	ActivePartyMember _currentPartyMember = null;
 	ActivePartyMember currentPartyMember
