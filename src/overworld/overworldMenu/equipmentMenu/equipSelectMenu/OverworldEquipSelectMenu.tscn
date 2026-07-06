@@ -11,8 +11,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ikyqm")
 
-[node name="Label" type="Label" parent="." unique_id=1594562342]
+[node name="EquipContainer" type="HBoxContainer" parent="." unique_id=1200700931]
 layout_mode = 0
 offset_right = 40.0
-offset_bottom = 23.0
-text = "It works"
+offset_bottom = 40.0
+
+[node name="EquipIcon" type="TextureRect" parent="EquipContainer" unique_id=1036699967]
+layout_mode = 2
+
+[node name="EquipText" type="Label" parent="EquipContainer" unique_id=1594562342]
+layout_mode = 2
+text = "------"
+
+[node name="EquipEntries" type="VBoxContainer" parent="." unique_id=1435419456]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

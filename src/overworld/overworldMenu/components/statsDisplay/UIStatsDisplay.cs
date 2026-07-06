@@ -3,6 +3,10 @@ using System;
 
 public partial class UIStatsDisplay : Control
 {
+	[Export] Color increaseColour = new Color("#00ff0d");
+	[Export] Color decreaseColour = new Color("#ff0000");
+	
+
 	CharacterStats _currentCharacterStats;
 
 	Label _HPValue;
@@ -14,6 +18,15 @@ public partial class UIStatsDisplay : Control
 	Label _defenseValue;
 	Label _resistanceValue;
 
+	Label  _HPModifier;
+	Label _MPModifier;
+	Label _strengthModifier;
+	Label _elementalModifier;
+	Label _agilityModifier;
+	Label _luckModifier;
+	Label _defenseModifier;
+	Label _resistanceModifier;
+
 	public override void _Ready()
 	{
 		_HPValue = GetNode<Label>("GridContainer/HP/HPValue");
@@ -24,6 +37,15 @@ public partial class UIStatsDisplay : Control
 		_luckValue = GetNode<Label>("GridContainer/Luck/LuckValue");
 		_defenseValue = GetNode<Label>("GridContainer/Defense/DefenseValue");
 		_resistanceValue = GetNode<Label>("GridContainer/Resistance/ResistanceValue");
+
+		_HPModifier = GetNode<Label>("GridContainer/HP/HPModifier");
+		_MPModifier = GetNode<Label>("GridContainer/MP/MPModifier");
+		_strengthModifier = GetNode<Label>("GridContainer/Strength/StrengthModifier");
+		_elementalModifier = GetNode<Label>("GridContainer/Elemental/ElementalModifier");
+		_agilityModifier = GetNode<Label>("GridContainer/Agility/AgilityModifier");
+		_luckModifier = GetNode<Label>("GridContainer/Luck/LuckModifier");
+		_defenseModifier = GetNode<Label>("GridContainer/Defense/DefenseModifier");
+		_resistanceModifier = GetNode<Label>("GridContainer/Resistance/ResistanceModifier");
 	}
 
 	public void Setup(CharacterStats characterStats)
