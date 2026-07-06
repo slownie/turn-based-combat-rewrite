@@ -18,6 +18,5 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 
 	public void Setup(GameState _gameState, int partyMemberIndex, EquipmentItemResource.EquipmentType equipmentType)
 	{
-		_gameState.GetActivePartyMembers()[partyMemberIndex].GetCharacterStats().ApplyStrength(6);
 	}
 }

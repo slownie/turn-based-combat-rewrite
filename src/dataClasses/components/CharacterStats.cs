@@ -10,8 +10,37 @@ public partial class CharacterStats : GodotObject
 	[Signal] public delegate void HPReviveEventHandler();
 	[Signal] public delegate void HPDepletedEventHandler();
 
+	[Signal] public delegate void MaxHPChangedEventHandler(int newMaxHP);
+	[Signal] public delegate void MaxMPChangedEventHandler(int newMaxMP);
+	[Signal] public delegate void StrengthChangedEventHandler(int newStrength);
+	[Signal] public delegate void ElementalChangedEventHandler(int newElemental);
+	[Signal] public delegate void AgilityChangedEventHandler(int newAgility);
+	[Signal] public delegate void LuckChangedEventHandler(int newLuck);
+	[Signal] public delegate void DefenseChangedEventHandler(int newDefense);
+	[Signal] public delegate void ResistanceChangedEventHandler(int newResistance);
+
 	int _maxHP = 0;
+	int maxHP
+	{
+		get { return _maxHP; }
+		set
+		{
+			_maxHP = value;
+			EmitSignal(SignalName.MaxHPChanged, _maxHP);
+		}
+	}
+
 	int _maxMP = 0;
+	int maxMP
+	{
+		get { return _maxMP; }
+		set
+		{
+			_maxMP = value;
+			EmitSignal(SignalName.MaxMPChanged, _maxMP);
+		}
+	}
+
 	int _curHP = 0;
 	int curHP
 	{
@@ -53,11 +82,70 @@ public partial class CharacterStats : GodotObject
 	}
 
 	int _strength = 0;
+	int strength
+	{
+		get { return _strength; }
+		set
+		{
+			_strength = value;
+			EmitSignal(SignalName.StrengthChanged, _strength);
+		}
+	}
+
 	int _elemental = 0;
+	int elemental
+	{
+		get { return _elemental; }
+		set
+		{
+			_elemental = value;
+			EmitSignal(SignalName.ElementalChanged, _elemental);
+		}
+	}
+
 	int _agility = 0;
+	int agility
+	{
+		get { return _agility; }
+		set
+		{
+			_agility = value;
+			EmitSignal(SignalName.AgilityChanged, _agility);
+		}
+	}
+
 	int _luck = 0;
+	int luck
+	{
+		get { return _luck; }
+		set
+		{
+			_luck = value;
+			EmitSignal(SignalName.LuckChanged, _luck);
+		}
+	}
+	
 	int _defense = 0;
-    int _resistance = 0;
+    int defense
+	{
+		get { return _defense; }
+		set
+		{
+			_defense = value;
+			EmitSignal(SignalName.DefenseChanged, _defense);
+		}
+	}
+
+	int _resistance = 0;
+	int resistance
+	{
+		get { return _resistance; }
+		set
+		{
+			_resistance = value;
+			EmitSignal(SignalName.ResistanceChanged, _resistance);
+		}
+	}
 
 	public CharacterStats() : this(null,-1,-1) {}
 	public CharacterStats(BaseStats baseStats, int _curHP=-1,int _curMP=-1)
@@ -118,13 +206,13 @@ public partial class CharacterStats : GodotObject
 		curMP = amount;
 	}
 
-	public void ApplyMaxHP(int newMaxHP) { _maxHP += newMaxHP; }
-	public void ApplyMaxMP(int newMaxMP) { _maxMP += newMaxMP; }
-	public void ApplyStrength(int newStrength) { _strength += newStrength; }
-	public void ApplyElemental(int newElemental) { _elemental += newElemental; }
-	public void ApplyAgility(int newAgility) { _agility += newAgility; }
-	public void ApplyLuck(int newLuck) { _luck += newLuck; }
-	public void ApplyDefense(int newDefense) { _defense += newDefense; }
-	public void ApplyResistance(int newResistance) { _resistance += newResistance; }
+	public void ApplyMaxHP(int newMaxHP) { maxHP += newMaxHP; }
+	public void ApplyMaxMP(int newMaxMP) { maxMP += newMaxMP; }
+	public void ApplyStrength(int newStrength) { strength += newStrength; }
+	public void ApplyElemental(int newElemental) { elemental += newElemental; }
+	public void ApplyAgility(int newAgility) { agility += newAgility; }
+	public void ApplyLuck(int newLuck) { luck += newLuck; }
+	public void ApplyDefense(int newDefense) { defense += newDefense; }
+	public void ApplyResistance(int newResistance) { resistance += newResistance; }
 
 }
