@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://jve2ivqnbtb7"]
 
 [ext_resource type="Script" uid="uid://csjlj5jnyvauk" path="res://src/overworld/overworldMenu/equipmentMenu/equipSelectMenu/OverworldEquipSelectMenu.cs" id="1_ikyqm"]
+[ext_resource type="PackedScene" uid="uid://6ug0p81f7bwq" path="res://src/overworld/overworldMenu/equipmentMenu/equipSelectMenu/EquipItemEntry.tscn" id="2_0f5pl"]
+[ext_resource type="PackedScene" uid="uid://bu0pauh0l7wyv" path="res://src/overworld/overworldMenu/components/statsDisplay/UIStatsDisplay.tscn" id="3_26dgo"]
 
 [node name="OverworldEquipSelectMenu" type="Control" unique_id=1854403117]
 layout_mode = 3
@@ -10,11 +12,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ikyqm")
+equipMenuEntry = ExtResource("2_0f5pl")
 
 [node name="EquipContainer" type="HBoxContainer" parent="." unique_id=1200700931]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 6.0
+offset_top = -8.0
+offset_right = 46.0
+offset_bottom = 32.0
 
 [node name="EquipIcon" type="TextureRect" parent="EquipContainer" unique_id=1036699967]
 layout_mode = 2
@@ -25,5 +30,13 @@ text = "------"
 
 [node name="EquipEntries" type="VBoxContainer" parent="." unique_id=1435419456]
 layout_mode = 0
+offset_top = 40.0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 80.0
+
+[node name="UIStatsDisplay" parent="." unique_id=1395545522 instance=ExtResource("3_26dgo")]
+layout_mode = 1
+offset_left = 140.0
+offset_top = 69.0
+offset_right = 140.12
+offset_bottom = 69.02

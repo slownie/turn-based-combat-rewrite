@@ -26,10 +26,10 @@ public partial class UIFusionMenuEntry : UIBattleMenuEntryBase
         GD.Print(_fusionSkillResource.GetSkillName());
 
         _enabled = enabled;
-        if (!_enabled) _nameText.Modulate = disabledColor;
+        if (!_enabled) _text.Modulate = disabledColor;
 
         _icon.Texture = _fusionSkillResource.GetIcon();
-        _nameText.Text = _fusionSkillResource.GetSkillName();
+        _text.Text = _fusionSkillResource.GetSkillName();
         _partnerIcon.Texture = partnerIcon;
 
         if (_fusionSkillResource.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)

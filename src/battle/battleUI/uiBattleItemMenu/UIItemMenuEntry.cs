@@ -17,7 +17,7 @@ public partial class UIItemMenuEntry : UIBattleMenuEntryBase
         _inventoryItem = inventoryItem;
 
         _icon.Texture = inventoryItem.GetIcon();
-        _nameText.Text = inventoryItem.GetItemName();
+        _text.Text = inventoryItem.GetItemName();
         _quantityText.Text = inventoryItem.GetItemQuantity().ToString();
     }
 

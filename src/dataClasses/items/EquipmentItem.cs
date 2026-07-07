@@ -17,5 +17,6 @@ public partial class EquipmentItem : InventoryItem
 	public BaseStats GetEquipmentBaseStats() { return _equipmentItemResource.GetBaseStats(); }
 
 	public void SetUser(ActivePartyMember user) { _equippedUser = user; }
+	public ActivePartyMember GetUser() { return _equippedUser; }
 	public void RemoveUser() { _equippedUser = null; }
 }

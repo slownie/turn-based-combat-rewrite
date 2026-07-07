@@ -10,9 +10,9 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 
 	Godot.Collections.Array<EquipmentItem> _equipment = [];
 
-	Godot.Collections.Array<EquipmentEntry> _equipmentEntries = [];
-	HBoxContainer _equipmentEntryContainer;
-	EquipmentEntry _currentEntry;
+	Godot.Collections.Array<EquipItemEntry> _equipmentEntries = [];
+	VBoxContainer _equipmentEntryContainer;
+	EquipItemEntry _currentEntry;
 
 	int _index = 0;
 	int index
@@ -37,11 +37,16 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		_equipmentEntryContainer = GetNode<HBoxContainer>("EquipEntries");
+		_equipmentEntryContainer = GetNode<VBoxContainer>("EquipEntries");
 	}
 
     public override void _Input(InputEvent @event)
 	{
+		if (@event.IsActionPressed("AButton"))
+		{
+			
+		}
+
 		if (@event.IsActionPressed("BButton"))
 		{
 			EmitSignal(SignalName.ExitMenu);
@@ -58,24 +63,44 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 		{
 			case EquipmentItemResource.EquipmentType.Weapon:
 			{
+				GD.Print("Get weapons");
 				_equipment = _gameState.GetWeaponInventory();
 				// Filter to only get weapons available to this party member
 				break;
 			}
 			case EquipmentItemResource.EquipmentType.Armor:
 			{
+				GD.Print("Get armor");
 				_equipment = _gameState.GetArmorInventory();
 				break;
 			}
 			case EquipmentItemResource.EquipmentType.Accessory:
 			{
+				GD.Print("Get accessory");
 				_equipment = _gameState.GetAccessoryInventory();
 				break;
 			}
 		}
 
-		// Create equipment entries
+		if (_equipment.Count == 0)
+		{
+			// No equipment
+			EquipItemEntry equipmentEntry = equipMenuEntry.Instantiate() as EquipItemEntry;
+			_equipmentEntryContainer.AddChild(equipmentEntry);
 
+			_equipmentEntries.Add(equipmentEntry);
+			equipmentEntry.Setup(null);
+		} else {
+			// Create equipment entries
+			foreach (EquipmentItem equipmentItem in _equipment)
+			{
+				EquipItemEntry equipmentEntry = equipMenuEntry.Instantiate() as EquipItemEntry;
+				_equipmentEntryContainer.AddChild(equipmentEntry);
+
+				_equipmentEntries.Add(equipmentEntry);
+				equipmentEntry.Setup(equipmentItem);
+			}
+		}
 	}
 
 	private void EquipEquipment()

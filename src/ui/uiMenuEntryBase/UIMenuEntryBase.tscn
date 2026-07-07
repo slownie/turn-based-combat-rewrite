@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://c7mqylyhauwam"]
+
+[ext_resource type="Script" uid="uid://fonw5pxmsox8" path="res://src/ui/uiMenuEntryBase/UIMenuEntryBase.cs" id="1_1i4mq"]
+
+[node name="UIMenuEntryBase" type="Control" unique_id=1111450166]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1i4mq")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1349965666]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer" unique_id=102362630]
+layout_mode = 2
+
+[node name="Text" type="Label" parent="HBoxContainer" unique_id=1671701624]
+layout_mode = 2

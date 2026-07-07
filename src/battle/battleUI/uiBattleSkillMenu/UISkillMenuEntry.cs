@@ -23,10 +23,10 @@ public partial class UISkillMenuEntry : UIBattleMenuEntryBase
         _skillResource = skillResource;
 
         _enabled = enabled;
-        if (!_enabled) _nameText.Modulate = disabledColor;
+        if (!_enabled) _text.Modulate = disabledColor;
 
         _icon.Texture = _skillResource.GetIcon();
-        _nameText.Text = _skillResource.GetSkillName();
+        _text.Text = _skillResource.GetSkillName();
 
         if (_skillResource.GetSkillCostType() == UseableSkillResource.SkillCostType.HP)
         {
