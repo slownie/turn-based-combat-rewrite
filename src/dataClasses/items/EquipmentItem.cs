@@ -8,7 +8,7 @@ public partial class EquipmentItem : InventoryItem
 	ActivePartyMember _equippedUser = null;
 
 	public EquipmentItem() : this(null) {}
-	public EquipmentItem(EquipmentItemResource equipmentItemResource)
+	public EquipmentItem(EquipmentItemResource equipmentItemResource) : base(equipmentItemResource, -1)
 	{
 		_equipmentItemResource = equipmentItemResource;
 	}

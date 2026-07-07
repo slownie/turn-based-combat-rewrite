@@ -33,6 +33,7 @@ layout_mode = 0
 offset_top = 40.0
 offset_right = 40.0
 offset_bottom = 80.0
+theme_override_constants/separation = 16
 
 [node name="UIStatsDisplay" parent="." unique_id=1395545522 instance=ExtResource("3_26dgo")]
 layout_mode = 1

@@ -14,6 +14,8 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 	VBoxContainer _equipmentEntryContainer;
 	EquipItemEntry _currentEntry;
 
+	UIStatsDisplay _uiStatsDisplay;
+
 	int _index = 0;
 	int index
 	{
@@ -38,6 +40,8 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 	public override void _Ready()
 	{
 		_equipmentEntryContainer = GetNode<VBoxContainer>("EquipEntries");
+	
+		_uiStatsDisplay = GetNode<UIStatsDisplay>("UIStatsDisplay");
 	}
 
     public override void _Input(InputEvent @event)
@@ -101,6 +105,8 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 				equipmentEntry.Setup(equipmentItem);
 			}
 		}
+
+		_uiStatsDisplay.Setup(_currentPartyMember.GetCharacterStats());
 	}
 
 	private void EquipEquipment()

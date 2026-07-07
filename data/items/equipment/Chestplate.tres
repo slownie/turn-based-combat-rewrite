@@ -9,6 +9,7 @@ metadata/_custom_type_script = "uid://elamptvvyimh"
 
 [resource]
 script = ExtResource("1_ef383")
+equipmentType = 1
 baseStats = SubResource("Resource_4mr0b")
 itemName = "Chestplate"
 metadata/_custom_type_script = "uid://vpkglnwo7p42"
