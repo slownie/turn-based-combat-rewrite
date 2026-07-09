@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="EquipmentItemResource" format=3 uid="uid://u51ausfflqdy"]
+
+[ext_resource type="Script" uid="uid://vpkglnwo7p42" path="res://src/dataClasses/items/EquipmentItemResource.cs" id="1_86xyn"]
+[ext_resource type="Script" uid="uid://elamptvvyimh" path="res://src/dataClasses/components/BaseStats.cs" id="1_xvytn"]
+
+[sub_resource type="Resource" id="Resource_ijosd"]
+script = ExtResource("1_xvytn")
+_maxMP = 20
+metadata/_custom_type_script = "uid://elamptvvyimh"
+
+[resource]
+script = ExtResource("1_86xyn")
+equipmentType = 2
+baseStats = SubResource("Resource_ijosd")
+itemName = "Red Ring"
+metadata/_custom_type_script = "uid://vpkglnwo7p42"

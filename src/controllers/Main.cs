@@ -58,8 +58,6 @@ public partial class Main : Node
 		_overworldController = overworldControllerScene.Instantiate() as OverworldController;
 		AddChild(_overworldController);
 
-		
-
 		PackedScene initialOverworldScene = GD.Load<PackedScene>("res://scenes/overworld/TestOverworld.tscn");
 		_overworldController.LoadScene(initialOverworldScene);
 
@@ -94,7 +92,11 @@ public partial class Main : Node
 		_gameState.NewGame(startingPartyMembers, inventoryItems, equipmentItems);
 
 		_overworldController.BindServices(
-			_gameState
+			_gameState,
+			_inventoryController,
+			_musicPlayer,
+			_sfxPlayer,
+			_gameCamera
 		);
 	}
 

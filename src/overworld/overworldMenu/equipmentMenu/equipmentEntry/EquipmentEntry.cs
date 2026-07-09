@@ -41,6 +41,11 @@ public partial class EquipmentEntry : Control
         _textLabel = GetNode<Label>("HBoxContainer/Text");
     }
 
+    public void Setup(EquipmentItem storedItem)
+    {
+        _textLabel.Text = storedItem.GetItemName();
+    }
+
     public void SetText(string text)
     {
         _textLabel.Text = text;

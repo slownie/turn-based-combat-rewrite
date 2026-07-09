@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://bu0pauh0l7wyv" path="res://src/overworld/overworldMenu/components/statsDisplay/UIStatsDisplay.tscn" id="3_26dgo"]
 
 [node name="OverworldEquipSelectMenu" type="Control" unique_id=1854403117]
+process_mode = 2
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -33,7 +34,7 @@ layout_mode = 0
 offset_top = 40.0
 offset_right = 40.0
 offset_bottom = 80.0
-theme_override_constants/separation = 16
+theme_override_constants/separation = 24
 
 [node name="UIStatsDisplay" parent="." unique_id=1395545522 instance=ExtResource("3_26dgo")]
 layout_mode = 1

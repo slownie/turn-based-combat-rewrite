@@ -70,6 +70,14 @@ public partial class OverworldEquipmentMenu : UIOverworldMenuBase
 		get { return _partyIndex; }
 		set
 		{
+			// Disconnect signals
+			if (_currentPartyMember != null)
+			{
+				_currentPartyMember.EquippedWeaponChanged -= OnEquippedWeaponChanged;
+				_currentPartyMember.EquippedArmorChanged -= OnEquippedArmorChanged;
+				_currentPartyMember.EquippedAccessoryChanged -= OnEquippedAccessoryChanged;
+			}
+
 			_partyIndex = value;
 
 			// Clamp
@@ -77,6 +85,11 @@ public partial class OverworldEquipmentMenu : UIOverworldMenuBase
 			if (_partyIndex < 0) _partyIndex = _gameState.GetActivePartyMembers().Count - 1;
 
 			ActivePartyMember currentPartyMember = _gameState.GetActivePartyMembers()[_partyIndex];
+			_currentPartyMember = currentPartyMember;
+
+			_currentPartyMember.EquippedWeaponChanged += OnEquippedWeaponChanged;
+			_currentPartyMember.EquippedArmorChanged += OnEquippedArmorChanged;
+			_currentPartyMember.EquippedAccessoryChanged += OnEquippedAccessoryChanged;
 
 			// Update UI elements
 			string emptyText = "--------";
@@ -107,7 +120,7 @@ public partial class OverworldEquipmentMenu : UIOverworldMenuBase
 			_statsDisplay.Setup(currentPartyMember.GetCharacterStats());
 		}
 	}
-
+	ActivePartyMember _currentPartyMember; // has to be set to get access to its signals
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -155,5 +168,20 @@ public partial class OverworldEquipmentMenu : UIOverworldMenuBase
 
 		partyIndex = 0;
 		equipmentIndex = 0;
+	}
+
+	private void OnEquippedWeaponChanged(EquipmentItem newWeapon)
+	{
+		_weaponEntry.Setup(newWeapon);
+	}
+
+	private void OnEquippedArmorChanged(EquipmentItem newArmor)
+	{
+		_armorEntry.Setup(newArmor);
+	}
+
+	private void OnEquippedAccessoryChanged(EquipmentItem newAccessory)
+	{
+		_accessoryEntry.Setup(newAccessory);
 	}
 }

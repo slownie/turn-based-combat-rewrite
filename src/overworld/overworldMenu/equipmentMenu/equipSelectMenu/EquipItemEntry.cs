@@ -61,4 +61,11 @@ public partial class EquipItemEntry : Control
 			_enabled = false;
 		}
 	}
+
+	public EquipmentItem GetEquipmentItem()
+	{
+		return _storedItem;
+	}
+
+	public bool GetEnabled() { return _enabled; }
 }

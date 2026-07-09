@@ -1,11 +1,12 @@
 using Godot;
-using System;
 
 public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 {
 	[Export] PackedScene equipMenuEntry;
 
 	GameState _gameState;
+	InventoryController _inventoryController;
+
 	ActivePartyMember _currentPartyMember;
 
 	Godot.Collections.Array<EquipmentItem> _equipment = [];
@@ -48,7 +49,10 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 	{
 		if (@event.IsActionPressed("AButton"))
 		{
-			
+			if (_currentEntry.GetEnabled())
+			{
+				EquipEquipment();
+			}
 		}
 
 		if (@event.IsActionPressed("BButton"))
@@ -57,9 +61,14 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 		}
 	}
 
-	public void Setup(GameState gameState, int partyMemberIndex, EquipmentItemResource.EquipmentType equipmentType)
+	public void BindServices(GameState gameState, InventoryController inventoryController)
 	{
 		_gameState = gameState;
+		_inventoryController = inventoryController;
+	}
+
+	public void Setup(int partyMemberIndex, EquipmentItemResource.EquipmentType equipmentType)
+	{
 		_currentPartyMember = _gameState.GetActivePartyMembers()[partyMemberIndex];
 
 		// Get current equipment
@@ -67,20 +76,26 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 		{
 			case EquipmentItemResource.EquipmentType.Weapon:
 			{
-				GD.Print("Get weapons");
-				_equipment = _gameState.GetWeaponInventory();
+				Godot.Collections.Array<EquipmentItem> _availableWeapons = _gameState.GetWeaponInventory();
+
 				// Filter to only get weapons available to this party member
+				foreach (EquipmentItem equipmentItem in _availableWeapons)
+				{
+					GD.Print(equipmentItem.GetEquipRestriction());
+					if (equipmentItem.GetEquipRestriction() == EquipmentItemResource.EquipRestriction.Any || equipmentItem.GetEquipRestriction() == _currentPartyMember.GetEquipRestriction())
+					{
+						_equipment.Add(equipmentItem);
+					}
+				}
 				break;
 			}
 			case EquipmentItemResource.EquipmentType.Armor:
 			{
-				GD.Print("Get armor");
 				_equipment = _gameState.GetArmorInventory();
 				break;
 			}
 			case EquipmentItemResource.EquipmentType.Accessory:
 			{
-				GD.Print("Get accessory");
 				_equipment = _gameState.GetAccessoryInventory();
 				break;
 			}
@@ -107,10 +122,12 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 		}
 
 		_uiStatsDisplay.Setup(_currentPartyMember.GetCharacterStats());
+
+		index = 0;
 	}
 
 	private void EquipEquipment()
 	{
-		
+		_inventoryController.EquipItem(_currentPartyMember, _currentEntry.GetEquipmentItem());
 	}
 }

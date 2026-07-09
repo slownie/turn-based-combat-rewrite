@@ -5,6 +5,7 @@ public partial class UIStatsDisplay : Control
 {
 	[Export] Color increaseColour = new Color("#00ff0d");
 	[Export] Color decreaseColour = new Color("#ff0000");
+	[Export] Color defaultColour = new Color("#ffffff");
 	
 
 	CharacterStats _currentCharacterStats;
@@ -83,9 +84,26 @@ public partial class UIStatsDisplay : Control
 		_currentCharacterStats.ResistanceChanged += OnResistanceChanged;
 	}
 
+	public void DisplayStatModifiers(BaseStats baseStats)
+	{
+		int calculatedMaxHP = _currentCharacterStats.GetMaxHP() - (_currentCharacterStats.GetMaxHP() + baseStats.GetMaxHP());
+		string displayMaxHP = calculatedMaxHP.ToString();
+
+		if (_currentCharacterStats.GetMaxHP() < calculatedMaxHP)
+		{
+			_HPModifier.Modulate = increaseColour;
+			displayMaxHP = "+" + displayMaxHP;
+		} else if (calculatedMaxHP < _currentCharacterStats.GetMaxHP()) {
+			_HPModifier.Modulate = decreaseColour;
+		} else {
+			_HPModifier.Modulate = defaultColour;
+		}
+		_HPModifier.Text = displayMaxHP;
+	}
+
 	private void OnMaxHPChanged(int newMaxHP) { _HPValue.Text = newMaxHP.ToString(); }
 	private void OnMaxMPChanged(int newMaxMP) { _MPValue.Text = newMaxMP.ToString(); }
-	private void OnStrengthChanged(int newStrength) { GD.Print("Am i being called"); _strengthValue.Text = newStrength.ToString(); }
+	private void OnStrengthChanged(int newStrength) { _strengthValue.Text = newStrength.ToString(); }
 	private void OnElementalChanged(int newElemental) { _elementalValue.Text = newElemental.ToString(); }
 	private void OnAgilityChanged(int newAgility) { _agilityValue.Text = newAgility.ToString(); }
 	private void OnLuckChanged(int newLuck) { _luckValue.Text = newLuck.ToString(); }

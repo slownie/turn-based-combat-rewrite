@@ -19,14 +19,19 @@ public partial class OverworldMenuController : Control
 	UIOverworldMenuBase _currentMenu;
 
 	GameState _gameState;
+	InventoryController _inventoryController;
     
 	public override void _Ready()
 	{
 	}
 
-	public void BindServices(GameState gameState)
+	public void BindServices(
+		GameState gameState,
+		InventoryController inventoryController
+	)
 	{
 		_gameState = gameState;
+		_inventoryController = inventoryController;
 	}
 
 	public void OpenMenu()
@@ -85,7 +90,11 @@ public partial class OverworldMenuController : Control
 	{
 		OverworldEquipSelectMenu overworldEquipSelectMenu = equipMenuScene.Instantiate() as OverworldEquipSelectMenu;
 		AddChild(overworldEquipSelectMenu);
-		overworldEquipSelectMenu.Setup(_gameState, partyMemberIndex, equipmentType);
+
+		overworldEquipSelectMenu.BindServices(_gameState, _inventoryController);
+		overworldEquipSelectMenu.Setup(partyMemberIndex, equipmentType);
+
+		
 
 		LoadMenu(overworldEquipSelectMenu);
 

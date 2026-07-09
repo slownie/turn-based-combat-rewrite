@@ -72,6 +72,7 @@ script = ExtResource("1_0mqtt")
 partyMemberName = "Terra"
 baseStats = SubResource("Resource_2gw5i")
 baseAffinity = SubResource("Resource_a3lub")
+restrictionType = 1
 startingSkills = Array[ExtResource("5_bqktf")]([ExtResource("10_6b3wo"), ExtResource("11_4oqrj"), ExtResource("11_6b3wo"), ExtResource("12_4oqrj")])
 startingFusionSkills = Array[ExtResource("6_4oqrj")]([ExtResource("7_bmjkj")])
 spriteFrames = SubResource("SpriteFrames_bqktf")

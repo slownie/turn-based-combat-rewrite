@@ -9,10 +9,14 @@
 [ext_resource type="Resource" uid="uid://d02umgi418wh7" path="res://data/items/Ether.tres" id="7_4p64y"]
 [ext_resource type="Resource" uid="uid://cheo5dmxxd60d" path="res://data/items/Revive.tres" id="8_ji6tv"]
 [ext_resource type="Script" uid="uid://vpkglnwo7p42" path="res://src/dataClasses/items/EquipmentItemResource.cs" id="9_6lw3g"]
-[ext_resource type="Resource" uid="uid://c1uf0uhgd4uig" path="res://data/items/equipment/Chestplate.tres" id="10_4u0mg"]
+[ext_resource type="Resource" uid="uid://c1uf0uhgd4uig" path="res://data/items/equipment/armor/Chestplate.tres" id="10_4u0mg"]
+[ext_resource type="Resource" uid="uid://bi365ykvhotco" path="res://data/items/equipment/weapons/Tonfa.tres" id="11_npgsd"]
+[ext_resource type="Resource" uid="uid://xglfj8q723kn" path="res://data/items/equipment/weapons/Gauntlets.tres" id="12_drxqx"]
+[ext_resource type="Resource" uid="uid://u51ausfflqdy" path="res://data/items/equipment/accessories/RedRing.tres" id="13_j5d53"]
+[ext_resource type="Resource" uid="uid://bg77h6w72jqj6" path="res://data/items/equipment/accessories/BlueRing.tres" id="14_ekh8g"]
 
 [node name="Main" type="Node" unique_id=1991083736]
 script = ExtResource("1_gwppc")
 startingPartyMembers = Array[ExtResource("2_k30t1")]([ExtResource("3_ktfyv"), ExtResource("4_6lw3g")])
 inventoryItems = Array[ExtResource("5_4u0mg")]([ExtResource("6_4p64y"), ExtResource("7_4p64y"), ExtResource("8_ji6tv")])
-equipmentItems = Array[ExtResource("9_6lw3g")]([ExtResource("10_4u0mg"), ExtResource("10_4u0mg")])
+equipmentItems = Array[ExtResource("9_6lw3g")]([ExtResource("10_4u0mg"), ExtResource("10_4u0mg"), ExtResource("11_npgsd"), ExtResource("12_drxqx"), ExtResource("13_j5d53"), ExtResource("14_ekh8g")])

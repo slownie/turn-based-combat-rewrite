@@ -21,4 +21,10 @@ public partial class InventoryController : Node2D
 			GD.Print("Inventory AddItemQuantity - Specified index not found");
 		}
 	}
+
+	// Equipment
+	public void EquipItem(ActivePartyMember partyMember, EquipmentItem equipmentItem)
+	{
+		partyMember.EquipItem(equipmentItem);
+	}
 }

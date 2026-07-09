@@ -13,6 +13,10 @@ public partial class OverworldController : Node2D
 	OverworldMenuController _overworldMenuController;
 
 	GameState _gameState;
+	InventoryController _inventoryController;
+	MusicPlayer	_musicPlayer;
+	SFXPlayer _sfxPlayer;
+	GameCamera _gameCamera;
 
 	[Signal] public delegate void SwitchToBattleEventHandler(EnemyEncounterResource enemyEncounterResource);
 
@@ -21,11 +25,25 @@ public partial class OverworldController : Node2D
 		_overworldMenuController = GetNode<OverworldMenuController>("Menus/OverworldMenuController");
 	}
 
-	public void BindServices(GameState gameState)
+	public void BindServices(
+		GameState gameState,
+		InventoryController inventoryController,
+		MusicPlayer musicPlayer,
+		SFXPlayer sfxPlayer,
+		GameCamera gameCamera
+	)
 	{
 		_gameState = gameState;
 
-		_overworldMenuController.BindServices(_gameState);
+		_inventoryController = inventoryController;
+		_musicPlayer = musicPlayer;
+		_sfxPlayer = sfxPlayer;
+		_gameCamera = gameCamera;
+
+		_overworldMenuController.BindServices(
+			_gameState,
+			_inventoryController
+		);
 		_overworldMenuController.CloseMenuRequested += OnCloseOverworldMenuRequested;
 	}
 

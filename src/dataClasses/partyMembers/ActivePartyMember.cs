@@ -7,6 +7,10 @@ using System;
 */
 public partial class ActivePartyMember : GodotObject
 {
+    [Signal] public delegate void EquippedWeaponChangedEventHandler(EquipmentItem newWeapon);
+    [Signal] public delegate void EquippedArmorChangedEventHandler(EquipmentItem newArmor);
+    [Signal] public delegate void EquippedAccessoryChangedEventHandler(EquipmentItem newAccessory);
+
     // UI
     string _name = "PartyMember - Name Placeholder";
 
@@ -21,6 +25,7 @@ public partial class ActivePartyMember : GodotObject
     EquipmentItem _equippedWeapon = null;
     EquipmentItem _equippedArmor = null;
     EquipmentItem _equippedAccessory = null;
+    EquipmentItemResource.EquipRestriction _equipRestriction;
 
     // Skills
     Godot.Collections.Array<BaseSkillResource> _learnedSkills = [];
@@ -56,6 +61,7 @@ public partial class ActivePartyMember : GodotObject
             _learnedFusionSkills = partyMemberDataResource.GetStartingFusionSkills();
             _equippedFusionSkills = _learnedFusionSkills;
 
+            _equipRestriction = partyMemberDataResource.GetEquipRestriction();
 
             _characterAffinity = new CharacterAffinity(partyMemberDataResource.GetBaseAffinity());
 
@@ -103,23 +109,67 @@ public partial class ActivePartyMember : GodotObject
     /*
         Equipment
     */
-    public void EquipWeapon(EquipmentItem weaponItem)
+    public void EquipItem(EquipmentItem equipmentItem)
     {
-        // Unequip the current weapon if it exists
-        if (_equippedWeapon != null)
+        switch(equipmentItem.GetEquipmentType())
         {
-            RemoveStats(_equippedWeapon.GetEquipmentBaseStats());
-            _equippedWeapon.RemoveUser();
-        }
+            case EquipmentItemResource.EquipmentType.Weapon:
+            {
+                // Unequip the current weapon if it exists
+                if (_equippedWeapon != null)
+                {
+                    RemoveStats(_equippedWeapon.GetEquipmentBaseStats());
+                    _equippedWeapon.RemoveUser();
+                }
 
-        _equippedWeapon = weaponItem;
-        ApplyStats(_equippedWeapon.GetEquipmentBaseStats());
-        _equippedWeapon.SetUser(this);
+                _equippedWeapon = equipmentItem;
+                ApplyStats(_equippedWeapon.GetEquipmentBaseStats());
+                _equippedWeapon.SetUser(this);
+
+                EmitSignal(SignalName.EquippedWeaponChanged, equipmentItem);
+                break;
+            }
+
+            case EquipmentItemResource.EquipmentType.Armor:
+            {
+                // Unequip the current weapon if it exists
+                if (_equippedArmor != null)
+                {
+                    RemoveStats(_equippedArmor.GetEquipmentBaseStats());
+                    _equippedArmor.RemoveUser();
+                }
+
+                _equippedArmor = equipmentItem;
+                ApplyStats(_equippedArmor.GetEquipmentBaseStats());
+                _equippedArmor.SetUser(this);
+
+                EmitSignal(SignalName.EquippedArmorChanged, equipmentItem);
+                break;
+            }
+
+            case EquipmentItemResource.EquipmentType.Accessory:
+            {
+                // Unequip the current weapon if it exists
+                if (_equippedAccessory != null)
+                {
+                    RemoveStats(_equippedAccessory.GetEquipmentBaseStats());
+                    _equippedAccessory.RemoveUser();
+                }
+
+                _equippedAccessory = equipmentItem;
+                ApplyStats(_equippedAccessory.GetEquipmentBaseStats());
+                _equippedAccessory.SetUser(this);
+
+                EmitSignal(SignalName.EquippedAccessoryChanged, equipmentItem);
+                break;
+            }
+        }
     }
 
     public EquipmentItem GetEquippedWeapon() { return _equippedWeapon; }
     public EquipmentItem GetEquippedArmor() { return _equippedArmor; }
     public EquipmentItem GetEquippedAccessory() { return _equippedAccessory; }
+    public EquipmentItemResource.EquipRestriction GetEquipRestriction() { return _equipRestriction; }
 
     private void ApplyStats(BaseStats baseStats)
     {

@@ -11,10 +11,15 @@ public partial class EquipmentItem : InventoryItem
 	public EquipmentItem(EquipmentItemResource equipmentItemResource) : base(equipmentItemResource, -1)
 	{
 		_equipmentItemResource = equipmentItemResource;
+		GD.Print(_equipmentItemResource.GetEquipRestriction());
 	}
 
 	public EquipmentItemResource GetEquipmentItemResource() { return _equipmentItemResource; }
 	public BaseStats GetEquipmentBaseStats() { return _equipmentItemResource.GetBaseStats(); }
+
+	public EquipmentItemResource.EquipmentType GetEquipmentType() { return _equipmentItemResource.GetEquipmentType(); }
+	public EquipmentItemResource.EquipRestriction GetEquipRestriction() { return _equipmentItemResource.GetEquipRestriction(); }
+
 
 	public void SetUser(ActivePartyMember user) { _equippedUser = user; }
 	public ActivePartyMember GetUser() { return _equippedUser; }
