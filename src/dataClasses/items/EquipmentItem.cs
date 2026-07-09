@@ -11,7 +11,6 @@ public partial class EquipmentItem : InventoryItem
 	public EquipmentItem(EquipmentItemResource equipmentItemResource) : base(equipmentItemResource, -1)
 	{
 		_equipmentItemResource = equipmentItemResource;
-		GD.Print(_equipmentItemResource.GetEquipRestriction());
 	}
 
 	public EquipmentItemResource GetEquipmentItemResource() { return _equipmentItemResource; }

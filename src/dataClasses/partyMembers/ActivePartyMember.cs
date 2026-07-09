@@ -166,6 +166,54 @@ public partial class ActivePartyMember : GodotObject
         }
     }
 
+    public void UnequipItem(EquipmentItemResource.EquipmentType equipmentType)
+    {
+        switch(equipmentType)
+        {
+            case EquipmentItemResource.EquipmentType.Weapon:
+            {
+                // Unequip the current weapon if it exists
+                if (_equippedWeapon != null)
+                {
+                    RemoveStats(_equippedWeapon.GetEquipmentBaseStats());
+                    _equippedWeapon.RemoveUser();
+                    _equippedWeapon = null;
+                }
+
+                EmitSignal(SignalName.EquippedWeaponChanged, null);
+                break;
+            }
+
+            case EquipmentItemResource.EquipmentType.Armor:
+            {
+                // Unequip the current weapon if it exists
+                if (_equippedArmor != null)
+                {
+                    RemoveStats(_equippedArmor.GetEquipmentBaseStats());
+                    _equippedArmor.RemoveUser();
+                    _equippedArmor = null;
+                }
+
+                EmitSignal(SignalName.EquippedArmorChanged, null);
+                break;
+            }
+
+            case EquipmentItemResource.EquipmentType.Accessory:
+            {
+                // Unequip the current weapon if it exists
+                if (_equippedAccessory != null)
+                {
+                    RemoveStats(_equippedAccessory.GetEquipmentBaseStats());
+                    _equippedAccessory.RemoveUser();
+                    _equippedAccessory = null;
+                }
+
+                EmitSignal(SignalName.EquippedAccessoryChanged, null);
+                break;
+            }
+        }
+    }
+
     public EquipmentItem GetEquippedWeapon() { return _equippedWeapon; }
     public EquipmentItem GetEquippedArmor() { return _equippedArmor; }
     public EquipmentItem GetEquippedAccessory() { return _equippedAccessory; }

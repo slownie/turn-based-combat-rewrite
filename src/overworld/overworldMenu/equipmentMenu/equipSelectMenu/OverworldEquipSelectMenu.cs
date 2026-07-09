@@ -9,9 +9,11 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 
 	ActivePartyMember _currentPartyMember;
 
+	EquipmentItemResource.EquipmentType _equipmentType;
 	Godot.Collections.Array<EquipmentItem> _equipment = [];
 
 	Godot.Collections.Array<EquipItemEntry> _equipmentEntries = [];
+	EquipItemEntry _equippedEntry;
 	VBoxContainer _equipmentEntryContainer;
 	EquipItemEntry _currentEntry;
 
@@ -41,12 +43,13 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 	public override void _Ready()
 	{
 		_equipmentEntryContainer = GetNode<VBoxContainer>("EquipEntries");
-	
-		_uiStatsDisplay = GetNode<UIStatsDisplay>("UIStatsDisplay");
 	}
 
     public override void _Input(InputEvent @event)
 	{
+		if (@event.IsActionPressed("MoveUp")) { index -= 1; }
+		if (@event.IsActionPressed("MoveDown")) { index += 1; }
+
 		if (@event.IsActionPressed("AButton"))
 		{
 			if (_currentEntry.GetEnabled())
@@ -58,6 +61,12 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 		if (@event.IsActionPressed("BButton"))
 		{
 			EmitSignal(SignalName.ExitMenu);
+		}
+
+		// Unequip
+		if (@event.IsActionPressed("XButton"))
+		{
+			UnequipEquipment();
 		}
 	}
 
@@ -71,8 +80,9 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 	{
 		_currentPartyMember = _gameState.GetActivePartyMembers()[partyMemberIndex];
 
+		_equipmentType = equipmentType;
 		// Get current equipment
-		switch(equipmentType)
+		switch(_equipmentType)
 		{
 			case EquipmentItemResource.EquipmentType.Weapon:
 			{
@@ -81,7 +91,6 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 				// Filter to only get weapons available to this party member
 				foreach (EquipmentItem equipmentItem in _availableWeapons)
 				{
-					GD.Print(equipmentItem.GetEquipRestriction());
 					if (equipmentItem.GetEquipRestriction() == EquipmentItemResource.EquipRestriction.Any || equipmentItem.GetEquipRestriction() == _currentPartyMember.GetEquipRestriction())
 					{
 						_equipment.Add(equipmentItem);
@@ -118,10 +127,15 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 
 				_equipmentEntries.Add(equipmentEntry);
 				equipmentEntry.Setup(equipmentItem);
+
+				if (equipmentItem.GetUser() == _currentPartyMember)
+				{
+					_equippedEntry = equipmentEntry;
+				}
 			}
 		}
 
-		_uiStatsDisplay.Setup(_currentPartyMember.GetCharacterStats());
+		//_uiStatsDisplay.Setup(_currentPartyMember.GetCharacterStats());
 
 		index = 0;
 	}
@@ -129,5 +143,16 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 	private void EquipEquipment()
 	{
 		_inventoryController.EquipItem(_currentPartyMember, _currentEntry.GetEquipmentItem());
+
+		// Update UI
+		if (_equippedEntry != null)
+		{
+			
+		}
+	}
+
+	private void UnequipEquipment()
+	{
+		_inventoryController.Unequipitem(_currentPartyMember, _equipmentType);
 	}
 }

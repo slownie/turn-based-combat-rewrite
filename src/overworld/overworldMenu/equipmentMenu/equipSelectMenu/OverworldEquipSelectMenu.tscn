@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://csjlj5jnyvauk" path="res://src/overworld/overworldMenu/equipmentMenu/equipSelectMenu/OverworldEquipSelectMenu.cs" id="1_ikyqm"]
 [ext_resource type="PackedScene" uid="uid://6ug0p81f7bwq" path="res://src/overworld/overworldMenu/equipmentMenu/equipSelectMenu/EquipItemEntry.tscn" id="2_0f5pl"]
-[ext_resource type="PackedScene" uid="uid://bu0pauh0l7wyv" path="res://src/overworld/overworldMenu/components/statsDisplay/UIStatsDisplay.tscn" id="3_26dgo"]
 
 [node name="OverworldEquipSelectMenu" type="Control" unique_id=1854403117]
 process_mode = 2
@@ -35,10 +34,3 @@ offset_top = 40.0
 offset_right = 40.0
 offset_bottom = 80.0
 theme_override_constants/separation = 24
-
-[node name="UIStatsDisplay" parent="." unique_id=1395545522 instance=ExtResource("3_26dgo")]
-layout_mode = 1
-offset_left = 140.0
-offset_top = 69.0
-offset_right = 140.12
-offset_bottom = 69.02

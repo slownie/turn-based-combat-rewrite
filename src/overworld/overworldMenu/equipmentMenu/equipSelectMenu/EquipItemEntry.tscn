@@ -21,6 +21,7 @@ layout_mode = 2
 
 [node name="ItemName" type="Label" parent="HBoxContainer" unique_id=1097402202]
 layout_mode = 2
+text = "EquipmentName"
 
 [node name="EquipperIcon" type="TextureRect" parent="HBoxContainer" unique_id=1438735589]
 layout_mode = 2

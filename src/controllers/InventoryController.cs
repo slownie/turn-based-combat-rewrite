@@ -27,4 +27,9 @@ public partial class InventoryController : Node2D
 	{
 		partyMember.EquipItem(equipmentItem);
 	}
+
+	public void Unequipitem(ActivePartyMember partyMember, EquipmentItemResource.EquipmentType equipmentType)
+	{
+		partyMember.UnequipItem(equipmentType);
+	}
 }

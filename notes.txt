@@ -11,3 +11,5 @@ Todo [ERPG Specific]
 - Defensive Actions
 - MP on Physical Attacks ✓
 - Boss (Multiple Actions) ✓
+
+* It's probably better to have an 'Empty' EquipmentItemResource instead of using null
