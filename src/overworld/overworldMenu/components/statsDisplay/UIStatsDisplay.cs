@@ -52,6 +52,7 @@ public partial class UIStatsDisplay : Control
 	public void Setup(CharacterStats characterStats)
 	{
 		// This is some crap
+
 		if (_currentCharacterStats != null) {
 			_currentCharacterStats.MaxHPChanged -= OnMaxHPChanged;
 			_currentCharacterStats.MaxMPChanged -= OnMaxMPChanged;

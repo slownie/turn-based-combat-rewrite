@@ -15,13 +15,7 @@ public partial class BaseStats : Resource
 	[Export] int _defense = 0;
     [Export] int _resistance = 0;
 
-	public BaseStats() : this(-1) {}
-	public BaseStats(
-		int maxHP
-	)
-	{
-		_maxHP = maxHP;
-	}
+	public BaseStats() {}
 
 	public int GetMaxHP() { return _maxHP; }
 	public int GetMaxMP() { return _maxMP; }

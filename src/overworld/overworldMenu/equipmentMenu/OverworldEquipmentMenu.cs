@@ -172,6 +172,7 @@ public partial class OverworldEquipmentMenu : UIOverworldMenuBase
 
 	private void OnEquippedWeaponChanged(EquipmentItem newWeapon)
 	{
+		GD.Print("Recevied");
 		_weaponEntry.Setup(newWeapon);
 	}
 

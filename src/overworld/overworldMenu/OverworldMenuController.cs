@@ -119,7 +119,6 @@ public partial class OverworldMenuController : Control
 
 			case UIBaseMenuEntry.MainMenuType.Equipment:
 			{
-				GD.Print("Equipment");
 				CreateEquipmentMenu();
 				break;
 			}

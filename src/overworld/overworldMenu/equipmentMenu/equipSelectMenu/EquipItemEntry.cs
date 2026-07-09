@@ -46,7 +46,6 @@ public partial class EquipItemEntry : Control
 	public void Setup(EquipmentItem storedItem)
 	{
 		_storedItem = storedItem;
-		GD.Print(_storedItem);
 		if (_storedItem != null)
 		{
 			_itemName.Text = _storedItem.GetItemName();
@@ -65,6 +64,16 @@ public partial class EquipItemEntry : Control
 	public EquipmentItem GetEquipmentItem()
 	{
 		return _storedItem;
+	}
+
+	public void Equip(Texture2D partyIcon)
+	{
+		_equipperIcon.Texture = partyIcon;
+	}
+
+	public void Unequip()
+	{
+		_equipperIcon.Texture = null;
 	}
 
 	public bool GetEnabled() { return _enabled; }

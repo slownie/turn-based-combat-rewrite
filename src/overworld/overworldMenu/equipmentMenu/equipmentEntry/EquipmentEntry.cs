@@ -43,7 +43,13 @@ public partial class EquipmentEntry : Control
 
     public void Setup(EquipmentItem storedItem)
     {
-        _textLabel.Text = storedItem.GetItemName();
+        if (storedItem != null)
+        {
+            _textLabel.Text = storedItem.GetItemName();
+        } else {
+            _textLabel.Text = "---------";
+        }
+        
     }
 
     public void SetText(string text)

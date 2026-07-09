@@ -25,10 +25,14 @@ public partial class InventoryController : Node2D
 	// Equipment
 	public void EquipItem(ActivePartyMember partyMember, EquipmentItem equipmentItem)
 	{
+		if (equipmentItem.GetUser() != null)
+		{
+			UnequipItem(equipmentItem.GetUser(), equipmentItem.GetEquipmentType());
+		}
 		partyMember.EquipItem(equipmentItem);
 	}
 
-	public void Unequipitem(ActivePartyMember partyMember, EquipmentItemResource.EquipmentType equipmentType)
+	public void UnequipItem(ActivePartyMember partyMember, EquipmentItemResource.EquipmentType equipmentType)
 	{
 		partyMember.UnequipItem(equipmentType);
 	}

@@ -142,17 +142,35 @@ public partial class OverworldEquipSelectMenu : UIOverworldMenuBase
 
 	private void EquipEquipment()
 	{
-		_inventoryController.EquipItem(_currentPartyMember, _currentEntry.GetEquipmentItem());
-
-		// Update UI
-		if (_equippedEntry != null)
+		if (_currentEntry != _equippedEntry)
 		{
-			
+			_inventoryController.EquipItem(_currentPartyMember, _currentEntry.GetEquipmentItem());
+
+			// Update UI
+			_currentEntry.Equip(_currentPartyMember.GetBattleIcon());
+
+			if (_equippedEntry != null)
+			{
+				_equippedEntry.Unequip();
+			}
+
+			_equippedEntry = _currentEntry;
 		}
 	}
 
 	private void UnequipEquipment()
 	{
-		_inventoryController.Unequipitem(_currentPartyMember, _equipmentType);
+		if (_equippedEntry != null)
+		{
+			_inventoryController.UnequipItem(_currentPartyMember, _equipmentType);
+
+			// Update UI
+			_equippedEntry.Unequip();
+
+			_equippedEntry = null;
+		}
+		
+
+		
 	}
 }

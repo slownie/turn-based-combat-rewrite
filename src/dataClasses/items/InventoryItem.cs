@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 [GlobalClass]
-public partial class InventoryItem : GodotObject
+public partial class InventoryItem : RefCounted
 {
 	BaseItemResource _itemResource;
 	int _quantity;

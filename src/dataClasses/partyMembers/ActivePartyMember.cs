@@ -5,7 +5,7 @@ using System;
     This class is primarily used in the Overworld as Battles create their own actors which use
     different variables of ActivePartyMember. 
 */
-public partial class ActivePartyMember : GodotObject
+public partial class ActivePartyMember : RefCounted
 {
     [Signal] public delegate void EquippedWeaponChangedEventHandler(EquipmentItem newWeapon);
     [Signal] public delegate void EquippedArmorChangedEventHandler(EquipmentItem newArmor);
@@ -180,7 +180,7 @@ public partial class ActivePartyMember : GodotObject
                     _equippedWeapon = null;
                 }
 
-                EmitSignal(SignalName.EquippedWeaponChanged, null);
+                EmitSignal(SignalName.EquippedWeaponChanged, _equippedWeapon);
                 break;
             }
 
@@ -194,7 +194,7 @@ public partial class ActivePartyMember : GodotObject
                     _equippedArmor = null;
                 }
 
-                EmitSignal(SignalName.EquippedArmorChanged, null);
+                EmitSignal(SignalName.EquippedArmorChanged, _equippedArmor);
                 break;
             }
 
@@ -208,7 +208,7 @@ public partial class ActivePartyMember : GodotObject
                     _equippedAccessory = null;
                 }
 
-                EmitSignal(SignalName.EquippedAccessoryChanged, null);
+                EmitSignal(SignalName.EquippedAccessoryChanged, _equippedAccessory);
                 break;
             }
         }
@@ -234,13 +234,13 @@ public partial class ActivePartyMember : GodotObject
 
     private void RemoveStats(BaseStats baseStats)
     {
-        if (baseStats.GetMaxHP() != 0) _characterStats.ApplyMaxHP(baseStats.GetMaxHP());
-        if (baseStats.GetMaxMP() != 0) _characterStats.ApplyMaxMP(baseStats.GetMaxMP());
-        if (baseStats.GetStrength() != 0) _characterStats.ApplyStrength(baseStats.GetStrength());
-        if (baseStats.GetElemental() != 0) _characterStats.ApplyElemental(baseStats.GetElemental());
-        if (baseStats.GetAgility() != 0) _characterStats.ApplyAgility(baseStats.GetAgility());
-        if (baseStats.GetLuck() != 0) _characterStats.ApplyLuck(baseStats.GetLuck());
-        if (baseStats.GetDefense() != 0) _characterStats.ApplyDefense(baseStats.GetDefense());
-        if (baseStats.GetResistance() != 0) _characterStats.ApplyResistance(baseStats.GetResistance());
+        if (baseStats.GetMaxHP() != 0) _characterStats.ApplyMaxHP(-baseStats.GetMaxHP());
+        if (baseStats.GetMaxMP() != 0) _characterStats.ApplyMaxMP(-baseStats.GetMaxMP());
+        if (baseStats.GetStrength() != 0) _characterStats.ApplyStrength(-baseStats.GetStrength());
+        if (baseStats.GetElemental() != 0) _characterStats.ApplyElemental(-baseStats.GetElemental());
+        if (baseStats.GetAgility() != 0) _characterStats.ApplyAgility(-baseStats.GetAgility());
+        if (baseStats.GetLuck() != 0) _characterStats.ApplyLuck(-baseStats.GetLuck());
+        if (baseStats.GetDefense() != 0) _characterStats.ApplyDefense(-baseStats.GetDefense());
+        if (baseStats.GetResistance() != 0) _characterStats.ApplyResistance(-baseStats.GetResistance());
     }
 }
