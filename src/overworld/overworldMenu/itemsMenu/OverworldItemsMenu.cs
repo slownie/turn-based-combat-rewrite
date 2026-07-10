@@ -11,8 +11,6 @@ public partial class OverworldItemsMenu : UIOverworldMenuBase
 	VBoxContainer _menuContainer;
 	VBoxContainer _partyContainer;
 
-	Label _currentOption;
-
 	Godot.Collections.Array<UIItemMenuEntry> _menuEntries = [];
 	UIItemMenuEntry _currentEntry;
 	UIItemMenuEntry currentEntry
@@ -27,7 +25,7 @@ public partial class OverworldItemsMenu : UIOverworldMenuBase
 		}
 	}
 
-	int _index;
+	int _index = 0;
 	int index
 	{
 		get { return _index; }
@@ -40,6 +38,17 @@ public partial class OverworldItemsMenu : UIOverworldMenuBase
 		}
 	}
 
+	int _tabIndex = 0;
+	int tabIndex
+	{
+		get { return _tabIndex; }
+		set
+		{
+			_tabIndex = value;
+		}
+	}
+
+
     public override void _Ready()
 	{
 		_menuContainer = GetNode<VBoxContainer>("MenuEntries");
@@ -51,19 +60,29 @@ public partial class OverworldItemsMenu : UIOverworldMenuBase
 		if (@event.IsActionPressed("MoveUp")) index -= 1;
 		if (@event.IsActionPressed("MoveDown")) index += 1;
 
+		// Use
 		if (@event.IsActionPressed("AButton"))
 		{
 			// Are we allowed to select this option?
-			if (_menuEntries[index].IsEnabled())
+			if (currentEntry.IsEnabled())
 			{
 				
 			}
 		}
 
 		if (@event.IsActionPressed("BButton")) EmitSignal(SignalName.ExitMenu);
+	
+		// Discard
+		if (@event.IsActionPressed("YButton"))
+		{
+			if (currentEntry.IsEnabled())
+			{
+				
+			}
+		}
 	}
 
-	public void Setup(GameState gameState)
+	public void Setup(GameState gameState, InventoryController inventoryController)
 	{
 		foreach (InventoryItem inventoryItem in gameState.GetInventoryItems())
 		{

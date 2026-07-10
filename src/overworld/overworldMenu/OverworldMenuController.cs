@@ -67,7 +67,7 @@ public partial class OverworldMenuController : Control
 	{
 		OverworldItemsMenu overworldItemsMenu = _itemsMenuScene.Instantiate() as OverworldItemsMenu;
 		AddChild(overworldItemsMenu);
-		overworldItemsMenu.Setup(_gameState);
+		overworldItemsMenu.Setup(_gameState, _inventoryController);
 
 		LoadMenu(overworldItemsMenu);
 

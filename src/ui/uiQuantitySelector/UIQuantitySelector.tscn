@@ -1,0 +1,37 @@
+[gd_scene format=3 uid="uid://cjwchcrve8gm0"]
+
+[ext_resource type="Script" uid="uid://ntkwk2bd65yg" path="res://src/ui/uiQuantitySelector/UIQuantitySelector.cs" id="1_m4w5k"]
+[ext_resource type="Texture2D" uid="uid://qjox3wbrt5tk" path="res://assets/images/ui/quantitySelector/SideArrow.png" id="2_mhm1l"]
+
+[node name="UIQuantitySelector" type="Control" unique_id=1627318968]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m4w5k")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1862444587]
+layout_mode = 0
+offset_right = 73.0
+offset_bottom = 23.0
+alignment = 1
+
+[node name="LeftArrow" type="TextureRect" parent="HBoxContainer" unique_id=2062276667]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_mhm1l")
+expand_mode = 2
+flip_h = true
+
+[node name="QuantityAmount" type="Label" parent="HBoxContainer" unique_id=174052249]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "00"
+
+[node name="RightArrow" type="TextureRect" parent="HBoxContainer" unique_id=1917279364]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_mhm1l")
+expand_mode = 2

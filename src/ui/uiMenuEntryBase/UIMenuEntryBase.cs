@@ -38,4 +38,14 @@ public partial class UIMenuEntryBase : Control
 		_icon = GetNode<TextureRect>("HBoxContainer/Icon");
 		_text = GetNode<Label>("HBoxContainer/Text");
 	}
+
+	public void SetIcon(Texture2D texture2D)
+	{
+		_icon.Texture = texture2D;
+	}
+
+	public void SetText(string newText)
+	{
+		_text.Text = newText;
+	}
 }

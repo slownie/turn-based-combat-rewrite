@@ -106,6 +106,7 @@ public partial class OverworldController : Node2D
 	private void OnEncounterStart(EnemyEncounterResource enemyEncounterResource)
 	{
 		_overworldPlayer.SetPhysicsProcess(false);
+		_overworldPlayer.SetProcessInput(false);
 		EmitSignal(SignalName.SwitchToBattle, enemyEncounterResource);
 	}
 
